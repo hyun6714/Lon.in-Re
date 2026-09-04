@@ -79,7 +79,7 @@ public struct GameDate : IEquatable<GameDate>
 
         lastDay = DateTime.DaysInMonth(this.year, this.month);
 
-        this.day = Math.Clamp(this.day, 1, lastDay);
+        this.day = Math.Clamp(day, 1, lastDay);
         this.hour = Math.Clamp(hour, 0, 23);
         minutes = 0;
 
