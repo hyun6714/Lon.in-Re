@@ -8,7 +8,7 @@ public struct GameDate : IEquatable<GameDate>
     public int hour;
     public int minutes;
     public Season season;
-    private int lastDay;
+    public int lastDay;
 
     public GameDate(CalendarData data)
     {

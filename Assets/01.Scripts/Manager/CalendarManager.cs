@@ -320,8 +320,8 @@ public class CalendarManager : MonoBehaviour
         currentDate.year = year;
         currentDate.month = Mathf.Clamp(month, 1, 12);
 
-        int lastDay = GetLastDay(currentDate.year, currentDate.month);
-        currentDate.day = Mathf.Clamp(day, 1, lastDay);
+        currentDate.lastDay = GetLastDay(currentDate.year, currentDate.month);
+        currentDate.day = Mathf.Clamp(day, 1, currentDate.lastDay);
 
         currentDate.hour = Mathf.Clamp(hour, 0, 23);
         currentDate.minutes = 0;
