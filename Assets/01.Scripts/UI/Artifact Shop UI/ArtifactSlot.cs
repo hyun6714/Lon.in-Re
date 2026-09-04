@@ -15,8 +15,6 @@ public class ArtifactSlot : MonoBehaviour
     public TextMeshProUGUI conditionText;//해금조건
     public Button unlockBtn;
 
-    private int artifactId;
-
     public void SetUp(ArtifactInfo info)
     {
         if (info != null)

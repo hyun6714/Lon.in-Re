@@ -22,7 +22,6 @@ public class ArtifactManager : MonoBehaviour
     }
 
 
-    //playerRebirth 플레이어 환생횟수 변수 변경할 필요 있음 
     public bool TryUnlockArtifact(int artifactID, int playerRebirth, int playerReputation, int playerSpecialCurrency)
     {
         ArtifactInfo info = artifactDatabase.GetArtifactsInfo(artifactID);
