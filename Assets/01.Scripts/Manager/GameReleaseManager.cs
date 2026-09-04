@@ -25,7 +25,11 @@ public class GameReleaseManager : MonoBehaviour
     // 개발 완료된 게임을 출시 목록에 등록
     public void ReleaseGame(GameDevResult gameResult)
     {
+        // 출시 게임 목록에 등록
         releasedGames.Add(gameResult);
+
+        // 출시 날짜를 기준으로 정산 시작
+        EventManager.instance.StartGameSettlement(gameResult.gameId);
 
         Utils.Log(
             $"게임 출시 완료  / ID : { gameResult.gameId} / " +
