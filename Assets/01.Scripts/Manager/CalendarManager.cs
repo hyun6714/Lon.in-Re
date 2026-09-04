@@ -83,6 +83,7 @@ public class CalendarManager : MonoBehaviour
     public void SubscribeEvent()
     {
         GameEventBridge.OnPausedChanged += PausedChanged;
+        Utils.Log("CalendarManager 구독 완료");
     }
 
     public void UnSubscribeEvent()

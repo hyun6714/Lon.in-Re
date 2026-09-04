@@ -58,7 +58,7 @@ public class SummerEvent : IEvent
         }
         catch (OperationCanceledException)
         {
-            Utils.Log("이벤트가 취소되었습니다.");
+            Utils.LogWarning("이벤트가 취소되었습니다.");
         }
         finally
         {

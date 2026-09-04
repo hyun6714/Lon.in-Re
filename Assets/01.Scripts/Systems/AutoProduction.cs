@@ -74,7 +74,7 @@ public class AutoProduction : MonoBehaviour
         employee.OnEmployeeChanged += UpdateMoneyPerSec;
         upgrade.OnMultiplierUpgradeChanged += UpdateMoneyPerSec;
         GameEventBridge.OnPausedChanged += PausedChanged;
-        Utils.Log("구독 완료");
+        Utils.Log("AutoProduction 구독 완료");
     }
 
     private void UnSubscribeEvent()

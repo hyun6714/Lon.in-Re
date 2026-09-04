@@ -82,7 +82,7 @@ public class EventManager : MonoBehaviour
         GameEventBridge.OnSeasonChanged += ChangeSeason;
         GameEventBridge.OnSeasonEvent += StartSeasonEvent;
         GameEventBridge.OnPausedChanged += PausedChanged;
-        Utils.Log("구독 완료");
+        Utils.Log("EventManager 구독 완료");
     }
 
     private void UnSubscribeEvent()
