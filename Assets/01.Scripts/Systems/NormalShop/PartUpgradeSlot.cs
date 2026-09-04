@@ -1,0 +1,96 @@
+﻿using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class PartUpgradeSlot : MonoBehaviour
+{
+    [Header("UI 연결")]
+    [SerializeField] private Image iconImage;
+    [SerializeField] private TextMeshProUGUI infoText; // Item Name 텍스트 (이름 + Lv + 효과)
+    [SerializeField] private TextMeshProUGUI costText; // 0 텍스트 (비용 숫자)
+    [SerializeField] private Button slotBtn;           // 슬롯 버튼
+
+    private PartState targetState;
+    private PlayerTapUpgrade playerUpgrade;
+
+    public void SetUp(PartState _targetState, PlayerTapUpgrade _playerUpgrade)
+    {
+        targetState = _targetState;
+        playerUpgrade = _playerUpgrade;
+
+        if(slotBtn == null)
+        {
+            slotBtn = GetComponent<Button>();
+        }
+
+        if(slotBtn != null)
+        {
+            slotBtn.onClick.RemoveAllListeners();
+            slotBtn.onClick.AddListener(OnClickUpgrade);
+        }
+        Refresh();
+    }
+
+    private void Update()
+    {
+        if(targetState != null && playerUpgrade != null && slotBtn != null)
+        {
+            slotBtn.interactable = playerUpgrade.CanUpgrade(targetState);
+        }
+    }
+
+    public void Refresh()
+    {
+        if(targetState == null || targetState.partData == null)
+        {
+            return;
+        }
+
+        var data = targetState.partData;
+
+        if(iconImage != null && data.Icon != null)
+        {
+            iconImage.sprite = data.Icon;
+        }
+
+        // 해금 여부 확인
+        bool isUnlocked = RankManager.instance != null && RankManager.instance.currentRank >= data.UnlockGrade;
+
+        if (!isUnlocked)
+        {
+            if(infoText != null)
+            {
+                infoText.text = $"[잠김] {data.UnlockGrade}";
+            }
+            if(costText != null)
+            {
+                costText.text = "-";
+            }
+            return;
+        }
+
+        // 이름 Lv.N (+수치) (해금된 상태)
+        if(infoText != null)
+        {
+            infoText.text = $"{data.PartName} Lv.{targetState.Level} (+{CurrencyFormatter.Format(data.PowerPerLevel)})";
+        }
+
+        // 비용
+        if (costText != null)
+        {
+            costText.text = CurrencyFormatter.Format(targetState.GetNextCost());
+        }
+    }
+
+    public void OnClickUpgrade()
+    {
+        if(playerUpgrade == null || targetState == null)
+        {
+            return;
+        }
+        if (playerUpgrade.TryUpgrade(targetState))
+        {
+            Refresh();
+        }
+    }
+}

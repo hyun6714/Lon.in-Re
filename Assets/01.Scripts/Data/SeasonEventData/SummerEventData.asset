@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4df5ed4c2fdd6749a6dc66425b134a0, type: 3}
+  m_Name: SummerEventData
+  m_EditorClassIdentifier: Assembly-CSharp::SummerEventData
+  autoMultiplier: 1
+  clickMultiplier: 1
+  coolAutoMultiplier: 2
+  coolClickMultiplier: 3
+  unCoolAutoMultiplier: 0.5
+  unCoolClickMultiplier: 0.5
+  coolText: "\uC790\uB3D9 \uBC30\uC218 2\uBC30 \uC801\uC6A9"
+  unCoolText: "\uC790\uB3D9 \uBC30\uC218 0.5\uBC30 \uC801\uC6A9"

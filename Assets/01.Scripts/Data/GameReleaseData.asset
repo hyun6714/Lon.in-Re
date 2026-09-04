@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a8441616794d7d4692f66a149a30cde, type: 3}
+  m_Name: GameReleaseData
+  m_EditorClassIdentifier: Assembly-CSharp::GameReleaseData
+  rewardDayInterval: 30
+  maxRewardCount: 2
+  gradeACurrencyReward: 0
+  gradeAReputationReward: 0
+  gradeBCurrencyReward: 0
+  gradeBReputationReward: 0
+  gradeCCurrencyReward: 0
+  gradeCReputationReward: 0

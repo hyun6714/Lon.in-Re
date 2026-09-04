@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 186c1fd6583dacd4d84c39261ebce003, type: 3}
+  m_Name: ArtifactDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::ArtifactDatabase
+  artifacts:
+  - artifactId: 100
+    type: 0
+    artiName: "\uD654\uBD84"
+    icon: {fileID: 0}
+    GainperClick: 0.5
+    PerSecond: 0
+    Probabilityincrease: 0
+    SpecialUnlockCost: 1000
+    isUnlocked: 0
+    requiredRebirthCount: 0
+    requiredReputation: 0
+  - artifactId: 101
+    type: 0
+    artiName: "\uCC45"
+    icon: {fileID: 0}
+    GainperClick: 1
+    PerSecond: 0
+    Probabilityincrease: 0
+    SpecialUnlockCost: 1500
+    isUnlocked: 0
+    requiredRebirthCount: 0
+    requiredReputation: 0
+  - artifactId: 102
+    type: 1
+    artiName: "\uB178\uD2B8\uBD81"
+    icon: {fileID: 0}
+    GainperClick: 2
+    PerSecond: 0
+    Probabilityincrease: 0
+    SpecialUnlockCost: 2500
+    isUnlocked: 0
+    requiredRebirthCount: 1
+    requiredReputation: 1500
+  - artifactId: 103
+    type: 1
+    artiName: "\uC18C\uD654\uAE30"
+    icon: {fileID: 0}
+    GainperClick: 2
+    PerSecond: 0
+    Probabilityincrease: 0
+    SpecialUnlockCost: 3000
+    isUnlocked: 0
+    requiredRebirthCount: 1
+    requiredReputation: 2500

@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 7f8139f05ef2a8b4882e16b520f389b1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - artifactDatabase: {instanceID: 0}
+  - contentParent: {instanceID: 0}
+  - slotPrefab: {instanceID: 0}
+  - shopPanel: {instanceID: 0}
+  - openShopBtn: {instanceID: 0}
+  - closeShopBtn: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
