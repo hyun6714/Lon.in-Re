@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,43 +13,38 @@ public class PartUpgradeSlot : MonoBehaviour
 
     private PartState targetState;
     private PlayerTapUpgrade playerUpgrade;
+    private Action onUpgradeSuccess;                   // 모든 부품 슬롯 일괄 갱신용 콜백
 
-    public void SetUp(PartState _targetState, PlayerTapUpgrade _playerUpgrade)
+    public void SetUp(PartState _targetState, PlayerTapUpgrade _playerUpgrade, Action onUpgradeSuccessCallback = null)
     {
         targetState = _targetState;
         playerUpgrade = _playerUpgrade;
+        onUpgradeSuccess = onUpgradeSuccessCallback;
 
-        if(slotBtn == null)
+        if (slotBtn == null)
         {
             slotBtn = GetComponent<Button>();
         }
 
-        if(slotBtn != null)
+        if (slotBtn != null)
         {
-            slotBtn.onClick.RemoveAllListeners();
+            slotBtn.onClick.RemoveListener(OnClickUpgrade);
             slotBtn.onClick.AddListener(OnClickUpgrade);
         }
-        Refresh();
-    }
 
-    private void Update()
-    {
-        if(targetState != null && playerUpgrade != null && slotBtn != null)
-        {
-            slotBtn.interactable = playerUpgrade.CanUpgrade(targetState);
-        }
+        Refresh();
     }
 
     public void Refresh()
     {
-        if(targetState == null || targetState.partData == null)
+        if (targetState == null || targetState.partData == null)
         {
             return;
         }
 
         var data = targetState.partData;
 
-        if(iconImage != null && data.Icon != null)
+        if (iconImage != null && data.Icon != null)
         {
             iconImage.sprite = data.Icon;
         }
@@ -58,19 +54,14 @@ public class PartUpgradeSlot : MonoBehaviour
 
         if (!isUnlocked)
         {
-            if(infoText != null)
-            {
-                infoText.text = $"[잠김] {data.UnlockGrade}";
-            }
-            if(costText != null)
-            {
-                costText.text = "-";
-            }
+            if (infoText != null) infoText.text = $"[잠김] {data.UnlockGrade}";
+            if (costText != null) costText.text = "-";
+            if (slotBtn != null) slotBtn.interactable = false;
             return;
         }
 
-        // 이름 Lv.N (+수치) (해금된 상태)
-        if(infoText != null)
+        // 이름 Lv.N (+수치)
+        if (infoText != null)
         {
             infoText.text = $"{data.PartName} Lv.{targetState.Level} (+{CurrencyFormatter.Format(data.PowerPerLevel)})";
         }
@@ -80,17 +71,31 @@ public class PartUpgradeSlot : MonoBehaviour
         {
             costText.text = CurrencyFormatter.Format(targetState.GetNextCost());
         }
+
+        // 버튼 활성화 여부 갱신
+        if (slotBtn != null && playerUpgrade != null)
+        {
+            slotBtn.interactable = playerUpgrade.CanUpgrade(targetState);
+        }
     }
 
     public void OnClickUpgrade()
     {
-        if(playerUpgrade == null || targetState == null)
+        if (playerUpgrade == null || targetState == null)
         {
             return;
         }
+
         if (playerUpgrade.TryUpgrade(targetState))
         {
-            Refresh();
+            if (onUpgradeSuccess != null)
+            {
+                onUpgradeSuccess.Invoke();
+            }
+            else
+            {
+                Refresh();
+            }
         }
     }
 }

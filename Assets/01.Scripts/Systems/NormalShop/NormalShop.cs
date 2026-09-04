@@ -76,6 +76,20 @@ public class NormalShop : MonoBehaviour
 
         // 부품 탭 비주얼 활성화
         SwitchTab(ShopTab.Part);
+
+        //재화 변동 이벤트 구독
+        if (CurrencyManager.instance != null)
+        {
+            CurrencyManager.instance.OnCurrencyChanged += OnCurrencyChanged;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (CurrencyManager.instance != null)
+        {
+            CurrencyManager.instance.OnCurrencyChanged -= OnCurrencyChanged;
+        }
     }
 
     // 슬롯 최초 1회 생성 및 초기화
@@ -92,7 +106,8 @@ public class NormalShop : MonoBehaviour
                 var slot = obj.GetComponent<PartUpgradeSlot>();
                 if (slot != null)
                 {
-                    slot.SetUp(state, playerUpgrade);
+                    // RefreshPartSlots 콜백 전달
+                    slot.SetUp(state, playerUpgrade, RefreshPartSlots);
                     partSlots.Add(slot);
                 }
             }
@@ -123,7 +138,6 @@ public class NormalShop : MonoBehaviour
                 if (slot != null)
                 {
                     slot.SetUp(info, RefreshArtifactSlots, ShowConfirmPopup);
-
                     artifactSlots.Add(slot);
                 }
             }
@@ -195,6 +209,49 @@ public class NormalShop : MonoBehaviour
 
         // 탭 버튼 비주얼(스프라이트/텍스트) 교체
         UpdateTabVisuals();
+    }
+
+    // 재화 변동 시 상점이 켜져 있을 때만 갱신
+    private void OnCurrencyChanged(CurrencyType type, int amount)
+    {
+        // 닫혀 있으면 갱신 X
+        if (shopPanel == null || !shopPanel.activeSelf)
+        {
+            return;
+        }
+
+        RefreshCurrentTab();
+    }
+
+    // 현재 활성화된 탭의 슬롯들만 갱신
+    public void RefreshCurrentTab()
+    {
+        switch (currentTab)
+        {
+            case ShopTab.Part:
+                RefreshPartSlots();
+                break;
+            case ShopTab.Employee:
+                for (int i = 0; i < employeeSlots.Count; i++)
+                {
+                    if (employeeSlots[i] != null) employeeSlots[i].Refresh();
+                }
+                break;
+            case ShopTab.Artifact:
+                RefreshArtifactSlots();
+                break;
+        }
+    }
+
+    public void RefreshPartSlots()
+    {
+        for (int i = 0; i < partSlots.Count; i++)
+        {
+            if (partSlots[i] != null)
+            {
+                partSlots[i].Refresh();
+            }
+        }
     }
 
     public void RefreshArtifactSlots()
