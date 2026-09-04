@@ -3,6 +3,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SummerEventData", menuName = "SeasonEvent/SummerEventData")]
 public class SummerEventData : ScriptableObject
 {
+    [Header("이벤트 지속 시간")]
+    [SerializeField] private int summerEventAddDay = 20;
+
     [Header("기본 생산 배수")]
     [SerializeField] private float autoMultiplier = 1f;
     [SerializeField] private float clickMultiplier = 1f;
@@ -18,6 +21,7 @@ public class SummerEventData : ScriptableObject
     [SerializeField] private string coolText = "자동 배수 2배 적용";
     [SerializeField] private string unCoolText = "자동 배수 0.5배 적용";
 
+    public int SummerEventAddDay => summerEventAddDay;
     public float AutoMultiplier => autoMultiplier;
     public float ClickMultiplier => clickMultiplier;
     public float CoolAutoMultiplier => coolAutoMultiplier;

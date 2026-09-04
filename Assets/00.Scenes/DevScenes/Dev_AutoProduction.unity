@@ -254,7 +254,7 @@ MonoBehaviour:
   rankManager: {fileID: 1744616750}
   employeeStates:
   - employeeData: {fileID: 11400000, guid: df4e50d22eabb2348b676de3507ae62d, type: 2}
-    count: 0
+    count: 3
   - employeeData: {fileID: 11400000, guid: c5b1268b4ea101341bb69d456510007d, type: 2}
     count: 0
   - employeeData: {fileID: 11400000, guid: afa7799207646c946a28490b410217fb, type: 2}
