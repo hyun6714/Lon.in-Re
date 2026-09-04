@@ -52,8 +52,18 @@ public class SummerEvent : IEvent
 
     private async UniTask EventTimer(CancellationToken token)
     {
-        await UniTask.WaitUntil(() => CalendarManager.instance.CurrentDate >= eventEndDate, PlayerLoopTiming.Update, token);
-        EndEvent();
+        try
+        {
+            await UniTask.WaitUntil(() => CalendarManager.instance.CurrentDate >= eventEndDate, cancellationToken: token);
+        }
+        catch (OperationCanceledException)
+        {
+            Utils.Log("이벤트가 취소되었습니다.");
+        }
+        finally
+        {
+            EndEvent();
+        }
     }
 
     public void EndEvent()
