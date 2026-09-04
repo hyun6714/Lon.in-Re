@@ -11,53 +11,26 @@ public class AutoProductionUpgrade : MonoBehaviour
     private float autoMultiplier = 1f;
     public float AutoMultiplier => autoMultiplier;
 
-    private CancellationTokenSource token;
-
     public event Action OnMultiplierUpgradeChanged;
 
     private void OnEnable()
     {
-        token?.Cancel();
-        token?.Dispose();
-        token = new CancellationTokenSource();
-
-        SubscribeEvent(token.Token).Forget();
+        SubscribeEvent();
     }
 
     private void OnDisable()
     {
-        token?.Cancel();
-        token?.Dispose();
-        token = null;
-
         UnSubscribeEvent();
-    }
-
-    private async UniTaskVoid SubscribeEvent(CancellationToken token)
-    {
-        try
-        {
-            await UniTask.WaitUntil(() => EventManager.instance != null, cancellationToken: token);
-
-            SubscribeEvent();
-        }
-        catch (OperationCanceledException)
-        {
-
-        }
     }
 
     private void SubscribeEvent()
     {
-        EventManager.instance.OnMultiplierChanged += SetMultiplier;
+        GameEventBridge.OnAutoMultiplierChanged += SetMultiplier;
     }
 
     private void UnSubscribeEvent()
     {
-        if (EventManager.instance != null)
-        {
-            EventManager.instance.OnMultiplierChanged -= SetMultiplier;
-        }
+        GameEventBridge.OnAutoMultiplierChanged -= SetMultiplier;
     }
 
     public float TotalPerSecond()

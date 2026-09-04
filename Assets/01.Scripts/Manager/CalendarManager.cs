@@ -31,7 +31,7 @@ public class CalendarManager : MonoBehaviour
     [SerializeField] private int allEventStartHour;
 
     [Header("일시 정지")]
-    [SerializeField] private bool isPaused = true;
+    [SerializeField] private bool isPaused;
 
     [Header("이벤트 플래그")]
     [SerializeField] private bool hasSeasonEvent;
@@ -83,6 +83,7 @@ public class CalendarManager : MonoBehaviour
     public void SubscribeEvent()
     {
         GameEventBridge.OnPausedChanged += PausedChanged;
+        Utils.Log("CalendarManager 구독 완료");
     }
 
     public void UnSubscribeEvent()
@@ -317,22 +318,7 @@ public class CalendarManager : MonoBehaviour
 #if UNITY_EDITOR
     public void SetDateOnlyEditor(int year, int month, int day, int hour)
     {
-        currentDate.year = year;
-        currentDate.month = Mathf.Clamp(month, 1, 12);
-
-        int lastDay = GetLastDay(currentDate.year, currentDate.month);
-        currentDate.day = Mathf.Clamp(day, 1, lastDay);
-
-        currentDate.hour = Mathf.Clamp(hour, 0, 23);
-        currentDate.minutes = 0;
-
-        currentDate.season = currentDate.month switch
-        {
-            >= 3 and <= 5 => Season.Spring,
-            >= 6 and <= 8 => Season.Summer,
-            >= 9 and <= 11 => Season.Fall,
-            _ => Season.Winter
-        };
+        currentDate.SetDate(year, month, day, hour);
 
         seasonEventMonth = currentDate.season switch
         {

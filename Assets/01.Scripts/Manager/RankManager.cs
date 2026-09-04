@@ -15,7 +15,7 @@ public class RankManager : MonoBehaviour
 
     public RankState currentRank = RankState.Solo;
 
-    public int gamesReleased
+    public int gamesReleased //게임 출시 횟수 가져오기
     { 
         get
         {
@@ -28,9 +28,9 @@ public class RankManager : MonoBehaviour
         }
     }
 
-    public bool hasEmployees = false; // 직원 고용 가능/불가능 
-    public int maxEmployee = 0;
-    public int currentEmployeeCount = 0;
+    public bool hasEmployees = false; //직원 고용 가능/불가능 
+    public int maxEmployee = 0; //직원 총수
+    public int currentEmployeeCount = 0; //현재 직원 총 수
 
     public static RankManager instance { get; private set; }
 

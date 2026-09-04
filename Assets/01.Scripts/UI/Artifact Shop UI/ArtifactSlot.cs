@@ -4,7 +4,6 @@ using TMPro;
 
 public class ArtifactSlot : MonoBehaviour
 {
-    //프리팹 만들기 UI에 적용할 
     [Header("ID")] 
     public int targetArtifactID;
 
@@ -14,8 +13,6 @@ public class ArtifactSlot : MonoBehaviour
     public TextMeshProUGUI costText;
     public TextMeshProUGUI conditionText;//해금조건
     public Button unlockBtn;
-
-    private int artifactId;
 
     public void SetUp(ArtifactInfo info)
     {
