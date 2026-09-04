@@ -4,7 +4,6 @@ using TMPro;
 
 public class ArtifactSlot : MonoBehaviour
 {
-    //프리팹 만들기 UI에 적용할 
     [Header("ID")] 
     public int targetArtifactID;
 

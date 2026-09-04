@@ -8,8 +8,6 @@ public class ArtifactManager : MonoBehaviour
 
     private void Awake()
     {
-        ResetArtifactsForEditor();
-
         if (instance == null)
         {
             instance = this;
@@ -98,28 +96,5 @@ public class ArtifactManager : MonoBehaviour
             }
         }
         return total;
-    }
-
-
-    //확인 할려고 만든 아티팩트 초기화 함수 나중에 삭제해야함
-    public void ResetArtifactsForEditor()
-    {
-        //삭제해야함 
-        PlayerPrefs.DeleteAll(); // 모든 저장 데이터 초기화 (테스트용)
-        Debug.Log("PlayerPrefs 초기화 완료");
-
-        if (artifactDatabase == null || artifactDatabase.artifacts == null)
-        {
-            return;
-        }
-
-        foreach (var info in artifactDatabase.artifacts)
-        {
-            if (info != null)
-            {
-                info.isUnlocked = false;
-            }
-        }
-        Debug.Log("아티팩트 초기화 완료");
     }
 }
