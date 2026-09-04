@@ -47,6 +47,7 @@ public class EventManager : MonoBehaviour
 
     [Header("테스트용 UI")]
     [SerializeField] private GameObject testPanel;
+    private SeasonEventPopup eventPopup;
 
     private void Awake()
     {
@@ -106,9 +107,13 @@ public class EventManager : MonoBehaviour
         if (currentEvent is SummerEvent strategy)
         {
             strategy.SetCool(value);
-            Time.timeScale = 1;
 
-            testPanel.SetActive(false);
+            if (eventPopup == null)
+            {
+                eventPopup = testPanel.GetComponent<SeasonEventPopup>();
+            }
+
+            eventPopup.ClosePanel();
         }
     }
 
@@ -200,7 +205,14 @@ public class EventManager : MonoBehaviour
         // 테스트 용 코드. 나중에 삭제
         if (currentEvent is SummerEvent)
         {
-            testPanel.SetActive(true);
+            if (eventPopup == null)
+            {
+                eventPopup = testPanel.GetComponent<SeasonEventPopup>();
+            }
+
+            eventPopup.gameObject.SetActive(true);
+            eventPopup.OpenPanel();
+
             Time.timeScale = 0;
         }
     }

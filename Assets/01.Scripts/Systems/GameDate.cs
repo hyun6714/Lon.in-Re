@@ -79,7 +79,7 @@ public struct GameDate : IEquatable<GameDate>
 
         lastDay = DateTime.DaysInMonth(this.year, this.month);
 
-        this.day = Math.Clamp(this.day, 1, lastDay);
+        this.day = Math.Clamp(day, 1, lastDay);
         this.hour = Math.Clamp(hour, 0, 23);
         minutes = 0;
 
@@ -97,6 +97,7 @@ public struct GameDate : IEquatable<GameDate>
         };
     }
 
+    #region 연산자 오버로딩
     public bool Equals(GameDate other)
     {
         return year == other.year && month == other.month && day == other.day && hour == other.hour && minutes == other.minutes;
@@ -131,8 +132,7 @@ public struct GameDate : IEquatable<GameDate>
 
         return 0;
     }
-
-    #region 연산자 오버로딩
+    
     public static bool operator ==(GameDate a, GameDate b)
     {
         return a.Equals(b);
