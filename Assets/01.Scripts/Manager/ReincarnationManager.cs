@@ -15,7 +15,8 @@ public class ReincarnationManager : MonoBehaviour
         {
             CurrencyManager.instance.ResetCurrenciesExceptSpecial();
 
-            int excesReputation = currentReputation - 5000;//어느정도 줄지 정하기 일단 예시로 정함
+            //특수 재화 주는 식
+            int excesReputation = currentReputation - 5000;
             if (excesReputation > 0 && CurrencyManager.instance != null)
             {
                 CurrencyManager.instance.AddCurrency(CurrencyType.Special, excesReputation);
