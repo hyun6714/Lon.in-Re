@@ -194,31 +194,6 @@ public class EventManager : MonoBehaviour
     //    }
     //}
 
-    //public async UniTaskVoid StartSeasonAsync(int year, int month, int seasonDay, CancellationToken token)
-    //{
-    //    CancellationTokenSource ctk = CancellationTokenSource.CreateLinkedTokenSource(this.token.Token, token);
-
-    //    try
-    //    {
-    //        int targetDay = seasonDay;
-    //        int targetMonth = month + 1;
-    //        int targetYear = year;
-
-    //        if (targetMonth > 12)
-    //        {
-    //            targetMonth = 1;
-    //            targetYear++;
-    //        }
-
-    //        await UniTask.WaitUntil(() => 
-    //        CalendarManager.instance.IsTargetDate(targetYear, targetMonth, targetDay))
-    //    }
-    //    catch (OperationCanceledException)
-    //    {
-
-    //    }
-    //}
-
     public void StartSeasonEvent()
     {
         currentEvent?.StartEvent();
