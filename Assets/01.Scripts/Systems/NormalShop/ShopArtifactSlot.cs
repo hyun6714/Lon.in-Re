@@ -236,6 +236,14 @@ public class ShopArtifactSlot : MonoBehaviour
         if (success)
         {
             Debug.Log($"해금 완료: {targetInfo.artiName}");
+
+            // 아티팩트 해금 후 탭 파워 배율 변동 즉시 반영
+            var playerUpgrade = FindFirstObjectByType<PlayerTapUpgrade>();
+            if (playerUpgrade != null)
+            {
+                playerUpgrade.RecalculateTapPower();
+            }
+
             if (onPurchaseSuccess != null)
             {
                 onPurchaseSuccess.Invoke();

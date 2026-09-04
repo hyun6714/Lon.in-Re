@@ -11,30 +11,39 @@ public class PlayerTapUpgrade : MonoBehaviour
 
     public List<PartState> PartStates => partStates;
 
-    // 최종 탭 파워 = (기본 1 + 모든 부품 파워 합) * 아티팩트 배율
-    public int CurrentTapPower
+    private int cachedTapPower = 1;     // 캐싱 변수
+
+    public int CurrentTapPower => cachedTapPower;
+
+    private void Start()
     {
-        get
+        // 게임 시작 시 초기 탭 파워 1회 계산
+        RecalculateTapPower();
+    }
+
+    // 최종 탭 파워 = (기본 1 + 모든 부품 파워 합) * 아티팩트 배율
+    public void RecalculateTapPower()
+    {
+        float totalPower = defaultBasePower;
+
+        // 1. 부품 파워 합산
+        for (int i = 0; i < partStates.Count; i++)
         {
-            float totalPower = defaultBasePower;
-
-            foreach (var state in partStates)
+            var state = partStates[i];
+            if (state != null && state.partData != null)
             {
-                if (state != null && state.partData != null)
-                {
-                    totalPower += state.GetTotalPower();
-                }
+                totalPower += state.GetTotalPower();
             }
-
-            // 아티팩트 배율 가져오기
-            if (ArtifactManager.instance != null)
-            {
-                float totalPercent = ArtifactManager.instance.GetTotalGainPerClick();
-                totalPower *= (1f + totalPercent);
-            }
-
-            return Mathf.Max(1, Mathf.RoundToInt(totalPower));
         }
+
+        // 2. 아티팩트 배율 반영
+        if (ArtifactManager.instance != null)
+        {
+            float totalPercent = ArtifactManager.instance.GetTotalGainPerClick();
+            totalPower *= (1f + totalPercent);
+        }
+
+        cachedTapPower = Mathf.Max(1, Mathf.RoundToInt(totalPower));
     }
 
     // 업그레이드 가능 여부 판별
@@ -63,6 +72,7 @@ public class PlayerTapUpgrade : MonoBehaviour
         if (CurrencyManager.instance.UseCurrency(CurrencyType.Normal, cost))
         {
             state.LevelUp();
+            RecalculateTapPower();
             return true;
         }
 
@@ -76,5 +86,6 @@ public class PlayerTapUpgrade : MonoBehaviour
         {
             state.ResetLevel();
         }
+        RecalculateTapPower();
     }
 }
