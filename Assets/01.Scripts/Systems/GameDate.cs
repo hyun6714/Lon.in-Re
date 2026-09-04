@@ -8,7 +8,7 @@ public struct GameDate : IEquatable<GameDate>
     public int hour;
     public int minutes;
     public Season season;
-    private int lastDay;
+    public int lastDay;
 
     public GameDate(CalendarData data)
     {
@@ -72,12 +72,67 @@ public struct GameDate : IEquatable<GameDate>
         return date;
     }
 
+    public void SetDate(int year, int month, int day, int hour)
+    {
+        this.year = year;
+        this.month = Math.Clamp(month, 1, 12);
+
+        lastDay = DateTime.DaysInMonth(this.year, this.month);
+
+        this.day = Math.Clamp(this.day, 1, lastDay);
+        this.hour = Math.Clamp(hour, 0, 23);
+        minutes = 0;
+
+        SetSeason();
+    }
+
+    public void SetSeason()
+    {
+        season = month switch
+        {
+            >= 3 and <= 5 => Season.Spring,
+            >= 6 and <= 8 => Season.Summer,
+            >= 9 and <= 11 => Season.Fall,
+            _ => Season.Winter
+        };
+    }
+
     public bool Equals(GameDate other)
     {
         return year == other.year && month == other.month && day == other.day && hour == other.hour && minutes == other.minutes;
     }
 
-    // 연산자 오버로딩
+    public int CompareTo(GameDate other)
+    {
+        if (year > other.year)
+            return 1;
+        if (year < other.year)
+            return -1;
+
+        if (month > other.month)
+            return 1;
+        if (month < other.month)
+            return -1;
+
+        if (day > other.day)
+            return 1;
+        if (day < other.day)
+            return -1;
+
+        if (hour > other.hour)
+            return 1;
+        if (hour < other.hour)
+            return -1;
+
+        if (minutes > other.minutes)
+            return 1;
+        if (minutes < other.minutes)
+            return -1;
+
+        return 0;
+    }
+
+    #region 연산자 오버로딩
     public static bool operator ==(GameDate a, GameDate b)
     {
         return a.Equals(b);
@@ -87,4 +142,25 @@ public struct GameDate : IEquatable<GameDate>
     {
         return !a.Equals(b);
     }
+
+    public static bool operator >=(GameDate a, GameDate b)
+    {
+        return a.CompareTo(b) >= 0;
+    }
+
+    public static bool operator <=(GameDate a, GameDate b)
+    {
+        return a.CompareTo(b) <= 0;
+    }
+
+    public static bool operator >(GameDate a, GameDate b)
+    {
+        return a.CompareTo(b) > 0;
+    }
+
+    public static bool operator <(GameDate a, GameDate b)
+    {
+        return a.CompareTo(b) < 0;
+    }
+    #endregion
 }

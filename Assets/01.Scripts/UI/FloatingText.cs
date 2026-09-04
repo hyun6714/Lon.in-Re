@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-public class FloatingText : MonoBehaviour
+public class FloatingText : MonoBehaviour, IPoolable
 {
     [SerializeField] private TextMeshProUGUI textMesh;
     [SerializeField] private float moveSpeed = 100f;    // 텍스트 떠오르는 속도

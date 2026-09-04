@@ -41,7 +41,6 @@ public class EventManager : MonoBehaviour
 
     // 정산 이벤트
     public event Action<int, int> OnGameSettlement;
-    public event Action<float> OnMultiplierChanged;
 
     [Header("일시 정지")]
     [SerializeField] private bool isPaused;
@@ -82,7 +81,7 @@ public class EventManager : MonoBehaviour
         GameEventBridge.OnSeasonChanged += ChangeSeason;
         GameEventBridge.OnSeasonEvent += StartSeasonEvent;
         GameEventBridge.OnPausedChanged += PausedChanged;
-        Utils.Log("구독 완료");
+        Utils.Log("EventManager 구독 완료");
     }
 
     private void UnSubscribeEvent()
@@ -98,7 +97,7 @@ public class EventManager : MonoBehaviour
     /// <param name="multi"> isCool에 따른 배율 변경값 </param>
     public void SummerMultiplier(float multi)
     {
-        OnMultiplierChanged?.Invoke(multi);
+        GameEventBridge.AutoMultiplierChanged(multi);
     }
     
     // UI 테스트용
@@ -191,31 +190,6 @@ public class EventManager : MonoBehaviour
     //        Utils.Log($"[{gameId}]ID 프로젝트의 [{i}]번째 정산 완료.");
 
     //        CalendarManager.instance.OnDateChanged -= SubscribeDevEventTest;
-    //    }
-    //}
-
-    //public async UniTaskVoid StartSeasonAsync(int year, int month, int seasonDay, CancellationToken token)
-    //{
-    //    CancellationTokenSource ctk = CancellationTokenSource.CreateLinkedTokenSource(this.token.Token, token);
-
-    //    try
-    //    {
-    //        int targetDay = seasonDay;
-    //        int targetMonth = month + 1;
-    //        int targetYear = year;
-
-    //        if (targetMonth > 12)
-    //        {
-    //            targetMonth = 1;
-    //            targetYear++;
-    //        }
-
-    //        await UniTask.WaitUntil(() => 
-    //        CalendarManager.instance.IsTargetDate(targetYear, targetMonth, targetDay))
-    //    }
-    //    catch (OperationCanceledException)
-    //    {
-
     //    }
     //}
 
