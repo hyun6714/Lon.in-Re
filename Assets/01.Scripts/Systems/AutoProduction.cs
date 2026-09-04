@@ -46,10 +46,7 @@ public class AutoProduction : MonoBehaviour
         token?.Dispose();
         token = new CancellationTokenSource();
 
-        if (employee != null)
-        {
-            SubscribeEvent();
-        }
+        SubscribeEvent();
 
         AutoMoneyProduct(token.Token).Forget();
     }
@@ -71,16 +68,32 @@ public class AutoProduction : MonoBehaviour
 
     private void SubscribeEvent()
     {
-        employee.OnEmployeeChanged += UpdateMoneyPerSec;
-        upgrade.OnMultiplierUpgradeChanged += UpdateMoneyPerSec;
+        if (employee != null)
+        {
+            employee.OnEmployeeChanged += UpdateMoneyPerSec;
+        }
+
+        if (upgrade != null)
+        {
+            upgrade.OnMultiplierUpgradeChanged += UpdateMoneyPerSec;
+        }
+
         GameEventBridge.OnPausedChanged += PausedChanged;
         Utils.Log("AutoProduction 구독 완료");
     }
 
     private void UnSubscribeEvent()
     {
-        employee.OnEmployeeChanged -= UpdateMoneyPerSec;
-        upgrade.OnMultiplierUpgradeChanged -= UpdateMoneyPerSec;
+        if (employee != null)
+        {
+            employee.OnEmployeeChanged -= UpdateMoneyPerSec;
+        }
+
+        if (upgrade != null)
+        {
+            upgrade.OnMultiplierUpgradeChanged -= UpdateMoneyPerSec;
+        }
+
         GameEventBridge.OnPausedChanged -= PausedChanged;
     }
 
@@ -94,17 +107,6 @@ public class AutoProduction : MonoBehaviour
         moneyPerSec = Mathf.RoundToInt((employeeProduction + upgradeProduction) * multiplier);
         //moneyPerSec *= multiplier;
     }
-
-    // n초당 생산량 갱신 테스트 용
-    //private async UniTaskVoid UpdateMoneyPerSecCheck(CancellationToken token)
-    //{
-    //    while (!token.IsCancellationRequested)
-    //    {
-    //        UpdateMoneyPerSec();
-
-    //        await UniTask.Delay(1000, cancellationToken: token);
-    //    }
-    //}
 
     // 자동 생산
     private async UniTaskVoid AutoMoneyProduct(CancellationToken token)

@@ -41,7 +41,6 @@ public class EventManager : MonoBehaviour
 
     // 정산 이벤트
     public event Action<int, int> OnGameSettlement;
-    public event Action<float> OnMultiplierChanged;
 
     [Header("일시 정지")]
     [SerializeField] private bool isPaused;
@@ -98,7 +97,7 @@ public class EventManager : MonoBehaviour
     /// <param name="multi"> isCool에 따른 배율 변경값 </param>
     public void SummerMultiplier(float multi)
     {
-        OnMultiplierChanged?.Invoke(multi);
+        GameEventBridge.AutoMultiplierChanged(multi);
     }
     
     // UI 테스트용

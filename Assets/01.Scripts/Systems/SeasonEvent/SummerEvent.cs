@@ -66,17 +66,24 @@ public class SummerEvent : IEvent
         }
     }
 
+    public void ReturnMultiplier()
+    {
+        coolAutoMultiplier = data.AutoMultiplier;
+        coolClickMultiplier = data.ClickMultiplier;
+
+        EventManager.instance.SummerMultiplier(coolAutoMultiplier);
+
+        Utils.Log("생산 배수 초기화");
+    }
+
     public void EndEvent()
     {
         token?.Cancel();
         token?.Dispose();
         token = null;
 
-        coolAutoMultiplier = data.AutoMultiplier;
-        coolClickMultiplier = data.ClickMultiplier;
-
-        EventManager.instance.SummerMultiplier(coolAutoMultiplier);
+        ReturnMultiplier();
+        
         Utils.Log("여름 이벤트 종료");
-        Utils.Log("생산 배수 초기화");
     }
 }

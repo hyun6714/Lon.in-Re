@@ -72,6 +72,31 @@ public struct GameDate : IEquatable<GameDate>
         return date;
     }
 
+    public void SetDate(int year, int month, int day, int hour)
+    {
+        this.year = year;
+        this.month = Math.Clamp(month, 1, 12);
+
+        lastDay = DateTime.DaysInMonth(this.year, this.month);
+
+        this.day = Math.Clamp(this.day, 1, lastDay);
+        this.hour = Math.Clamp(hour, 0, 23);
+        minutes = 0;
+
+        SetSeason();
+    }
+
+    public void SetSeason()
+    {
+        season = month switch
+        {
+            >= 3 and <= 5 => Season.Spring,
+            >= 6 and <= 8 => Season.Summer,
+            >= 9 and <= 11 => Season.Fall,
+            _ => Season.Winter
+        };
+    }
+
     public bool Equals(GameDate other)
     {
         return year == other.year && month == other.month && day == other.day && hour == other.hour && minutes == other.minutes;
