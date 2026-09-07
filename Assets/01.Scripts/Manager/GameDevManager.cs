@@ -17,6 +17,7 @@ public class GameDevManager : MonoBehaviour
 
     private int nextGameId = 1;
 
+    public int NextGameId => nextGameId;
     private void Awake()
     {
         if (instance == null)

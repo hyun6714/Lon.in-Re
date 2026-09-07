@@ -8,7 +8,9 @@ public class GameReleaseManager : MonoBehaviour
 {
     public static GameReleaseManager instance;
 
-    public List<GameDevResult> releasedGames = new List<GameDevResult>();
+    // 출시된 게임 목록
+    public List<ReleasedGameSaveData> releasedGames = new List<ReleasedGameSaveData>();
+
 
     private void Awake()
     {
@@ -25,8 +27,22 @@ public class GameReleaseManager : MonoBehaviour
     // 개발 완료된 게임을 출시 목록에 등록
     public void ReleaseGame(GameDevResult gameResult)
     {
-        // 출시 게임 목록에 등록
-        releasedGames.Add(gameResult);
+        GameDate currentDate = CalendarManager.instance.CurrentDate;
+        ReleasedGameSaveData releasedGame = new ReleasedGameSaveData();
+
+        // 게임 개발 결과
+        releasedGame.gameResult = gameResult;
+
+        // 출시 직후에는 정산 횟수 0
+        releasedGame.settlementCount = 0;
+
+        // 출시 게임 목록에 추가
+        releasedGames.Add(releasedGame);
+
+        // 출시 날짜
+        releasedGame.releaseYear = currentDate.year;
+        releasedGame.releaseMonth = currentDate.month;
+        releasedGame.releaseDay = currentDate.day;
 
         // 출시 날짜를 기준으로 정산 시작
         EventManager.instance.StartGameSettlement(gameResult.gameId);
@@ -39,17 +55,49 @@ public class GameReleaseManager : MonoBehaviour
     }
 
     // 출시된 게임, ID 로 찾기
-    public GameDevResult GetReleasedGame(int gameId)
+    public ReleasedGameSaveData GetReleasedGameData(int gameId)
     {
-        foreach (GameDevResult game in releasedGames)
+        foreach (ReleasedGameSaveData releasedGame in releasedGames)
         {
-            if (game.gameId == gameId)
+            if (releasedGame.gameResult.gameId == gameId)
             {
-                return game;
+                return releasedGame;
             }
         }
 
         Utils.Log($"출시된 게임을 찾을 수 없습니다. ID : {gameId}");
         return null;
+    }
+
+    // 기존 GameSettlementManager에서 사용하기 위한 함수
+    public GameDevResult GetReleasedGame(int gameId)
+    {
+        ReleasedGameSaveData releasedGame = GetReleasedGameData(gameId);
+
+        if (releasedGame == null)
+        {
+            return null;
+        }
+
+        return releasedGame.gameResult;
+    }
+
+
+    // 정산 완료 횟수 증가
+    public void IncreaseSettlementCount(int gameId)
+    {
+        ReleasedGameSaveData releasedGame = GetReleasedGameData(gameId);
+
+        if (releasedGame == null)
+        {
+            return;
+        }
+
+        releasedGame.settlementCount++;
+
+        Utils.Log(
+            $"게임 정산 횟수 증가 / ID : {gameId} / " +
+            $"현재 정산 횟수 : {releasedGame.settlementCount}"
+        );
     }
 }
