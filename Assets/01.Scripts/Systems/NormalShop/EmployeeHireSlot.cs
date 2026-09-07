@@ -9,7 +9,8 @@ public class EmployeeHireSlot : MonoBehaviour
     [SerializeField] private Image iconImage;
     [SerializeField] private TextMeshProUGUI infoText; // 직군 이름 및 현재 고용 인원수
     [SerializeField] private TextMeshProUGUI costText; // 고용 비용
-    [SerializeField] private Button hireBtn;           // 슬롯 버튼
+    [SerializeField] private Button hireBtn;           // 고용 버튼
+    [SerializeField] private Button fireBtn;           // 해고 버튼
 
     private EmployeeState targetState;
     private EmployeeManager employeeManager;
@@ -31,6 +32,13 @@ public class EmployeeHireSlot : MonoBehaviour
             hireBtn.onClick.RemoveListener(OnClickHire);
             hireBtn.onClick.AddListener(OnClickHire);
         }
+
+        if (fireBtn != null)
+        {
+            fireBtn.onClick.RemoveListener(OnClickFire);
+            fireBtn.onClick.AddListener(OnClickFire);
+        }
+
         Refresh();
     }
 
@@ -87,6 +95,10 @@ public class EmployeeHireSlot : MonoBehaviour
             {
                 hireBtn.interactable = false;
             }
+            if (fireBtn != null)
+            {
+                fireBtn.interactable = false;
+            }
             return;
         }
 
@@ -109,6 +121,12 @@ public class EmployeeHireSlot : MonoBehaviour
         {
             hireBtn.interactable = CanHire();
         }
+
+        // 해고 버튼 : 보유 인원이 1명 이상일 때만 활성화
+        if (fireBtn != null)
+        {
+            fireBtn.interactable = targetState.Count > 0;
+        }
     }
 
     public void OnClickHire()
@@ -125,6 +143,29 @@ public class EmployeeHireSlot : MonoBehaviour
         else
         {
             Refresh();
+        }
+    }
+
+    public void OnClickFire()
+    {
+        if (targetState == null || targetState.Count <= 0) return;
+
+        var manager = employeeManager != null ? employeeManager : EmployeeManager.instance;
+        if (manager == null) return;
+
+        // 직원 해고 실행
+        bool success = manager.FireEmployee(targetState.employeeData.EmployeeId);
+        if (success)
+        {
+            // 일괄 갱신
+            if (onHireSuccess != null)
+            {
+                onHireSuccess.Invoke();
+            }
+            else
+            {
+                Refresh();
+            }
         }
     }
 }
