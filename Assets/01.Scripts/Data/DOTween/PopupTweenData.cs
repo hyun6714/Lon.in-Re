@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PopupTweenData", menuName = "DOTween/PopupTweenData")]
 public class PopupTweenData : ScriptableObject
 {
     [SerializeField] private float popupSize = 1.2f;

@@ -15,9 +15,6 @@ public class CalendarData : ScriptableObject
     [SerializeField] private int realTime = 1;
     [SerializeField] private int minutePerSec = 15;
 
-    [Header("이벤트 발생일")]
-    [SerializeField] private int seasonEventStartDay = 15;
-
     public int StartYear => startYear;
     public int StartMonth => startMonth;
     public int StartDay => startDay;
@@ -26,5 +23,4 @@ public class CalendarData : ScriptableObject
     public Season StartSeason => startSeason;
     public int RealTime => realTime;
     public int MinutePerSec => minutePerSec;
-    public int SeasonEventStartDay => seasonEventStartDay;
 }

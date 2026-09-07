@@ -1,14 +1,35 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
 
-public class SeasonEventPopup : PopupBase
+public class SummerEventPopup : PopupBase
 {
-    public void OpenPanel()
+    public override UIName Name => UIName.Event_0715_Popup;
+
+    [SerializeField] private Button button_1;
+    [SerializeField] private Button button_2;
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        button_1.onClick.AddListener(() => EventManager.instance.OnClickSummerCool(false));
+        button_2.onClick.AddListener(() => EventManager.instance.OnClickSummerCool(true));
+    }
+
+    private void OnDisable()
+    {
+        button_1.onClick.RemoveAllListeners();
+        button_2.onClick.RemoveAllListeners();
+    }
+
+    public override void OpenPanel()
     {
         PopupOpen();
     }
 
-    public void ClosePanel()
+    public override void ClosePanel()
     {
         PopupClose();
     }
@@ -16,7 +37,7 @@ public class SeasonEventPopup : PopupBase
     private void PopupOpen()
     {
         seq?.Kill();
-
+        
         seq = DOTween.Sequence();
         seq.Append(transform.DOScale(data.PopupSize, data.PopupDelay))
             .Append(transform.DOScale(data.OpenSize, data.PopupDelay))
@@ -35,8 +56,8 @@ public class SeasonEventPopup : PopupBase
             .SetUpdate(true)
             .OnComplete(() =>
             {
+                GameManager.Instance.GameResume();
                 gameObject.SetActive(false);
-                Time.timeScale = 1f;
             });
     }
 }

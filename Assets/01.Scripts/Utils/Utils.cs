@@ -1,26 +1,27 @@
+using System.Diagnostics;
 using UnityEngine;
 
 public static class Utils
 {
-
+    [Conditional("UNITY_EDITOR")]
     public static void Log(string message)
     {
 #if UNITY_EDITOR
-        Debug.Log(message);
+        UnityEngine.Debug.Log(message);
 #endif
     }
 
     public static void LogError(string message)
     {
 #if UNITY_EDITOR
-        Debug.LogError(message);
+        UnityEngine.Debug.LogError(message);
 #endif
     }
 
     public static void LogWarning(string message)
     {
 #if UNITY_EDITOR
-        Debug.LogWarning(message);
+        UnityEngine.Debug.LogWarning(message);
 #endif
     }
 }

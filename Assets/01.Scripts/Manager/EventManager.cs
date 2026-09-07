@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.LightTransport;
 
 /// <summary>
 /// 계절별 이벤트 시작, 종료를 정의하는 전략 인터페이스
@@ -14,13 +14,12 @@ public interface IEvent
     void EndEvent();
 }
 
-public enum Season
+public enum EventType
 {
-    None = 0,
-    Spring = 3,
-    Summer = 6,
-    Fall = 9,
-    Winter = 12
+    SpringEvent = 3001,
+    SummerEvent,
+    FallEvent,
+    WinterEvent
 }
 
 public class EventManager : MonoBehaviour
@@ -29,13 +28,18 @@ public class EventManager : MonoBehaviour
 
     [Header("데이터")]
     [SerializeField] private EventManagerData data;
+    [SerializeField] private GameEventData eventData;
 
     [Header("계절 이벤트 데이터")]
     [SerializeField] private SummerEventData summerData;
 
+    private Dictionary<(int month, int day), GameEventInfo> eventDateDic = new Dictionary<(int month, int day), GameEventInfo>();
+
     private EventFactory eventFactory;
 
     private IEvent currentEvent;
+    private EventType currentEventType;
+    private GameEventInfo currentGameEventInfo;
 
     private CancellationTokenSource token;
 
@@ -47,7 +51,7 @@ public class EventManager : MonoBehaviour
 
     [Header("테스트용 UI")]
     [SerializeField] private GameObject testPanel;
-    private SeasonEventPopup eventPopup;
+    private SummerEventPopup eventPopup;
 
     private void Awake()
     {
@@ -56,7 +60,31 @@ public class EventManager : MonoBehaviour
         else
             Destroy(gameObject);
 
+        InitializeDic();
+
         eventFactory = new EventFactory(summerData);
+    }
+
+    private void InitializeDic()
+    {
+        if (eventData == null || eventData.EventList == null)
+        {
+            Debug.Log("이벤트 데이터가 존재하지 않습니다.");
+            return;
+        }
+
+        foreach (GameEventInfo info in eventData.EventList)
+        {
+            var key = (info.TargetMonth, info.TargetDay);
+
+            if (eventDateDic.ContainsKey(key))
+            {
+                Debug.Log($"같은 날짜에 이벤트가 이미 존재합니다. {info.TargetMonth}월 {info.TargetDay}일");
+                continue;
+            }
+
+            eventDateDic.Add(key, info);
+        }
     }
 
     private void OnEnable()
@@ -79,16 +107,16 @@ public class EventManager : MonoBehaviour
 
     private void SubscribeEvent()
     {
-        GameEventBridge.OnSeasonChanged += ChangeSeason;
-        GameEventBridge.OnSeasonEvent += StartSeasonEvent;
+        GameEventBridge.OnDayChanged += ChangeEvent;
+        GameEventBridge.OnEventStarted += StartCurrentEvent;
         GameEventBridge.OnPausedChanged += PausedChanged;
         Utils.Log("EventManager 구독 완료");
     }
 
     private void UnSubscribeEvent()
     {
-        GameEventBridge.OnSeasonChanged -= ChangeSeason;
-        GameEventBridge.OnSeasonEvent -= StartSeasonEvent;
+        GameEventBridge.OnDayChanged -= ChangeEvent;
+        GameEventBridge.OnEventStarted -= StartCurrentEvent;
         GameEventBridge.OnPausedChanged -= PausedChanged;
     }
 
@@ -108,20 +136,29 @@ public class EventManager : MonoBehaviour
         {
             strategy.SetCool(value);
 
-            if (eventPopup == null)
-            {
-                eventPopup = testPanel.GetComponent<SeasonEventPopup>();
-            }
-
-            eventPopup.ClosePanel();
+            UIManager.Instance.ClosePopup(currentGameEventInfo.PopupName);
         }
     }
 
-    // 계절 변경 시 전략 교체
-    public void ChangeSeason(Season season)
+    // 이벤트 교체
+    public void ChangeEvent(int month, int day)
     {
-        currentEvent = eventFactory.CreateEvent(season);
-        Utils.Log($"현재 전략{currentEvent}");
+        var key = (month, day);
+
+        if (!eventDateDic.TryGetValue(key, out GameEventInfo info))
+        {
+            currentGameEventInfo = null;
+            currentEvent = null;
+
+            return;
+        }
+
+        currentGameEventInfo = info;
+        currentEventType = info.EventType;
+
+        currentEvent = eventFactory.CreateEvent(currentEventType);
+
+        Utils.Log($"이벤트 등록 성공 : {currentEventType}_{month}월 {day}일");
     }
 
     // 게임 출시 후 해당 게임의 정산 시작
@@ -175,49 +212,20 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    //public void StartGameDevTest(GameDate date, int gameId)
-    //{
-    //    targetDate = CalendarManager.instance.CurrentDate;
-    //    this.gameId = gameId;
-
-    //    CalendarManager.instance.OnDateChanged += SubscribeDevEventTest;
-    //}
-
-    //GameDate targetDate;
-    //int gameId;
-
-    //public void SubscribeDevEventTest(GameDate date)
-    //{
-    //    if (targetDate == date)
-    //    {
-    //        // 해당 날짜에 실행
-    //        OnGameSettlement?.Invoke(gameId, i);
-    //        Utils.Log($"[{gameId}]ID 프로젝트의 [{i}]번째 정산 완료.");
-
-    //        CalendarManager.instance.OnDateChanged -= SubscribeDevEventTest;
-    //    }
-    //}
-
-    public void StartSeasonEvent()
+    public void StartCurrentEvent()
     {
+        if (currentEvent == null)
+        {
+            Utils.Log("등록된 이벤트가 없습니다.");
+            return;
+        }
+
         currentEvent?.StartEvent();
 
-        // 테스트 용 코드. 나중에 삭제
-        if (currentEvent is SummerEvent)
-        {
-            if (eventPopup == null)
-            {
-                eventPopup = testPanel.GetComponent<SeasonEventPopup>();
-            }
-
-            eventPopup.gameObject.SetActive(true);
-            eventPopup.OpenPanel();
-
-            Time.timeScale = 0;
-        }
+        UIManager.Instance.OpenPopup(currentGameEventInfo.PopupName);
     }
 
-    public void EndSeasonEvent()
+    public void EndCurrentEvent()
     {
         currentEvent?.EndEvent();
     }    

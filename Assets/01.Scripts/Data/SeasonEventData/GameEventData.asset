@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 256d430ece6e90140ad22b2c1388fa7c, type: 3}
+  m_Name: GameEventData
+  m_EditorClassIdentifier: Assembly-CSharp::GameEventData
+  eventList:
+  - eventType: 3001
+    targetMonth: 4
+    targetDay: 15
+    popupName: 0
+  - eventType: 3002
+    targetMonth: 7
+    targetDay: 15
+    popupName: 1
+  - eventType: 3003
+    targetMonth: 10
+    targetDay: 15
+    popupName: 0
+  - eventType: 3004
+    targetMonth: 1
+    targetDay: 15
+    popupName: 0

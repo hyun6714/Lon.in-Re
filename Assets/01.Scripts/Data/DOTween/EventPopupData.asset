@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 263b5fd15be5b3042a7778bf5ecb29f0, type: 3}
-  m_Name: PopupTweenData
-  m_EditorClassIdentifier: Assembly-CSharp::PopupTweenData
+  m_Script: {fileID: 11500000, guid: c436eb8115ede1c4195ba113751bf1da, type: 3}
+  m_Name: EventPopupData
+  m_EditorClassIdentifier: Assembly-CSharp::SeasonEventPopupData
   popupSize: 0.9
   openSize: 0.7
   closeSize: 0.1

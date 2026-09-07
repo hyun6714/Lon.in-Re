@@ -1,9 +1,18 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum UIName
+{
+    None,
+    Event_0715_Popup
+}
+
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance;
+
     [SerializeField] TextMeshProUGUI levelText;
     [SerializeField] TextMeshProUGUI frameText;
     [SerializeField] TextMeshProUGUI rebirthText;
@@ -22,18 +31,119 @@ public class UIManager : MonoBehaviour
     [SerializeField] Button peopleBtn;
     [SerializeField] Button rebirthBtn;
 
+    [Header("테스트용 캔버스")]
+    [SerializeField] private Canvas uiCanvas;
 
+    [Header("팝업 프리팹")]
+    [SerializeField] private List<PopupBase> popupList;
 
+    private Dictionary<UIName, PopupBase> popupDic = new Dictionary<UIName, PopupBase>();
+    private Dictionary<UIName, PopupBase> runtimePopupDic = new Dictionary<UIName, PopupBase>();
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
-        
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+            Destroy(gameObject);
+
+        InitializeDictionary();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void InitializeDictionary()
     {
-        
+        if (popupList == null)
+            return;
+
+        foreach (PopupBase popup in popupList)
+        {
+            if (popup == null)
+                continue;
+
+            if (popupDic.ContainsKey(popup.Name))
+            {
+                Utils.Log($"중복 UI : {popup.Name}");
+                continue;
+            }
+
+            popupDic.Add(popup.Name, popup);
+        }
     }
+
+    public void OpenPopup(UIName name)
+    {
+        if (runtimePopupDic.TryGetValue(name, out PopupBase popup))
+        {
+            if (popup != null && popup.gameObject.activeSelf)
+            {
+                Utils.Log($"이미 열린 UI : {name}");
+                return;
+            }
+        }
+        else
+        {
+            if (!popupDic.TryGetValue(name, out PopupBase popupPrefab))
+            {
+                Utils.Log($"등록되지 않은 UI : {name}");
+                return;
+            }
+
+            popup = Instantiate(popupPrefab, uiCanvas.transform);
+            runtimePopupDic.Add(name, popup);
+        }
+
+        GameManager.Instance.GamePaused();
+        popup.gameObject.SetActive(true);
+        popup.OpenPanel();
+    }
+
+    public void ClosePopup(UIName name)
+    {
+        if (!runtimePopupDic.TryGetValue(name, out PopupBase popup))
+        {
+            Utils.Log($"열리지 않은 UI : {name}");
+            return;
+        }
+
+        popup.ClosePanel();
+    }
+
+    //public void OpenEventPopup(EventPopup popupPrefab)
+    //{
+    //    if (popupPrefab == null)
+    //    {
+    //        Utils.Log("이벤트 팝업이 존재하지 않습니다.");
+    //        return;
+    //    }
+
+    //    if (!runtimePopupDic.TryGetValue(popupPrefab, out EventPopup popup))
+    //    {
+    //        popup = Instantiate(popupPrefab, uiCanvas.transform);
+    //        runtimePopupDic.Add(popupPrefab, popup);
+    //    }
+
+    //    if (currentPopup != null && currentPopup != popup)
+    //    {
+    //        currentPopup.ClosePanel();
+    //    }
+
+    //    GameManager.Instance.GamePaused();
+
+    //    currentPopup = popup;
+
+    //    currentPopup.gameObject.SetActive(true);
+    //    currentPopup.OpenPanel();
+    //}
+
+    //public void CloseEventPopup()
+    //{
+    //    if (currentPopup == null)
+    //        return;
+
+    //    currentPopup.ClosePanel();
+    //    currentPopup = null;
+    //}
 }
