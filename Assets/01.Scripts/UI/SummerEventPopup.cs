@@ -1,9 +1,13 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
 
-public class EventPopup : PopupBase
+public class SummerEventPopup : PopupBase
 {
+    public override UIName Name => UIName.Event_0715_Popup;
+
     [SerializeField] private Button button_1;
     [SerializeField] private Button button_2;
 
@@ -20,20 +24,20 @@ public class EventPopup : PopupBase
         button_2.onClick.RemoveAllListeners();
     }
 
-    public void OpenPanel()
+    public override void OpenPanel()
     {
         PopupOpen();
     }
 
-    public void ClosePanel()
+    public override void ClosePanel()
     {
         PopupClose();
     }
 
-    private void PopupOpen()
+    private async Task PopupOpen()
     {
         seq?.Kill();
-
+        
         seq = DOTween.Sequence();
         seq.Append(transform.DOScale(data.PopupSize, data.PopupDelay))
             .Append(transform.DOScale(data.OpenSize, data.PopupDelay))

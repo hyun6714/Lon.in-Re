@@ -107,12 +107,6 @@ public class CalendarManager : MonoBehaviour
         currentDate = new GameDate(data);        
         
         allEventStartHour = data.StartHour;
-
-        //seasonEventMonth = currentDate.month + 1;
-        //if (seasonEventMonth > 12)
-        //{
-        //    seasonEventMonth = 1;
-        //}
     }
 
     private async UniTaskVoid UpdateTimeTick(CancellationToken token)
@@ -123,18 +117,6 @@ public class CalendarManager : MonoBehaviour
             while (!token.IsCancellationRequested)
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(realTimer), cancellationToken: token);
-
-                //if (!isPaused)
-                //{
-                //    elapsedTime += Time.deltaTime;
-
-                //    while (elapsedTime >= realTimer)
-                //    {
-                //        elapsedTime -= realTimer;
-                //        AddTime(minutePerSec);
-                //        TestTextShow();
-                //    }
-                //}
 
                 AddTime(minutePerSec);
 

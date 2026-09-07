@@ -11,11 +11,11 @@ public class GameEventInfo
     [SerializeField] private int targetMonth;
     [SerializeField] private int targetDay;
 
-    [Header("ÀÌº¥Æ® ÆË¾÷ ÇÁ¸®ÆÕ")]
-    [SerializeField] private EventPopup popupPrefab;
+    [Header("ÆË¾÷ ÀÌ¸§")]
+    [SerializeField] private UIName popupName;
 
     public EventType EventType => eventType;
     public int TargetMonth => targetMonth;
     public int TargetDay => targetDay;
-    public EventPopup PopupPrefab => popupPrefab;
+    public UIName PopupName => popupName;
 }

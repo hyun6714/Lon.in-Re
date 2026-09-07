@@ -16,12 +16,16 @@ MonoBehaviour:
   - eventType: 3001
     targetMonth: 4
     targetDay: 15
+    popupName: 0
   - eventType: 3002
     targetMonth: 7
     targetDay: 15
+    popupName: 1
   - eventType: 3003
     targetMonth: 10
     targetDay: 15
+    popupName: 0
   - eventType: 3004
     targetMonth: 1
     targetDay: 15
+    popupName: 0

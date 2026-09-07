@@ -523,6 +523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EventManager
   data: {fileID: 11400000, guid: f02f7609f7c072141aa8e031d169e62d, type: 2}
+  eventData: {fileID: 11400000, guid: 912758fbdb951dd42a536b3d9b98afe6, type: 2}
   summerData: {fileID: 11400000, guid: 604cfb58ffd3aca4ab48bcb12e681073, type: 2}
   isPaused: 0
   testPanel: {fileID: 0}
@@ -850,10 +851,9 @@ MonoBehaviour:
   artifactBtn: {fileID: 0}
   peopleBtn: {fileID: 0}
   rebirthBtn: {fileID: 0}
-  popupList:
-  - season: 6
-    popup: {fileID: 7640322817199498836, guid: a76e0719b163c2f4aac2ea76940cbd5f, type: 3}
   uiCanvas: {fileID: 63482798}
+  popupList:
+  - {fileID: 7640322817199498836, guid: a76e0719b163c2f4aac2ea76940cbd5f, type: 3}
 --- !u!4 &972648406
 Transform:
   m_ObjectHideFlags: 0
@@ -898,6 +898,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da67491e41f9d134caf8eed14a7ecc06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CurrencyManager
+  currencyText: {fileID: 0}
   currencyDatabase: {fileID: 11400000, guid: 1fe5d80301c629c4db1852d69d84c589, type: 2}
   auto: {fileID: 951927155}
 --- !u!4 &1032588329
@@ -948,11 +949,8 @@ MonoBehaviour:
   minutePerSec: 15
   realTimer: 1
   totalTime: 0
-  seasonEventStartDay: 0
-  seasonEventMonth: 0
   allEventStartHour: 0
   isPaused: 0
-  hasSeasonEvent: 0
   text: {fileID: 868614495}
 --- !u!4 &1141283586
 Transform:

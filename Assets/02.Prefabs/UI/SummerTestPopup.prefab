@@ -905,7 +905,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4472736807488251619
 RectTransform:
   m_ObjectHideFlags: 0
@@ -978,6 +978,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78020864a79997b46b88f86985c531f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EventPopup
-  data: {fileID: 11400000, guid: 1a1ba1354d7d650439bad6ff16ceb127, type: 2}
+  data: {fileID: 11400000, guid: 3ae2396fd4a6c5a4aa3cd8b098b288f8, type: 2}
   button_1: {fileID: 5727950341880773460}
   button_2: {fileID: 4140231459242389180}

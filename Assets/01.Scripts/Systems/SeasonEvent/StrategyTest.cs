@@ -50,14 +50,14 @@ public class StrategyTest : MonoBehaviour
                 {
                     if (currentSeason != Season.None)
                     {
-                        EventManager.instance.EndSeasonEvent();
+                        EventManager.instance.EndCurrentEvent();
 
                     }
                     
                     currentSeason = seasons[seasonIndex];
 
 
-                    EventManager.instance.StartSeasonEvent();
+                    EventManager.instance.StartCurrentEvent();
 
                     seasonIndex = (seasonIndex + 1) % seasons.Count;
 

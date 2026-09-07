@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SeasonEventPopupData", menuName = "DOTween/SeasonEventPopupData")]
+[CreateAssetMenu(fileName = "EventPopupData", menuName = "DOTween/EventPopupData")]
 public class SeasonEventPopupData : PopupTweenData
 {
     

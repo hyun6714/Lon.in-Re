@@ -3,6 +3,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum UIName
+{
+    None,
+    Event_0715_Popup
+}
+
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
@@ -25,14 +31,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] Button peopleBtn;
     [SerializeField] Button rebirthBtn;
 
-    [Header("테스트용 이벤트 팝업")]
-    [SerializeField] private List<EventPopupStorage> popupList;
-
     [Header("테스트용 캔버스")]
     [SerializeField] private Canvas uiCanvas;
 
-    private Dictionary<Season, EventPopup> eventPopupDic = new Dictionary<Season, EventPopup>();
-    private Dictionary<Season, EventPopup> runtimePopupDic = new Dictionary<Season, EventPopup>();
+    [Header("팝업 프리팹")]
+    [SerializeField] private List<PopupBase> popupList;
+
+    private Dictionary<UIName, PopupBase> popupDic = new Dictionary<UIName, PopupBase>();
+    private Dictionary<UIName, PopupBase> runtimePopupDic = new Dictionary<UIName, PopupBase>();
 
     private void Awake()
     {
@@ -44,53 +50,100 @@ public class UIManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-        InitializeEventPopupDic();
+        InitializeDictionary();
     }
 
-    private void InitializeEventPopupDic()
+    private void InitializeDictionary()
     {
-        foreach (EventPopupStorage storage in popupList)
+        if (popupList == null)
+            return;
+
+        foreach (PopupBase popup in popupList)
         {
-            if (storage.popup == null)
+            if (popup == null)
+                continue;
+
+            if (popupDic.ContainsKey(popup.Name))
             {
-                Debug.LogWarning("EventPopup이 없습니다.");
+                Utils.Log($"중복 UI : {popup.Name}");
                 continue;
             }
 
-            if (eventPopupDic.ContainsKey(storage.season))
-            {
-                Debug.LogWarning("이미 등록된 Season 입니다.");
-                continue;
-            }
-
-            eventPopupDic.Add(storage.season, storage.popup);
+            popupDic.Add(popup.Name, popup);
         }
     }
 
-    //public void OpenEventPopup(Season season)
+    public void OpenPopup(UIName name)
+    {
+        if (runtimePopupDic.TryGetValue(name, out PopupBase popup))
+        {
+            if (popup != null && popup.gameObject.activeSelf)
+            {
+                Utils.Log($"이미 열린 UI : {name}");
+                return;
+            }
+        }
+        else
+        {
+            if (!popupDic.TryGetValue(name, out PopupBase popupPrefab))
+            {
+                Utils.Log($"등록되지 않은 UI : {name}");
+                return;
+            }
+
+            popup = Instantiate(popupPrefab, uiCanvas.transform);
+            runtimePopupDic.Add(name, popup);
+        }
+
+        GameManager.Instance.GamePaused();
+        popup.gameObject.SetActive(true);
+        popup.OpenPanel();
+    }
+
+    public void ClosePopup(UIName name)
+    {
+        if (!runtimePopupDic.TryGetValue(name, out PopupBase popup))
+        {
+            Utils.Log($"열리지 않은 UI : {name}");
+            return;
+        }
+
+        popup.ClosePanel();
+    }
+
+    //public void OpenEventPopup(EventPopup popupPrefab)
     //{
-    //    if (!runtimePopupDic.TryGetValue(season, out EventPopup popup))
+    //    if (popupPrefab == null)
     //    {
-    //        if (!eventPopupDic.TryGetValue(season, out EventPopup targetPopup))
-    //        {
-    //            Debug.LogWarning("Season에 등록된 Popup이 없습니다.");
-    //            return;
-    //        }
-
-    //        popup = Instantiate(targetPopup, uiCanvas.transform);
-
-    //        runtimePopupDic.Add(season, popup);
+    //        Utils.Log("이벤트 팝업이 존재하지 않습니다.");
+    //        return;
     //    }
 
-    //    popup.gameObject.SetActive(true);
-    //    popup.OpenPanel();
+    //    if (!runtimePopupDic.TryGetValue(popupPrefab, out EventPopup popup))
+    //    {
+    //        popup = Instantiate(popupPrefab, uiCanvas.transform);
+    //        runtimePopupDic.Add(popupPrefab, popup);
+    //    }
+
+    //    if (currentPopup != null && currentPopup != popup)
+    //    {
+    //        currentPopup.ClosePanel();
+    //    }
+
+    //    GameManager.Instance.GamePaused();
+
+    //    currentPopup = popup;
+
+    //    currentPopup.gameObject.SetActive(true);
+    //    currentPopup.OpenPanel();
     //}
 
-    //public void CloseEventPopup(Season season)
+    //public void CloseEventPopup()
     //{
-    //    if (runtimePopupDic.TryGetValue(season, out EventPopup popup))
-    //    {
-    //        popup.ClosePanel();
-    //    }
+    //    if (currentPopup == null)
+    //        return;
+
+    //    currentPopup.ClosePanel();
+    //    currentPopup = null;
     //}
 }

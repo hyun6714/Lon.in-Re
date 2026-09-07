@@ -33,7 +33,6 @@ public class EventManager : MonoBehaviour
     [Header("계절 이벤트 데이터")]
     [SerializeField] private SummerEventData summerData;
 
-    //private Dictionary<EventType, GameEventInfo> eventDic = new Dictionary<EventType, GameEventInfo>();
     private Dictionary<(int month, int day), GameEventInfo> eventDateDic = new Dictionary<(int month, int day), GameEventInfo>();
 
     private EventFactory eventFactory;
@@ -52,7 +51,7 @@ public class EventManager : MonoBehaviour
 
     [Header("테스트용 UI")]
     [SerializeField] private GameObject testPanel;
-    private EventPopup eventPopup;
+    private SummerEventPopup eventPopup;
 
     private void Awake()
     {
@@ -109,7 +108,7 @@ public class EventManager : MonoBehaviour
     private void SubscribeEvent()
     {
         GameEventBridge.OnDayChanged += ChangeEvent;
-        GameEventBridge.OnEventStarted += StartSeasonEvent;
+        GameEventBridge.OnEventStarted += StartCurrentEvent;
         GameEventBridge.OnPausedChanged += PausedChanged;
         Utils.Log("EventManager 구독 완료");
     }
@@ -117,7 +116,7 @@ public class EventManager : MonoBehaviour
     private void UnSubscribeEvent()
     {
         GameEventBridge.OnDayChanged -= ChangeEvent;
-        GameEventBridge.OnEventStarted -= StartSeasonEvent;
+        GameEventBridge.OnEventStarted -= StartCurrentEvent;
         GameEventBridge.OnPausedChanged -= PausedChanged;
     }
 
@@ -137,7 +136,7 @@ public class EventManager : MonoBehaviour
         {
             strategy.SetCool(value);
 
-            //UIManager.Instance.CloseEventPopup(currentSeason);
+            UIManager.Instance.ClosePopup(currentGameEventInfo.PopupName);
         }
     }
 
@@ -213,7 +212,7 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public void StartSeasonEvent()
+    public void StartCurrentEvent()
     {
         if (currentEvent == null)
         {
@@ -223,24 +222,10 @@ public class EventManager : MonoBehaviour
 
         currentEvent?.StartEvent();
 
-        GameManager.Instance.GamePaused();
-
-        // 테스트 용 코드. 나중에 삭제
-        //if (currentEvent is SummerEvent)
-        //{
-        //    if (eventPopup == null)
-        //    {
-        //        eventPopup = testPanel.GetComponent<EventPopup>();
-        //    }
-
-        //    eventPopup.gameObject.SetActive(true);
-        //    eventPopup.OpenPanel();
-
-        //    Time.timeScale = 0;
-        //}
+        UIManager.Instance.OpenPopup(currentGameEventInfo.PopupName);
     }
 
-    public void EndSeasonEvent()
+    public void EndCurrentEvent()
     {
         currentEvent?.EndEvent();
     }    
