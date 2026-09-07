@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class SeasonEventPopup : PopupBase
+public class EventPopup : PopupBase
 {
     public void OpenPanel()
     {

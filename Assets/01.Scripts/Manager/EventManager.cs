@@ -14,13 +14,9 @@ public interface IEvent
     void EndEvent();
 }
 
-public enum Season
+public enum EventType
 {
-    None = 0,
-    Spring = 3,
-    Summer = 6,
-    Fall = 9,
-    Winter = 12
+
 }
 
 public class EventManager : MonoBehaviour
@@ -47,7 +43,7 @@ public class EventManager : MonoBehaviour
 
     [Header("테스트용 UI")]
     [SerializeField] private GameObject testPanel;
-    private SeasonEventPopup eventPopup;
+    private EventPopup eventPopup;
 
     private void Awake()
     {
@@ -80,7 +76,7 @@ public class EventManager : MonoBehaviour
     private void SubscribeEvent()
     {
         GameEventBridge.OnSeasonChanged += ChangeSeason;
-        GameEventBridge.OnSeasonEvent += StartSeasonEvent;
+        GameEventBridge.OnEventStarted += StartSeasonEvent;
         GameEventBridge.OnPausedChanged += PausedChanged;
         Utils.Log("EventManager 구독 완료");
     }
@@ -88,7 +84,7 @@ public class EventManager : MonoBehaviour
     private void UnSubscribeEvent()
     {
         GameEventBridge.OnSeasonChanged -= ChangeSeason;
-        GameEventBridge.OnSeasonEvent -= StartSeasonEvent;
+        GameEventBridge.OnEventStarted -= StartSeasonEvent;
         GameEventBridge.OnPausedChanged -= PausedChanged;
     }
 
@@ -110,7 +106,7 @@ public class EventManager : MonoBehaviour
 
             if (eventPopup == null)
             {
-                eventPopup = testPanel.GetComponent<SeasonEventPopup>();
+                eventPopup = testPanel.GetComponent<EventPopup>();
             }
 
             eventPopup.ClosePanel();
@@ -175,29 +171,6 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    //public void StartGameDevTest(GameDate date, int gameId)
-    //{
-    //    targetDate = CalendarManager.instance.CurrentDate;
-    //    this.gameId = gameId;
-
-    //    CalendarManager.instance.OnDateChanged += SubscribeDevEventTest;
-    //}
-
-    //GameDate targetDate;
-    //int gameId;
-
-    //public void SubscribeDevEventTest(GameDate date)
-    //{
-    //    if (targetDate == date)
-    //    {
-    //        // 해당 날짜에 실행
-    //        OnGameSettlement?.Invoke(gameId, i);
-    //        Utils.Log($"[{gameId}]ID 프로젝트의 [{i}]번째 정산 완료.");
-
-    //        CalendarManager.instance.OnDateChanged -= SubscribeDevEventTest;
-    //    }
-    //}
-
     public void StartSeasonEvent()
     {
         currentEvent?.StartEvent();
@@ -207,7 +180,7 @@ public class EventManager : MonoBehaviour
         {
             if (eventPopup == null)
             {
-                eventPopup = testPanel.GetComponent<SeasonEventPopup>();
+                eventPopup = testPanel.GetComponent<EventPopup>();
             }
 
             eventPopup.gameObject.SetActive(true);

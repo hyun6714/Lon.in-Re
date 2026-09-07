@@ -5,6 +5,15 @@ using System.Threading;
 using UnityEngine;
 using TMPro;
 
+public enum Season
+{
+    None = 0,
+    Spring = 3,
+    Summer = 6,
+    Fall = 9,
+    Winter = 12
+}
+
 public class CalendarManager : MonoBehaviour
 {
     public static CalendarManager instance;
@@ -186,7 +195,7 @@ public class CalendarManager : MonoBehaviour
         if (hasSeasonEvent)
         {
             hasSeasonEvent = false;
-            GameEventBridge.SeasonEvent();
+            GameEventBridge.EventStarted();
         }
     }
 
@@ -272,36 +281,7 @@ public class CalendarManager : MonoBehaviour
     public bool IsEventTime(int year, int month, int day)
     {
         return currentDate.year == year && currentDate.month == month && currentDate.day == day && currentDate.hour == allEventStartHour;
-    }
-
-    /// <summary>
-    /// 지정한 날짜로부터 n일 후의 날짜를 계산해주는 함수
-    /// </summary>
-    /// <param name="year"> 계산 시작 연도 </param>
-    /// <param name="month"> 계산 시작 달 </param>
-    /// <param name="day"> 계산 시작 일 </param>
-    /// <param name="addDay"> 추가 될 일수 </param>
-    /// <returns></returns>
-    //public (int year, int month, int day) GetNextDay(int year, int month, int day, int addDay)
-    //{
-    //    int nextYear = year;
-    //    int nextMonth = month;
-    //    int nextDay = day + addDay;
-
-    //    while (nextDay > GetLastDay(nextYear, nextMonth))
-    //    {
-    //        nextDay -= GetLastDay(nextYear, nextMonth);
-    //        nextMonth++;
-
-    //        if (nextMonth > 12)
-    //        {
-    //            nextMonth = 1;
-    //            nextYear++;
-    //        }
-    //    }
-
-    //    return (nextYear, nextMonth, nextDay);
-    ////}
+    }        
 
     // addDay 만큼의 일 수가 지난 후 날짜
 
