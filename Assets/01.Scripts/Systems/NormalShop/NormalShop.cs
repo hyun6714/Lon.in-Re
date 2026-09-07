@@ -122,7 +122,8 @@ public class NormalShop : MonoBehaviour
                 var slot = obj.GetComponent<EmployeeHireSlot>();
                 if (slot != null)
                 {
-                    slot.SetUp(state, employeeManager);
+                    // RefreshEmployeeSlots 콜백 전달
+                    slot.SetUp(state, employeeManager, RefreshEmployeeSlots);
                     employeeSlots.Add(slot);
                 }
             }
@@ -137,6 +138,7 @@ public class NormalShop : MonoBehaviour
                 var slot = obj.GetComponent<ShopArtifactSlot>();
                 if (slot != null)
                 {
+                    // RefreshArtifactSlots 콜백 전달
                     slot.SetUp(info, RefreshArtifactSlots, ShowConfirmPopup);
                     artifactSlots.Add(slot);
                 }
@@ -232,10 +234,7 @@ public class NormalShop : MonoBehaviour
                 RefreshPartSlots();
                 break;
             case ShopTab.Employee:
-                for (int i = 0; i < employeeSlots.Count; i++)
-                {
-                    if (employeeSlots[i] != null) employeeSlots[i].Refresh();
-                }
+                RefreshEmployeeSlots();
                 break;
             case ShopTab.Artifact:
                 RefreshArtifactSlots();
@@ -250,6 +249,17 @@ public class NormalShop : MonoBehaviour
             if (partSlots[i] != null)
             {
                 partSlots[i].Refresh();
+            }
+        }
+    }
+
+    public void RefreshEmployeeSlots()
+    {
+        for (int i = 0; i < employeeSlots.Count; i++)
+        {
+            if (employeeSlots[i] != null)
+            {
+                employeeSlots[i].Refresh();
             }
         }
     }
