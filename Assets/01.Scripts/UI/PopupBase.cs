@@ -8,7 +8,7 @@ public class PopupBase : MonoBehaviour
 
     protected Sequence seq;
 
-    protected void OnEnable()
+    protected virtual void OnEnable()
     {
         transform.localScale = Vector3.one * data.CloseSize;
     }

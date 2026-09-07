@@ -391,9 +391,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 102900000, guid: 996dc709372ab74458d4637a4c2f6d94, type: 3}
         m_TargetAssemblyTypeName: EventManager, Assembly-CSharp
-        m_MethodName: OnClickSummerCool
+        m_MethodName: 
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -979,3 +979,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EventPopup
   data: {fileID: 11400000, guid: 1a1ba1354d7d650439bad6ff16ceb127, type: 2}
+  button_1: {fileID: 5727950341880773460}
+  button_2: {fileID: 4140231459242389180}

@@ -34,16 +34,11 @@ public class CalendarManager : MonoBehaviour
     #endregion
 
     #region Event Settings
-    [Header("이벤트 시작 날짜")]
-    [SerializeField] private int seasonEventStartDay;
-    [SerializeField] private int seasonEventMonth;
+    [Header("이벤트 시작 시간")]
     [SerializeField] private int allEventStartHour;
 
     [Header("일시 정지")]
     [SerializeField] private bool isPaused;
-
-    [Header("이벤트 플래그")]
-    [SerializeField] private bool hasSeasonEvent;
     #endregion
 
     [Header("테스트 전용")]
@@ -113,16 +108,11 @@ public class CalendarManager : MonoBehaviour
         
         allEventStartHour = data.StartHour;
 
-        seasonEventStartDay = data.SeasonEventStartDay;
-
-        seasonEventMonth = currentDate.month + 1;
-        if (seasonEventMonth > 12)
-        {
-            seasonEventMonth = 1;
-        }
-
-        hasSeasonEvent = false;
-        GameEventBridge.SeasonChanged(currentDate.season);
+        //seasonEventMonth = currentDate.month + 1;
+        //if (seasonEventMonth > 12)
+        //{
+        //    seasonEventMonth = 1;
+        //}
     }
 
     private async UniTaskVoid UpdateTimeTick(CancellationToken token)
@@ -182,67 +172,16 @@ public class CalendarManager : MonoBehaviour
         }    
     }
 
-    private void EventDayCheck()
-    {
-        if (currentDate.month == seasonEventMonth && currentDate.day == seasonEventStartDay)
-        {
-            hasSeasonEvent = true;
-        }
-    }
-
     private void EventTrigger()
     {
-        if (hasSeasonEvent)
-        {
-            hasSeasonEvent = false;
-            GameEventBridge.EventStarted();
-        }
+        GameEventBridge.EventStarted();
     }
 
     private void NextDay()
     {
-        Season season = currentDate.season;
-
         currentDate.NextDay();
 
-        EventDayCheck();
-
-        if (season != currentDate.season)
-        {
-            NextSeason();
-        }
-    }
-
-    //private void NextMonth()
-    //{
-    //    currentDate.month++;
-
-    //    if (currentDate.month > 12)
-    //    {
-    //        currentDate.month = 1;
-    //        NextYear();
-    //    }
-
-    //    if (currentDate.month % 3 == 0)
-    //    {
-    //        NextSeason(currentDate.month);
-    //    }
-    //}
-
-    //private void NextYear()
-    //{
-    //    currentDate.year++;
-    //}
-
-    private void NextSeason()
-    {
-        GameEventBridge.SeasonChanged(currentDate.season);
-
-        seasonEventMonth = currentDate.month + 1;
-        if (seasonEventMonth > 12)
-        {
-            seasonEventMonth = 1;
-        }
+        GameEventBridge.DayChanged(currentDate.month, currentDate.day);
     }
 
     public string MinuteText()
@@ -300,16 +239,7 @@ public class CalendarManager : MonoBehaviour
     {
         currentDate.SetDate(year, month, day, hour);
 
-        seasonEventMonth = currentDate.season switch
-        {
-            Season.Spring => 4,
-            Season.Summer => 7,
-            Season.Fall => 10,
-            Season.Winter => 1,
-            _ => 4
-        };
-
-        EventDayCheck();
+        GameEventBridge.DayChanged(currentDate.month, currentDate.day);
 
         if (currentDate.hour >= allEventStartHour)
         {
@@ -317,7 +247,6 @@ public class CalendarManager : MonoBehaviour
         }
 
         TestTextShow();
-        GameEventBridge.SeasonChanged(currentDate.season);
         Utils.Log("날짜 강제 변경 성공");
     }
 #endif

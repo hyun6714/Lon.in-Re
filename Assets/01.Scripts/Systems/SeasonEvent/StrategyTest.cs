@@ -56,7 +56,6 @@ public class StrategyTest : MonoBehaviour
                     
                     currentSeason = seasons[seasonIndex];
 
-                    EventManager.instance.ChangeSeason(currentSeason);
 
                     EventManager.instance.StartSeasonEvent();
 
