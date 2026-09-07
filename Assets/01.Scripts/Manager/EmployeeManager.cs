@@ -1,19 +1,40 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 using System;
 public class EmployeeManager : MonoBehaviour
 {
+    public static EmployeeManager instance { get; private set; }
+
     [SerializeField] private RankManager rankManager;
 
-    [Header("Á÷¿ø »óÅÂ ¸ñ·Ï")]
+    [Header("ì§ì› ìƒíƒœ ëª©ë¡")]
     [SerializeField] private List<EmployeeState> employeeStates = new List<EmployeeState>();
 
     public List<EmployeeState> EmployeeStates => employeeStates;
 
-    // Á÷¿ø °í¿ë ¼º°ø ½Ã ¹ß»ıÇÏ´Â ÀÌº¥Æ®
+    // ì§ì› ê³ ìš© ì„±ê³µ ì‹œ ë°œìƒí•˜ëŠ” ì´ë²¤íŠ¸
     public event Action OnEmployeeChanged;
 
-    // Á÷¿ø ID ·Î Á÷¿ø Ã£±â 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        if (rankManager == null && RankManager.instance != null)
+        {
+            rankManager = RankManager.instance;
+        }
+    }
+
+    // ì§ì› ID ë¡œ ì§ì› ì°¾ê¸° 
     public EmployeeState GetEmployeeState(string employeeId)
     {
         foreach (EmployeeState state in employeeStates)
@@ -24,13 +45,13 @@ public class EmployeeManager : MonoBehaviour
             }
         }
 
-        Utils.Log($"Á÷¿ø ID¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù : {employeeId}");
+        Utils.Log($"ì§ì› IDë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤ : {employeeId}");
         return null;
     }
 
     public void HireEmployee(string employeeId)
     {
-        // 1. Á÷¿ø Ã£±â
+        // 1. ì§ì› ì°¾ê¸°
         EmployeeState state = GetEmployeeState(employeeId);
 
         if (state == null)
@@ -38,52 +59,82 @@ public class EmployeeManager : MonoBehaviour
             return;
         }
 
-        // 2. ÇöÀç È¸»ç µî±Ş¿¡¼­ ÇØ±İµÈ Á÷¿øÀÎÁö È®ÀÎ
+        // 2. í˜„ì¬ íšŒì‚¬ ë“±ê¸‰ì—ì„œ í•´ê¸ˆëœ ì§ì›ì¸ì§€ í™•ì¸
         if (rankManager.currentRank < state.employeeData.UnlockGrade)
         {
-            Utils.Log("¾ÆÁ÷ ÇØ±İµÇÁö ¾ÊÀº Á÷¿øÀÔ´Ï´Ù.");
+            Utils.Log("ì•„ì§ í•´ê¸ˆë˜ì§€ ì•Šì€ ì§ì›ì…ë‹ˆë‹¤.");
             return;
         }
 
-        // 3. µî±Şº° ÃÖ´ë °í¿ë ÀÎ¿ø È®ÀÎ
+        // 3. ë“±ê¸‰ë³„ ìµœëŒ€ ê³ ìš© ì¸ì› í™•ì¸
         if (rankManager.currentEmployeeCount >= rankManager.maxEmployee)
         {
-            Utils.Log("ÃÖ´ë °í¿ë ÀÎ¿ø¿¡ µµ´ŞÇß½À´Ï´Ù.");
+            Utils.Log("ìµœëŒ€ ê³ ìš© ì¸ì›ì— ë„ë‹¬í–ˆìŠµë‹ˆë‹¤.");
             return;
         }
 
-        // 4. ÇöÀç °í¿ë ºñ¿ë °è»ê
+        // 4. í˜„ì¬ ê³ ìš© ë¹„ìš© ê³„ì‚°
         int hireCost = state.GetCurrentHireCost();
 
-        // 5. CurrencyManager Á¸Àç È®ÀÎ
+        // 5. CurrencyManager ì¡´ì¬ í™•ì¸
         if (CurrencyManager.instance == null)
         {
-            Utils.Log("CurrencyManager¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Utils.Log("CurrencyManagerë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
             return;
         }
 
-        // 6. ÀÏ¹İ ÀçÈ­ Â÷°¨
+        // 6. ì¼ë°˜ ì¬í™” ì°¨ê°
         bool success = CurrencyManager.instance.UseCurrency(CurrencyType.Normal, hireCost );
 
-        // ÀçÈ­°¡ ºÎÁ·ÇÏ¸é °í¿ë Ãë¼Ò
+        // ì¬í™”ê°€ ë¶€ì¡±í•˜ë©´ ê³ ìš© ì·¨ì†Œ
         if (!success)
         {
             return;
         }
 
-        // 7. ÇØ´ç Á÷¿ø º¸À¯ ¼ö Áõ°¡
+        // 7. í•´ë‹¹ ì§ì› ë³´ìœ  ìˆ˜ ì¦ê°€
         state.AddEmployee();
 
-        // 8. ÀüÃ¼ Á÷¿ø ¼ö Áõ°¡
+        // 8. ì „ì²´ ì§ì› ìˆ˜ ì¦ê°€
         rankManager.currentEmployeeCount++;
 
-        // 9. Á÷¿ø °í¿ë ÈÄ »ı»ê·® °»½Å ÀÌº¥Æ®
+        // 9. ì§ì› ê³ ìš© í›„ ìƒì‚°ëŸ‰ ê°±ì‹  ì´ë²¤íŠ¸
         OnEmployeeChanged?.Invoke();
 
-        Utils.Log($"{state.employeeData.EmployeeName} °í¿ë ¿Ï·á / " + $"ÇöÀç º¸À¯ ¼ö : {state.Count}");
+        Utils.Log($"{state.employeeData.EmployeeName} ê³ ìš© ì™„ë£Œ / " + $"í˜„ì¬ ë³´ìœ  ìˆ˜ : {state.Count}");
     }
 
-    // ÇöÀç º¸À¯ÇÑ ¸ğµç Á÷¿øÀÇ ÃÊ´ç »ı»ê·® °è»ê
+    // ì§ì› 1ëª… í•´ê³ 
+    public bool FireEmployee(string employeeId)
+    {
+        EmployeeState state = GetEmployeeState(employeeId);
+        if (state == null || state.Count <= 0)
+        {
+            Utils.Log("í•´ê³ í•  ì§ì›ì´ ì—†ìŠµë‹ˆë‹¤.");
+            return false;
+        }
+
+        // í•´ë‹¹ ì§ì› ë³´ìœ  ìˆ˜ ê°ì†Œ
+        state.RemoveEmployee();
+
+        // ì „ì²´ ì§ì› ì¹´ìš´íŠ¸ ê°ì†Œ (ìµœì†Œ 0)
+        if (rankManager != null)
+        {
+            rankManager.currentEmployeeCount = Mathf.Max(0, rankManager.currentEmployeeCount - 1);
+        }
+        else if (RankManager.instance != null)
+        {
+            RankManager.instance.currentEmployeeCount = Mathf.Max(0, RankManager.instance.currentEmployeeCount - 1);
+        }
+
+        // ì´ˆë‹¹ ìƒì‚°ëŸ‰ ê°±ì‹  ì´ë²¤íŠ¸ ë°œìƒ
+        OnEmployeeChanged?.Invoke();
+
+        Utils.Log($"{state.employeeData.EmployeeName} í•´ê³  ì™„ë£Œ / ë‚¨ì€ ì¸ì›: {state.Count}");
+        return true;
+    }
+
+    // í˜„ì¬ ë³´ìœ í•œ ëª¨ë“  ì§ì›ì˜ ì´ˆë‹¹ ìƒì‚°ëŸ‰ ê³„ì‚°
     public int GetTotalProductionPerSecond()
     {
         int totalProduction = 0;
@@ -95,10 +146,22 @@ public class EmployeeManager : MonoBehaviour
                 continue;
             }
 
-            // Á÷¿øº° »ı»ê·® °è»ê (ÃßÈÄ AutoProduction ¿¡¼­ »ç¿ë°¡´É)
+            // ì§ì›ë³„ ìƒì‚°ëŸ‰ ê³„ì‚° (ì¶”í›„ AutoProduction ì—ì„œ ì‚¬ìš©ê°€ëŠ¥)
             totalProduction += state.employeeData.ProductionPerSecond * state.Count;
         }
 
         return totalProduction;
+    }
+
+    // í™˜ìƒ ì‹œ ëª¨ë“  ì§ì› ìˆ˜ ë¦¬ì…‹
+    public void ResetAllEmployees()
+    {
+        foreach (var state in employeeStates)
+        {
+            state?.ResetCount();
+        }
+
+        OnEmployeeChanged?.Invoke();
+        Utils.Log("ëª¨ë“  ì§ì›ì´ ì´ˆê¸°í™”ë˜ì—ˆìŠµë‹ˆë‹¤.");
     }
 }
