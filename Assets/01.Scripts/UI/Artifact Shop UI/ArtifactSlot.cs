@@ -78,6 +78,7 @@ public class ArtifactSlot : MonoBehaviour
             if (info != null)
             {
                 UpdateUIState(info);
+                CurrencyManager.instance.CurrencyTestSet();
             }
         }
     }

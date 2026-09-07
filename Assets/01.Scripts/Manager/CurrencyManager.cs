@@ -1,9 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CurrencyManager : MonoBehaviour
 {
+    public TextMeshProUGUI currencyText;
+
+    public void CurrencyTestSet()
+    {
+        if (currencyText != null && CurrencyManager.instance != null)
+        {
+            int normal = CurrencyManager.instance.GetAmount(CurrencyType.Normal);
+            int special = CurrencyManager.instance.GetAmount(CurrencyType.Special);
+            int reputation = CurrencyManager.instance.GetAmount(CurrencyType.Reputation);
+
+            currencyText.text = $"일반: {normal:N0}\n특수: {special:N0}\n명성: {reputation:N0}";
+        }
+    }
+
     public static CurrencyManager instance { get; private set; }
 
     private Dictionary<CurrencyType, int> currentCurrencies = new Dictionary<CurrencyType, int>();
@@ -28,6 +43,8 @@ public class CurrencyManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        CurrencyTestSet();
     }
 
     private void OnEnable()
@@ -89,6 +106,10 @@ public class CurrencyManager : MonoBehaviour
 
         currentCurrencies[type] = GetAmount(type) + amount;
 
+        string saveKey = $"Currency_{type}";
+        PlayerPrefs.SetInt(saveKey, currentCurrencies[type]);
+        PlayerPrefs.Save();
+
         OnCurrencyChanged?.Invoke(type, currentCurrencies[type]);
     }
 
@@ -105,6 +126,10 @@ public class CurrencyManager : MonoBehaviour
         }
 
         currentCurrencies[type] = current - amount;
+
+        string saveKey = $"Currency_{type}";
+        PlayerPrefs.SetInt(saveKey, currentCurrencies[type]);
+        PlayerPrefs.Save();
 
         OnCurrencyChanged?.Invoke(type, currentCurrencies[type]);
 
@@ -130,6 +155,7 @@ public class CurrencyManager : MonoBehaviour
 
             OnCurrencyChanged?.Invoke(info.type, info.initialAmount);
         }
+
         PlayerPrefs.Save();
         Debug.Log("특수 재화를 제외한 모든 재화가 초기화되었습니다.");
     }
