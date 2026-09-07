@@ -10,14 +10,12 @@ public class ShopCurrencyHUD : MonoBehaviour
 
     private void OnEnable()
     {
-        // HUD 켜질 때 현재 수치로 즉시 갱신
-        RefreshAllCurrencies();
+        SubscribeAndRefresh();
+    }
 
-        // 재화 변동 이벤트 구독
-        if (CurrencyManager.instance != null)
-        {
-            CurrencyManager.instance.OnCurrencyChanged += HandleCurrencyChanged;
-        }
+    private void Start()
+    {
+        SubscribeAndRefresh();
     }
 
     private void OnDisable()
@@ -27,6 +25,17 @@ public class ShopCurrencyHUD : MonoBehaviour
         {
             CurrencyManager.instance.OnCurrencyChanged -= HandleCurrencyChanged;
         }
+    }
+
+    private void SubscribeAndRefresh()
+    {
+        if (CurrencyManager.instance == null) return;
+
+        // 중복 구독 방지 후 이벤트 재연결
+        CurrencyManager.instance.OnCurrencyChanged -= HandleCurrencyChanged;
+        CurrencyManager.instance.OnCurrencyChanged += HandleCurrencyChanged;
+
+        RefreshAllCurrencies();
     }
 
     private void HandleCurrencyChanged(CurrencyType type, int amount)
