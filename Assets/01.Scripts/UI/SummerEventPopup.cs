@@ -34,7 +34,7 @@ public class SummerEventPopup : PopupBase
         PopupClose();
     }
 
-    private async Task PopupOpen()
+    private void PopupOpen()
     {
         seq?.Kill();
         
