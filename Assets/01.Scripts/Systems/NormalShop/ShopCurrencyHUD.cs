@@ -8,61 +8,60 @@ public class ShopCurrencyHUD : MonoBehaviour
     [SerializeField] private TextMeshProUGUI specialCurrencyText;  // Special_Currency_Text
     [SerializeField] private TextMeshProUGUI reputationText;       // Reputation_Text
 
-    // 이전 수치 캐싱 (최초 1회 갱신)
-    private int prevNormal = -1;
-    private int prevSpecial = -1;
-    private int prevReputation = -1;
-
     private void OnEnable()
     {
-        prevNormal = -1;
-        prevSpecial = -1;
-        prevReputation = -1;
+        // HUD 켜질 때 현재 수치로 즉시 갱신
+        RefreshAllCurrencies();
 
-        InvokeRepeating(nameof(RefreshCurrencyUI), 0f, 0.2f);
+        // 재화 변동 이벤트 구독
+        if (CurrencyManager.instance != null)
+        {
+            CurrencyManager.instance.OnCurrencyChanged += HandleCurrencyChanged;
+        }
     }
 
     private void OnDisable()
     {
-        CancelInvoke(nameof(RefreshCurrencyUI));
+        // 이벤트 해제
+        if (CurrencyManager.instance != null)
+        {
+            CurrencyManager.instance.OnCurrencyChanged -= HandleCurrencyChanged;
+        }
     }
 
-    public void RefreshCurrencyUI()
+    private void HandleCurrencyChanged(CurrencyType type, int amount)
     {
-        if (CurrencyManager.instance == null)
-        {
-            return;
-        }
+        UpdateCurrencyText(type, amount);
+    }
 
-        int normal = CurrencyManager.instance.GetAmount(CurrencyType.Normal);
-        int special = CurrencyManager.instance.GetAmount(CurrencyType.Special);
-        int reputation = CurrencyManager.instance.GetAmount(CurrencyType.Reputation);
+    // HUD 활성화 시 전체 1회 갱신
+    public void RefreshAllCurrencies()
+    {
+        if (CurrencyManager.instance == null) return;
 
-        if (normal != prevNormal)
-        {
-            prevNormal = normal;
-            if (normalCurrencyText != null)
-            {
-                normalCurrencyText.text = $"일반 재화 : {CurrencyFormatter.Format(normal)}";
-            }
-        }
+        UpdateCurrencyText(CurrencyType.Normal, CurrencyManager.instance.GetAmount(CurrencyType.Normal));
+        UpdateCurrencyText(CurrencyType.Special, CurrencyManager.instance.GetAmount(CurrencyType.Special));
+        UpdateCurrencyText(CurrencyType.Reputation, CurrencyManager.instance.GetAmount(CurrencyType.Reputation));
+    }
 
-        if (special != prevSpecial)
+    private void UpdateCurrencyText(CurrencyType type, int amount)
+    {
+        switch (type)
         {
-            prevSpecial = special;
-            if (specialCurrencyText != null)
-            {
-                specialCurrencyText.text = $"특수 재화 : {CurrencyFormatter.Format(special)}";
-            }
-        }
+            case CurrencyType.Normal:
+                if (normalCurrencyText != null)
+                    normalCurrencyText.text = $"일반 재화 : {CurrencyFormatter.Format(amount)}";
+                break;
 
-        if (reputation != prevReputation)
-        {
-            prevReputation = reputation;
-            if (reputationText != null)
-            {
-                reputationText.text = $"명성 : {CurrencyFormatter.Format(reputation)}";
-            }
+            case CurrencyType.Special:
+                if (specialCurrencyText != null)
+                    specialCurrencyText.text = $"특수 재화 : {CurrencyFormatter.Format(amount)}";
+                break;
+
+            case CurrencyType.Reputation:
+                if (reputationText != null)
+                    reputationText.text = $"명성 : {CurrencyFormatter.Format(amount)}";
+                break;
         }
     }
 

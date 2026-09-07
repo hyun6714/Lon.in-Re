@@ -45,12 +45,59 @@ public class RankManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        LoadRank();
     }
 
-    //이것도 지워야함 테스트용
-    private void Start()
+    private void OnEnable()
     {
-        Debug.Log($"현재 랭크:{currentRank}");
+        ReincarnationManager.OnReincarnated += ResetRank;
+    }
+
+    private void OnDisable()
+    {
+        ReincarnationManager.OnReincarnated -= ResetRank;
+    }
+
+    private void LoadRank()
+    {
+        if (PlayerPrefs.HasKey("PlayerRank"))
+        {
+            currentRank = (RankState)PlayerPrefs.GetInt("PlayerRank");
+
+            RestoreRankStats();
+        }
+    }
+
+    private void RestoreRankStats()
+    {
+        switch (currentRank)
+        {
+            case RankState.Solo:
+                hasEmployees = false;
+                maxEmployee = 0;
+                break;
+
+            case RankState.Indie:
+                hasEmployees = true;
+                maxEmployee = 5;
+                break;
+
+            case RankState.Small:
+                hasEmployees = true;
+                maxEmployee = 10;
+                break;
+
+            case RankState.Midsized:
+                hasEmployees = true;
+                maxEmployee = 20;
+                break;
+
+            case RankState.MajorPublisher:
+                hasEmployees = true;
+                maxEmployee = 50;
+                break;
+        }
     }
 
     public void CheckRankUp()

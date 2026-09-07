@@ -1,7 +1,10 @@
 using UnityEngine;
+using System;
 
 public class ReincarnationManager : MonoBehaviour
 {
+    public static event Action OnReincarnated;
+
     public void BtnReincarnation()
     {
         if (!CanReincarnation())
@@ -25,7 +28,8 @@ public class ReincarnationManager : MonoBehaviour
         }
 
         GameManager.Instance.playerRebirthCount++;
-        ResetRankDate();
+        OnReincarnated?.Invoke();
+        CurrencyManager.instance.CurrencyTestSet();
 
         Debug.Log($"환생 완료");
     }
@@ -42,13 +46,6 @@ public class ReincarnationManager : MonoBehaviour
         }
         return true;
     }
-
-    //등급 초기화
-    private void ResetRankDate()
-    {
-        RankManager.instance.ResetRank();
-    }
-
 
     //플레이어가 가지고 있는 명성 가져오는 함수 
     private int GetCurrentReputation()

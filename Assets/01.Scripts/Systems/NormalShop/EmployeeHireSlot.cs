@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,32 +13,27 @@ public class EmployeeHireSlot : MonoBehaviour
 
     private EmployeeState targetState;
     private EmployeeManager employeeManager;
+    private Action onHireSuccess;
 
-    public void SetUp(EmployeeState _employeeState, EmployeeManager _employeeManager)
+    public void SetUp(EmployeeState _employeeState, EmployeeManager _employeeManager, Action onHireSuccessCallback = null)
     {
         targetState = _employeeState;
         employeeManager = _employeeManager;
+        onHireSuccess = onHireSuccessCallback;
 
-        if(hireBtn == null)
+        if (hireBtn == null)
         {
             hireBtn = GetComponent<Button>();
         }
 
         if(hireBtn != null)
         {
-            hireBtn.onClick.RemoveAllListeners();
+            hireBtn.onClick.RemoveListener(OnClickHire);
             hireBtn.onClick.AddListener(OnClickHire);
         }
         Refresh();
     }
 
-    private void Update()
-    {
-        if (hireBtn != null)
-        {
-            hireBtn.interactable = CanHire();
-        }
-    }
 
     private bool CanHire()
     {
@@ -74,13 +70,23 @@ public class EmployeeHireSlot : MonoBehaviour
         }
 
         var data = targetState.employeeData;
+        RankManager rank = RankManager.instance;
+        bool isUnlocked = rank != null && rank.currentRank >= data.UnlockGrade;
 
-        // 해금 여부 확인
-        bool isUnlocked = RankManager.instance != null && RankManager.instance.currentRank >= data.UnlockGrade;
         if (!isUnlocked)
         {
-            if (infoText != null) infoText.text = $"[잠김] {data.UnlockGrade}";
-            if (costText != null) costText.text = "-";
+            if (infoText != null)
+            {
+                infoText.text = $"[잠김] {data.UnlockGrade}";
+            }
+            if (costText != null)
+            {
+                costText.text = "-";
+            }
+            if (hireBtn != null)
+            {
+                hireBtn.interactable = false;
+            }
             return;
         }
 
@@ -97,6 +103,12 @@ public class EmployeeHireSlot : MonoBehaviour
         {
             costText.text = isMaxCapacity ? "MAX" : CurrencyFormatter.Format(targetState.GetCurrentHireCost());
         }
+
+        // 버튼 활성화 여부 판정
+        if (hireBtn != null)
+        {
+            hireBtn.interactable = CanHire();
+        }
     }
 
     public void OnClickHire()
@@ -106,6 +118,13 @@ public class EmployeeHireSlot : MonoBehaviour
             return;
         }
         employeeManager.HireEmployee(targetState.employeeData.EmployeeId);
-        Refresh();
+        if (onHireSuccess != null)
+        {
+            onHireSuccess.Invoke();
+        }
+        else
+        {
+            Refresh();
+        }
     }
 }

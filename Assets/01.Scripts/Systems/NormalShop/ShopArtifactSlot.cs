@@ -96,7 +96,7 @@ public class ShopArtifactSlot : MonoBehaviour
         }
         if (unlockBtn != null)
         {
-            unlockBtn.onClick.RemoveAllListeners();
+            unlockBtn.onClick.RemoveListener(OnClickUnlock);
             unlockBtn.onClick.AddListener(OnClickUnlock);
         }
 
