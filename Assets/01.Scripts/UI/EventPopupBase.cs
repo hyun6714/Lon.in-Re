@@ -5,7 +5,7 @@ using System.Threading;
 
 public class EventPopupBase : PopupBase
 {
-    CancellationTokenSource token;
+    protected CancellationTokenSource token;
 
     public override void OpenPanel()
     {

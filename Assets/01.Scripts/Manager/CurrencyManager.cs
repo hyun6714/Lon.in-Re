@@ -27,9 +27,6 @@ public class CurrencyManager : MonoBehaviour
 
     [SerializeField] private CurrencyDatabase currencyDatabase;
 
-    // 임시 연동
-    [SerializeField] private AutoProduction auto;
-
     private void Awake()
     {
         if (instance == null)
@@ -49,20 +46,14 @@ public class CurrencyManager : MonoBehaviour
 
     private void OnEnable()
     {
-        if (auto != null)
-        {
-            auto.OnNormalCurrencyChanged += AddCurrency;
-        }
+        GameEventBridge.OnCurrencyAdded += AddCurrency;
 
         ReincarnationManager.OnReincarnated += ResetCurrenciesExceptSpecial;
     }
 
     private void OnDisable()
     {
-        if (auto != null)
-        {
-            auto.OnNormalCurrencyChanged -= AddCurrency;
-        }
+        GameEventBridge.OnCurrencyAdded -= AddCurrency;
 
         ReincarnationManager.OnReincarnated -= ResetCurrenciesExceptSpecial;
     }
