@@ -111,40 +111,4 @@ public class UIManager : MonoBehaviour
 
         popup.ClosePanel();
     }
-
-    //public void OpenEventPopup(EventPopup popupPrefab)
-    //{
-    //    if (popupPrefab == null)
-    //    {
-    //        Utils.Log("이벤트 팝업이 존재하지 않습니다.");
-    //        return;
-    //    }
-
-    //    if (!runtimePopupDic.TryGetValue(popupPrefab, out EventPopup popup))
-    //    {
-    //        popup = Instantiate(popupPrefab, uiCanvas.transform);
-    //        runtimePopupDic.Add(popupPrefab, popup);
-    //    }
-
-    //    if (currentPopup != null && currentPopup != popup)
-    //    {
-    //        currentPopup.ClosePanel();
-    //    }
-
-    //    GameManager.Instance.GamePaused();
-
-    //    currentPopup = popup;
-
-    //    currentPopup.gameObject.SetActive(true);
-    //    currentPopup.OpenPanel();
-    //}
-
-    //public void CloseEventPopup()
-    //{
-    //    if (currentPopup == null)
-    //        return;
-
-    //    currentPopup.ClosePanel();
-    //    currentPopup = null;
-    //}
 }
