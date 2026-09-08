@@ -53,6 +53,8 @@ public class CurrencyManager : MonoBehaviour
         {
             auto.OnNormalCurrencyChanged += AddCurrency;
         }
+
+        ReincarnationManager.OnReincarnated += ResetCurrenciesExceptSpecial;
     }
 
     private void OnDisable()
@@ -61,6 +63,8 @@ public class CurrencyManager : MonoBehaviour
         {
             auto.OnNormalCurrencyChanged -= AddCurrency;
         }
+
+        ReincarnationManager.OnReincarnated -= ResetCurrenciesExceptSpecial;
     }
 
     private void InitializeCurrencies()
