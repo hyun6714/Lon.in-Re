@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c436eb8115ede1c4195ba113751bf1da, type: 3}
   m_Name: EventPopupData
   m_EditorClassIdentifier: Assembly-CSharp::SeasonEventPopupData
-  popupSize: 0.9
-  openSize: 0.7
+  popupSize: 1.6
+  openSize: 1.4
   closeSize: 0.1
   popupDelay: 0.2

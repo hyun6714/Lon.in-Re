@@ -32,9 +32,6 @@ public class AutoProduction : MonoBehaviour
 
     private CancellationTokenSource token;
 
-    // µ· È¹µæ ½Ã ¹ß»ýÇÒ ÀÌº¥Æ®
-    public event Action<CurrencyType, int> OnNormalCurrencyChanged;
-
     private void Awake()
     {
         AutoProductionInit();
@@ -121,7 +118,7 @@ public class AutoProduction : MonoBehaviour
                 if (moneyPerSec != 0)
                 {
                     nowMoney += moneyPerSec;
-                    OnNormalCurrencyChanged?.Invoke(CurrencyType.Normal, (int)moneyPerSec);
+                    GameEventBridge.CurrencyAdded(CurrencyType.Normal, (int)moneyPerSec);
                     SpawnFloatingText(transform.position);
                 }
 
