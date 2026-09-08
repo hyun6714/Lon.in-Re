@@ -137,7 +137,7 @@ public class EventManager : MonoBehaviour
     }
 
     // 이벤트 교체
-    public void ChangeEvent(EventDate dateKey)
+    private void ChangeEvent(EventDate dateKey)
     {
         if (!eventDateDic.TryGetValue(dateKey, out GameEventInfo info))
         {
