@@ -15,6 +15,17 @@ public class PlayerTapUpgrade : MonoBehaviour
 
     public int CurrentTapPower => cachedTapPower;
 
+    // 환생 이벤트 구독 / 해제
+    private void OnEnable()
+    {
+        ReincarnationManager.OnReincarnated += ResetUpgrade;
+    }
+
+    private void OnDisable()
+    {
+        ReincarnationManager.OnReincarnated -= ResetUpgrade;
+    }
+
     private void Start()
     {
         // 게임 시작 시 초기 탭 파워 1회 계산

@@ -182,7 +182,7 @@ public class RankManager : MonoBehaviour
         currentEmployeeCount = 0;
         maxEmployee = 0;
         hasEmployees = false;
-
+        
         if (GameManager.Instance != null)
         {
             GameManager.Instance.gameDevCount = 0;
