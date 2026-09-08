@@ -97,6 +97,7 @@ public class UIManager : MonoBehaviour
 
         GameManager.Instance.GamePaused();
         popup.gameObject.SetActive(true);
+        popup.transform.SetAsLastSibling();
         popup.OpenPanel();
     }
 

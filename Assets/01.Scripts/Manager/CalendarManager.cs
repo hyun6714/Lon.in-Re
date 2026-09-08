@@ -162,8 +162,9 @@ public class CalendarManager : MonoBehaviour
     private void NextDay()
     {
         currentDate.NextDay();
+        EventDate date = new EventDate(currentDate.month, currentDate.day);
 
-        GameEventBridge.DayChanged(currentDate.month, currentDate.day);
+        GameEventBridge.DayChanged(date);
     }
 
     public string MinuteText()
@@ -221,7 +222,9 @@ public class CalendarManager : MonoBehaviour
     {
         currentDate.SetDate(year, month, day, hour);
 
-        GameEventBridge.DayChanged(currentDate.month, currentDate.day);
+        EventDate date = new EventDate(month, day);
+
+        GameEventBridge.DayChanged(date);
 
         if (currentDate.hour >= allEventStartHour)
         {

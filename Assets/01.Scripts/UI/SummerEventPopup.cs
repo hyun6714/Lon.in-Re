@@ -1,9 +1,5 @@
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
-using Cysharp.Threading.Tasks;
-using System.Threading.Tasks;
-using System;
 
 public class SummerEventPopup : EventPopupBase
 {

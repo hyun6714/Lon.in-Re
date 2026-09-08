@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
-using UnityEngine.LightTransport;
 
 /// <summary>
 /// 계절별 이벤트 시작, 종료를 정의하는 전략 인터페이스
@@ -33,7 +32,8 @@ public class EventManager : MonoBehaviour
     [Header("계절 이벤트 데이터")]
     [SerializeField] private SummerEventData summerData;
 
-    private Dictionary<(int month, int day), GameEventInfo> eventDateDic = new Dictionary<(int month, int day), GameEventInfo>();
+    //private Dictionary<(int month, int day), GameEventInfo> eventDateDic = new Dictionary<(int month, int day), GameEventInfo>();
+    private Dictionary<EventDate, GameEventInfo> eventDateDic = new Dictionary<EventDate, GameEventInfo>();
 
     private EventFactory eventFactory;
 
@@ -48,10 +48,6 @@ public class EventManager : MonoBehaviour
 
     [Header("일시 정지")]
     [SerializeField] private bool isPaused;
-
-    [Header("테스트용 UI")]
-    [SerializeField] private GameObject testPanel;
-    private SummerEventPopup eventPopup;
 
     private void Awake()
     {
@@ -75,15 +71,15 @@ public class EventManager : MonoBehaviour
 
         foreach (GameEventInfo info in eventData.EventList)
         {
-            var key = (info.TargetMonth, info.TargetDay);
+            EventDate dateKey = new EventDate(info.TargetMonth, info.TargetDay);
 
-            if (eventDateDic.ContainsKey(key))
+            if (eventDateDic.ContainsKey(dateKey))
             {
                 Debug.Log($"같은 날짜에 이벤트가 이미 존재합니다. {info.TargetMonth}월 {info.TargetDay}일");
                 continue;
             }
 
-            eventDateDic.Add(key, info);
+            eventDateDic.Add(dateKey, info);
         }
     }
 
@@ -141,15 +137,13 @@ public class EventManager : MonoBehaviour
     }
 
     // 이벤트 교체
-    public void ChangeEvent(int month, int day)
+    public void ChangeEvent(EventDate dateKey)
     {
-        var key = (month, day);
-
-        if (!eventDateDic.TryGetValue(key, out GameEventInfo info))
+        if (!eventDateDic.TryGetValue(dateKey, out GameEventInfo info))
         {
             currentGameEventInfo = null;
             currentEvent = null;
-
+            Utils.Log("존재하지 않는 날짜 키");
             return;
         }
 
@@ -158,7 +152,7 @@ public class EventManager : MonoBehaviour
 
         currentEvent = eventFactory.CreateEvent(currentEventType);
 
-        Utils.Log($"이벤트 등록 성공 : {currentEventType}_{month}월 {day}일");
+        Utils.Log($"이벤트 등록 성공 : {currentEventType}_{dateKey.month}월 {dateKey.day}일");
     }
 
     // 게임 출시 후 해당 게임의 정산 시작

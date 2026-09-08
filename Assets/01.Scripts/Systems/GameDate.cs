@@ -140,7 +140,7 @@ public struct GameDate : IEquatable<GameDate>
 
     public static bool operator !=(GameDate a, GameDate b)
     {
-        return !a.Equals(b);
+        return !(a.Equals(b));
     }
 
     public static bool operator >=(GameDate a, GameDate b)
