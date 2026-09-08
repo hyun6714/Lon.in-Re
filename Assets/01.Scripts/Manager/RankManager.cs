@@ -50,7 +50,7 @@ public class RankManager : MonoBehaviour
     }
 
     private void OnEnable()
-    {
+    { 
         ReincarnationManager.OnReincarnated += ResetRank;
     }
 
