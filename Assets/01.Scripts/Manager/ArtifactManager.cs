@@ -49,7 +49,9 @@ public class ArtifactManager : MonoBehaviour
         }
 
         info.isUnlocked = true;
-        CurrencyManager.instance.UseCurrency(CurrencyType.Special, info.SpecialUnlockCost);
+
+        GameEventBridge.CurrencyUsed(CurrencyType.Special, info.SpecialUnlockCost);
+        //CurrencyManager.instance.UseCurrency(CurrencyType.Special, info.SpecialUnlockCost);
         Debug.Log($"{info.artiName} 아티팩트 해금");
         return true;
     }

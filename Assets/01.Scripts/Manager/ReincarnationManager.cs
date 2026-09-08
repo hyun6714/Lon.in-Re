@@ -20,7 +20,8 @@ public class ReincarnationManager : MonoBehaviour
             int excesReputation = currentReputation - 5000;
             if (excesReputation > 0 && CurrencyManager.instance != null)
             {
-                CurrencyManager.instance.AddCurrency(CurrencyType.Special, excesReputation);
+                GameEventBridge.CurrencyAdded(CurrencyType.Special, excesReputation);
+                //CurrencyManager.instance.AddCurrency(CurrencyType.Special, excesReputation);
                 Debug.Log($"환생 완료 초과명성 {excesReputation}만큼 특수재화를 획득 ");
             }
         }
