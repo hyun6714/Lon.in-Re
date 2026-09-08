@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class EventFactory
 {
-    private Dictionary<EventType, Func<IEvent>> createDic;
+    private Dictionary<GameEventType, Func<IEvent>> createDic;
 
     private SummerEventData summerData;
 
@@ -16,16 +16,16 @@ public class EventFactory
 
     private void InitFactory()
     {
-        createDic = new Dictionary<EventType, Func<IEvent>>()
+        createDic = new Dictionary<GameEventType, Func<IEvent>>()
         {
-            { EventType.SpringEvent, () => new SpringEvent() },
-            { EventType.SummerEvent, () => new SummerEvent(summerData) },
-            { EventType.FallEvent, () => new FallEvent() },
-            { EventType.WinterEvent, () => new WinterEvent() }
+            { GameEventType.SpringEvent, () => new SpringEvent() },
+            { GameEventType.SummerEvent, () => new SummerEvent(summerData) },
+            { GameEventType.FallEvent, () => new FallEvent() },
+            { GameEventType.WinterEvent, () => new WinterEvent() }
         };
     }
 
-    public IEvent CreateEvent(EventType type)
+    public IEvent CreateEvent(GameEventType type)
     {
         if (createDic.TryGetValue(type, out Func<IEvent> func))
         {

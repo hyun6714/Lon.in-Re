@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 using System.Threading.Tasks;
+using System;
 
 public class SummerEventPopup : PopupBase
 {
@@ -36,28 +37,46 @@ public class SummerEventPopup : PopupBase
 
     private void PopupOpen()
     {
-        seq?.Kill();
-        
-        seq = DOTween.Sequence();
-        seq.Append(transform.DOScale(data.PopupSize, data.PopupDelay))
-            .Append(transform.DOScale(data.OpenSize, data.PopupDelay))
-            .SetLink(gameObject, LinkBehaviour.KillOnDisable)
-            .SetUpdate(true);
+        try
+        {
+            seq?.Kill();
+
+            seq = DOTween.Sequence();
+            seq.Append(transform.DOScale(data.PopupSize, data.PopupDelay))
+                .Append(transform.DOScale(data.OpenSize, data.PopupDelay))
+                .SetLink(gameObject, LinkBehaviour.KillOnDisable)
+                .SetUpdate(true)
+                .ToUniTask(cancellationToken: destroyCancellationToken)
+                .Forget();
+        }
+        catch(OperationCanceledException)
+        {
+
+        }        
     }
 
     private void PopupClose()
     {
-        seq?.Kill();
-        
-        seq = DOTween.Sequence();
-        seq.Append(transform.DOScale(data.PopupSize, data.PopupDelay))
-            .Append(transform.DOScale(data.CloseSize, data.PopupDelay))
-            .SetLink(gameObject, LinkBehaviour.KillOnDisable)
-            .SetUpdate(true)
-            .OnComplete(() =>
-            {
-                GameManager.Instance.GameResume();
-                gameObject.SetActive(false);
-            });
+        try
+        {
+            seq?.Kill();
+
+            seq = DOTween.Sequence();
+            seq.Append(transform.DOScale(data.PopupSize, data.PopupDelay))
+                .Append(transform.DOScale(data.CloseSize, data.PopupDelay))
+                .SetLink(gameObject, LinkBehaviour.KillOnDisable)
+                .SetUpdate(true)
+                .OnComplete(() =>
+                {
+                    GameManager.Instance.GameResume();
+                    gameObject.SetActive(false);
+                })
+                .ToUniTask(cancellationToken: destroyCancellationToken)
+                .Forget();
+        }
+        catch (OperationCanceledException)
+        {
+
+        }        
     }
 }

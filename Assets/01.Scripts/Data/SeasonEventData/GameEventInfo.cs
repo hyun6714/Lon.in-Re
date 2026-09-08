@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameEventInfo
 {
     [Header("이벤트 고유 ID")]
-    [SerializeField] private EventType eventType;
+    [SerializeField] private GameEventType eventType;
 
     [Header("발생 조건(날짜)")]
     [SerializeField] private int targetMonth;
@@ -14,7 +14,7 @@ public class GameEventInfo
     [Header("팝업 이름")]
     [SerializeField] private UIName popupName;
 
-    public EventType EventType => eventType;
+    public GameEventType EventType => eventType;
     public int TargetMonth => targetMonth;
     public int TargetDay => targetDay;
     public UIName PopupName => popupName;

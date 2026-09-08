@@ -14,7 +14,7 @@ public interface IEvent
     void EndEvent();
 }
 
-public enum EventType
+public enum GameEventType
 {
     SpringEvent = 3001,
     SummerEvent,
@@ -38,7 +38,7 @@ public class EventManager : MonoBehaviour
     private EventFactory eventFactory;
 
     private IEvent currentEvent;
-    private EventType currentEventType;
+    private GameEventType currentEventType;
     private GameEventInfo currentGameEventInfo;
 
     private CancellationTokenSource token;
