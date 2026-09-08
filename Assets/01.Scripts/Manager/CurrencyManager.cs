@@ -47,6 +47,7 @@ public class CurrencyManager : MonoBehaviour
     private void OnEnable()
     {
         GameEventBridge.OnCurrencyAdded += AddCurrency;
+        GameEventBridge.OnCurrencyUsed += UseCurrency;
 
         ReincarnationManager.OnReincarnated += ResetCurrenciesExceptSpecial;
     }
@@ -54,6 +55,7 @@ public class CurrencyManager : MonoBehaviour
     private void OnDisable()
     {
         GameEventBridge.OnCurrencyAdded -= AddCurrency;
+        GameEventBridge.OnCurrencyUsed -= UseCurrency;
 
         ReincarnationManager.OnReincarnated -= ResetCurrenciesExceptSpecial;
     }

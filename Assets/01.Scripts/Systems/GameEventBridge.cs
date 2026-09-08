@@ -14,8 +14,11 @@ public static class GameEventBridge
     /// <summary> 자동 생산 배수 변경 시 발생 (배율) </summary>
     public static event Action<float> OnAutoMultiplierChanged;
 
-    /// <summary> 재화 증감 시 발생 (재화 타입, 재화량) </summary>
+    /// <summary> 재화 획득 시 발생 (재화 타입, 재화량) </summary>
     public static event Action<CurrencyType, int> OnCurrencyAdded;
+
+    /// <summary> 재화 사용 시 발생 (재화 타입, 재화량) </summary>
+    public static event Func<CurrencyType, int, bool> OnCurrencyUsed;
     
 
     // 이벤트 실행
@@ -24,4 +27,5 @@ public static class GameEventBridge
     public static void PausedChanged(bool isPaused) => OnPausedChanged?.Invoke(isPaused);
     public static void AutoMultiplierChanged(float multi) => OnAutoMultiplierChanged?.Invoke(multi);
     public static void CurrencyAdded(CurrencyType type, int value) => OnCurrencyAdded?.Invoke(type, value);
+    public static void CurrencyUsed(CurrencyType type, int value) => OnCurrencyUsed?.Invoke(type, value);
 }
