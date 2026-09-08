@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class EmployeeHireSlot : MonoBehaviour
 {
@@ -15,6 +16,15 @@ public class EmployeeHireSlot : MonoBehaviour
     private EmployeeState targetState;
     private EmployeeManager employeeManager;
     private Action onHireSuccess;
+    private Color originCostColor = Color.white;
+
+    private void Awake()
+    {
+        if (costText != null)
+        {
+            originCostColor = costText.color;
+        }
+    }
 
     public void SetUp(EmployeeState _employeeState, EmployeeManager _employeeManager, Action onHireSuccessCallback = null)
     {
@@ -85,11 +95,12 @@ public class EmployeeHireSlot : MonoBehaviour
         {
             if (infoText != null)
             {
-                infoText.text = $"[잠김] {data.UnlockGrade}";
+                // 직군 이름과 함께 필요 등급을 명시
+                infoText.text = $"{data.EmployeeName} ([해금] {GetRankKorean(data.UnlockGrade)})";
             }
             if (costText != null)
             {
-                costText.text = "-";
+                costText.text = "잠김";
             }
             if (hireBtn != null)
             {
@@ -116,10 +127,10 @@ public class EmployeeHireSlot : MonoBehaviour
             costText.text = isMaxCapacity ? "MAX" : CurrencyFormatter.Format(targetState.GetCurrentHireCost());
         }
 
-        // 버튼 활성화 여부 판정
+        // 버튼 활성화 유지
         if (hireBtn != null)
         {
-            hireBtn.interactable = CanHire();
+            hireBtn.interactable = true;
         }
 
         // 해고 버튼 : 보유 인원이 1명 이상일 때만 활성화
@@ -131,11 +142,21 @@ public class EmployeeHireSlot : MonoBehaviour
 
     public void OnClickHire()
     {
-        if (!CanHire() || employeeManager == null)
+        var manager = employeeManager != null ? employeeManager : EmployeeManager.instance;
+        if (manager == null)
         {
             return;
         }
-        employeeManager.HireEmployee(targetState.employeeData.EmployeeId);
+
+        // 고용 조건 미달 시 실패 연출
+        if (!CanHire())
+        {
+            PlayHireFailAnimation();
+            return;
+        }
+
+        manager.HireEmployee(targetState.employeeData.EmployeeId);
+
         if (onHireSuccess != null)
         {
             onHireSuccess.Invoke();
@@ -148,16 +169,20 @@ public class EmployeeHireSlot : MonoBehaviour
 
     public void OnClickFire()
     {
-        if (targetState == null || targetState.Count <= 0) return;
+        if (targetState == null || targetState.Count <= 0)
+        {
+            return;
+        }
 
         var manager = employeeManager != null ? employeeManager : EmployeeManager.instance;
-        if (manager == null) return;
+        if (manager == null)
+        {
+            return;
+        }
 
-        // 직원 해고 실행
         bool success = manager.FireEmployee(targetState.employeeData.EmployeeId);
         if (success)
         {
-            // 일괄 갱신
             if (onHireSuccess != null)
             {
                 onHireSuccess.Invoke();
@@ -168,4 +193,55 @@ public class EmployeeHireSlot : MonoBehaviour
             }
         }
     }
+
+    private void PlayHireFailAnimation()
+    {
+        // 슬롯 좌우 진동
+        transform.DOComplete();
+        transform.DOShakePosition(0.25f, strength: new Vector3(8f, 0, 0), vibrato: 10, randomness: 90, fadeOut: true)
+                 .SetLink(gameObject);
+
+        // 텍스트 피드백
+        if (costText != null)
+        {
+            costText.DOComplete();
+            costText.transform.DOComplete();
+
+            bool isMaxCapacity = RankManager.instance != null && RankManager.instance.currentEmployeeCount >= RankManager.instance.maxEmployee;
+
+            if (isMaxCapacity)
+            {
+                // 정원이 꽉 찼을 때 MAX 텍스트 펀치 스케일 효과
+                costText.transform.DOPunchScale(Vector3.one * 0.25f, 0.2f)
+                                  .SetLink(gameObject);
+            }
+            else
+            {
+                // 돈이 부족할 때 빨간색 깜빡임
+                costText.color = originCostColor;
+                costText.DOColor(Color.red, 0.12f)
+                        .SetLoops(2, LoopType.Yoyo)
+                        .SetLink(gameObject);
+            }
+        }
+    }
+
+private string GetRankKorean(RankManager.RankState rank)
+{
+    switch (rank)
+    {
+        case RankManager.RankState.Solo:
+            return "1인 개발";
+        case RankManager.RankState.Indie:
+            return "인디 기업";
+        case RankManager.RankState.Small:
+            return "중소기업";
+        case RankManager.RankState.Midsized:
+            return "중견기업";
+        case RankManager.RankState.MajorPublisher:
+            return "대기업";
+        default:
+            return "잠김";
+    }
+}
 }
