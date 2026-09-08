@@ -16,8 +16,6 @@ public class ReincarnationManager : MonoBehaviour
 
         if (CurrencyManager.instance != null)
         {
-            CurrencyManager.instance.ResetCurrenciesExceptSpecial();
-
             //특수 재화 주는 식
             int excesReputation = currentReputation - 5000;
             if (excesReputation > 0 && CurrencyManager.instance != null)
@@ -27,8 +25,8 @@ public class ReincarnationManager : MonoBehaviour
             }
         }
 
-        GameManager.Instance.playerRebirthCount++;
         OnReincarnated?.Invoke();
+        GameManager.Instance.playerRebirthCount++;
         CurrencyManager.instance.CurrencyTestSet();
 
         Debug.Log($"환생 완료");
