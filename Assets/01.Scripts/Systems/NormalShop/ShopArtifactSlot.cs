@@ -251,6 +251,7 @@ public class ShopArtifactSlot : MonoBehaviour
             else if (info != null)
             {
                 UpdateUIState(info);
+                CurrencyManager.instance.CurrencyTestSet();
             }
         }
     }
