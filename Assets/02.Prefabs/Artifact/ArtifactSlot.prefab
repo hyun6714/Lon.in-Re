@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6717076984942953158}
-  - component: {fileID: 3800459969951545550}
   - component: {fileID: 2177090533922581113}
+  - component: {fileID: 1791250613884815097}
   m_Layer: 0
   m_Name: ArtifactSlot
   m_TagString: Untagged
@@ -40,27 +40,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 66.2, y: -26.7}
+  m_AnchoredPosition: {x: 112.15452, y: 86.22807}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3800459969951545550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 823014149324471385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec09dd128b59e4148b6e52f059a9dd97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ArtifactSlot
-  targetArtifactID: 0
-  iconImage: {fileID: 7306495531443214812}
-  nameText: {fileID: 6977302456385165303}
-  costText: {fileID: 8475917214847648092}
-  conditionText: {fileID: 1109805537401795893}
-  unlockBtn: {fileID: 8108130564320272032}
 --- !u!114 &2177090533922581113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,6 +63,25 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &1791250613884815097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823014149324471385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47a477144a8917c4d8918225122a9d28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShopArtifactSlot
+  targetArtifactID: 0
+  iconImage: {fileID: 7306495531443214812}
+  nameText: {fileID: 6977302456385165303}
+  costText: {fileID: 8475917214847648092}
+  descText: {fileID: 0}
+  conditionText: {fileID: 1109805537401795893}
+  unlockBtn: {fileID: 8108130564320272032}
 --- !u!1 &951090065941889838
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,7 +340,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3800459969951545550}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ArtifactSlot, Assembly-CSharp
         m_MethodName: OnCilckUnlock
         m_Mode: 1

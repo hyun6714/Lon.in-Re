@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ArtifactManager : MonoBehaviour
@@ -6,12 +7,16 @@ public class ArtifactManager : MonoBehaviour
 
     public ArtifactDatabase artifactDatabase;
 
+    private Dictionary<int, bool> unlockedStates = new Dictionary<int, bool>();
+
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+
+            InitUnlockedStates();
         }
         else
         {
@@ -19,11 +24,28 @@ public class ArtifactManager : MonoBehaviour
         }
     }
 
+    private void InitUnlockedStates()
+    {
+        if (artifactDatabase == null) return;
+
+        foreach (var info in artifactDatabase.artifacts)
+        {
+            if (!unlockedStates.ContainsKey(info.artifactId))
+            {
+                unlockedStates.Add(info.artifactId, false);
+            }
+        }
+    }
+
+    public bool IsUnlocked(int artifactID)
+    {
+        return unlockedStates.TryGetValue(artifactID, out bool isUnlocked) && isUnlocked;
+    }
 
     public bool TryUnlockArtifact(int artifactID, int playerRebirth, int playerReputation, int playerSpecialCurrency)
     {
         ArtifactInfo info = artifactDatabase.GetArtifactsInfo(artifactID);
-        if(info==null || info.isUnlocked)
+        if(info==null || IsUnlocked(artifactID))
         {
             return false;
         }
@@ -48,10 +70,9 @@ public class ArtifactManager : MonoBehaviour
             return false;
         }
 
-        info.isUnlocked = true;
+        unlockedStates[artifactID] = true;
 
         GameEventBridge.CurrencyUsed(CurrencyType.Special, info.SpecialUnlockCost);
-        //CurrencyManager.instance.UseCurrency(CurrencyType.Special, info.SpecialUnlockCost);
         Debug.Log($"{info.artiName} 아티팩트 해금");
         return true;
     }
@@ -64,7 +85,7 @@ public class ArtifactManager : MonoBehaviour
 
         foreach (var info in artifactDatabase.artifacts)
         {
-            if (info.isUnlocked)
+            if (IsUnlocked(info.artifactId))
             {
                 total += info.GainperClick; 
             }
@@ -78,7 +99,7 @@ public class ArtifactManager : MonoBehaviour
         float total = 0f;
         foreach (var info in artifactDatabase.artifacts)
         {
-            if (info.isUnlocked)
+            if (IsUnlocked(info.artifactId))
             {
                 total += info.PerSecond;
             }
@@ -92,7 +113,7 @@ public class ArtifactManager : MonoBehaviour
         float total = 0f;
         foreach (var info in artifactDatabase.artifacts)
         {
-            if (info.isUnlocked)
+            if (IsUnlocked(info.artifactId))
             {
                 total += info.Probabilityincrease;
             }

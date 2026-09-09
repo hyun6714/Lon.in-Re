@@ -23,7 +23,6 @@ public class ArtifactInfo
 
     [Header("해금")]
     public int SpecialUnlockCost; //해금 비용
-    public bool isUnlocked = false;
 
     [Header("조건별 필요 수치")]
     public int requiredRebirthCount; // 필요 환생 횟수 

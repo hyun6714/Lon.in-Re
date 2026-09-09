@@ -16,7 +16,7 @@ public class ArtifactShopUI : MonoBehaviour
     public Button openShopBtn;
     public Button closeShopBtn;
 
-    private List<ArtifactSlot> spawnedSlots = new List<ArtifactSlot>();
+    private List<ShopArtifactSlot> spawnedSlots = new List<ShopArtifactSlot>();
 
     private void Start()
     {
@@ -37,7 +37,7 @@ public class ArtifactShopUI : MonoBehaviour
         foreach (var info in artifactDatabase.artifacts)
         {
             GameObject slotObj = Instantiate(slotPrefab, contentParent);
-            ArtifactSlot slot = slotObj.GetComponent<ArtifactSlot>();
+            ShopArtifactSlot slot = slotObj.GetComponent<ShopArtifactSlot>();
 
             if (slot != null)
             {
