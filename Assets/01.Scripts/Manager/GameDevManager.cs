@@ -17,6 +17,12 @@ public class GameDevManager : MonoBehaviour
 
     private int nextGameId = 1;
 
+    // 저장된 게임 ID 불러오기
+    public void LoadNextGameId(int value)
+    {
+        nextGameId = value;
+    }
+
     public int NextGameId => nextGameId;
     private void Awake()
     {
