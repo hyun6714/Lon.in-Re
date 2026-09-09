@@ -128,17 +128,6 @@ public class ShopCurrencyHUD : MonoBehaviour
             {
                 RankManager.instance.currentRank = (RankManager.RankState)nextRank;
 
-                // 등급에 맞는 고용 한도 설정
-                RankManager.instance.maxEmployee = RankManager.instance.currentRank switch
-                {
-                    RankManager.RankState.Indie => 5,
-                    RankManager.RankState.Small => 10,
-                    RankManager.RankState.Midsized => 20,
-                    RankManager.RankState.MajorPublisher => 50,
-                    _ => 0
-                };
-                RankManager.instance.hasEmployees = true;
-
                 Debug.Log($"[디버그] 회사 등급 상승 완료: {RankManager.instance.currentRank} (최대 인원: {RankManager.instance.maxEmployee})");
             }
             else
@@ -164,8 +153,6 @@ public class ShopCurrencyHUD : MonoBehaviour
         if (RankManager.instance != null)
         {
             RankManager.instance.currentRank = RankManager.RankState.MajorPublisher;
-            RankManager.instance.maxEmployee = 50;
-            RankManager.instance.hasEmployees = true;
         }
 
         Debug.Log("[디버그] 모든 조건 프리패스 지급 완료! (일반 1000만, 특수 10000, 명성 3000, 환생 5회, 대기업 등급)");
