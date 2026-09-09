@@ -24,6 +24,7 @@ public class ArtifactManager : MonoBehaviour
         }
     }
 
+    //해금 초기화 
     private void InitUnlockedStates()
     {
         if (artifactDatabase == null) return;
