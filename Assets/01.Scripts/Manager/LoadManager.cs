@@ -50,11 +50,11 @@ public class LoadManager : MonoBehaviour
     // 재화 데이터 불러오기
     private void LoadCurrencyData(SaveData saveData)
     {
-        //CurrencyManager.instance.SetCurrency(CurrencyType.Normal, saveData.normalCurrency);
+        CurrencyManager.instance.SetCurrency(CurrencyType.Normal, saveData.normalCurrency);
 
-        //CurrencyManager.instance.SetCurrency(CurrencyType.Special, saveData.specialCurrency);
+        CurrencyManager.instance.SetCurrency(CurrencyType.Special, saveData.specialCurrency);
 
-        //CurrencyManager.instance.SetCurrency(CurrencyType.Reputation, saveData.reputation);
+        CurrencyManager.instance.SetCurrency(CurrencyType.Reputation, saveData.reputation);
     }
 
     // 게임 진행 데이터 불러오기
