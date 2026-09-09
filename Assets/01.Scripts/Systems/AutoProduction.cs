@@ -120,7 +120,7 @@ public class AutoProduction : MonoBehaviour
                     nowMoney += moneyPerSec;
                     GameEventBridge.CurrencyAdded(CurrencyType.Normal, (int)moneyPerSec);
                     CurrencyManager.instance.CurrencyTestSet();
-                    SpawnFloatingText(transform.position);
+                    UIManager.Instance.SpawnFloatingText(transform.position, (int)moneyPerSec, true);
                 }
 
                 await UniTask.NextFrame(PlayerLoopTiming.EarlyUpdate, token);
@@ -133,39 +133,39 @@ public class AutoProduction : MonoBehaviour
     }
 
     // 텍스트 특정 위치에 출력. 현재는 해당 오브젝트 상단에 출력
-    public void SpawnFloatingText(Vector2 pos)
-    {
-        if (textPrefab == null || ObjectPoolManager.instance == null)
-            return;
-        GameObject text = textPrefab.gameObject;
+    //public void spawnfloatingtext(vector2 pos)
+    //{
+    //    if (textprefab == null || objectpoolmanager.instance == null)
+    //        return;
+    //    gameobject text = textprefab.gameobject;
         
-        FloatingText textObj = ObjectPoolManager.instance.GetObject<FloatingText>(
-            textPrefab.gameObject,
-            effectCanvasTransform
-            );
+    //    floatingtext textobj = objectpoolmanager.instance.getobject<floatingtext>(
+    //        textprefab.gameobject,
+    //        effectcanvastransform
+    //        );
 
-        if (textObj != null)
-        {
-            RectTransform rect = textObj.GetComponent<RectTransform>();
+    //    if (textobj != null)
+    //    {
+    //        recttransform rect = textobj.getcomponent<recttransform>();
 
             
-            if (rect != null && effectCanvasTransform is RectTransform canvasRect)
-            {
-                Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Camera.main, pos);
+    //        if (rect != null && effectcanvastransform is recttransform canvasrect)
+    //        {
+    //            vector2 screenpos = recttransformutility.worldtoscreenpoint(camera.main, pos);
 
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    canvasRect,
-                    screenPos,
-                    canvasRect.GetComponent<Canvas>().worldCamera,
-                    out Vector2 localPoint
-                    );
+    //            recttransformutility.screenpointtolocalpointinrectangle(
+    //                canvasrect,
+    //                screenpos,
+    //                canvasrect.getcomponent<canvas>().worldcamera,
+    //                out vector2 localpoint
+    //                );
 
-                rect.anchoredPosition = localPoint + new Vector2(0f, 100f);
-            }
-            textObj.SetOriginPrefab(textPrefab.gameObject);
-            textObj.Setup($"+{moneyPerSec}");
-        }
-    }
+    //            rect.anchoredposition = localpoint + new vector2(0f, 100f);
+    //        }
+    //        textobj.setoriginprefab(textprefab.gameobject);
+    //        textobj.setup($"+{moneypersec}");
+    //    }
+    //}
 
     public void PausedChanged(bool isPaused)
     {
