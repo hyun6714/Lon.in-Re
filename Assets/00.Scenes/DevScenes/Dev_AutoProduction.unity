@@ -679,6 +679,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1708670568}
   - {fileID: 868614497}
   - {fileID: 1481196921}
   m_Father: {fileID: 0}
@@ -1069,7 +1070,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 846028511}
     m_Modifications:
     - target: {fileID: 5016297241151860667, guid: 765033205fd9bb141a607f5b8af0ba60, type: 3}
       propertyPath: m_Name
@@ -1089,19 +1090,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6867769187791697006, guid: 765033205fd9bb141a607f5b8af0ba60, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6867769187791697006, guid: 765033205fd9bb141a607f5b8af0ba60, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6867769187791697006, guid: 765033205fd9bb141a607f5b8af0ba60, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6867769187791697006, guid: 765033205fd9bb141a607f5b8af0ba60, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6867769187791697006, guid: 765033205fd9bb141a607f5b8af0ba60, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1141,11 +1142,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6867769187791697006, guid: 765033205fd9bb141a607f5b8af0ba60, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 2.5322266
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6867769187791697006, guid: 765033205fd9bb141a607f5b8af0ba60, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.29003906
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6867769187791697006, guid: 765033205fd9bb141a607f5b8af0ba60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1397,6 +1398,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &1708670568 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6867769187791697006, guid: 765033205fd9bb141a607f5b8af0ba60, type: 3}
+  m_PrefabInstance: {fileID: 1110780954}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1744616749
 GameObject:
   m_ObjectHideFlags: 0
@@ -1426,9 +1432,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47fe0d75f617af94b8f60bbac28adf87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RankManager
+  rankDataList: []
   currentRank: 0
-  hasEmployees: 0
-  maxEmployee: 0
   currentEmployeeCount: 0
 --- !u!4 &1744616751
 Transform:
@@ -1572,7 +1577,6 @@ SceneRoots:
   - {fileID: 637411954}
   - {fileID: 1961804787}
   - {fileID: 972648406}
-  - {fileID: 1110780954}
   - {fileID: 846028511}
   - {fileID: 1566224140}
   - {fileID: 59152326}

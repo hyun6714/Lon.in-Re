@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum UIName
 {
@@ -55,6 +56,22 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
 
         InitializeDictionary();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // 런타임 딕셔너리에 저장된 팝업 비우기
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        runtimePopupDic.Clear();
     }
 
     private void InitializeDictionary()

@@ -20,10 +20,6 @@ public class AutoProduction : MonoBehaviour
     [Header("업그레이드")]
     [SerializeField] private AutoProductionUpgrade upgrade;
 
-    [Header("풀링 연동")]
-    [SerializeField] private FloatingText textPrefab;
-    [SerializeField] private Transform effectCanvasTransform;
-
     [Header("직원 정보 가져오기")]
     [SerializeField] private EmployeeManager employee;
 
@@ -102,7 +98,6 @@ public class AutoProduction : MonoBehaviour
         float multiplier = upgrade != null ? upgrade.AutoMultiplier : 1f;
 
         moneyPerSec = Mathf.RoundToInt((employeeProduction + upgradeProduction) * multiplier);
-        //moneyPerSec *= multiplier;
     }
 
     // 자동 생산
