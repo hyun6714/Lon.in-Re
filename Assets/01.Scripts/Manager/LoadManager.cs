@@ -44,6 +44,7 @@ public class LoadManager : MonoBehaviour
         LoadGameData(saveData);
         LoadRankData(saveData);
         LoadEmployeeData(saveData);
+        LoadGameDevData(saveData);
 
         Utils.Log("게임 불러오기 완료");
     }
@@ -73,7 +74,7 @@ public class LoadManager : MonoBehaviour
 
         RankManager.instance.currentEmployeeCount = saveData.currentEmployeeCount;
     }
-
+ 
     // 직원 데이터 불러오기
     private void LoadEmployeeData(SaveData saveData)
     {
@@ -83,5 +84,11 @@ public class LoadManager : MonoBehaviour
 
             state.SetCount(employeeSaveData.count);
         }
+    }
+
+    // 게임 개발 데이터 불러오기
+    private void LoadGameDevData(SaveData saveData)
+    {
+        GameDevManager.instance.LoadNextGameId(saveData.nextGameId);
     }
 }
