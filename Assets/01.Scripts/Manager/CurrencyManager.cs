@@ -70,11 +70,7 @@ public class CurrencyManager : MonoBehaviour
 
         foreach (CurrencyInfo info in currencyDatabase.currencies)
         {
-            string saveKey = $"Currency_{info.type}";
-
-            int amount = PlayerPrefs.GetInt(saveKey, info.initialAmount);
-
-            currentCurrencies[info.type] = amount;
+            currentCurrencies[info.type] = info.initialAmount;
         }
     }
 
@@ -103,10 +99,6 @@ public class CurrencyManager : MonoBehaviour
 
         currentCurrencies[type] = GetAmount(type) + amount;
 
-        string saveKey = $"Currency_{type}";
-        PlayerPrefs.SetInt(saveKey, currentCurrencies[type]);
-        PlayerPrefs.Save();
-
         OnCurrencyChanged?.Invoke(type, currentCurrencies[type]);
     }
 
@@ -124,15 +116,18 @@ public class CurrencyManager : MonoBehaviour
 
         currentCurrencies[type] = current - amount;
 
-        string saveKey = $"Currency_{type}";
-        PlayerPrefs.SetInt(saveKey, currentCurrencies[type]);
-        PlayerPrefs.Save();
-
         OnCurrencyChanged?.Invoke(type, currentCurrencies[type]);
 
         return true;
     }
 
+    // 재화 값 설정
+    public void SetCurrency(CurrencyType type, int amount)
+    {
+        currentCurrencies[type] = amount;
+
+        OnCurrencyChanged?.Invoke(type, currentCurrencies[type]);
+    }
 
     //환생전용 특수 재화 제외 초기화 
     public void ResetCurrenciesExceptSpecial()
@@ -147,13 +142,10 @@ public class CurrencyManager : MonoBehaviour
             }
 
             currentCurrencies[info.type] = info.initialAmount;
-            string saveKey = $"Currency_{info.type}";
-            PlayerPrefs.SetInt(saveKey, info.initialAmount);
 
             OnCurrencyChanged?.Invoke(info.type, info.initialAmount);
         }
 
-        PlayerPrefs.Save();
         Debug.Log("특수 재화를 제외한 모든 재화가 초기화되었습니다.");
     }
 }
