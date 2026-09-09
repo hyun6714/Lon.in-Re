@@ -13,4 +13,9 @@ public class FallEvent : IEvent
         Utils.Log("가을 이벤트 종료");
 
     }
+
+    public void SaveEventData(EventSaveData data)
+    {
+
+    }
 }

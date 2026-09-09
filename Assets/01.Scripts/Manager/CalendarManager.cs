@@ -36,6 +36,7 @@ public class CalendarManager : MonoBehaviour
     #region Event Settings
     [Header("이벤트 시작 시간")]
     [SerializeField] private int allEventStartHour;
+    public int AllEventStartHour => allEventStartHour;
 
     [Header("일시 정지")]
     [SerializeField] private bool isPaused;
@@ -162,9 +163,8 @@ public class CalendarManager : MonoBehaviour
     private void NextDay()
     {
         currentDate.NextDay();
-        EventDate date = new EventDate(currentDate.month, currentDate.day);
 
-        GameEventBridge.DayChanged(date);
+        GameEventBridge.DayChanged(currentDate);
     }
 
     public string MinuteText()
@@ -194,19 +194,22 @@ public class CalendarManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 현재 날짜와 맞는지, 이벤트 발생 시간인지 비교
+    /// 현재 날짜와 맞는지, 이벤트 발생 시간인지 비교하는 함수
     /// </summary>
     /// <param name="year"> 목표 연도 </param>
     /// <param name="month"> 목표 월 </param>
     /// <param name="day"> 목표 일 </param>
     /// <returns></returns>
-    public bool IsEventTime(int year, int month, int day)
+    public bool IsEventTime(GameDate date)
     {
-        return currentDate.year == year && currentDate.month == month && currentDate.day == day && currentDate.hour == allEventStartHour;
-    }        
+        return currentDate.year == date.year && currentDate.month == date.month && currentDate.day == date.day && currentDate.hour == allEventStartHour;
+    }
 
-    // addDay 만큼의 일 수가 지난 후 날짜
-
+    /// <summary>
+    /// addDay 만큼의 일 수가 지난 후 날짜
+    /// </summary>
+    /// <param name="addDay"> 추가할 일 수 </param>
+    /// <returns></returns>
     public GameDate GetAfterDay(int addDay)
     {
         return currentDate.GetAfterDay(addDay);
@@ -222,9 +225,7 @@ public class CalendarManager : MonoBehaviour
     {
         currentDate.SetDate(year, month, day, hour);
 
-        EventDate date = new EventDate(month, day);
-
-        GameEventBridge.DayChanged(date);
+        GameEventBridge.DayChanged(currentDate);
 
         if (currentDate.hour >= allEventStartHour)
         {

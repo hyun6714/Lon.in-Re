@@ -72,6 +72,11 @@ public struct GameDate : IEquatable<GameDate>
         return date;
     }
 
+    public bool EqualMonthDay(GameDate other)
+    {
+        return month == other.month && day == other.day;
+    }
+
     public void SetDate(int year, int month, int day, int hour)
     {
         this.year = year;
