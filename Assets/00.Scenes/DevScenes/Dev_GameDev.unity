@@ -1741,9 +1741,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47fe0d75f617af94b8f60bbac28adf87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RankManager
+  rankDataList:
+  - {fileID: 11400000, guid: 484695b4244307544bc13fb9a34966f6, type: 2}
+  - {fileID: 11400000, guid: 8574d52ce7effdb438d7ba7e49c8c37e, type: 2}
+  - {fileID: 11400000, guid: a3526f7dc6fe8934d9a12ba9f94d1378, type: 2}
+  - {fileID: 11400000, guid: 71559f5044eb7ab4d9e4b12d3b6705d8, type: 2}
+  - {fileID: 11400000, guid: 72780581f9543394fbdc13dce867772a, type: 2}
   currentRank: 0
-  hasEmployees: 0
-  maxEmployee: 0
   currentEmployeeCount: 0
 --- !u!4 &1645554113
 Transform:
@@ -1896,7 +1900,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CurrencyManager
   currencyText: {fileID: 1985535518}
   currencyDatabase: {fileID: 11400000, guid: 1fe5d80301c629c4db1852d69d84c589, type: 2}
-  auto: {fileID: 0}
 --- !u!4 &1775202680
 Transform:
   m_ObjectHideFlags: 0

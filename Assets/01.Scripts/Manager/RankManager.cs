@@ -13,26 +13,21 @@ public class RankManager : MonoBehaviour
         MajorPublisher //대기업
     }
 
-    public RankState currentRank = RankState.Solo;
-
-    public int gamesReleased //게임 출시 횟수 가져오기
-    { 
-        get
-        {
-            if (GameManager.Instance != null)
-            {
-                return GameManager.Instance.gameDevCount;
-            }
-
-            return 0;
-        }
-    }
-
-    public bool hasEmployees = false; //직원 고용 가능/불가능 
-    public int maxEmployee = 0; //직원 총수
-    public int currentEmployeeCount = 0; //현재 직원 총 수
-
     public static RankManager instance { get; private set; }
+
+    [Header("등급 데이터 에셋 (순서대로 배치)")]
+    [SerializeField] private List<RankData> rankDataList;
+
+    public RankState currentRank = RankState.Solo;
+    public int currentEmployeeCount = 0;
+
+    // 현재 등급의 ScriptableObject 데이터 읽기
+    public RankData CurrentRankData => GetRankData(currentRank);
+
+    // 기존 변수 호환용 프로퍼티 (실시간 반영)
+    public bool hasEmployees => CurrentRankData != null && CurrentRankData.hasEmployees;
+    public int maxEmployee => CurrentRankData != null ? CurrentRankData.maxEmployee : 0;
+    public int gamesReleased => GameManager.Instance != null ? GameManager.Instance.gameDevCount : 0;
 
     private void Awake()
     {
@@ -47,121 +42,51 @@ public class RankManager : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    { 
-        ReincarnationManager.OnReincarnated += ResetRank;
-    }
+    private void OnEnable() => ReincarnationManager.OnReincarnated += ResetRank;
+    private void OnDisable() => ReincarnationManager.OnReincarnated -= ResetRank;
 
-    private void OnDisable()
-    {
-        ReincarnationManager.OnReincarnated -= ResetRank;
-    }
-  
 
-    public void RestoreRankStats()
+    public RankData GetRankData(RankState state)
     {
-        switch (currentRank)
+        int index = (int)state;
+        if (index >= 0 && index < rankDataList.Count)
         {
-            case RankState.Solo:
-                hasEmployees = false;
-                maxEmployee = 0;
-                break;
-
-            case RankState.Indie:
-                hasEmployees = true;
-                maxEmployee = 5;
-                break;
-
-            case RankState.Small:
-                hasEmployees = true;
-                maxEmployee = 10;
-                break;
-
-            case RankState.Midsized:
-                hasEmployees = true;
-                maxEmployee = 20;
-                break;
-
-            case RankState.MajorPublisher:
-                hasEmployees = true;
-                maxEmployee = 50;
-                break;
+            return rankDataList[index];
         }
+        return null;
     }
 
     public void CheckRankUp()
     {
-        int currentReputation = 0;
-        if (CurrencyManager.instance != null)
+        int currentIndex = (int)currentRank;
+
+        // 최고 등급 도달 확인
+        if (currentIndex >= rankDataList.Count - 1)
         {
-            currentReputation = CurrencyManager.instance.GetAmount(CurrencyType.Reputation);
-            Debug.Log($"현재 명성{currentReputation}");
+            Debug.Log("등급업을 더이상 못합니다");
+            return;
         }
 
-        switch (currentRank)
+        RankData currentData = CurrentRankData;
+        int currentReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
+
+        Debug.Log($"현재 명성: {currentReputation}");
+
+        // 승급 조건 검사 (ScriptableObject에 적힌 수치와 비교)
+        bool isGameSatisfied = gamesReleased >= currentData.reqGamesReleased;
+        bool isEmployeeSatisfied = currentEmployeeCount >= currentData.reqEmployeeCount;
+        bool isReputationSatisfied = currentReputation >= currentData.reqReputation;
+
+        if (isGameSatisfied && isEmployeeSatisfied && isReputationSatisfied)
         {
-            case RankState.Solo:
-                if (gamesReleased >= 1)
-                {
-                    currentRank = RankState.Indie;
-                    hasEmployees = true;
-                    maxEmployee = 5;
-                    Debug.Log("인디");
-                }
-                else
-                {
-                    Debug.Log("조건 미달: 게임 출시 1회 이상");
-                }
-                break;
-
-            case RankState.Indie:
-                if (currentEmployeeCount >= 1 && currentReputation >= 500)
-                {
-                    currentRank = RankState.Small;
-                    maxEmployee = 10;
-                    Debug.Log("중소기업");
-                }
-                else
-                {
-                    Debug.Log("조건이 부족합니다");
-                    return;
-                }
-                break;
-
-            case RankState.Small:
-                if(currentReputation >= 1000 && gamesReleased >=5)
-                {
-                    currentRank = RankState.Midsized;
-                    maxEmployee = 20;
-                    Debug.Log("중견기업");
-                }
-                else
-                {
-                    Debug.Log("조건이 부족합니다");
-                }
-                break;
-
-            case RankState.Midsized:
-                if (currentReputation >= 25000)
-                {
-                    currentRank = RankState.MajorPublisher;
-                    maxEmployee = 50;
-                    Debug.Log("대기업");
-                }
-                else
-                {
-                    Debug.Log("명성이 부족합니다");
-                }
-                break;
-
-            case RankState.MajorPublisher:
-                if(currentRank == RankState.MajorPublisher)
-                {
-                    Debug.Log("등급업을 더이상 못합니다");
-                }
-                break;
+            currentRank = (RankState)(currentIndex + 1);
+            Debug.Log($"승급 성공 현재 등급: {CurrentRankData.rankDisplayName}");
         }
-        
+        else
+        {
+            Debug.Log("조건이 부족합니다");
+        }
+
     }
 
     //환생할 때 사용하는 데이터 초기화
@@ -169,14 +94,11 @@ public class RankManager : MonoBehaviour
     {
         currentRank = RankState.Solo;
         currentEmployeeCount = 0;
-        maxEmployee = 0;
-        hasEmployees = false;
-        
+
         if (GameManager.Instance != null)
         {
             GameManager.Instance.gameDevCount = 0;
         }
-
-        Debug.Log($"등급 초기화 완료");
+        Debug.Log("등급 초기화 완료");
     }
 }
