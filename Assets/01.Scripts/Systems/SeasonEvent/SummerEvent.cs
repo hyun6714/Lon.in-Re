@@ -21,6 +21,9 @@ public class SummerEvent : IEvent
     public SummerEvent(SummerEventData data)
     {
         this.data = data;
+
+        int day = data.SummerEventAddDay;
+        eventEndDate = CalendarManager.instance.GetAfterDay(day);
     }
 
     public void StartEvent()
@@ -30,8 +33,6 @@ public class SummerEvent : IEvent
         token = new CancellationTokenSource();
         Utils.Log("여름 이벤트 시작");
 
-        int day = data.SummerEventAddDay;
-        eventEndDate = CalendarManager.instance.GetAfterDay(day);
         Utils.Log($"이벤트 종료 날짜 : {eventEndDate.year}년 {eventEndDate.month}월 {eventEndDate.day}일 {eventEndDate.hour}시 {eventEndDate.minutes}분");
 
         EventTimer(token.Token).Forget();
@@ -111,6 +112,21 @@ public class SummerEvent : IEvent
         token?.Cancel();
         token?.Dispose();
         token = new CancellationTokenSource();
+
+        GameDate currentDate = CalendarManager.instance.CurrentDate;
+        GameDate targetDate = new GameDate()
+        {
+            year = currentDate.year,
+            month = eventEndDate.month,
+            day = eventEndDate.day,
+            hour = CalendarManager.instance.AllEventStartHour
+        };
+
+        if (currentDate < targetDate)
+        {
+            Utils.Log("여름 이벤트 복원 완료(이벤트 시작 전)");
+            return;
+        }
 
         SetMultiplier();
         EventTimer(token.Token).Forget();

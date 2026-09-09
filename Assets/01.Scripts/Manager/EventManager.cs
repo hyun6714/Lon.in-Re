@@ -36,7 +36,7 @@ public class EventManager : MonoBehaviour
     [SerializeField] private SummerEventData summerData;
 
     //private Dictionary<(int month, int day), GameEventInfo> eventDateDic = new Dictionary<(int month, int day), GameEventInfo>();
-    private Dictionary<EventDate, GameEventInfo> eventDateDic = new Dictionary<EventDate, GameEventInfo>();
+    private Dictionary<GameDate, GameEventInfo> eventDateDic = new Dictionary<GameDate, GameEventInfo>();
 
     private EventFactory eventFactory;
 
@@ -74,7 +74,14 @@ public class EventManager : MonoBehaviour
 
         foreach (GameEventInfo info in eventData.EventList)
         {
-            EventDate dateKey = new EventDate(info.TargetMonth, info.TargetDay);
+            GameDate dateKey = new GameDate
+            {
+                year = 0,
+                month = info.TargetMonth,
+                day = info.TargetDay,
+                hour = 0,
+                minutes = 0
+            };
 
             if (eventDateDic.ContainsKey(dateKey))
             {
@@ -131,14 +138,12 @@ public class EventManager : MonoBehaviour
             return;
         }
 
-        EventDate dateKey = default;
         GameEventInfo targetInfo = null;
         
         foreach (var events in eventDateDic)
         {
             if (events.Value.EventType == eventSaveData.eventType)
             {
-                dateKey = events.Key;
                 targetInfo = events.Value;
                 break;
             }
@@ -152,7 +157,7 @@ public class EventManager : MonoBehaviour
 
         if (CalendarManager.instance.CurrentDate < eventSaveData.eventEndDate)
         {
-            Utils.Log($"진행중인 이벤트 발견 : [{eventSaveData.eventType}] {dateKey.month}월 {dateKey.day}일 에 시작함");
+            Utils.Log($"진행중인 이벤트 발견 : [{eventSaveData.eventType}] {targetInfo.TargetMonth}월 {targetInfo.TargetDay}일 에 시작함");
 
             currentGameEventInfo = targetInfo;
             currentEventType = eventSaveData.eventType;
@@ -217,18 +222,30 @@ public class EventManager : MonoBehaviour
     }
 
     // 이벤트 교체
-    private void ChangeEvent(EventDate dateKey)
+    private void ChangeEvent(GameDate date)
     {
-        if (!eventDateDic.TryGetValue(dateKey, out GameEventInfo info))
+        GameEventInfo targetInfo = null;
+        GameDate dateKey = default;
+
+        foreach (var kv in eventDateDic)
+        {
+            if (kv.Key.EqualMonthDay(date))
+            {
+                targetInfo = kv.Value;
+                dateKey = kv.Key;
+                break;
+            }
+        }
+
+        if (targetInfo == null)
         {
             currentGameEventInfo = null;
             currentEvent = null;
-            Utils.Log("존재하지 않는 날짜 키");
             return;
         }
 
-        currentGameEventInfo = info;
-        currentEventType = info.EventType;
+        currentGameEventInfo = targetInfo;
+        currentEventType = targetInfo.EventType;
 
         currentEvent = eventFactory.CreateEvent(currentEventType);
 
@@ -272,7 +289,7 @@ public class EventManager : MonoBehaviour
 
                 await UniTask.WaitUntil(() =>
                 !isPaused &&
-                CalendarManager.instance.IsEventTime(targetDate.year, targetDate.month, targetDate.day),
+                CalendarManager.instance.IsEventTime(targetDate),
                 cancellationToken: token);
 
                 OnGameSettlement?.Invoke(gameId, i);
