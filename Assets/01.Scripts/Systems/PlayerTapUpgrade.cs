@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerTapUpgrade : MonoBehaviour
 {
+    // 탭 파워 변경될때 수치 전달 이벤트
+    public event Action<int> OnTapPowerChanged;
+
     [Header("기본 탭 파워")]
     [SerializeField] private int defaultBasePower = 1;
 
@@ -55,6 +59,9 @@ public class PlayerTapUpgrade : MonoBehaviour
         }
 
         cachedTapPower = Mathf.Max(1, Mathf.RoundToInt(totalPower));
+
+        // 최종 탭 파워 브로드캐스팅
+        OnTapPowerChanged?.Invoke(cachedTapPower);
     }
 
     // 업그레이드 가능 여부 판별

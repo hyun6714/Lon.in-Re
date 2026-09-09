@@ -14,7 +14,7 @@ public class PartUpgradeSlot : MonoBehaviour
 
     private PartState targetState;
     private PlayerTapUpgrade playerUpgrade;
-    private Action onUpgradeSuccess;                   // 모든 부품 슬롯 일괄 갱신용 콜백
+    private Action onUpgradeSuccess;                    // 모든 부품 슬롯 일괄 갱신용 콜백
     private Color originCostColor = Color.white;
 
     private void Awake()
@@ -79,7 +79,15 @@ public class PartUpgradeSlot : MonoBehaviour
         // 비용
         if (costText != null)
         {
-            costText.text = CurrencyFormatter.Format(targetState.GetNextCost());
+            int nextCost = targetState.GetNextCost();
+            costText.text = CurrencyFormatter.Format(nextCost);
+
+            // 돈 충분한지 체크
+            bool canAfford = CurrencyManager.instance != null && CurrencyManager.instance.GetAmount(CurrencyType.Normal) >= nextCost;
+
+            // 연출 완료 후 색상 설정
+            costText.DOComplete();
+            costText.color = canAfford ? originCostColor : new Color(0.65f, 0.65f, 0.65f, 1f);
         }
 
         // 버튼 활성화 유지
@@ -99,6 +107,10 @@ public class PartUpgradeSlot : MonoBehaviour
         // 업그레이드 시도
         if (playerUpgrade.TryUpgrade(targetState))
         {
+            // 업그레이드 성공 연출
+            transform.DOComplete();
+            transform.DOPunchScale(Vector3.one * 0.06f, 0.15f, vibrato: 5, elasticity: 0.5f)
+                     .SetLink(gameObject);
             if (onUpgradeSuccess != null)
             {
                 onUpgradeSuccess.Invoke();
@@ -110,7 +122,7 @@ public class PartUpgradeSlot : MonoBehaviour
         }
         else
         {
-            // 업그레이드 실패(골드 부족)
+            // 업그레이드 실패
             PlayFailAnimation();
         }
     }
@@ -121,16 +133,6 @@ public class PartUpgradeSlot : MonoBehaviour
         transform.DOComplete();
         transform.DOShakePosition(0.25f, strength: new Vector3(8f, 0, 0), vibrato: 10, randomness: 90, fadeOut: true)
                  .SetLink(gameObject);
-
-        // 비용 텍스트 일시적 붉은색 깜빡임
-        if (costText != null)
-        {
-            costText.DOComplete();
-            costText.color = originCostColor; // 색상 변질 방지
-            costText.DOColor(Color.red, 0.12f)
-                    .SetLoops(2, LoopType.Yoyo)
-                    .SetLink(gameObject);
-        }
     }
 
     private string GetRankKorean(RankManager.RankState rank)

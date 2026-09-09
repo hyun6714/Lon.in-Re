@@ -37,7 +37,7 @@ public class EmployeeHireSlot : MonoBehaviour
             hireBtn = GetComponent<Button>();
         }
 
-        if(hireBtn != null)
+        if (hireBtn != null)
         {
             hireBtn.onClick.RemoveListener(OnClickHire);
             hireBtn.onClick.AddListener(OnClickHire);
@@ -101,6 +101,7 @@ public class EmployeeHireSlot : MonoBehaviour
             if (costText != null)
             {
                 costText.text = "잠김";
+                costText.color = new Color(0.6f, 0.6f, 0.6f, 1f);
             }
             if (hireBtn != null)
             {
@@ -124,7 +125,24 @@ public class EmployeeHireSlot : MonoBehaviour
         bool isMaxCapacity = RankManager.instance != null && RankManager.instance.currentEmployeeCount >= RankManager.instance.maxEmployee;
         if (costText != null)
         {
-            costText.text = isMaxCapacity ? "MAX" : CurrencyFormatter.Format(targetState.GetCurrentHireCost());
+            costText.DOComplete();
+
+            if (isMaxCapacity)
+            {
+                costText.text = "MAX";
+                costText.color = new Color(0.65f, 0.65f, 0.65f, 1f); // 정원 초과 시 회색
+            }
+            else
+            {
+                int hireCost = targetState.GetCurrentHireCost();
+                costText.text = CurrencyFormatter.Format(hireCost);
+
+                int currentGold = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Normal) : 0;
+                bool canAfford = currentGold >= hireCost;
+
+                // 고용 가능하면 흰색, 돈 부족하면 옅은 회색
+                costText.color = canAfford ? originCostColor : new Color(0.65f, 0.65f, 0.65f, 1f);
+            }
         }
 
         // 버튼 활성화 유지
@@ -156,6 +174,11 @@ public class EmployeeHireSlot : MonoBehaviour
         }
 
         manager.HireEmployee(targetState.employeeData.EmployeeId);
+
+        // 고용 성공 연출
+        transform.DOComplete();
+        transform.DOPunchScale(Vector3.one * 0.06f, 0.15f, vibrato: 5, elasticity: 0.5f)
+                 .SetLink(gameObject);
 
         if (onHireSuccess != null)
         {
@@ -200,48 +223,24 @@ public class EmployeeHireSlot : MonoBehaviour
         transform.DOComplete();
         transform.DOShakePosition(0.25f, strength: new Vector3(8f, 0, 0), vibrato: 10, randomness: 90, fadeOut: true)
                  .SetLink(gameObject);
+    }
 
-        // 텍스트 피드백
-        if (costText != null)
+    private string GetRankKorean(RankManager.RankState rank)
+    {
+        switch (rank)
         {
-            costText.DOComplete();
-            costText.transform.DOComplete();
-
-            bool isMaxCapacity = RankManager.instance != null && RankManager.instance.currentEmployeeCount >= RankManager.instance.maxEmployee;
-
-            if (isMaxCapacity)
-            {
-                // 정원이 꽉 찼을 때 MAX 텍스트 펀치 스케일 효과
-                costText.transform.DOPunchScale(Vector3.one * 0.25f, 0.2f)
-                                  .SetLink(gameObject);
-            }
-            else
-            {
-                // 돈이 부족할 때 빨간색 깜빡임
-                costText.color = originCostColor;
-                costText.DOColor(Color.red, 0.12f)
-                        .SetLoops(2, LoopType.Yoyo)
-                        .SetLink(gameObject);
-            }
+            case RankManager.RankState.Solo:
+                return "1인 개발";
+            case RankManager.RankState.Indie:
+                return "인디 기업";
+            case RankManager.RankState.Small:
+                return "중소기업";
+            case RankManager.RankState.Midsized:
+                return "중견기업";
+            case RankManager.RankState.MajorPublisher:
+                return "대기업";
+            default:
+                return "잠김";
         }
     }
-
-private string GetRankKorean(RankManager.RankState rank)
-{
-    switch (rank)
-    {
-        case RankManager.RankState.Solo:
-            return "1인 개발";
-        case RankManager.RankState.Indie:
-            return "인디 기업";
-        case RankManager.RankState.Small:
-            return "중소기업";
-        case RankManager.RankState.Midsized:
-            return "중견기업";
-        case RankManager.RankState.MajorPublisher:
-            return "대기업";
-        default:
-            return "잠김";
-    }
-}
 }
