@@ -39,10 +39,11 @@ public class LoadManager : MonoBehaviour
         // JSON -> SaveData 변환
         SaveData saveData = JsonUtility.FromJson<SaveData>(json);
 
-        // 각 시스템 데이터 복원
+        // 각 시스템 데이터 불러오기
         LoadCurrencyData(saveData);
         LoadGameData(saveData);
         LoadRankData(saveData);
+        LoadEmployeeData(saveData);
 
         Utils.Log("게임 불러오기 완료");
     }
@@ -70,10 +71,19 @@ public class LoadManager : MonoBehaviour
     {
         RankManager.instance.currentRank = saveData.currentRank;
 
-        RankManager.instance.hasEmployees = saveData.hasEmployees;
-
-        RankManager.instance.maxEmployee = saveData.maxEmployee;
-
         RankManager.instance.currentEmployeeCount = saveData.currentEmployeeCount;
+
+        RankManager.instance.RestoreRankStats();
+    }
+
+    // 직원 데이터 불러오기
+    private void LoadEmployeeData(SaveData saveData)
+    {
+        foreach (EmployeeSaveData employeeSaveData in saveData.employees)
+        {
+            EmployeeState state = EmployeeManager.instance.GetEmployeeState(employeeSaveData.employeeId);
+
+            state.SetCount(employeeSaveData.count);
+        }
     }
 }

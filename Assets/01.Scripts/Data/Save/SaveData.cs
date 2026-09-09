@@ -36,12 +36,6 @@ public class SaveData
     // 현재 회사 등급
     public RankManager.RankState currentRank;
 
-    // 직원 고용 가능 여부
-    public bool hasEmployees;
-
-    // 최대 고용 가능 직원 수
-    public int maxEmployee;
-
     // 현재 총 직원 수
     public int currentEmployeeCount;
 
