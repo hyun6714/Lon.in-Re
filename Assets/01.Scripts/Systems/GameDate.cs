@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 public struct GameDate : IEquatable<GameDate>
 {
@@ -10,6 +11,15 @@ public struct GameDate : IEquatable<GameDate>
     public Season season;
     public int lastDay;
 
+    public int defaultDaysInMonth;
+    public int maxMonthPerYear;
+    public int maxHourPerDay;
+
+    public int monthPerSeason;
+
+    public List<int> daysInMonthList;
+    public List<SeasonInfo> seasonList;
+
     public GameDate(CalendarData data)
     {
         year = data.StartYear;
@@ -18,7 +28,17 @@ public struct GameDate : IEquatable<GameDate>
         hour = data.StartHour;
         minutes = data.StartMinute;
         season = data.StartSeason;
-        lastDay = DateTime.DaysInMonth(year, month);
+
+        defaultDaysInMonth = data.DefaultDaysInMonth;
+        maxMonthPerYear = data.MaxMonthPerYear;
+        maxHourPerDay = data.MaxHourPerDay;
+
+        monthPerSeason = data.MonthPerSeason;
+
+        daysInMonthList = data.DaysInMonthList;
+        seasonList = data.SeasonList;
+
+        lastDay = daysInMonthList[month - 1];
     }
 
     public void NextDay()
@@ -36,13 +56,13 @@ public struct GameDate : IEquatable<GameDate>
     {
         month++;
 
-        if (month > 12)
+        if (month > maxMonthPerYear)
         {
             month = 1;
             NextYear();
         }
 
-        lastDay = DateTime.DaysInMonth(year, month);
+        lastDay = daysInMonthList[month - 1];
 
         CheckNextSeason();
     }
@@ -54,7 +74,7 @@ public struct GameDate : IEquatable<GameDate>
 
     public void CheckNextSeason()
     {
-        if (month % 3 == 0)
+        if (month % monthPerSeason == 0)
         {
             season = (Season)month;
         }
@@ -77,15 +97,16 @@ public struct GameDate : IEquatable<GameDate>
         return month == other.month && day == other.day;
     }
 
+#if UNITY_EDITOR
     public void SetDate(int year, int month, int day, int hour)
     {
         this.year = year;
-        this.month = Math.Clamp(month, 1, 12);
+        this.month = Math.Clamp(month, 1, maxMonthPerYear);
 
-        lastDay = DateTime.DaysInMonth(this.year, this.month);
+        lastDay = daysInMonthList[this.month - 1]; ;
 
         this.day = Math.Clamp(day, 1, lastDay);
-        this.hour = Math.Clamp(hour, 0, 23);
+        this.hour = Math.Clamp(hour, 0, maxHourPerDay - 1);
         minutes = 0;
 
         SetSeason();
@@ -101,7 +122,7 @@ public struct GameDate : IEquatable<GameDate>
             _ => Season.Winter
         };
     }
-
+#endif
     #region 연산자 오버로딩
     public bool Equals(GameDate other)
     {

@@ -46,13 +46,7 @@ public class CalendarManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI text;
 
 
-    private Dictionary<Season, string> seasonString = new Dictionary<Season, string>()
-    {
-        { Season.Spring, "봄" },
-        { Season.Summer, "여름" },
-        { Season.Fall, "가을" },
-        { Season.Winter, "겨울" }
-    };
+    private Dictionary<Season, string> seasonString = new Dictionary<Season, string>();
 
     private CancellationTokenSource token;
 
@@ -107,7 +101,15 @@ public class CalendarManager : MonoBehaviour
 
         currentDate = new GameDate(data);        
         
-        allEventStartHour = data.StartHour;
+        allEventStartHour = data.BaseEventHour;
+        realTimer = data.RealTime;
+        minutePerSec = data.MinutePerSec;
+
+        seasonString.Clear();
+        foreach (SeasonInfo info in data.SeasonList)
+        {
+            seasonString[info.season] = info.seasonName;
+        }
     }
 
     private async UniTaskVoid UpdateTimeTick(CancellationToken token)
@@ -137,14 +139,14 @@ public class CalendarManager : MonoBehaviour
         currentDate.minutes += minutes;
         totalTime += minutes;
 
-        while (currentDate.minutes >= 60)
+        while (currentDate.minutes >= data.MaxMinutePerHour)
         {
-            currentDate.minutes -= 60;
+            currentDate.minutes -= data.MaxMinutePerHour;
             currentDate.hour++;
 
-            if (currentDate.hour >= 24)
+            if (currentDate.hour >= data.MaxHourPerDay)
             {
-                currentDate.hour -= 24;
+                currentDate.hour -= data.MaxHourPerDay;
                 NextDay();
             }
 
@@ -177,15 +179,25 @@ public class CalendarManager : MonoBehaviour
         return $"{(int)currentDate.hour:D2}";
     }
 
-    public int GetLastDay(int year, int month)
+    /// <summary>
+    /// 해당 달의 마지막날 계산
+    /// </summary>
+    /// <param name="month"> 목표 달 </param>
+    /// <returns> 달의 마지막 날 </returns>
+    public int GetLastDay(int month)
     {
-        if (month > 12 || month < 1)
+        if (month > data.MaxMonthPerYear || month < 1)
         {
-            Utils.Log("달이 12를 초과했거나 1 미만입니다.");
+            Utils.Log($"달이 범위를 초과했습니다. {month}");
             return 0;
         }
 
-        return DateTime.DaysInMonth(year, month);
+        if (month <= data.DaysInMonthList.Count)
+        {
+            return data.DaysInMonthList[month - 1];
+        }
+
+        return data.DefaultDaysInMonth;
     }
 
     public void TestTextShow()
