@@ -162,6 +162,22 @@ public class NormalShop : MonoBehaviour
         SwitchTab(currentTab);
     }
 
+    // 외부에서 원하는 탭을 지정해 바로 열 때 호출하는 메서드
+    public void OpenShop(ShopTab tab)
+    {
+        if (!isInitialized)
+        {
+            InitSlots();
+        }
+
+        if (shopPanel != null)
+        {
+            shopPanel.SetActive(true);
+        }
+        SwitchTab(tab);
+    }
+
+
     public void CloseShop()
     {
         if (shopPanel != null)
