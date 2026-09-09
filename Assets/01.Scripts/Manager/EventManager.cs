@@ -130,7 +130,7 @@ public class EventManager : MonoBehaviour
     /// 게임 로드 시 이벤트 불러오는 함수
     /// </summary>
     /// <param name="eventSaveData"> 저장된 EventSaveData </param>
-    public void CheckEvnetSave(EventSaveData eventSaveData)
+    public void CheckEventSave(EventSaveData eventSaveData)
     {
         if (eventSaveData == null || !eventSaveData.isEventActive)
         {
