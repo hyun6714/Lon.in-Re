@@ -13,4 +13,9 @@ public class SpringEvent : IEvent
         // 이벤트 종료 로직
         Utils.Log("봄 이벤트 종료");
     }
+
+    public void SaveEventData(EventSaveData data)
+    {
+
+    }
 }

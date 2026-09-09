@@ -120,7 +120,7 @@ public class AutoProduction : MonoBehaviour
                     nowMoney += moneyPerSec;
                     GameEventBridge.CurrencyAdded(CurrencyType.Normal, (int)moneyPerSec);
                     CurrencyManager.instance.CurrencyTestSet();
-                    SpawnFloatingText(transform.position);
+                    UIManager.Instance.SpawnFloatingText(transform.position, (int)moneyPerSec, true);
                 }
 
                 await UniTask.NextFrame(PlayerLoopTiming.EarlyUpdate, token);
@@ -129,41 +129,6 @@ public class AutoProduction : MonoBehaviour
         catch (OperationCanceledException)
         {
             
-        }
-    }
-
-    // 텍스트 특정 위치에 출력. 현재는 해당 오브젝트 상단에 출력
-    public void SpawnFloatingText(Vector2 pos)
-    {
-        if (textPrefab == null || ObjectPoolManager.instance == null)
-            return;
-        GameObject text = textPrefab.gameObject;
-        
-        FloatingText textObj = ObjectPoolManager.instance.GetObject<FloatingText>(
-            textPrefab.gameObject,
-            effectCanvasTransform
-            );
-
-        if (textObj != null)
-        {
-            RectTransform rect = textObj.GetComponent<RectTransform>();
-
-            
-            if (rect != null && effectCanvasTransform is RectTransform canvasRect)
-            {
-                Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Camera.main, pos);
-
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    canvasRect,
-                    screenPos,
-                    canvasRect.GetComponent<Canvas>().worldCamera,
-                    out Vector2 localPoint
-                    );
-
-                rect.anchoredPosition = localPoint + new Vector2(0f, 100f);
-            }
-            textObj.SetOriginPrefab(textPrefab.gameObject);
-            textObj.Setup($"+{moneyPerSec}");
         }
     }
 

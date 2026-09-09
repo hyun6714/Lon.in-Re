@@ -3,7 +3,7 @@ using System;
 public static class GameEventBridge
 {
     /// <summary> 날짜 변경시 발생 (월, 일) </summary>
-    public static event Action<EventDate> OnDayChanged;
+    public static event Action<GameDate> OnDayChanged;
 
     /// <summary> 7시 마다 이벤트 체크 </summary>
     public static event Action OnEventStarted;
@@ -22,7 +22,7 @@ public static class GameEventBridge
     
 
     // 이벤트 실행
-    public static void DayChanged(EventDate date) => OnDayChanged?.Invoke(date);
+    public static void DayChanged(GameDate date) => OnDayChanged?.Invoke(date);
     public static void EventStarted() => OnEventStarted?.Invoke();
     public static void PausedChanged(bool isPaused) => OnPausedChanged?.Invoke(isPaused);
     public static void AutoMultiplierChanged(float multi) => OnAutoMultiplierChanged?.Invoke(multi);

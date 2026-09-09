@@ -31,8 +31,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] Button peopleBtn;
     [SerializeField] Button rebirthBtn;
 
-    [Header("테스트용 캔버스")]
+    [Header("캔버스")]
     [SerializeField] private Canvas uiCanvas;
+    [SerializeField] private Canvas effectCanvas;
+
+    [Header("플로팅 텍스트")]
+    [SerializeField] private FloatingText floatingTextPrefab;
 
     [Header("팝업 프리팹")]
     [SerializeField] private List<PopupBase> popupList;
@@ -70,6 +74,46 @@ public class UIManager : MonoBehaviour
             }
 
             popupDic.Add(popup.Name, popup);
+        }
+    }
+
+    /// <summary>
+    /// 재화 획득 텍스트를 화면에 띄우는 함수
+    /// </summary>
+    /// <param name="position"> 텍스트가 나올 위치 </param>
+    /// <param name="power"> 획득한 재화량 </param>
+    /// <param name="isWorldPos"> 월드 캔버스에 표시할지 결정 </param>
+    public void SpawnFloatingText(Vector3 position, int power, bool isWorldPos)
+    {
+        if (floatingTextPrefab == null || ObjectPoolManager.instance == null)
+        {
+            Utils.Log("프리팹 또는 매니저를 찾지 못함");
+            return;
+        }
+
+        FloatingText textObj = ObjectPoolManager.instance.GetObject<FloatingText>(
+            floatingTextPrefab.gameObject,
+            effectCanvas.transform
+        );
+
+        if (textObj != null)
+        {
+            RectTransform rect = textObj.GetComponent<RectTransform>();
+            if (rect != null)
+            {
+                if (isWorldPos)
+                {
+                    Vector3 worldPos = position + new Vector3(0f, 1f, 0f);
+                    rect.position = Camera.main.WorldToScreenPoint(worldPos);
+                }
+                else
+                {
+                    rect.position = position;
+                }
+            }
+
+            textObj.SetOriginPrefab(floatingTextPrefab.gameObject);
+            textObj.Setup($"+{CurrencyFormatter.Format(power)}");
         }
     }
 
