@@ -14,6 +14,10 @@ public class SummerEvent : IEvent
 
     private CancellationTokenSource token;
 
+    public bool IsActive => token != null;
+    public GameDate EventEndDate => eventEndDate;
+    public bool IsCool => isCool;
+
     public SummerEvent(SummerEventData data)
     {
         this.data = data;
@@ -85,5 +89,31 @@ public class SummerEvent : IEvent
         ReturnMultiplier();
         
         Utils.Log("여름 이벤트 종료");
+    }
+
+    public void SaveEventData(EventSaveData eventSaveData)
+    {
+        eventSaveData.eventEndDate = eventEndDate;
+        eventSaveData.isSummerCool = isCool;
+    }
+
+    public void LoadEvent(GameDate endDate, bool isSummerCool)
+    {
+        eventEndDate = endDate;
+        isCool = isSummerCool;
+
+        if (CalendarManager.instance.CurrentDate >= eventEndDate)
+        {
+            EndEvent();
+            return;
+        }
+
+        token?.Cancel();
+        token?.Dispose();
+        token = new CancellationTokenSource();
+
+        SetMultiplier();
+        EventTimer(token.Token).Forget();
+        Utils.Log("여름 이벤트 복원 완료");
     }
 }

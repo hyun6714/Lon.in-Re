@@ -11,10 +11,13 @@ public interface IEvent
 {
     void StartEvent();
     void EndEvent();
+
+    void SaveEventData(EventSaveData eventSaveData);
 }
 
 public enum GameEventType
 {
+    None,
     SpringEvent = 3001,
     SummerEvent,
     FallEvent,
@@ -117,6 +120,83 @@ public class EventManager : MonoBehaviour
     }
 
     /// <summary>
+    /// 게임 로드 시 이벤트 불러오는 함수
+    /// </summary>
+    /// <param name="eventSaveData"> 저장된 EventSaveData </param>
+    public void CheckEvnetSave(EventSaveData eventSaveData)
+    {
+        if (eventSaveData == null || !eventSaveData.isEventActive)
+        {
+            Utils.Log("저장된 이벤트가 없습니다.");
+            return;
+        }
+
+        EventDate dateKey = default;
+        GameEventInfo targetInfo = null;
+        
+        foreach (var events in eventDateDic)
+        {
+            if (events.Value.EventType == eventSaveData.eventType)
+            {
+                dateKey = events.Key;
+                targetInfo = events.Value;
+                break;
+            }
+        }
+
+        if (targetInfo == null)
+        {
+            Utils.Log($"이벤트 타입 [{eventSaveData.eventType}]에 해당하는 이벤트를 딕셔너리에서 찾지 못했습니다.");
+            return;
+        }
+
+        if (CalendarManager.instance.CurrentDate < eventSaveData.eventEndDate)
+        {
+            Utils.Log($"진행중인 이벤트 발견 : [{eventSaveData.eventType}] {dateKey.month}월 {dateKey.day}일 에 시작함");
+
+            currentGameEventInfo = targetInfo;
+            currentEventType = eventSaveData.eventType;
+            currentEvent = eventFactory.CreateEvent(currentEventType);
+
+            if (currentEvent == null)
+            {
+                Utils.Log($"이벤트 생성 실패 : {currentEventType}");
+                return;
+            }
+
+            if (currentEvent is SummerEvent summerEvent)
+            {
+                summerEvent.LoadEvent(eventSaveData.eventEndDate, eventSaveData.isSummerCool);
+            }            
+        }
+        else
+        {
+            Utils.Log("저장된 이벤트의 종료 날짜가 이미 지났습니다.");
+        }
+    }
+
+    /// <summary>
+    /// 게임 세이브 시 불러오는 함수
+    /// </summary>
+    /// <returns> 현재 진행중인 이벤트 정보를 반환  </returns>
+    public EventSaveData GetEventSaveData()
+    {
+        EventSaveData saveData = new EventSaveData();
+
+        if (currentEvent == null)
+        {
+            saveData.isEventActive = false;
+            return saveData;
+        }
+
+        saveData.isEventActive = true;
+        saveData.eventType = currentEventType;
+
+        currentEvent.SaveEventData(saveData);
+        return saveData;
+    }
+
+    /// <summary>
     /// 여름 이벤트 발동 시 배율 변경
     /// </summary>
     /// <param name="multi"> isCool에 따른 배율 변경값 </param>
@@ -160,8 +240,7 @@ public class EventManager : MonoBehaviour
     public void StartGameSettlement(int gameId)
     {
         GameDate nowDate = CalendarManager.instance.CurrentDate;
-        //StartGameDevAsync(date.year, date.month, date.day, gameId, CalendarManager.instance.Token).Forget();
-        StartGameDevAsync(nowDate, gameId, token.Token).Forget();
+        StartGameSettlementAsync(nowDate, gameId, token.Token).Forget();
     }
 
     // 개발 버튼 눌렀을 시 실행
@@ -181,7 +260,7 @@ public class EventManager : MonoBehaviour
     /// <param name="gameId"> 출시 게임 고유 ID </param>
     /// <param name="token"> UniTask 토큰 </param>
     /// <returns></returns>
-    public async UniTaskVoid StartGameDevAsync(GameDate date, int gameId, CancellationToken token)
+    public async UniTaskVoid StartGameSettlementAsync(GameDate date, int gameId, CancellationToken token)
     {
         try
         {
@@ -222,6 +301,10 @@ public class EventManager : MonoBehaviour
     public void EndCurrentEvent()
     {
         currentEvent?.EndEvent();
+
+        currentEvent = null;
+        currentEventType = GameEventType.None;
+        currentGameEventInfo = null;
     }    
 
     public void PausedChanged(bool isPaused)

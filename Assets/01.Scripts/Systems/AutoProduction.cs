@@ -132,41 +132,6 @@ public class AutoProduction : MonoBehaviour
         }
     }
 
-    // 텍스트 특정 위치에 출력. 현재는 해당 오브젝트 상단에 출력
-    //public void spawnfloatingtext(vector2 pos)
-    //{
-    //    if (textprefab == null || objectpoolmanager.instance == null)
-    //        return;
-    //    gameobject text = textprefab.gameobject;
-        
-    //    floatingtext textobj = objectpoolmanager.instance.getobject<floatingtext>(
-    //        textprefab.gameobject,
-    //        effectcanvastransform
-    //        );
-
-    //    if (textobj != null)
-    //    {
-    //        recttransform rect = textobj.getcomponent<recttransform>();
-
-            
-    //        if (rect != null && effectcanvastransform is recttransform canvasrect)
-    //        {
-    //            vector2 screenpos = recttransformutility.worldtoscreenpoint(camera.main, pos);
-
-    //            recttransformutility.screenpointtolocalpointinrectangle(
-    //                canvasrect,
-    //                screenpos,
-    //                canvasrect.getcomponent<canvas>().worldcamera,
-    //                out vector2 localpoint
-    //                );
-
-    //            rect.anchoredposition = localpoint + new vector2(0f, 100f);
-    //        }
-    //        textobj.setoriginprefab(textprefab.gameobject);
-    //        textobj.setup($"+{moneypersec}");
-    //    }
-    //}
-
     public void PausedChanged(bool isPaused)
     {
         this.isPaused = isPaused;
