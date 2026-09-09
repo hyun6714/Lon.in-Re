@@ -45,8 +45,6 @@ public class RankManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        LoadRank();
     }
 
     private void OnEnable()
@@ -58,18 +56,9 @@ public class RankManager : MonoBehaviour
     {
         ReincarnationManager.OnReincarnated -= ResetRank;
     }
+  
 
-    private void LoadRank()
-    {
-        if (PlayerPrefs.HasKey("PlayerRank"))
-        {
-            currentRank = (RankState)PlayerPrefs.GetInt("PlayerRank");
-
-            RestoreRankStats();
-        }
-    }
-
-    private void RestoreRankStats()
+    public void RestoreRankStats()
     {
         switch (currentRank)
         {
@@ -188,8 +177,6 @@ public class RankManager : MonoBehaviour
             GameManager.Instance.gameDevCount = 0;
         }
 
-        PlayerPrefs.SetInt("PlayerRank", (int)currentRank);
-        PlayerPrefs.Save();
         Debug.Log($"등급 초기화 완료");
     }
 }

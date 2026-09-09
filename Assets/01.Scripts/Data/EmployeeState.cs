@@ -41,5 +41,11 @@ public class EmployeeState
     {
         count = 0;
     }
+
+    // 저장된 직원 수 설정 (로드할때 필요)
+    public void SetCount(int value)
+    {
+        count = value;
+    }
 }
 

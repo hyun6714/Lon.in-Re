@@ -65,9 +65,8 @@ public class SaveManager : MonoBehaviour
     private void SaveRankData(SaveData saveData)
     {
         saveData.currentRank = RankManager.instance.currentRank;
-        saveData.hasEmployees = RankManager.instance.hasEmployees;
-        saveData.maxEmployee = RankManager.instance.maxEmployee;
         saveData.currentEmployeeCount = RankManager.instance.currentEmployeeCount;
+
     }
 
     // 직원 데이터 저장
