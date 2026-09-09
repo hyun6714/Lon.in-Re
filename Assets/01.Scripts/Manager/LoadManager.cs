@@ -72,8 +72,6 @@ public class LoadManager : MonoBehaviour
         RankManager.instance.currentRank = saveData.currentRank;
 
         RankManager.instance.currentEmployeeCount = saveData.currentEmployeeCount;
-
-        RankManager.instance.RestoreRankStats();
     }
 
     // 직원 데이터 불러오기
