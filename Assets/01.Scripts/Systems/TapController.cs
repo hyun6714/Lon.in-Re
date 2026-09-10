@@ -9,6 +9,9 @@ public class TapController : MonoBehaviour, IPointerDownHandler
 
     private void Awake()
     {
+        // 다중 터치 활성화
+        Input.multiTouchEnabled = true;
+
         // 컴포넌트 자동 연동
         if (playerUpgrade == null)
         {

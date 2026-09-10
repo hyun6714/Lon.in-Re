@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
+public class PartSaveData
+{
+    public string partId;
+    public int level;
+}
+
 public class PlayerTapUpgrade : MonoBehaviour
 {
     // 탭 파워 변경될때 수치 전달 이벤트
@@ -96,6 +103,67 @@ public class PlayerTapUpgrade : MonoBehaviour
 
         return false;
     }
+
+    // 부품 ID로 부품 상태 찾기
+    public PartState GetPartState(string partId)
+    {
+        for (int i = 0; i < partStates.Count; i++)
+        {
+            PartState state = partStates[i];
+            if (state != null && state.partData != null)
+            {
+                if (state.partData.PartId == partId)
+                {
+                    return state;
+                }
+            }
+        }
+        return null;
+    }
+
+    // 세이브
+    public List<PartSaveData> GetSaveData()
+    {
+        List<PartSaveData> list = new List<PartSaveData>();
+
+        for (int i = 0; i < partStates.Count; i++)
+        {
+            PartState state = partStates[i];
+            if (state != null && state.partData != null)
+            {
+                PartSaveData data = new PartSaveData();
+                data.partId = state.partData.PartId;
+                data.level = state.Level;
+
+                list.Add(data);
+            }
+        }
+
+        return list;
+    }
+
+    // 로드
+    public void LoadSaveData(List<PartSaveData> savedList)
+    {
+        if (savedList == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < savedList.Count; i++)
+        {
+            PartSaveData saved = savedList[i];
+            PartState state = GetPartState(saved.partId);
+
+            if (state != null)
+            {
+                state.SetLevel(saved.level);
+            }
+        }
+
+        RecalculateTapPower();
+    }
+
 
     // 환생 시 레벨 리셋 함수
     public void ResetUpgrade()

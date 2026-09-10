@@ -27,6 +27,11 @@ public class PartState
         level++;
     }
 
+    public void SetLevel(int value)
+    {
+        level = Mathf.Max(0, value);
+    }
+
     public void ResetLevel()
     {
         level = 0;
