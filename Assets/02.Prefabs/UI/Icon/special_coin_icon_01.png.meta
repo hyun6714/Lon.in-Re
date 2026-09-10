@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5662f6a148c5619428e7218671952387
+guid: e5b1c9bc930f4ed4b9282c57e012c695
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -636070176980213949
-    second: levelicon_05_02_0
+      213: 5634654857601646502
+    second: special_coin_icon_01_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: levelicon_05_02_0
+      name: special_coin_icon_01_0
       rect:
         serializedVersion: 2
-        x: 6
+        x: 0
         y: 0
-        width: 141
-        height: 150
+        width: 62
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 34fdfd84b893c27f0800000000000000
-      internalID: -636070176980213949
+      spriteID: 6af76434db0523e40800000000000000
+      internalID: 5634654857601646502
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      levelicon_05_02_0: -636070176980213949
+      special_coin_icon_01_0: 5634654857601646502
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
