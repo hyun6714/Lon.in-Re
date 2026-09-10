@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public enum UIName
 {
@@ -49,6 +50,8 @@ public class UIManager : MonoBehaviour
 
     private Dictionary<UIName, PopupBase> popupDic = new Dictionary<UIName, PopupBase>();
     private Dictionary<UIName, PopupBase> runtimePopupDic = new Dictionary<UIName, PopupBase>();
+
+    public event Action OnSceneInit;
 
     private void Awake()
     {
