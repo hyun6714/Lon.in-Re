@@ -112,6 +112,17 @@ public class CalendarManager : MonoBehaviour
         }
     }
 
+    public GameDateSaveData SaveDate()
+    {
+        GameDateSaveData saveData = new GameDateSaveData(currentDate);
+        return saveData;
+    }
+
+    public void LoadDate(GameDateSaveData saveData)
+    {
+        currentDate.LoadDate(saveData);
+    }
+
     private async UniTaskVoid UpdateTimeTick(CancellationToken token)
     {
         try

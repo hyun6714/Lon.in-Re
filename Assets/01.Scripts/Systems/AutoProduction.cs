@@ -114,7 +114,7 @@ public class AutoProduction : MonoBehaviour
                 {
                     nowMoney += moneyPerSec;
                     GameEventBridge.CurrencyAdded(CurrencyType.Normal, (int)moneyPerSec);
-                    CurrencyManager.instance.CurrencyTestSet();
+                    
                     UIManager.Instance.SpawnFloatingText(transform.position, (int)moneyPerSec, true);
                 }
 

@@ -41,6 +41,18 @@ public struct GameDate : IEquatable<GameDate>
         lastDay = daysInMonthList[month - 1];
     }
 
+    public void LoadDate(GameDateSaveData saveData)
+    {
+        year = saveData.year;
+        month = saveData.month;
+        day = saveData.day;
+        hour = saveData.hour;
+        minutes = saveData.minutes;
+
+        UpdateSeason();
+        lastDay = daysInMonthList[month - 1];
+    }
+
     public void NextDay()
     {
         day++;
@@ -64,7 +76,7 @@ public struct GameDate : IEquatable<GameDate>
 
         lastDay = daysInMonthList[month - 1];
 
-        CheckNextSeason();
+        UpdateSeason();
     }
 
     public void NextYear()
@@ -72,11 +84,16 @@ public struct GameDate : IEquatable<GameDate>
         year++;
     }
 
-    public void CheckNextSeason()
+    public void UpdateSeason()
     {
-        if (month % monthPerSeason == 0)
+        season = Season.Winter;
+
+        foreach (SeasonInfo info in seasonList)
         {
-            season = (Season)month;
+            if ((int)info.season <= month)
+            {
+                season = info.season;
+            }
         }
     }
 
