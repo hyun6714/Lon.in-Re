@@ -45,6 +45,8 @@ public class LoadManager : MonoBehaviour
         LoadRankData(saveData);
         LoadEmployeeData(saveData);
         LoadGameDevData(saveData);
+        LoadCalendarData(saveData);
+        LoadReleasedGameData(saveData);
 
         Utils.Log("게임 불러오기 완료");
     }
@@ -90,5 +92,24 @@ public class LoadManager : MonoBehaviour
     private void LoadGameDevData(SaveData saveData)
     {
         GameDevManager.instance.LoadNextGameId(saveData.nextGameId);
+    }
+
+    // 게임 내 날짜 불러오기
+    private void LoadCalendarData(SaveData saveData)
+    {
+        CalendarManager.instance.LoadDate(saveData.gameDate);
+    }
+
+    // 출시된 게임 데이터 불러오기
+    private void LoadReleasedGameData(SaveData saveData)
+    {
+        GameReleaseManager.instance.releasedGames.Clear();
+
+        foreach (ReleasedGameSaveData releasedGame in saveData.releasedGames)
+        {
+            GameReleaseManager.instance.releasedGames.Add(releasedGame);
+
+            EventManager.instance.LoadGameSettlement(releasedGame);
+        }
     }
 }

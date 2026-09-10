@@ -93,13 +93,7 @@ public class SaveManager : MonoBehaviour
     // 게임 내 날짜 저장
     private void SaveCalendarData(SaveData saveData)
     {
-        GameDate currentDate = CalendarManager.instance.CurrentDate;
-
-        saveData.year = currentDate.year;
-        saveData.month = currentDate.month;
-        saveData.day = currentDate.day;
-        saveData.hour = currentDate.hour;
-        saveData.minute = currentDate.minutes;
+        saveData.gameDate = CalendarManager.instance.SaveDate();
     }
 
     // 출시된 게임 데이터 저장

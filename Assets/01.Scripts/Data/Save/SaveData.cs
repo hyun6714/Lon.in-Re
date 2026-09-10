@@ -63,11 +63,7 @@ public class SaveData
 
     #region 게임 내 날짜
 
-    public int year;
-    public int month;
-    public int day;
-    public int hour;
-    public int minute;
+    public GameDateSaveData gameDate;
 
     #endregion
 

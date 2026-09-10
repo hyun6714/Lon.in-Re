@@ -257,7 +257,7 @@ public class EventManager : MonoBehaviour
     public void StartGameSettlement(int gameId)
     {
         GameDate nowDate = CalendarManager.instance.CurrentDate;
-        StartGameSettlementAsync(nowDate, gameId, token.Token).Forget();
+        StartGameSettlementAsync(nowDate, gameId, 0, token.Token).Forget();
     }
 
     // 개발 버튼 눌렀을 시 실행
@@ -277,11 +277,11 @@ public class EventManager : MonoBehaviour
     /// <param name="gameId"> 출시 게임 고유 ID </param>
     /// <param name="token"> UniTask 토큰 </param>
     /// <returns></returns>
-    public async UniTaskVoid StartGameSettlementAsync(GameDate date, int gameId, CancellationToken token)
+    public async UniTaskVoid StartGameSettlementAsync(GameDate date, int gameId, int settlementCount, CancellationToken token)
     {
         try
         {
-            for (int i = 1; i <= data.SettlementNum; i++)
+            for (int i = settlementCount + 1; i <= data.SettlementNum; i++)
             {
                 int addDay = data.NextSettlements[i - 1];
 
@@ -327,5 +327,17 @@ public class EventManager : MonoBehaviour
     public void PausedChanged(bool isPaused)
     {
         this.isPaused = isPaused;
+    }
+
+    // 저장된 게임 정산 이어서 시작
+    public void LoadGameSettlement(ReleasedGameSaveData releasedGame)
+    {
+        GameDate releaseDate = CalendarManager.instance.CurrentDate;
+
+        releaseDate.year = releasedGame.releaseYear;
+        releaseDate.month = releasedGame.releaseMonth;
+        releaseDate.day = releasedGame.releaseDay;
+
+        StartGameSettlementAsync(releaseDate, releasedGame.gameResult.gameId, releasedGame.settlementCount, token.Token ).Forget();
     }
 }
