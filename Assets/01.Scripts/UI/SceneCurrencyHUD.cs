@@ -3,17 +3,28 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
 
-public class SceneCurrencyHUD : MonoBehaviour
+public class SceneCurrencyHUD : UIBase
 {
+    public override UIName Name => UIName.SceneCurrencyHUD;
+
     [SerializeField] private CurrencyDatabase data;
 
     [SerializeField] private List<TextMeshProUGUI> currencyTextList;
     [SerializeField] private List<Image> images;
 
+    private void Start()
+    {
+        UIManager.Instance.HUDRegister(this);
+    }
 
     private void OnEnable()
     {
         HUDInit();
+    }
+
+    private void OnDestroy()
+    {
+        UIManager.Instance.HUDUnRegister(this);
     }
 
     private void HUDInit()

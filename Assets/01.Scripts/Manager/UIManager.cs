@@ -8,7 +8,9 @@ using System;
 public enum UIName
 {
     None,
-    Event_0715_Popup
+    Event_0715_Popup,
+    DateHUD,
+    SceneCurrencyHUD
 }
 
 public class UIManager : MonoBehaviour
@@ -51,7 +53,8 @@ public class UIManager : MonoBehaviour
     private Dictionary<UIName, PopupBase> popupDic = new Dictionary<UIName, PopupBase>();
     private Dictionary<UIName, PopupBase> runtimePopupDic = new Dictionary<UIName, PopupBase>();
 
-    public event Action OnSceneInit;
+    private Dictionary<UIName, UIBase> hudDic = new Dictionary<UIName, UIBase>();
+
 
     private void Awake()
     {
@@ -80,12 +83,14 @@ public class UIManager : MonoBehaviour
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         GameEventBridge.OnCurrencyChanged += SetCurrencyText;
+        GameEventBridge.OnTimeChanged += SetDateText;
     }
 
     private void UnSubscribeEvent()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
         GameEventBridge.OnCurrencyChanged -= SetCurrencyText;
+        GameEventBridge.OnTimeChanged -= SetDateText;
     }
 
     // 런타임 딕셔너리에 저장된 팝업 비우기
@@ -111,6 +116,25 @@ public class UIManager : MonoBehaviour
             }
 
             popupDic.Add(popup.Name, popup);
+        }
+    }
+
+    public void HUDRegister(UIBase ui)
+    {
+        if (ui == null)
+            return;
+
+        hudDic[ui.Name] = ui;
+    }
+
+    public void HUDUnRegister(UIBase ui)
+    {
+        if (ui == null)
+            return;
+
+        if (hudDic.TryGetValue(ui.Name, out UIBase registUI) && registUI == ui)
+        {
+            hudDic.Remove(ui.Name);
         }
     }
 
@@ -199,5 +223,33 @@ public class UIManager : MonoBehaviour
             return;
 
         sceneCurrencyHUD.SetHUD(type, amount);
+    }
+
+    //public void InitDateHUD(UIName name, GameDate date)
+    //{
+    //    if (!hudDic.TryGetValue(name, out UIBase hud))
+    //    {
+    //        Utils.Log("해당하는 UI를 찾을 수 없습니다.");
+    //        return;
+    //    }
+
+    //    if (hud is DateHUD dateHUD)
+    //    {
+    //        dateHUD.InitHUD(date);
+    //    }
+    //}
+
+    public void SetDateText(UIName name, GameDate date)
+    {
+        if (!hudDic.TryGetValue(name, out UIBase hud))
+        {
+            Utils.Log("해당하는 UI를 찾을 수 없습니다.");
+            return;
+        }
+
+        if (hud is DateHUD dateHUD)
+        {
+            dateHUD.SetHUD(date);
+        }
     }
 }

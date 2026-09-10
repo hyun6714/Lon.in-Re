@@ -110,6 +110,7 @@ public class CalendarManager : MonoBehaviour
         {
             seasonString[info.season] = info.seasonName;
         }
+
     }
 
     public GameDateSaveData SaveDate()
@@ -134,7 +135,7 @@ public class CalendarManager : MonoBehaviour
 
                 AddTime(minutePerSec);
 
-                TestTextShow();
+                GameEventBridge.TimeChanged(UIName.DateHUD, currentDate);
 
                 await UniTask.NextFrame(PlayerLoopTiming.EarlyUpdate, token);
             }
@@ -180,16 +181,6 @@ public class CalendarManager : MonoBehaviour
         GameEventBridge.DayChanged(currentDate);
     }
 
-    public string MinuteText()
-    {
-        return $"{(int)currentDate.minutes:D2}";
-    }
-
-    public string HourText()
-    {
-        return $"{(int)currentDate.hour:D2}";
-    }
-
     /// <summary>
     /// 해당 달의 마지막날 계산
     /// </summary>
@@ -209,11 +200,6 @@ public class CalendarManager : MonoBehaviour
         }
 
         return data.DefaultDaysInMonth;
-    }
-
-    public void TestTextShow()
-    {
-        text.text = $"{currentDate.year}년 {currentDate.month}월 {currentDate.day}일\n{seasonString[currentDate.season]}\n{HourText()} : {MinuteText()}";
     }
 
     /// <summary>
@@ -255,7 +241,7 @@ public class CalendarManager : MonoBehaviour
             EventTrigger();
         }
 
-        TestTextShow();
+        GameEventBridge.TimeChanged(UIName.DateHUD, currentDate);
         Utils.Log("날짜 강제 변경 성공");
     }
 #endif
