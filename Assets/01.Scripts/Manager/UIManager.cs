@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public enum UIName
 {
@@ -14,6 +15,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
+    [Header("테스트용(삭제 예정)")]
     [SerializeField] TextMeshProUGUI levelText;
     [SerializeField] TextMeshProUGUI frameText;
     [SerializeField] TextMeshProUGUI rebirthText;
@@ -32,6 +34,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] Button peopleBtn;
     [SerializeField] Button rebirthBtn;
 
+    [Header("HUD")]
+    [SerializeField] private SceneCurrencyHUD sceneCurrencyHUD;
+    [SerializeField] private DateHUD dateHUD;
+
     [Header("캔버스")]
     [SerializeField] private Canvas uiCanvas;
     [SerializeField] private Canvas effectCanvas;
@@ -44,6 +50,8 @@ public class UIManager : MonoBehaviour
 
     private Dictionary<UIName, PopupBase> popupDic = new Dictionary<UIName, PopupBase>();
     private Dictionary<UIName, PopupBase> runtimePopupDic = new Dictionary<UIName, PopupBase>();
+
+    public event Action OnSceneInit;
 
     private void Awake()
     {
@@ -60,12 +68,24 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        SubscribeEvent();
     }
 
     private void OnDisable()
     {
+        UnSubscribeEvent();
+    }
+
+    private void SubscribeEvent()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        GameEventBridge.OnCurrencyChanged += SetCurrencyText;
+    }
+
+    private void UnSubscribeEvent()
+    {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        GameEventBridge.OnCurrencyChanged -= SetCurrencyText;
     }
 
     // 런타임 딕셔너리에 저장된 팝업 비우기
@@ -171,5 +191,13 @@ public class UIManager : MonoBehaviour
         }
 
         popup.ClosePanel();
+    }
+
+    public void SetCurrencyText(CurrencyType type, int amount)
+    {
+        if (sceneCurrencyHUD == null)
+            return;
+
+        sceneCurrencyHUD.SetHUD(type, amount);
     }
 }
