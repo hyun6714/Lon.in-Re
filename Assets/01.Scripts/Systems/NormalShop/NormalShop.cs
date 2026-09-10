@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -14,7 +15,8 @@ public enum ShopTab
 public class NormalShop : MonoBehaviour
 {
     [Header("상점 패널")]
-    [SerializeField] private GameObject shopPanel;
+    [SerializeField] private GameObject shopPanel;      // 전체 패널
+    [SerializeField] private Transform windowTransform; // 팝업 연출될 패널
 
     [Header("확인 팝업 연동")]
     [SerializeField] private ConfirmPopup confirmPopup;
@@ -39,6 +41,9 @@ public class NormalShop : MonoBehaviour
     [Header("스크롤 뷰 컨텐츠 부모")]
     [SerializeField] private Transform contentParent; // Scroll View > Viewport > Content
 
+    [Header("스크롤 뷰 연동")]
+    [SerializeField] private ScrollRect scrollRect;
+
     [Header("슬롯 프리팹 3종")]
     [SerializeField] private GameObject partSlotPrefab;
     [SerializeField] private GameObject employeeHireSlotPrefab;
@@ -54,10 +59,15 @@ public class NormalShop : MonoBehaviour
     private readonly List<ShopArtifactSlot> artifactSlots = new List<ShopArtifactSlot>();
 
     private ShopTab currentTab = ShopTab.Part;
+
     private bool isInitialized = false;
+
+    private Tween shopTween;
 
     private void Awake()
     {
+        if (windowTransform == null) windowTransform = transform;
+
         if (playerUpgrade == null) playerUpgrade = FindFirstObjectByType<PlayerTapUpgrade>();
         if (employeeManager == null) employeeManager = FindFirstObjectByType<EmployeeManager>();
 
@@ -86,6 +96,8 @@ public class NormalShop : MonoBehaviour
 
     private void OnDestroy()
     {
+        shopTween?.Kill();
+
         if (CurrencyManager.instance != null)
         {
             CurrencyManager.instance.OnCurrencyChanged -= OnCurrencyChanged;
@@ -150,16 +162,7 @@ public class NormalShop : MonoBehaviour
 
     public void OpenShop()
     {
-        if (!isInitialized)
-        {
-            InitSlots();
-        }
-
-        if (shopPanel != null)
-        {
-            shopPanel.SetActive(true);
-        }
-        SwitchTab(currentTab);
+        OpenShop(currentTab);
     }
 
     // 외부에서 원하는 탭을 지정해 바로 열 때 호출하는 메서드
@@ -172,7 +175,16 @@ public class NormalShop : MonoBehaviour
 
         if (shopPanel != null)
         {
+            shopTween?.Kill();
             shopPanel.SetActive(true);
+
+            // 열기 연출
+            Transform animTarget = windowTransform != null ? windowTransform : transform;
+            animTarget.localScale = Vector3.one * 0.8f;
+            shopTween = animTarget.DOScale(Vector3.one, 0.25f)
+                                  .SetEase(Ease.OutBack)
+                                  .SetUpdate(true)
+                                  .SetLink(gameObject);
         }
         SwitchTab(tab);
     }
@@ -180,9 +192,21 @@ public class NormalShop : MonoBehaviour
 
     public void CloseShop()
     {
-        if (shopPanel != null)
+        if (shopPanel != null && shopPanel.activeSelf)
         {
-            shopPanel.SetActive(false);
+            shopTween?.Kill();
+
+            // 닫기 연출
+            Transform animTarget = windowTransform != null ? windowTransform : transform;
+            shopTween = animTarget.DOScale(Vector3.one * 0.8f, 0.15f)
+                                  .SetEase(Ease.InBack)
+                                  .SetUpdate(true)
+                                  .SetLink(gameObject)
+                                  .OnComplete(() =>
+                                  {
+                                      shopPanel.SetActive(false);
+                                      animTarget.localScale = Vector3.one; // 원래 크기 복구
+                                  });
         }
     }
 
@@ -223,6 +247,11 @@ public class NormalShop : MonoBehaviour
             case ShopTab.Artifact:
                 for (int i = 0; i < artifactSlots.Count; i++) artifactSlots[i].Refresh();
                 break;
+        }
+
+        if (scrollRect != null)
+        {
+            scrollRect.verticalNormalizedPosition = 1f;
         }
 
         // 탭 버튼 비주얼(스프라이트/텍스트) 교체
