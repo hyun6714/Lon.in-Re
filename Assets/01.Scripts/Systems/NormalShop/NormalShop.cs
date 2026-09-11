@@ -88,20 +88,14 @@ public class NormalShop : MonoBehaviour
         SwitchTab(ShopTab.Part);
 
         //재화 변동 이벤트 구독
-        if (CurrencyManager.instance != null)
-        {
-            CurrencyManager.instance.OnCurrencyChanged += OnCurrencyChanged;
-        }
+        GameEventBridge.OnCurrencyChanged += OnCurrencyChanged;
     }
 
     private void OnDestroy()
     {
         shopTween?.Kill();
 
-        if (CurrencyManager.instance != null)
-        {
-            CurrencyManager.instance.OnCurrencyChanged -= OnCurrencyChanged;
-        }
+        GameEventBridge.OnCurrencyChanged -= OnCurrencyChanged;
     }
 
     // 슬롯 최초 1회 생성 및 초기화
