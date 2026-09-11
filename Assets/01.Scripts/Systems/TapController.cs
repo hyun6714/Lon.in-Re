@@ -7,6 +7,10 @@ public class TapController : MonoBehaviour, IPointerDownHandler
     [Header("플레이어 업그레이드 연동")]
     [SerializeField] private PlayerTapUpgrade playerUpgrade;
 
+    [Header("터치 이펙트 연동")]
+    [SerializeField] private TapEffect tapEffectPrefab;  // 이펙트 프리팹
+    [SerializeField] private Transform effectParent;     // 띄울 캔버스
+
     private void Awake()
     {
         // 다중 터치 활성화
@@ -32,5 +36,26 @@ public class TapController : MonoBehaviour, IPointerDownHandler
 
         // 풀에서 텍스트 꺼내기
         UIManager.Instance.SpawnFloatingText(eventData.position, currentPower, false);
+
+        // 터치 좌표에 이펙트 출력
+        SpawnTapEffect(eventData.position);
+    }
+
+    private void SpawnTapEffect(Vector2 position)
+    {
+        if (tapEffectPrefab == null || ObjectPoolManager.instance == null)
+        {
+            return;
+        }
+
+        Transform parent = effectParent != null ? effectParent : transform;
+        TapEffect effect = ObjectPoolManager.instance.GetObject<TapEffect>(tapEffectPrefab.gameObject, parent);
+
+        if (effect != null)
+        {
+            effect.transform.position = position;
+            effect.SetOriginPrefab(tapEffectPrefab.gameObject);
+            effect.PlayEffect();
+        }
     }
 }
