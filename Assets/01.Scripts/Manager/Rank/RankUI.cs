@@ -20,6 +20,7 @@ public class RankUI : MonoBehaviour
     {
         RankManager.OnRankChanged += UpdateRankUI;
         ReincarnationManager.OnReincarnated += UpdateRankUI;
+        ReincarnationManager.OnReincarnated += RankUpOnBtn;
         UpdateRankUI();
     }
 
@@ -27,6 +28,7 @@ public class RankUI : MonoBehaviour
     {
         RankManager.OnRankChanged -= UpdateRankUI;
         ReincarnationManager.OnReincarnated -= UpdateRankUI;
+        ReincarnationManager.OnReincarnated -= RankUpOnBtn;
     }
 
     public void OpenRankPop()
@@ -106,5 +108,14 @@ public class RankUI : MonoBehaviour
             }
         }
 
+    }
+
+    //환생 후 버튼 활성화 
+    public void RankUpOnBtn()
+    {
+        if (rankUpButton != null)
+        {
+            rankUpButton.interactable = true;
+        }
     }
 }

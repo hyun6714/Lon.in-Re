@@ -67,7 +67,6 @@ public class RankManager : MonoBehaviour
         // 최고 등급 도달 확인
         if (currentIndex >= rankDataList.Count - 1 || nextIndex >= rankDataList.Count)
         {
-            Debug.Log("등급업을 더이상 못합니다");
             return;
         }
 
@@ -75,8 +74,6 @@ public class RankManager : MonoBehaviour
         if (nextData == null) return;
 
         int currentReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
-
-        Debug.Log($"현재 명성: {currentReputation} / 요구 명성: {nextData.reqReputation}");
 
         // 승급 조건 검사 (다음 등급 에셋에 적힌 수치와 비교)
         bool isGameSatisfied = gamesReleased >= nextData.reqGamesReleased;
@@ -86,7 +83,6 @@ public class RankManager : MonoBehaviour
         if (isGameSatisfied && isEmployeeSatisfied && isReputationSatisfied)
         {
             currentRank = (RankState)nextIndex;
-            Debug.Log($"승급 성공 현재 등급: {CurrentRankData.rankDisplayName}");
 
             OnRankChanged?.Invoke();
         }

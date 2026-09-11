@@ -4231,7 +4231,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &541891229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10764,7 +10764,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2448743574051451926, guid: 41ce3624cdd197640a5c445c70df610b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 10
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4164926703171886849, guid: 41ce3624cdd197640a5c445c70df610b, type: 3}
       propertyPath: m_Name
@@ -10772,7 +10772,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4164926703171886849, guid: 41ce3624cdd197640a5c445c70df610b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5178411565260716857, guid: 41ce3624cdd197640a5c445c70df610b, type: 3}
       propertyPath: m_IsActive
@@ -14276,7 +14276,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4329008457663270748, guid: cb2e2c5a56038214382db1bee816e5af, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4470683841124022924, guid: cb2e2c5a56038214382db1bee816e5af, type: 3}
       propertyPath: m_SizeDelta.x
