@@ -135,7 +135,7 @@ public class CalendarManager : MonoBehaviour
 
                 AddTime(minutePerSec);
 
-                GameEventBridge.TimeChanged(UIName.DateHUD, currentDate);
+                GameEventBridge.TimeChanged(currentDate);
 
                 await UniTask.NextFrame(PlayerLoopTiming.EarlyUpdate, token);
             }
@@ -241,7 +241,7 @@ public class CalendarManager : MonoBehaviour
             EventTrigger();
         }
 
-        GameEventBridge.TimeChanged(UIName.DateHUD, currentDate);
+        GameEventBridge.TimeChanged(currentDate);
         Utils.Log("날짜 강제 변경 성공");
     }
 #endif

@@ -9,8 +9,23 @@ public enum UIName
 {
     None,
     Event_0715_Popup,
-    DateHUD,
-    SceneCurrencyHUD
+    HUDTextGroup
+}
+
+public enum HUDTextType
+{
+    Level,
+    Rebirth,
+
+    Coin,
+    SpecialCoin,
+    Fame,
+    CoinSec,
+
+    Date,
+
+    Employee,
+    Game
 }
 
 public class UIManager : MonoBehaviour
@@ -37,8 +52,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Button rebirthBtn;
 
     [Header("HUD")]
-    [SerializeField] private SceneCurrencyHUD sceneCurrencyHUD;
-    [SerializeField] private DateHUD dateHUD;
+    [SerializeField] private HUDTextGroup textGroup;
 
     [Header("캔버스")]
     [SerializeField] private Canvas uiCanvas;
@@ -53,8 +67,13 @@ public class UIManager : MonoBehaviour
     private Dictionary<UIName, PopupBase> popupDic = new Dictionary<UIName, PopupBase>();
     private Dictionary<UIName, PopupBase> runtimePopupDic = new Dictionary<UIName, PopupBase>();
 
-    private Dictionary<UIName, UIBase> hudDic = new Dictionary<UIName, UIBase>();
-
+    // CurrencyType - HUDTextType 매핑
+    private Dictionary<CurrencyType, HUDTextType> currencyTextDic = new Dictionary<CurrencyType, HUDTextType>()
+    {
+        { CurrencyType.Normal, HUDTextType.Coin },
+        { CurrencyType.Special, HUDTextType.SpecialCoin },
+        { CurrencyType.Reputation, HUDTextType.Fame }
+    };
 
     private void Awake()
     {
@@ -82,15 +101,15 @@ public class UIManager : MonoBehaviour
     private void SubscribeEvent()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-        GameEventBridge.OnCurrencyChanged += SetCurrencyText;
-        GameEventBridge.OnTimeChanged += SetDateText;
+        GameEventBridge.OnCurrencyChanged += SetText;
+        GameEventBridge.OnTimeChanged += SetText;
     }
 
     private void UnSubscribeEvent()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        GameEventBridge.OnCurrencyChanged -= SetCurrencyText;
-        GameEventBridge.OnTimeChanged -= SetDateText;
+        GameEventBridge.OnCurrencyChanged -= SetText;
+        GameEventBridge.OnTimeChanged -= SetText;
     }
 
     // 런타임 딕셔너리에 저장된 팝업 비우기
@@ -119,22 +138,18 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void HUDRegister(UIBase ui)
+    public void TextRegister(HUDTextGroup group)
     {
-        if (ui == null)
-            return;
-
-        hudDic[ui.Name] = ui;
+        textGroup = group;
+        Utils.Log($"텍스트 그룹 등록 성공 {textGroup}");
     }
 
-    public void HUDUnRegister(UIBase ui)
+    public void TextUnRegister(HUDTextGroup group)
     {
-        if (ui == null)
-            return;
-
-        if (hudDic.TryGetValue(ui.Name, out UIBase registUI) && registUI == ui)
+        if (textGroup == group)
         {
-            hudDic.Remove(ui.Name);
+            textGroup = null;
+            Utils.Log($"텍스트 그룹 해제 성공 {textGroup}");
         }
     }
 
@@ -217,39 +232,31 @@ public class UIManager : MonoBehaviour
         popup.ClosePanel();
     }
 
-    public void SetCurrencyText(CurrencyType type, int amount)
+    #region SetText Method
+    public void SetText(HUDTextType type, string value)
     {
-        if (sceneCurrencyHUD == null)
-            return;
-
-        sceneCurrencyHUD.SetHUD(type, amount);
+        textGroup.SetText(type, value);
     }
 
-    //public void InitDateHUD(UIName name, GameDate date)
-    //{
-    //    if (!hudDic.TryGetValue(name, out UIBase hud))
-    //    {
-    //        Utils.Log("해당하는 UI를 찾을 수 없습니다.");
-    //        return;
-    //    }
-
-    //    if (hud is DateHUD dateHUD)
-    //    {
-    //        dateHUD.InitHUD(date);
-    //    }
-    //}
-
-    public void SetDateText(UIName name, GameDate date)
+    public void SetText(HUDTextType type, int amount)
     {
-        if (!hudDic.TryGetValue(name, out UIBase hud))
+        textGroup.SetText(type, amount);
+    }
+
+    public void SetText(CurrencyType type, int amount)
+    {
+        if (!currencyTextDic.TryGetValue(type, out HUDTextType textType))
         {
-            Utils.Log("해당하는 UI를 찾을 수 없습니다.");
+            Utils.Log($"등록되지 않는 재화입니다 : {type}");
             return;
         }
 
-        if (hud is DateHUD dateHUD)
-        {
-            dateHUD.SetHUD(date);
-        }
+        textGroup.SetText(textType, amount);
     }
+
+    public void SetText(GameDate date)
+    {
+        textGroup.SetText(HUDTextType.Date, date);
+    }
+    #endregion
 }

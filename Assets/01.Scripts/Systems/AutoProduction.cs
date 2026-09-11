@@ -98,6 +98,8 @@ public class AutoProduction : MonoBehaviour
         float multiplier = upgrade != null ? upgrade.AutoMultiplier : 1f;
 
         moneyPerSec = Mathf.RoundToInt((employeeProduction + upgradeProduction) * multiplier);
+
+        UIManager.Instance.SetText(HUDTextType.CoinSec, $"{moneyPerSec}G/초");
     }
 
     // 자동 생산
