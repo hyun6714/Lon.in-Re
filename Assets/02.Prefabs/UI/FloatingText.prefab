@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: +1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 20c240146d6f8fa4896536241cf9e723, type: 2}
+  m_sharedMaterial: {fileID: -8484805202074614647, guid: 20c240146d6f8fa4896536241cf9e723, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -153,4 +153,5 @@ MonoBehaviour:
   textMesh: {fileID: 9186481811768572253}
   moveSpeed: 100
   duration: 0.5
+  fadeDuration: 0.2
   originPrefab: {fileID: 1891754731395928562}
