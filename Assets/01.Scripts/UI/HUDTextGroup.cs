@@ -21,7 +21,7 @@ public class HUDTextGroup : UIBase
 
         foreach (HUDTextInfo info in textList)
         {
-            if (info.text = null)
+            if (info.text == null)
                 continue;
 
             if (textDic.ContainsKey(info.type))
@@ -65,6 +65,6 @@ public class HUDTextGroup : UIBase
 
     public void SetText(HUDTextType type, GameDate date)
     {
-        SetText(type, $"{date.year}년\n{date.month}월 {date.day}일\n{date.hour} : {date.minutes}");
+        SetText(type, $"{date.year}년\n{date.month}월 {date.day}일\n{date.hour:D2} : {date.minutes:D2}");
     }
 }

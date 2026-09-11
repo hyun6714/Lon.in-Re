@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11a89d09ec62e243bd00957bad5fffc, type: 3}
   m_Name: AutoProductionData
   m_EditorClassIdentifier: Assembly-CSharp::AutoProductionData
-  baseMoneyPerSec: 5
+  baseMoneyPerSec: 0
   baseAutoSec: 1

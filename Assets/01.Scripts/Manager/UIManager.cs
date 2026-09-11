@@ -67,8 +67,6 @@ public class UIManager : MonoBehaviour
     private Dictionary<UIName, PopupBase> popupDic = new Dictionary<UIName, PopupBase>();
     private Dictionary<UIName, PopupBase> runtimePopupDic = new Dictionary<UIName, PopupBase>();
 
-    //private Dictionary<UIName, UIBase> hudDic = new Dictionary<UIName, UIBase>();
-
     // CurrencyType - HUDTextType 매핑
     private Dictionary<CurrencyType, HUDTextType> currencyTextDic = new Dictionary<CurrencyType, HUDTextType>()
     {
@@ -143,6 +141,7 @@ public class UIManager : MonoBehaviour
     public void TextRegister(HUDTextGroup group)
     {
         textGroup = group;
+        Utils.Log($"텍스트 그룹 등록 성공 {textGroup}");
     }
 
     public void TextUnRegister(HUDTextGroup group)
@@ -150,6 +149,7 @@ public class UIManager : MonoBehaviour
         if (textGroup == group)
         {
             textGroup = null;
+            Utils.Log($"텍스트 그룹 해제 성공 {textGroup}");
         }
     }
 

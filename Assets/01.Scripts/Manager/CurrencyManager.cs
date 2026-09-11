@@ -99,7 +99,7 @@ public class CurrencyManager : MonoBehaviour
 
         currentCurrencies[type] = GetAmount(type) + amount;
 
-        OnCurrencyChanged?.Invoke(type, currentCurrencies[type]);
+        GameEventBridge.CurrencyChanged(type, currentCurrencies[type]);
     }
 
     //재화 차감 
@@ -116,7 +116,7 @@ public class CurrencyManager : MonoBehaviour
 
         currentCurrencies[type] = current - amount;
 
-        OnCurrencyChanged?.Invoke(type, currentCurrencies[type]);
+        GameEventBridge.CurrencyChanged(type, currentCurrencies[type]);
 
         return true;
     }
@@ -126,7 +126,7 @@ public class CurrencyManager : MonoBehaviour
     {
         currentCurrencies[type] = amount;
 
-        OnCurrencyChanged?.Invoke(type, currentCurrencies[type]);
+        GameEventBridge.CurrencyChanged(type, currentCurrencies[type]);
     }
 
     //환생전용 특수 재화 제외 초기화 
@@ -143,7 +143,7 @@ public class CurrencyManager : MonoBehaviour
 
             currentCurrencies[info.type] = info.initialAmount;
 
-            OnCurrencyChanged?.Invoke(info.type, info.initialAmount);
+            GameEventBridge.CurrencyChanged(info.type, info.initialAmount);
         }
 
         Debug.Log("특수 재화를 제외한 모든 재화가 초기화되었습니다.");

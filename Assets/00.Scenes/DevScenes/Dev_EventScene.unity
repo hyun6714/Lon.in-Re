@@ -2131,6 +2131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bceaf6b41ca848342928c7fcb98f9398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ReincarnationManager
+  ReincarnationPop: {fileID: 0}
 --- !u!4 &214624127
 Transform:
   m_ObjectHideFlags: 0
@@ -2342,7 +2343,7 @@ Transform:
   m_GameObject: {fileID: 232609560}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 114.98514, y: 445.2811, z: 0}
+  m_LocalPosition: {x: 7.5, y: 3.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7139,12 +7140,12 @@ MonoBehaviour:
   artifactBtn: {fileID: 1659505321}
   peopleBtn: {fileID: 962699971}
   rebirthBtn: {fileID: 2119435115}
-  sceneCurrencyHUD: {fileID: 0}
-  dateHUD: {fileID: 0}
+  textGroup: {fileID: 2039348175}
   uiCanvas: {fileID: 2112053387}
   effectCanvas: {fileID: 527315037}
   floatingTextPrefab: {fileID: 4107302407250168393, guid: 18ef8d7347b1c254ebe8848704eb84a9, type: 3}
-  popupList: []
+  popupList:
+  - {fileID: 6301843282318123067, guid: db6cfdb65480a3442a6a648f38807df5, type: 3}
 --- !u!4 &856832276
 Transform:
   m_ObjectHideFlags: 0
@@ -16793,15 +16794,15 @@ MonoBehaviour:
   rankManager: {fileID: 2052795134}
   employeeStates:
   - employeeData: {fileID: 11400000, guid: df4e50d22eabb2348b676de3507ae62d, type: 2}
-    count: 0
+    count: 5
   - employeeData: {fileID: 11400000, guid: c5b1268b4ea101341bb69d456510007d, type: 2}
-    count: 0
+    count: 4
   - employeeData: {fileID: 11400000, guid: 422f4a1bd4bcf89458f1fc979aac5bad, type: 2}
-    count: 0
+    count: 3
   - employeeData: {fileID: 11400000, guid: afa7799207646c946a28490b410217fb, type: 2}
-    count: 0
+    count: 2
   - employeeData: {fileID: 11400000, guid: c4c9cca6de125e942838cb4969f721c2, type: 2}
-    count: 0
+    count: 1
 --- !u!4 &1837111864
 Transform:
   m_ObjectHideFlags: 0
@@ -18350,6 +18351,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2013015556}
   m_CullTransparentMesh: 1
+--- !u!1 &2039348174
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2039348176}
+  - component: {fileID: 2039348175}
+  m_Layer: 0
+  m_Name: HUDTextGroup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2039348175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039348174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d5e52290f4d2ea43845d42d633eaa2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HUDTextGroup
+  textList:
+  - type: 2
+    text: {fileID: 1373589484}
+  - type: 3
+    text: {fileID: 504814964}
+  - type: 6
+    text: {fileID: 1420733643}
+  - type: 5
+    text: {fileID: 292801368}
+  - type: 7
+    text: {fileID: 758096954}
+  - type: 8
+    text: {fileID: 534832440}
+  - type: 0
+    text: {fileID: 265049368}
+  - type: 4
+    text: {fileID: 1028060672}
+  - type: 1
+    text: {fileID: 2013015558}
+--- !u!4 &2039348176
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039348174}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1478.7784, y: 1003.13983, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2047159959
 GameObject:
   m_ObjectHideFlags: 0
@@ -20165,3 +20229,4 @@ SceneRoots:
   - {fileID: 80652259}
   - {fileID: 214624127}
   - {fileID: 1329402595}
+  - {fileID: 2039348176}
