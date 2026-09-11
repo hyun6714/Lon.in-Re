@@ -21,19 +21,15 @@ public class ShopCurrencyHUD : MonoBehaviour
     private void OnDisable()
     {
         // 이벤트 해제
-        if (CurrencyManager.instance != null)
-        {
-            CurrencyManager.instance.OnCurrencyChanged -= HandleCurrencyChanged;
-        }
+        GameEventBridge.OnCurrencyChanged -= HandleCurrencyChanged;
+
     }
 
     private void SubscribeAndRefresh()
     {
-        if (CurrencyManager.instance == null) return;
-
         // 중복 구독 방지 후 이벤트 재연결
-        CurrencyManager.instance.OnCurrencyChanged -= HandleCurrencyChanged;
-        CurrencyManager.instance.OnCurrencyChanged += HandleCurrencyChanged;
+        GameEventBridge.OnCurrencyChanged -= HandleCurrencyChanged;
+        GameEventBridge.OnCurrencyChanged += HandleCurrencyChanged;
 
         RefreshAllCurrencies();
     }
