@@ -7,13 +7,16 @@ using UnityEngine.UI;
 
 public enum ShopTab
 {
+    None,
     Part,
     Employee,
     Artifact
 }
 
-public class NormalShop : MonoBehaviour
+public class NormalShop : PopupBase
 {
+    public override UIName Name => UIName.Popup_Shop;
+
     [Header("상점 패널")]
     [SerializeField] private GameObject shopPanel;      // 전체 패널
     [SerializeField] private Transform windowTransform; // 팝업 연출될 패널
@@ -72,7 +75,8 @@ public class NormalShop : MonoBehaviour
         if (employeeManager == null) employeeManager = FindFirstObjectByType<EmployeeManager>();
 
         if (openShopBtn != null) openShopBtn.onClick.AddListener(OpenShop);
-        if (exitBtn != null) exitBtn.onClick.AddListener(CloseShop);
+        //if (exitBtn != null) exitBtn.onClick.AddListener(CloseShop);
+        if (exitBtn != null) exitBtn.onClick.AddListener(ClosePopup);
 
         if (partTabBtn != null) partTabBtn.onClick.AddListener(() => SwitchTab(ShopTab.Part));
         if (employeeTabBtn != null) employeeTabBtn.onClick.AddListener(() => SwitchTab(ShopTab.Employee));
@@ -157,6 +161,16 @@ public class NormalShop : MonoBehaviour
     public void OpenShop()
     {
         OpenShop(currentTab);
+    }
+
+    public override void OpenPopup()
+    {
+        OpenShop(currentTab);
+    }
+
+    public override void ClosePopup()
+    {
+        CloseShop();
     }
 
     // 외부에서 원하는 탭을 지정해 바로 열 때 호출하는 메서드

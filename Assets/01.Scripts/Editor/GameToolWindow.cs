@@ -78,7 +78,6 @@ public class GameToolWindow : EditorWindow
         if (GUILayout.Button("일반 재화 획득"))
         {
             GameEventBridge.CurrencyAdded(CurrencyType.Normal, normalCurrency);
-            CurrencyManager.instance.CurrencyTestSet();
         }
 
         EditorGUILayout.Space(1);
@@ -86,7 +85,6 @@ public class GameToolWindow : EditorWindow
         if(GUILayout.Button("일반 재화 감소"))
         {
             GameEventBridge.CurrencyUsed(CurrencyType.Normal, normalCurrency);
-            CurrencyManager.instance.CurrencyTestSet();
         }
 
         EditorGUILayout.Space(7);
@@ -98,7 +96,6 @@ public class GameToolWindow : EditorWindow
         if (GUILayout.Button("특수 재화 획득"))
         {
             GameEventBridge.CurrencyAdded(CurrencyType.Special, specialCurrency);
-            CurrencyManager.instance.CurrencyTestSet();
         }
 
         EditorGUILayout.Space(1);
@@ -106,7 +103,6 @@ public class GameToolWindow : EditorWindow
         if (GUILayout.Button("특수 재화 감소"))
         {
             GameEventBridge.CurrencyUsed(CurrencyType.Special, specialCurrency);
-            CurrencyManager.instance.CurrencyTestSet();
         }
 
         EditorGUILayout.Space(7);
@@ -118,7 +114,6 @@ public class GameToolWindow : EditorWindow
         if (GUILayout.Button("명성 획득"))
         {
             GameEventBridge.CurrencyAdded(CurrencyType.Reputation, reputationCurrency);
-            CurrencyManager.instance.CurrencyTestSet();
         }
 
         EditorGUILayout.Space(1);
@@ -126,7 +121,6 @@ public class GameToolWindow : EditorWindow
         if (GUILayout.Button("명성 감소"))
         {
             GameEventBridge.CurrencyUsed(CurrencyType.Reputation, reputationCurrency);
-            CurrencyManager.instance.CurrencyTestSet();
         }
 
         EditorGUILayout.EndScrollView();

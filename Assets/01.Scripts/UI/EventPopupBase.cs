@@ -2,12 +2,18 @@ using DG.Tweening;
 using System;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using UnityEngine;
 
 public class EventPopupBase : PopupBase
 {
     protected CancellationTokenSource token;
 
-    public override void OpenPanel()
+    protected virtual void OnEnable()
+    {
+        transform.localScale = Vector3.one * data.CloseSize;
+    }
+
+    public override void OpenPopup()
     {
         token?.Cancel();
         token?.Dispose();
@@ -16,7 +22,7 @@ public class EventPopupBase : PopupBase
         PopupOpenAsync(token.Token).Forget();
     }
 
-    public override void ClosePanel()
+    public override void ClosePopup()
     {
         token?.Cancel();
         token?.Dispose();

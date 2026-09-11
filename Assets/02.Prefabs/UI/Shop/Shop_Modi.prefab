@@ -865,8 +865,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6548348819784645241}
+  - component: {fileID: 8440208768747391524}
   m_Layer: 5
-  m_Name: Shop
+  m_Name: Shop_Modi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -894,6 +895,39 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8440208768747391524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4164926703171886849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef7b76fa6f120ef43a8d887cd1bad2d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NormalShop
+  data: {fileID: 0}
+  shopPanel: {fileID: 4164926703171886849}
+  windowTransform: {fileID: 8132450313777513245}
+  confirmPopup: {fileID: 7114400923996665048}
+  openShopBtn: {fileID: 0}
+  exitBtn: {fileID: 1867389563433936023}
+  partTabBtn: {fileID: 8866279904091853998}
+  employeeTabBtn: {fileID: 2357077008117395504}
+  artifactTabBtn: {fileID: 4883692477633682991}
+  selectedTabSprite: {fileID: 21300000, guid: 1a4d845383e66b64c88f30cfdecc085e, type: 3}
+  unselectedTabSprite: {fileID: 21300000, guid: f32cb77e50a57394c971836553063b5e, type: 3}
+  selectedTextColor: {r: 1, g: 1, b: 1, a: 1}
+  unselectedTextColor: {r: 0.16078432, g: 0.20784314, b: 0.4627451, a: 1}
+  contentParent: {fileID: 2448743574051451926}
+  scrollRect: {fileID: 1312814923714662086}
+  partSlotPrefab: {fileID: 7910234965448710540, guid: 4afeb1ff6b52d094cb144137caee2f02, type: 3}
+  employeeHireSlotPrefab: {fileID: 3761150613533152509, guid: f4378ad210e04954991014a9071b10ca, type: 3}
+  artifactSlotPrefab: {fileID: 3888838722383847860, guid: 7518354a4e4bab341b20e6d58f3474d9, type: 3}
+  playerUpgrade: {fileID: 0}
+  employeeManager: {fileID: 0}
+  artifactDatabase: {fileID: 11400000, guid: d75123bb30a94304ea4fcbcb23b964d8, type: 2}
 --- !u!1 &4901272076844395102
 GameObject:
   m_ObjectHideFlags: 0
@@ -1496,7 +1530,6 @@ GameObject:
   - component: {fileID: 8132450313777513245}
   - component: {fileID: 2916491383015002290}
   - component: {fileID: 8752110515839728636}
-  - component: {fileID: 4861372512015226525}
   m_Layer: 5
   m_Name: Market_Bg
   m_TagString: Untagged
@@ -1568,39 +1601,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4861372512015226525
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6399410263924163162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef7b76fa6f120ef43a8d887cd1bad2d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NormalShop
-  data: {fileID: 0}
-  shopPanel: {fileID: 4164926703171886849}
-  windowTransform: {fileID: 8132450313777513245}
-  confirmPopup: {fileID: 7114400923996665048}
-  openShopBtn: {fileID: 0}
-  exitBtn: {fileID: 1867389563433936023}
-  partTabBtn: {fileID: 8866279904091853998}
-  employeeTabBtn: {fileID: 2357077008117395504}
-  artifactTabBtn: {fileID: 4883692477633682991}
-  selectedTabSprite: {fileID: 21300000, guid: 1a4d845383e66b64c88f30cfdecc085e, type: 3}
-  unselectedTabSprite: {fileID: 21300000, guid: f32cb77e50a57394c971836553063b5e, type: 3}
-  selectedTextColor: {r: 1, g: 1, b: 1, a: 1}
-  unselectedTextColor: {r: 0.16078432, g: 0.20784314, b: 0.4627451, a: 1}
-  contentParent: {fileID: 2448743574051451926}
-  scrollRect: {fileID: 1312814923714662086}
-  partSlotPrefab: {fileID: 7910234965448710540, guid: 4afeb1ff6b52d094cb144137caee2f02, type: 3}
-  employeeHireSlotPrefab: {fileID: 3761150613533152509, guid: f4378ad210e04954991014a9071b10ca, type: 3}
-  artifactSlotPrefab: {fileID: 3888838722383847860, guid: 7518354a4e4bab341b20e6d58f3474d9, type: 3}
-  playerUpgrade: {fileID: 0}
-  employeeManager: {fileID: 0}
-  artifactDatabase: {fileID: 11400000, guid: d75123bb30a94304ea4fcbcb23b964d8, type: 2}
 --- !u!1 &6698942979185199531
 GameObject:
   m_ObjectHideFlags: 0
