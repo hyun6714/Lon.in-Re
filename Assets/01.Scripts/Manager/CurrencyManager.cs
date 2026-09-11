@@ -23,8 +23,6 @@ public class CurrencyManager : MonoBehaviour
 
     private Dictionary<CurrencyType, int> currentCurrencies = new Dictionary<CurrencyType, int>();
 
-    public event Action<CurrencyType, int> OnCurrencyChanged;
-
     [SerializeField] private CurrencyDatabase currencyDatabase;
 
     private void Awake()
