@@ -175,14 +175,14 @@ public class GameDevManager : MonoBehaviour
         }
 
         // 기본 개발 비용 차감
-        bool success = CurrencyManager.instance.UseCurrency(CurrencyType.Normal, gameDevData.DevelopmentCost);
+        //bool success = CurrencyManager.instance.UseCurrency(CurrencyType.Normal, gameDevData.DevelopmentCost);
 
-        // 개발 비용이 부족하면 취소
-        if (!success)
-        {
-            Utils.Log("게임 개발 비용이 부족합니다.");
-            return null;
-        }
+        //// 개발 비용이 부족하면 취소
+        //if (!success)
+        //{
+        //    Utils.Log("게임 개발 비용이 부족합니다.");
+        //    return null;
+        //}
 
         // 게임 개발 결과 생성
         GameDevResult result = GameResult();
