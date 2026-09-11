@@ -1414,6 +1414,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5178411565260716857, guid: 41ce3624cdd197640a5c445c70df610b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6352154818409637328, guid: 41ce3624cdd197640a5c445c70df610b, type: 3}
       propertyPath: openShopBtn
       value: 
@@ -1513,6 +1517,14 @@ PrefabInstance:
     - target: {fileID: 7468654351804681019, guid: 41ce3624cdd197640a5c445c70df610b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193956881936032493, guid: 41ce3624cdd197640a5c445c70df610b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -118
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193956881936032493, guid: 41ce3624cdd197640a5c445c70df610b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 21
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
