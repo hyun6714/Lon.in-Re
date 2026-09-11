@@ -3,7 +3,6 @@ using UnityEngine;
 public class ReincarnationUI : MonoBehaviour
 {
     public GameObject ReincarnationBtn;
-
     public GameObject ReincarnationPop;
 
     public void OpenReincarnatioBtn()
