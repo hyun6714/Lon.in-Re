@@ -457,8 +457,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dde6f4bc6817634bb85494ad39144cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  playerRebirthCount: 50
-  gameDevCount: 50
+  playerRebirthCount: 0
+  gameDevCount: 0
 --- !u!4 &67100346
 Transform:
   m_ObjectHideFlags: 0
@@ -6067,7 +6067,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4329008457663270748, guid: cb2e2c5a56038214382db1bee816e5af, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4470683841124022924, guid: cb2e2c5a56038214382db1bee816e5af, type: 3}
       propertyPath: m_SizeDelta.x
@@ -11014,7 +11014,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 71559f5044eb7ab4d9e4b12d3b6705d8, type: 2}
   - {fileID: 11400000, guid: 72780581f9543394fbdc13dce867772a, type: 2}
   currentRank: 0
-  currentEmployeeCount: 50
+  currentEmployeeCount: 0
 --- !u!4 &1337146822
 Transform:
   m_ObjectHideFlags: 0

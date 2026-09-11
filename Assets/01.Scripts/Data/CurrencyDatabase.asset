@@ -16,12 +16,12 @@ MonoBehaviour:
   - type: 0
     currencyName: "\uB3C8"
     icon: {fileID: 0}
-    initialAmount: 100000
+    initialAmount: 0
   - type: 1
     currencyName: "\uBCF4\uC11D"
     icon: {fileID: 0}
-    initialAmount: 10000
+    initialAmount: 0
   - type: 2
     currencyName: "\uBA85\uC131"
     icon: {fileID: 0}
-    initialAmount: 100000
+    initialAmount: 0
