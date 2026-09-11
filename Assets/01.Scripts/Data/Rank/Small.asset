@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Small
   m_EditorClassIdentifier: Assembly-CSharp::RankDataSO
   rank: 2
-  rankDisplayName: "\uC911\uC18C"
+  rankDisplayName: "\uC911\uC18C \uAE30\uC5C5"
   hasEmployees: 1
   maxEmployee: 10
   reqGamesReleased: 5
   reqEmployeeCount: 0
-  reqReputation: 1000
+  reqReputation: 5000

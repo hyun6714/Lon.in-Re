@@ -5,6 +5,8 @@ public class ReincarnationManager : MonoBehaviour
 {
     public static event Action OnReincarnated;
 
+    public GameObject ReincarnationPop;
+
     public void BtnReincarnation()
     {
         if (!CanReincarnation())
@@ -28,6 +30,9 @@ public class ReincarnationManager : MonoBehaviour
         OnReincarnated?.Invoke();
         GameManager.Instance.playerRebirthCount++;
         CurrencyManager.instance.CurrencyTestSet();
+
+        if (ReincarnationPop == null) return;
+        ReincarnationPop.SetActive(false);
 
         Debug.Log($"환생 완료");
     }
