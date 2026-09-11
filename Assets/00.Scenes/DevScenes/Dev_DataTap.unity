@@ -8158,6 +8158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPoolManager
   objList:
   - {fileID: 1891754731395928562, guid: 18ef8d7347b1c254ebe8848704eb84a9, type: 3}
+  - {fileID: 546803580312990476, guid: c0c871dbc08d1e248b2b6311c16934bf, type: 3}
   poolSize: 20
 --- !u!4 &1470781613
 Transform:
@@ -8930,8 +8931,7 @@ MonoBehaviour:
   artifactBtn: {fileID: 0}
   peopleBtn: {fileID: 0}
   rebirthBtn: {fileID: 0}
-  sceneCurrencyHUD: {fileID: 0}
-  dateHUD: {fileID: 0}
+  textGroup: {fileID: 0}
   uiCanvas: {fileID: 562136973}
   effectCanvas: {fileID: 1958653686}
   floatingTextPrefab: {fileID: 4107302407250168393, guid: 18ef8d7347b1c254ebe8848704eb84a9, type: 3}
@@ -9112,6 +9112,69 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
+--- !u!1 &1683350651
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1683350653}
+  - component: {fileID: 1683350652}
+  m_Layer: 0
+  m_Name: HUDTextGroup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1683350652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683350651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d5e52290f4d2ea43845d42d633eaa2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HUDTextGroup
+  textList:
+  - type: 2
+    text: {fileID: 0}
+  - type: 3
+    text: {fileID: 0}
+  - type: 6
+    text: {fileID: 0}
+  - type: 5
+    text: {fileID: 0}
+  - type: 7
+    text: {fileID: 0}
+  - type: 8
+    text: {fileID: 0}
+  - type: 0
+    text: {fileID: 0}
+  - type: 4
+    text: {fileID: 0}
+  - type: 1
+    text: {fileID: 0}
+--- !u!4 &1683350653
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683350651}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1478.7784, y: 1003.13983, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1740038378
 GameObject:
   m_ObjectHideFlags: 0
@@ -15695,9 +15758,9 @@ PrefabInstance:
       value: UI_TapZone
       objectReference: {fileID: 0}
     - target: {fileID: 6053549418978279743, guid: 765033205fd9bb141a607f5b8af0ba60, type: 3}
-      propertyPath: effectCanvasTransform
+      propertyPath: effectParent
       value: 
-      objectReference: {fileID: 562136974}
+      objectReference: {fileID: 1958653689}
     - target: {fileID: 6867769187791697006, guid: 765033205fd9bb141a607f5b8af0ba60, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -21178,6 +21241,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 708889241}
   - {fileID: 562136974}
+  - {fileID: 1831460794}
   - {fileID: 1958653689}
   - {fileID: 485670595}
   - {fileID: 1758225721}
@@ -21189,4 +21253,4 @@ SceneRoots:
   - {fileID: 1634559837}
   - {fileID: 1974875656}
   - {fileID: 2079900157}
-  - {fileID: 1831460794}
+  - {fileID: 1683350653}
