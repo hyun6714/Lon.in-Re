@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System;
 
 public class RankManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class RankManager : MonoBehaviour
         Midsized, //중견
         MajorPublisher //대기업
     }
+
+    public static event Action OnRankChanged;
 
     public static RankManager instance { get; private set; }
 
@@ -59,28 +62,33 @@ public class RankManager : MonoBehaviour
     public void CheckRankUp()
     {
         int currentIndex = (int)currentRank;
+        int nextIndex = currentIndex + 1;
 
         // 최고 등급 도달 확인
-        if (currentIndex >= rankDataList.Count - 1)
+        if (currentIndex >= rankDataList.Count - 1 || nextIndex >= rankDataList.Count)
         {
             Debug.Log("등급업을 더이상 못합니다");
             return;
         }
 
-        RankData currentData = CurrentRankData;
+        RankData nextData = GetRankData((RankState)nextIndex);
+        if (nextData == null) return;
+
         int currentReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
 
-        Debug.Log($"현재 명성: {currentReputation}");
+        Debug.Log($"현재 명성: {currentReputation} / 요구 명성: {nextData.reqReputation}");
 
-        // 승급 조건 검사 (ScriptableObject에 적힌 수치와 비교)
-        bool isGameSatisfied = gamesReleased >= currentData.reqGamesReleased;
-        bool isEmployeeSatisfied = currentEmployeeCount >= currentData.reqEmployeeCount;
-        bool isReputationSatisfied = currentReputation >= currentData.reqReputation;
+        // 승급 조건 검사 (다음 등급 에셋에 적힌 수치와 비교)
+        bool isGameSatisfied = gamesReleased >= nextData.reqGamesReleased;
+        bool isEmployeeSatisfied = currentEmployeeCount >= nextData.reqEmployeeCount;
+        bool isReputationSatisfied = currentReputation >= nextData.reqReputation;
 
         if (isGameSatisfied && isEmployeeSatisfied && isReputationSatisfied)
         {
-            currentRank = (RankState)(currentIndex + 1);
+            currentRank = (RankState)nextIndex;
             Debug.Log($"승급 성공 현재 등급: {CurrentRankData.rankDisplayName}");
+
+            OnRankChanged?.Invoke();
         }
         else
         {

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Midsized
   m_EditorClassIdentifier: Assembly-CSharp::RankDataSO
   rank: 3
-  rankDisplayName: "\uC911\uACAC"
+  rankDisplayName: "\uC911\uACAC \uAE30\uC5C5"
   hasEmployees: 1
   maxEmployee: 20
-  reqGamesReleased: 0
-  reqEmployeeCount: 0
-  reqReputation: 25000
+  reqGamesReleased: 10
+  reqEmployeeCount: 10
+  reqReputation: 10000

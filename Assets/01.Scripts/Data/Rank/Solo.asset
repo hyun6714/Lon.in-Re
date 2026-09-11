@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Solo
   m_EditorClassIdentifier: Assembly-CSharp::RankDataSO
   rank: 0
-  rankDisplayName: "1\uC778"
+  rankDisplayName: "1\uC778 \uAC1C\uBC1C\uC790"
   hasEmployees: 0
   maxEmployee: 0
-  reqGamesReleased: 1
+  reqGamesReleased: 0
   reqEmployeeCount: 0
   reqReputation: 0
