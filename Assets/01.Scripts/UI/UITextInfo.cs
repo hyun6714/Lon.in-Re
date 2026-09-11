@@ -2,7 +2,7 @@ using System;
 using TMPro;
 
 [Serializable]
-public class HUDTextInfo
+public class UITextInfo
 {
     public HUDTextType type;
     public TextMeshProUGUI text;

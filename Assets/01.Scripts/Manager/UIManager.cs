@@ -8,8 +8,11 @@ using System;
 public enum UIName
 {
     None,
-    Event_0715_Popup,
-    HUDTextGroup
+    Popup_Event_0715,
+    Popup_Shop,
+    Popup_Game,
+    Popup_Rebirth,
+    Popup_System
 }
 
 public enum HUDTextType
@@ -51,8 +54,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] Button peopleBtn;
     [SerializeField] Button rebirthBtn;
 
-    [Header("HUD")]
-    [SerializeField] private HUDTextGroup textGroup;
+    [Header("UI 그룹")]
+    [SerializeField] private UITextGroup textGroup;
+    [SerializeField] private UIButtonGroup buttonGroup;
 
     [Header("캔버스")]
     [SerializeField] private Canvas uiCanvas;
@@ -138,13 +142,13 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void TextRegister(HUDTextGroup group)
+    public void TextRegister(UITextGroup group)
     {
         textGroup = group;
         Utils.Log($"텍스트 그룹 등록 성공 {textGroup}");
     }
 
-    public void TextUnRegister(HUDTextGroup group)
+    public void TextUnRegister(UITextGroup group)
     {
         if (textGroup == group)
         {
@@ -215,10 +219,44 @@ public class UIManager : MonoBehaviour
             runtimePopupDic.Add(name, popup);
         }
 
-        GameManager.Instance.GamePaused();
+        //GameManager.Instance.GamePaused();
         popup.gameObject.SetActive(true);
         popup.transform.SetAsLastSibling();
-        popup.OpenPanel();
+        popup.OpenPopup();
+    }
+
+    public void OpenPopup(UIName name, ShopTab tab)
+    {
+        if (runtimePopupDic.TryGetValue(name, out PopupBase popup))
+        {
+            if (popup != null && popup.gameObject.activeSelf)
+            {
+                Utils.Log($"이미 열린 UI : {name}");
+                return;
+            }
+        }
+        else
+        {
+            if (!popupDic.TryGetValue(name, out PopupBase popupPrefab))
+            {
+                Utils.Log($"등록되지 않은 UI : {name}");
+                return;
+            }
+
+            popup = Instantiate(popupPrefab, uiCanvas.transform);
+            runtimePopupDic.Add(name, popup);
+        }
+
+        popup.gameObject.SetActive(true);
+        popup.transform.SetAsLastSibling();
+
+        if (popup is NormalShop shop)
+        {
+            shop.OpenShop(tab);
+            return;
+        }
+
+        popup.OpenPopup();
     }
 
     public void ClosePopup(UIName name)
@@ -229,7 +267,7 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        popup.ClosePanel();
+        popup.ClosePopup();
     }
 
     #region SetText Method

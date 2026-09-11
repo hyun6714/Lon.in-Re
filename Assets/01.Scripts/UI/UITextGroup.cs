@@ -2,11 +2,9 @@ using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 
-public class HUDTextGroup : UIBase
+public class UITextGroup : MonoBehaviour
 {
-    public override UIName Name => UIName.HUDTextGroup;
-
-    [SerializeField] private List<HUDTextInfo> textList;
+    [SerializeField] private List<UITextInfo> textList;
 
     private Dictionary<HUDTextType, TextMeshProUGUI> textDic = new Dictionary<HUDTextType, TextMeshProUGUI>();
 
@@ -19,7 +17,7 @@ public class HUDTextGroup : UIBase
     {
         textDic.Clear();
 
-        foreach (HUDTextInfo info in textList)
+        foreach (UITextInfo info in textList)
         {
             if (info.text == null)
                 continue;

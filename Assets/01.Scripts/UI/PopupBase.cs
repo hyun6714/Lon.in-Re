@@ -11,11 +11,6 @@ public abstract class PopupBase : UIBase
 
     protected Sequence seq;
 
-    public abstract void OpenPanel();
-    public abstract void ClosePanel();
-
-    protected virtual void OnEnable()
-    {
-        transform.localScale = Vector3.one * data.CloseSize;
-    }
+    public abstract void OpenPopup();
+    public abstract void ClosePopup();
 }
