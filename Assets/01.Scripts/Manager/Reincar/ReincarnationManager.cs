@@ -1,7 +1,12 @@
 using UnityEngine;
+using System;
 
 public class ReincarnationManager : MonoBehaviour
 {
+    public static event Action OnReincarnated;
+
+    public GameObject ReincarnationPop;
+
     public void BtnReincarnation()
     {
         if (!CanReincarnation())
@@ -13,18 +18,21 @@ public class ReincarnationManager : MonoBehaviour
 
         if (CurrencyManager.instance != null)
         {
-            CurrencyManager.instance.ResetCurrenciesExceptSpecial();
-
-            int excesReputation = currentReputation - 5000;//어느정도 줄지 정하기 일단 예시로 정함
+            //특수 재화 주는 식
+            int excesReputation = currentReputation - 5000;
             if (excesReputation > 0 && CurrencyManager.instance != null)
             {
-                CurrencyManager.instance.AddCurrency(CurrencyType.Special, excesReputation);
+                GameEventBridge.CurrencyAdded(CurrencyType.Special, excesReputation);
                 Debug.Log($"환생 완료 초과명성 {excesReputation}만큼 특수재화를 획득 ");
             }
         }
 
+        OnReincarnated?.Invoke();
         GameManager.Instance.playerRebirthCount++;
-        ResetRankDate();
+        CurrencyManager.instance.CurrencyTestSet();
+
+        if (ReincarnationPop == null) return;
+        ReincarnationPop.SetActive(false);
 
         Debug.Log($"환생 완료");
     }
@@ -41,13 +49,6 @@ public class ReincarnationManager : MonoBehaviour
         }
         return true;
     }
-
-    //등급 초기화
-    private void ResetRankDate()
-    {
-        RankManager.instance.ResetRank();
-    }
-
 
     //플레이어가 가지고 있는 명성 가져오는 함수 
     private int GetCurrentReputation()

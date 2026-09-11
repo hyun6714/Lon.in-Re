@@ -12,13 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fae180d24d06f1944bfc9549e223909d, type: 3}
   m_Name: CalendarBaseData
   m_EditorClassIdentifier: Assembly-CSharp::CalendarData
+  defaultDaysInMonth: 30
   startYear: 1
   startMonth: 3
   startDay: 1
   startHour: 7
   startMinute: 0
   startSeason: 3
+  daysInMonthList: 1f0000001c0000001f0000001e0000001f0000001e0000001f0000001f0000001e0000001f0000001e0000001f000000
   realTime: 1
   minutePerSec: 15
-  gameDevEventDay: 5
-  seasonEventStartDay: 15
+  maxMonthPerYear: 12
+  maxHourPerDay: 24
+  maxMinutePerHour: 60
+  monthPerSeason: 3
+  seasonList:
+  - season: 3
+    seasonName: "\uBD04"
+  - season: 6
+    seasonName: "\uC5EC\uB984"
+  - season: 9
+    seasonName: "\uAC00\uC744"
+  - season: 12
+    seasonName: "\uACA8\uC6B8"
+  baseEventHour: 7

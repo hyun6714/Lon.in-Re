@@ -8,61 +8,69 @@ public class ShopCurrencyHUD : MonoBehaviour
     [SerializeField] private TextMeshProUGUI specialCurrencyText;  // Special_Currency_Text
     [SerializeField] private TextMeshProUGUI reputationText;       // Reputation_Text
 
-    // 이전 수치 캐싱 (최초 1회 갱신)
-    private int prevNormal = -1;
-    private int prevSpecial = -1;
-    private int prevReputation = -1;
-
     private void OnEnable()
     {
-        prevNormal = -1;
-        prevSpecial = -1;
-        prevReputation = -1;
+        SubscribeAndRefresh();
+    }
 
-        InvokeRepeating(nameof(RefreshCurrencyUI), 0f, 0.2f);
+    private void Start()
+    {
+        SubscribeAndRefresh();
     }
 
     private void OnDisable()
     {
-        CancelInvoke(nameof(RefreshCurrencyUI));
+        // 이벤트 해제
+        if (CurrencyManager.instance != null)
+        {
+            CurrencyManager.instance.OnCurrencyChanged -= HandleCurrencyChanged;
+        }
     }
 
-    public void RefreshCurrencyUI()
+    private void SubscribeAndRefresh()
     {
-        if (CurrencyManager.instance == null)
-        {
-            return;
-        }
+        if (CurrencyManager.instance == null) return;
 
-        int normal = CurrencyManager.instance.GetAmount(CurrencyType.Normal);
-        int special = CurrencyManager.instance.GetAmount(CurrencyType.Special);
-        int reputation = CurrencyManager.instance.GetAmount(CurrencyType.Reputation);
+        // 중복 구독 방지 후 이벤트 재연결
+        CurrencyManager.instance.OnCurrencyChanged -= HandleCurrencyChanged;
+        CurrencyManager.instance.OnCurrencyChanged += HandleCurrencyChanged;
 
-        if (normal != prevNormal)
-        {
-            prevNormal = normal;
-            if (normalCurrencyText != null)
-            {
-                normalCurrencyText.text = $"일반 재화 : {CurrencyFormatter.Format(normal)}";
-            }
-        }
+        RefreshAllCurrencies();
+    }
 
-        if (special != prevSpecial)
-        {
-            prevSpecial = special;
-            if (specialCurrencyText != null)
-            {
-                specialCurrencyText.text = $"특수 재화 : {CurrencyFormatter.Format(special)}";
-            }
-        }
+    private void HandleCurrencyChanged(CurrencyType type, int amount)
+    {
+        UpdateCurrencyText(type, amount);
+    }
 
-        if (reputation != prevReputation)
+    // HUD 활성화 시 전체 1회 갱신
+    public void RefreshAllCurrencies()
+    {
+        if (CurrencyManager.instance == null) return;
+
+        UpdateCurrencyText(CurrencyType.Normal, CurrencyManager.instance.GetAmount(CurrencyType.Normal));
+        UpdateCurrencyText(CurrencyType.Special, CurrencyManager.instance.GetAmount(CurrencyType.Special));
+        UpdateCurrencyText(CurrencyType.Reputation, CurrencyManager.instance.GetAmount(CurrencyType.Reputation));
+    }
+
+    private void UpdateCurrencyText(CurrencyType type, int amount)
+    {
+        switch (type)
         {
-            prevReputation = reputation;
-            if (reputationText != null)
-            {
-                reputationText.text = $"명성 : {CurrencyFormatter.Format(reputation)}";
-            }
+            case CurrencyType.Normal:
+                if (normalCurrencyText != null)
+                    normalCurrencyText.text = $"일반 재화 : {CurrencyFormatter.Format(amount)}";
+                break;
+
+            case CurrencyType.Special:
+                if (specialCurrencyText != null)
+                    specialCurrencyText.text = $"특수 재화 : {CurrencyFormatter.Format(amount)}";
+                break;
+
+            case CurrencyType.Reputation:
+                if (reputationText != null)
+                    reputationText.text = $"명성 : {CurrencyFormatter.Format(amount)}";
+                break;
         }
     }
 
@@ -120,17 +128,6 @@ public class ShopCurrencyHUD : MonoBehaviour
             {
                 RankManager.instance.currentRank = (RankManager.RankState)nextRank;
 
-                // 등급에 맞는 고용 한도 설정
-                RankManager.instance.maxEmployee = RankManager.instance.currentRank switch
-                {
-                    RankManager.RankState.Indie => 5,
-                    RankManager.RankState.Small => 10,
-                    RankManager.RankState.Midsized => 20,
-                    RankManager.RankState.MajorPublisher => 50,
-                    _ => 0
-                };
-                RankManager.instance.hasEmployees = true;
-
                 Debug.Log($"[디버그] 회사 등급 상승 완료: {RankManager.instance.currentRank} (최대 인원: {RankManager.instance.maxEmployee})");
             }
             else
@@ -156,8 +153,6 @@ public class ShopCurrencyHUD : MonoBehaviour
         if (RankManager.instance != null)
         {
             RankManager.instance.currentRank = RankManager.RankState.MajorPublisher;
-            RankManager.instance.maxEmployee = 50;
-            RankManager.instance.hasEmployees = true;
         }
 
         Debug.Log("[디버그] 모든 조건 프리패스 지급 완료! (일반 1000만, 특수 10000, 명성 3000, 환생 5회, 대기업 등급)");

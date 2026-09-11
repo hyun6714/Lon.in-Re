@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ArtifactManager : MonoBehaviour
@@ -6,14 +7,16 @@ public class ArtifactManager : MonoBehaviour
 
     public ArtifactDatabase artifactDatabase;
 
+    private Dictionary<int, bool> unlockedStates = new Dictionary<int, bool>();
+
     private void Awake()
     {
-        ResetArtifactsForEditor();
-
         if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+
+            InitUnlockedStates();
         }
         else
         {
@@ -21,12 +24,29 @@ public class ArtifactManager : MonoBehaviour
         }
     }
 
+    //해금 초기화 
+    private void InitUnlockedStates()
+    {
+        if (artifactDatabase == null) return;
 
-    //playerRebirth 플레이어 환생횟수 변수 변경할 필요 있음 
+        foreach (var info in artifactDatabase.artifacts)
+        {
+            if (!unlockedStates.ContainsKey(info.artifactId))
+            {
+                unlockedStates.Add(info.artifactId, false);
+            }
+        }
+    }
+
+    public bool IsUnlocked(int artifactID)
+    {
+        return unlockedStates.TryGetValue(artifactID, out bool isUnlocked) && isUnlocked;
+    }
+
     public bool TryUnlockArtifact(int artifactID, int playerRebirth, int playerReputation, int playerSpecialCurrency)
     {
         ArtifactInfo info = artifactDatabase.GetArtifactsInfo(artifactID);
-        if(info==null || info.isUnlocked)
+        if(info==null || IsUnlocked(artifactID))
         {
             return false;
         }
@@ -51,8 +71,9 @@ public class ArtifactManager : MonoBehaviour
             return false;
         }
 
-        info.isUnlocked = true;
-        CurrencyManager.instance.UseCurrency(CurrencyType.Special, info.SpecialUnlockCost);
+        unlockedStates[artifactID] = true;
+
+        GameEventBridge.CurrencyUsed(CurrencyType.Special, info.SpecialUnlockCost);
         Debug.Log($"{info.artiName} 아티팩트 해금");
         return true;
     }
@@ -65,7 +86,7 @@ public class ArtifactManager : MonoBehaviour
 
         foreach (var info in artifactDatabase.artifacts)
         {
-            if (info.isUnlocked)
+            if (IsUnlocked(info.artifactId))
             {
                 total += info.GainperClick; 
             }
@@ -79,7 +100,7 @@ public class ArtifactManager : MonoBehaviour
         float total = 0f;
         foreach (var info in artifactDatabase.artifacts)
         {
-            if (info.isUnlocked)
+            if (IsUnlocked(info.artifactId))
             {
                 total += info.PerSecond;
             }
@@ -93,34 +114,11 @@ public class ArtifactManager : MonoBehaviour
         float total = 0f;
         foreach (var info in artifactDatabase.artifacts)
         {
-            if (info.isUnlocked)
+            if (IsUnlocked(info.artifactId))
             {
                 total += info.Probabilityincrease;
             }
         }
         return total;
-    }
-
-
-    //확인 할려고 만든 아티팩트 초기화 함수 나중에 삭제해야함
-    public void ResetArtifactsForEditor()
-    {
-        //삭제해야함 
-        PlayerPrefs.DeleteAll(); // 모든 저장 데이터 초기화 (테스트용)
-        Debug.Log("PlayerPrefs 초기화 완료");
-
-        if (artifactDatabase == null || artifactDatabase.artifacts == null)
-        {
-            return;
-        }
-
-        foreach (var info in artifactDatabase.artifacts)
-        {
-            if (info != null)
-            {
-                info.isUnlocked = false;
-            }
-        }
-        Debug.Log("아티팩트 초기화 완료");
     }
 }

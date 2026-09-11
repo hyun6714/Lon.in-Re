@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EventManagerData", menuName = "Game/EventManagerData")]
+[CreateAssetMenu(fileName = "EventManagerDaeta", menuName = "Game/EventManagerData")]
 public class EventManagerData : ScriptableObject
 {
     [Header("n일 뒤 정산 리스트")]

@@ -20,10 +20,6 @@ public class AutoProduction : MonoBehaviour
     [Header("업그레이드")]
     [SerializeField] private AutoProductionUpgrade upgrade;
 
-    [Header("풀링 연동")]
-    [SerializeField] private FloatingText textPrefab;
-    [SerializeField] private Transform effectCanvasTransform;
-
     [Header("직원 정보 가져오기")]
     [SerializeField] private EmployeeManager employee;
 
@@ -31,9 +27,6 @@ public class AutoProduction : MonoBehaviour
     [SerializeField] private bool isPaused = false;
 
     private CancellationTokenSource token;
-
-    // 돈 획득 시 발생할 이벤트
-    public event Action<CurrencyType, int> OnNormalCurrencyChanged;
 
     private void Awake()
     {
@@ -46,10 +39,7 @@ public class AutoProduction : MonoBehaviour
         token?.Dispose();
         token = new CancellationTokenSource();
 
-        if (employee != null)
-        {
-            SubscribeEvent();
-        }
+        SubscribeEvent();
 
         AutoMoneyProduct(token.Token).Forget();
     }
@@ -71,16 +61,32 @@ public class AutoProduction : MonoBehaviour
 
     private void SubscribeEvent()
     {
-        employee.OnEmployeeChanged += UpdateMoneyPerSec;
-        upgrade.OnMultiplierUpgradeChanged += UpdateMoneyPerSec;
+        if (employee != null)
+        {
+            employee.OnEmployeeChanged += UpdateMoneyPerSec;
+        }
+
+        if (upgrade != null)
+        {
+            upgrade.OnMultiplierUpgradeChanged += UpdateMoneyPerSec;
+        }
+
         GameEventBridge.OnPausedChanged += PausedChanged;
-        Utils.Log("구독 완료");
+        Utils.Log("AutoProduction 구독 완료");
     }
 
     private void UnSubscribeEvent()
     {
-        employee.OnEmployeeChanged -= UpdateMoneyPerSec;
-        upgrade.OnMultiplierUpgradeChanged -= UpdateMoneyPerSec;
+        if (employee != null)
+        {
+            employee.OnEmployeeChanged -= UpdateMoneyPerSec;
+        }
+
+        if (upgrade != null)
+        {
+            upgrade.OnMultiplierUpgradeChanged -= UpdateMoneyPerSec;
+        }
+
         GameEventBridge.OnPausedChanged -= PausedChanged;
     }
 
@@ -92,19 +98,7 @@ public class AutoProduction : MonoBehaviour
         float multiplier = upgrade != null ? upgrade.AutoMultiplier : 1f;
 
         moneyPerSec = Mathf.RoundToInt((employeeProduction + upgradeProduction) * multiplier);
-        //moneyPerSec *= multiplier;
     }
-
-    // n초당 생산량 갱신 테스트 용
-    //private async UniTaskVoid UpdateMoneyPerSecCheck(CancellationToken token)
-    //{
-    //    while (!token.IsCancellationRequested)
-    //    {
-    //        UpdateMoneyPerSec();
-
-    //        await UniTask.Delay(1000, cancellationToken: token);
-    //    }
-    //}
 
     // 자동 생산
     private async UniTaskVoid AutoMoneyProduct(CancellationToken token)
@@ -119,8 +113,9 @@ public class AutoProduction : MonoBehaviour
                 if (moneyPerSec != 0)
                 {
                     nowMoney += moneyPerSec;
-                    OnNormalCurrencyChanged?.Invoke(CurrencyType.Normal, (int)moneyPerSec);
-                    SpawnFloatingText(transform.position);
+                    GameEventBridge.CurrencyAdded(CurrencyType.Normal, (int)moneyPerSec);
+                    
+                    UIManager.Instance.SpawnFloatingText(transform.position, (int)moneyPerSec, true);
                 }
 
                 await UniTask.NextFrame(PlayerLoopTiming.EarlyUpdate, token);
@@ -129,41 +124,6 @@ public class AutoProduction : MonoBehaviour
         catch (OperationCanceledException)
         {
             
-        }
-    }
-
-    // 텍스트 특정 위치에 출력. 현재는 해당 오브젝트 상단에 출력
-    public void SpawnFloatingText(Vector2 pos)
-    {
-        if (textPrefab == null || ObjectPoolManager.instance == null)
-            return;
-        GameObject text = textPrefab.gameObject;
-        
-        FloatingText textObj = ObjectPoolManager.instance.GetObject<FloatingText>(
-            textPrefab.gameObject,
-            effectCanvasTransform
-            );
-
-        if (textObj != null)
-        {
-            RectTransform rect = textObj.GetComponent<RectTransform>();
-
-            
-            if (rect != null && effectCanvasTransform is RectTransform canvasRect)
-            {
-                Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(Camera.main, pos);
-
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    canvasRect,
-                    screenPos,
-                    canvasRect.GetComponent<Canvas>().worldCamera,
-                    out Vector2 localPoint
-                    );
-
-                rect.anchoredPosition = localPoint + new Vector2(0f, 100f);
-            }
-            textObj.SetOriginPrefab(textPrefab.gameObject);
-            textObj.Setup($"+{moneyPerSec}");
         }
     }
 

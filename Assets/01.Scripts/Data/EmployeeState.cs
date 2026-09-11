@@ -1,19 +1,19 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
-// ÇöÀç ÇÃ·¹ÀÌ¾î°¡ º¸À¯ÇÑ Á÷¿ø »óÅÂ 
+// í˜„ì¬ í”Œë ˆì´ì–´ê°€ ë³´ìœ í•œ ì§ì› ìƒíƒœ 
 [Serializable]
 public class EmployeeState
 {
-    // Á÷¿ø µ¥ÀÌÅÍ
+    // ì§ì› ë°ì´í„°
     public EmployeeData employeeData;
 
-    // ÇöÀç º¸À¯ ÀÎ¿ø
+    // í˜„ì¬ ë³´ìœ  ì¸ì›
     [SerializeField] private int count;
     public int Count => count;
 
-    // °í¿ë»óÅÂ¿¡ µû¸¥ ´ÙÀ½ °í¿ëºñ °è»ê
-    // 2¹øÂ° °í¿ëºÎÅÍ Àû¿ë
+    // ê³ ìš©ìƒíƒœì— ë”°ë¥¸ ë‹¤ìŒ ê³ ìš©ë¹„ ê³„ì‚°
+    // 2ë²ˆì§¸ ê³ ìš©ë¶€í„° ì ìš©
     public int GetCurrentHireCost()
     {
         double cost = employeeData.BaseHireCost * Math.Pow(employeeData.HireCostMultiplier, count);
@@ -21,10 +21,31 @@ public class EmployeeState
         return (int)Math.Round(cost);
     }
 
-    // Á÷¿ø °í¿ë ½Ã º¸À¯ ÀÎ¿ø Áõ°¡
+    // ì§ì› ê³ ìš© ì‹œ ë³´ìœ  ì¸ì› ì¦ê°€
     public void AddEmployee()
     {
         count++;
+    }
+
+    // ì§ì› í•´ê³ 
+    public void RemoveEmployee()
+    {
+        if (count > 0)
+        {
+            count--;
+        }
+    }
+
+    // 0ìœ¼ë¡œ ì´ˆê¸°í™”
+    public void ResetCount()
+    {
+        count = 0;
+    }
+
+    // ì €ì¥ëœ ì§ì› ìˆ˜ ì„¤ì • (ë¡œë“œí• ë•Œ í•„ìš”)
+    public void SetCount(int value)
+    {
+        count = value;
     }
 }
 

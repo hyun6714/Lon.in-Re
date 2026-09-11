@@ -64,6 +64,8 @@ public class GameSettlementManager : MonoBehaviour
                 break;
         }
 
+        GameReleaseManager.instance.IncreaseSettlementCount(gameId);
+
         Utils.Log(
             $"게임 정산 / ID : {gameId} / " +
             $"정산 회차 : {settlementCount} / " +

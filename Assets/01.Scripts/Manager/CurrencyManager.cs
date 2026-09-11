@@ -1,9 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CurrencyManager : MonoBehaviour
 {
+    public TextMeshProUGUI currencyText;
+
+    public void CurrencyTestSet()
+    {
+        if (currencyText != null && CurrencyManager.instance != null)
+        {
+            int normal = CurrencyManager.instance.GetAmount(CurrencyType.Normal);
+            int special = CurrencyManager.instance.GetAmount(CurrencyType.Special);
+            int reputation = CurrencyManager.instance.GetAmount(CurrencyType.Reputation);
+
+            currencyText.text = $"일반: {normal:N0}\n특수: {special:N0}\n명성: {reputation:N0}";
+        }
+    }
+
     public static CurrencyManager instance { get; private set; }
 
     private Dictionary<CurrencyType, int> currentCurrencies = new Dictionary<CurrencyType, int>();
@@ -11,9 +26,6 @@ public class CurrencyManager : MonoBehaviour
     public event Action<CurrencyType, int> OnCurrencyChanged;
 
     [SerializeField] private CurrencyDatabase currencyDatabase;
-
-    // 임시 연동
-    [SerializeField] private AutoProduction auto;
 
     private void Awake()
     {
@@ -28,22 +40,24 @@ public class CurrencyManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        CurrencyTestSet();
     }
 
     private void OnEnable()
     {
-        if (auto != null)
-        {
-            auto.OnNormalCurrencyChanged += AddCurrency;
-        }
+        GameEventBridge.OnCurrencyAdded += AddCurrency;
+        GameEventBridge.OnCurrencyUsed += UseCurrency;
+
+        ReincarnationManager.OnReincarnated += ResetCurrenciesExceptSpecial;
     }
 
     private void OnDisable()
     {
-        if (auto != null)
-        {
-            auto.OnNormalCurrencyChanged -= AddCurrency;
-        }
+        GameEventBridge.OnCurrencyAdded -= AddCurrency;
+        GameEventBridge.OnCurrencyUsed -= UseCurrency;
+
+        ReincarnationManager.OnReincarnated -= ResetCurrenciesExceptSpecial;
     }
 
     private void InitializeCurrencies()
@@ -56,11 +70,7 @@ public class CurrencyManager : MonoBehaviour
 
         foreach (CurrencyInfo info in currencyDatabase.currencies)
         {
-            string saveKey = $"Currency_{info.type}";
-
-            int amount = PlayerPrefs.GetInt(saveKey, info.initialAmount);
-
-            currentCurrencies[info.type] = amount;
+            currentCurrencies[info.type] = info.initialAmount;
         }
     }
 
@@ -89,6 +99,7 @@ public class CurrencyManager : MonoBehaviour
 
         currentCurrencies[type] = GetAmount(type) + amount;
 
+        OnCurrencyChanged?.Invoke(type, currentCurrencies[type]);
     }
 
     //재화 차감 
@@ -104,9 +115,19 @@ public class CurrencyManager : MonoBehaviour
         }
 
         currentCurrencies[type] = current - amount;
+
+        OnCurrencyChanged?.Invoke(type, currentCurrencies[type]);
+
         return true;
     }
 
+    // 재화 값 설정
+    public void SetCurrency(CurrencyType type, int amount)
+    {
+        currentCurrencies[type] = amount;
+
+        OnCurrencyChanged?.Invoke(type, currentCurrencies[type]);
+    }
 
     //환생전용 특수 재화 제외 초기화 
     public void ResetCurrenciesExceptSpecial()
@@ -121,10 +142,10 @@ public class CurrencyManager : MonoBehaviour
             }
 
             currentCurrencies[info.type] = info.initialAmount;
-            string saveKey = $"Currency_{info.type}";
-            PlayerPrefs.SetInt(saveKey, info.initialAmount);
+
+            OnCurrencyChanged?.Invoke(info.type, info.initialAmount);
         }
-        PlayerPrefs.Save();
+
         Debug.Log("특수 재화를 제외한 모든 재화가 초기화되었습니다.");
     }
 }

@@ -24,6 +24,11 @@ public class ShopArtifactSlot : MonoBehaviour
     private Color32 normalColor = new Color32(247, 244, 235, 255);
     // private Color32 impossibleColor = new Color32(235, 85, 85, 255);
 
+    private void OnEnable()
+    {
+        Refresh();
+    }
+
     public void SetUp(
             ArtifactInfo info,
             Action onPurchaseSuccessCallback = null,
@@ -72,6 +77,8 @@ public class ShopArtifactSlot : MonoBehaviour
             descText.gameObject.SetActive(!string.IsNullOrEmpty(descStr));
         }
 
+        bool isUnlocked = ArtifactManager.instance != null && ArtifactManager.instance.IsUnlocked(targetArtifactID);
+
         // 조건 텍스트 설정
         string conditionStr = "";
         if (info.requiredRebirthCount > 0)
@@ -86,7 +93,7 @@ public class ShopArtifactSlot : MonoBehaviour
         if (conditionText != null)
         {
             conditionText.text = conditionStr;
-            conditionText.gameObject.SetActive(!string.IsNullOrEmpty(conditionStr) && !info.isUnlocked);
+            conditionText.gameObject.SetActive(!string.IsNullOrEmpty(conditionStr) && !isUnlocked);
         }
 
         // 버튼 리스너 연결
@@ -96,7 +103,7 @@ public class ShopArtifactSlot : MonoBehaviour
         }
         if (unlockBtn != null)
         {
-            unlockBtn.onClick.RemoveAllListeners();
+            unlockBtn.onClick.RemoveListener(OnClickUnlock);
             unlockBtn.onClick.AddListener(OnClickUnlock);
         }
 
@@ -110,7 +117,9 @@ public class ShopArtifactSlot : MonoBehaviour
             return;
         }
 
-        if (info.isUnlocked)
+        bool isUnlocked = ArtifactManager.instance != null && ArtifactManager.instance.IsUnlocked(info.artifactId);
+
+        if (isUnlocked)
         {
             // 이미 보유한 아티팩트
             if (unlockBtn != null)
@@ -163,8 +172,10 @@ public class ShopArtifactSlot : MonoBehaviour
     // 슬롯 터치 시 실행되는 함수
     public void OnClickUnlock()
     {
+        bool isUnlocked = ArtifactManager.instance != null && ArtifactManager.instance.IsUnlocked(targetArtifactID);
+
         // 이미 보유 중이거나 데이터가 없으면 무시
-        if (targetInfo == null || targetInfo.isUnlocked)
+        if (targetInfo == null || isUnlocked)
         {
             return;
         }
@@ -223,8 +234,6 @@ public class ShopArtifactSlot : MonoBehaviour
         int currentReputation = CurrencyManager.instance.GetAmount(CurrencyType.Reputation);
         int currentReincarnation = GameManager.Instance.playerRebirthCount;
 
-        ArtifactInfo info = ArtifactManager.instance.artifactDatabase.GetArtifactsInfo(targetArtifactID);
-
         // 실제 구매 및 해금 검사
         bool success = ArtifactManager.instance.TryUnlockArtifact(
             targetArtifactID,
@@ -236,13 +245,22 @@ public class ShopArtifactSlot : MonoBehaviour
         if (success)
         {
             Debug.Log($"해금 완료: {targetInfo.artiName}");
+
+            // 아티팩트 해금 후 탭 파워 배율 변동 즉시 반영
+            var playerUpgrade = FindFirstObjectByType<PlayerTapUpgrade>();
+            if (playerUpgrade != null)
+            {
+                playerUpgrade.RecalculateTapPower();
+            }
+
             if (onPurchaseSuccess != null)
             {
                 onPurchaseSuccess.Invoke();
             }
-            else if (info != null)
+            else if (targetInfo != null)
             {
-                UpdateUIState(info);
+                UpdateUIState(targetInfo);
+                CurrencyManager.instance.CurrencyTestSet();
             }
         }
     }

@@ -13,4 +13,9 @@ public class WinterEvent : IEvent
         Utils.Log("겨울 이벤트 종료");
 
     }
+
+    public void SaveEventData(EventSaveData data)
+    {
+
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -14,7 +15,8 @@ public enum ShopTab
 public class NormalShop : MonoBehaviour
 {
     [Header("상점 패널")]
-    [SerializeField] private GameObject shopPanel;
+    [SerializeField] private GameObject shopPanel;      // 전체 패널
+    [SerializeField] private Transform windowTransform; // 팝업 연출될 패널
 
     [Header("확인 팝업 연동")]
     [SerializeField] private ConfirmPopup confirmPopup;
@@ -39,6 +41,9 @@ public class NormalShop : MonoBehaviour
     [Header("스크롤 뷰 컨텐츠 부모")]
     [SerializeField] private Transform contentParent; // Scroll View > Viewport > Content
 
+    [Header("스크롤 뷰 연동")]
+    [SerializeField] private ScrollRect scrollRect;
+
     [Header("슬롯 프리팹 3종")]
     [SerializeField] private GameObject partSlotPrefab;
     [SerializeField] private GameObject employeeHireSlotPrefab;
@@ -54,10 +59,15 @@ public class NormalShop : MonoBehaviour
     private readonly List<ShopArtifactSlot> artifactSlots = new List<ShopArtifactSlot>();
 
     private ShopTab currentTab = ShopTab.Part;
+
     private bool isInitialized = false;
+
+    private Tween shopTween;
 
     private void Awake()
     {
+        if (windowTransform == null) windowTransform = transform;
+
         if (playerUpgrade == null) playerUpgrade = FindFirstObjectByType<PlayerTapUpgrade>();
         if (employeeManager == null) employeeManager = FindFirstObjectByType<EmployeeManager>();
 
@@ -76,6 +86,22 @@ public class NormalShop : MonoBehaviour
 
         // 부품 탭 비주얼 활성화
         SwitchTab(ShopTab.Part);
+
+        //재화 변동 이벤트 구독
+        if (CurrencyManager.instance != null)
+        {
+            CurrencyManager.instance.OnCurrencyChanged += OnCurrencyChanged;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        shopTween?.Kill();
+
+        if (CurrencyManager.instance != null)
+        {
+            CurrencyManager.instance.OnCurrencyChanged -= OnCurrencyChanged;
+        }
     }
 
     // 슬롯 최초 1회 생성 및 초기화
@@ -92,7 +118,8 @@ public class NormalShop : MonoBehaviour
                 var slot = obj.GetComponent<PartUpgradeSlot>();
                 if (slot != null)
                 {
-                    slot.SetUp(state, playerUpgrade);
+                    // RefreshPartSlots 콜백 전달
+                    slot.SetUp(state, playerUpgrade, RefreshPartSlots);
                     partSlots.Add(slot);
                 }
             }
@@ -107,7 +134,8 @@ public class NormalShop : MonoBehaviour
                 var slot = obj.GetComponent<EmployeeHireSlot>();
                 if (slot != null)
                 {
-                    slot.SetUp(state, employeeManager);
+                    // RefreshEmployeeSlots 콜백 전달
+                    slot.SetUp(state, employeeManager, RefreshEmployeeSlots);
                     employeeSlots.Add(slot);
                 }
             }
@@ -122,8 +150,8 @@ public class NormalShop : MonoBehaviour
                 var slot = obj.GetComponent<ShopArtifactSlot>();
                 if (slot != null)
                 {
+                    // RefreshArtifactSlots 콜백 전달
                     slot.SetUp(info, RefreshArtifactSlots, ShowConfirmPopup);
-
                     artifactSlots.Add(slot);
                 }
             }
@@ -134,6 +162,12 @@ public class NormalShop : MonoBehaviour
 
     public void OpenShop()
     {
+        OpenShop(currentTab);
+    }
+
+    // 외부에서 원하는 탭을 지정해 바로 열 때 호출하는 메서드
+    public void OpenShop(ShopTab tab)
+    {
         if (!isInitialized)
         {
             InitSlots();
@@ -141,16 +175,38 @@ public class NormalShop : MonoBehaviour
 
         if (shopPanel != null)
         {
+            shopTween?.Kill();
             shopPanel.SetActive(true);
+
+            // 열기 연출
+            Transform animTarget = windowTransform != null ? windowTransform : transform;
+            animTarget.localScale = Vector3.one * 0.8f;
+            shopTween = animTarget.DOScale(Vector3.one, 0.25f)
+                                  .SetEase(Ease.OutBack)
+                                  .SetUpdate(true)
+                                  .SetLink(gameObject);
         }
-        SwitchTab(currentTab);
+        SwitchTab(tab);
     }
+
 
     public void CloseShop()
     {
-        if (shopPanel != null)
+        if (shopPanel != null && shopPanel.activeSelf)
         {
-            shopPanel.SetActive(false);
+            shopTween?.Kill();
+
+            // 닫기 연출
+            Transform animTarget = windowTransform != null ? windowTransform : transform;
+            shopTween = animTarget.DOScale(Vector3.one * 0.8f, 0.15f)
+                                  .SetEase(Ease.InBack)
+                                  .SetUpdate(true)
+                                  .SetLink(gameObject)
+                                  .OnComplete(() =>
+                                  {
+                                      shopPanel.SetActive(false);
+                                      animTarget.localScale = Vector3.one; // 원래 크기 복구
+                                  });
         }
     }
 
@@ -193,8 +249,64 @@ public class NormalShop : MonoBehaviour
                 break;
         }
 
+        if (scrollRect != null)
+        {
+            scrollRect.verticalNormalizedPosition = 1f;
+        }
+
         // 탭 버튼 비주얼(스프라이트/텍스트) 교체
         UpdateTabVisuals();
+    }
+
+    // 재화 변동 시 상점이 켜져 있을 때만 갱신
+    private void OnCurrencyChanged(CurrencyType type, int amount)
+    {
+        // 닫혀 있으면 갱신 X
+        if (shopPanel == null || !shopPanel.activeSelf)
+        {
+            return;
+        }
+
+        RefreshCurrentTab();
+    }
+
+    // 현재 활성화된 탭의 슬롯들만 갱신
+    public void RefreshCurrentTab()
+    {
+        switch (currentTab)
+        {
+            case ShopTab.Part:
+                RefreshPartSlots();
+                break;
+            case ShopTab.Employee:
+                RefreshEmployeeSlots();
+                break;
+            case ShopTab.Artifact:
+                RefreshArtifactSlots();
+                break;
+        }
+    }
+
+    public void RefreshPartSlots()
+    {
+        for (int i = 0; i < partSlots.Count; i++)
+        {
+            if (partSlots[i] != null)
+            {
+                partSlots[i].Refresh();
+            }
+        }
+    }
+
+    public void RefreshEmployeeSlots()
+    {
+        for (int i = 0; i < employeeSlots.Count; i++)
+        {
+            if (employeeSlots[i] != null)
+            {
+                employeeSlots[i].Refresh();
+            }
+        }
     }
 
     public void RefreshArtifactSlots()
