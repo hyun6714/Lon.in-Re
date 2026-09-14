@@ -1,4 +1,6 @@
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 // 확률 강화
 // 세부 등급 랜덤 생성 
@@ -11,6 +13,17 @@ public class GameDevManager : MonoBehaviour
 
     [Header("게임 개발 데이터")]
     [SerializeField] private GameDevData gameDevData;
+
+    [Header("게임 개발 UI")]
+    [SerializeField] private TMP_Text probabilityCountText;
+    [SerializeField] private Image funIcon;
+    [SerializeField] private Image graphicIcon;
+    [SerializeField] private Image optimizationIcon;
+
+    [Header("등급 이미지")]
+    [SerializeField] private Sprite aGradeSprite;
+    [SerializeField] private Sprite bGradeSprite;
+    [SerializeField] private Sprite cGradeSprite;
 
     // 현재 확률 추가 횟수
     private int probabilityUpgradeCount = 0;
@@ -82,7 +95,33 @@ public class GameDevManager : MonoBehaviour
         // 확률 증가 횟수 +1
         probabilityUpgradeCount++;
 
+        UpdateProbabilityCountText();
+
         Utils.Log($"확률 증가 완료 / A : {GetCurrentARate()}% / " +$"B : {GetCurrentBRate()}% / " +$"C : {GetCurrentCRate()}%");
+    }
+
+    // 확률 강화 횟수 UI 갱신
+    private void UpdateProbabilityCountText()
+    {
+        probabilityCountText.text = probabilityUpgradeCount.ToString();
+    }
+
+    // 확률 강화 횟수 감소
+    public void DecreaseProbability()
+    {
+        if (probabilityUpgradeCount <= 0)
+        {
+            return;
+        }
+
+        probabilityUpgradeCount--;
+
+        // 사용했던 강화 비용 반환
+        CurrencyManager.instance.AddCurrency(CurrencyType.Normal, gameDevData.ProbabilityUpgradeCost);
+
+        UpdateProbabilityCountText();
+
+        Utils.Log($"확률 강화 취소 / 현재 강화 횟수 : {probabilityUpgradeCount}");
     }
 
     // 확률에 따라 A, B,C 중 하나를 랜덤으로 결정
@@ -205,10 +244,35 @@ public class GameDevManager : MonoBehaviour
         return result;
     }
 
-    // 버튼 테스트용
-    public void TestDevelopGame()
+    private void SetGradeIcon(Image icon, DevelopmentGrade grade)
     {
-        DevelopGame();
+        switch (grade)
+        {
+            case DevelopmentGrade.A:
+                icon.sprite = aGradeSprite;
+                break;
+
+            case DevelopmentGrade.B:
+                icon.sprite = bGradeSprite;
+                break;
+
+            case DevelopmentGrade.C:
+                icon.sprite = cGradeSprite;
+                break;
+        }
+    }
+
+    // 게임 만들기 버튼
+    public void OnClickDevelopGame()
+    {
+        GameDevResult result = DevelopGame();
+
+        if (result == null)
+            return;
+
+        SetGradeIcon(funIcon, result.funGrade);
+        SetGradeIcon(graphicIcon, result.graphicGrade);
+        SetGradeIcon(optimizationIcon, result.optimizationGrade);
     }
 }
 
