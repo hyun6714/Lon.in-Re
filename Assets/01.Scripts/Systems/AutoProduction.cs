@@ -61,14 +61,10 @@ public class AutoProduction : MonoBehaviour
 
     private void SubscribeEvent()
     {
-        if (employee != null)
-        {
-            employee.OnEmployeeChanged += UpdateMoneyPerSec;
-        }
 
         if (upgrade != null)
         {
-            upgrade.OnMultiplierUpgradeChanged += UpdateMoneyPerSec;
+            upgrade.OnAutoUpgradeChanged += UpdateMoneyPerSec;
         }
 
         GameEventBridge.OnPausedChanged += PausedChanged;
@@ -77,14 +73,10 @@ public class AutoProduction : MonoBehaviour
 
     private void UnSubscribeEvent()
     {
-        if (employee != null)
-        {
-            employee.OnEmployeeChanged -= UpdateMoneyPerSec;
-        }
 
         if (upgrade != null)
         {
-            upgrade.OnMultiplierUpgradeChanged -= UpdateMoneyPerSec;
+            upgrade.OnAutoUpgradeChanged -= UpdateMoneyPerSec;
         }
 
         GameEventBridge.OnPausedChanged -= PausedChanged;
@@ -93,11 +85,8 @@ public class AutoProduction : MonoBehaviour
     // n초당 생산량 갱신 함수. 고용 인원 + 업그레이드 증가량(임시 계산)
     private void UpdateMoneyPerSec()
     {
-        int employeeProduction = employee != null ? employee.GetTotalProductionPerSecond() : 0;
-        float upgradeProduction = upgrade != null ? upgrade.TotalPerSecond() : 0;
-        float multiplier = upgrade != null ? upgrade.AutoMultiplier : 1f;
-
-        moneyPerSec = Mathf.RoundToInt((employeeProduction + upgradeProduction) * multiplier);
+        moneyPerSec = upgrade.TotalPerSec;
+        Utils.Log($"초당 생산량 갱신 완료 : {moneyPerSec}G/초");
 
         UIManager.Instance.SetText(HUDTextType.CoinSec, $"{moneyPerSec}G/초");
     }

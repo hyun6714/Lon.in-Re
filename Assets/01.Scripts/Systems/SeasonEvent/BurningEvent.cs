@@ -1,17 +1,15 @@
 using UnityEngine;
 
-public class SpringEvent : IEvent
+public class BurningEvent : IEvent
 {
     public void StartEvent()
     {
-        // 이벤트 시작 로직
-        Utils.Log("봄 이벤트 시작");
+        Utils.Log("버닝 이벤트 실행 확인용");
     }
 
     public void EndEvent()
     {
-        // 이벤트 종료 로직
-        Utils.Log("봄 이벤트 종료");
+        Utils.Log("버닝 이벤트 종료");
     }
 
     public void SaveEventData(EventSaveData data)

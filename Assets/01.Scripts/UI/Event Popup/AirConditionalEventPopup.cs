@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SummerEventPopup : EventPopupBase
+public class AirConditionalEventPopup : EventPopupBase
 {
-    public override UIName Name => UIName.Popup_Event_0715;
+    public override UIName Name => UIName.Popup_Event_AirConditional;
 
     [SerializeField] private Button button_1;
     [SerializeField] private Button button_2;

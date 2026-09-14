@@ -18,14 +18,23 @@ public interface IEvent
 public enum GameEventType
 {
     None,
-    SpringEvent = 3001,
-    SummerEvent,
+    Burning = 3001,
+    AirConditional,
     FallEvent,
     WinterEvent
 }
 
 public class EventManager : MonoBehaviour
 {
+    private class ActiveEvent
+    {
+        public GameEventType Type;
+        public GameEventInfo Info;
+        public GameDate EventDate;
+        public IEvent Event;
+        public bool IsStarted;
+    }
+
     public static EventManager instance;
 
     [Header("데이터")]
@@ -33,16 +42,19 @@ public class EventManager : MonoBehaviour
     [SerializeField] private GameEventData eventData;
 
     [Header("계절 이벤트 데이터")]
-    [SerializeField] private SummerEventData summerData;
+    [SerializeField] private AirConditionalEventData summerData;
 
-    //private Dictionary<(int month, int day), GameEventInfo> eventDateDic = new Dictionary<(int month, int day), GameEventInfo>();
+    // 날짜별 이벤트 저장용 딕셔너리
     private Dictionary<GameDate, GameEventInfo> eventDateDic = new Dictionary<GameDate, GameEventInfo>();
+
+    // 발생한 이벤트 저장용 딕셔너리
+    private Dictionary<GameEventType, ActiveEvent> activeEventDic = new Dictionary<GameEventType, ActiveEvent>();
 
     private EventFactory eventFactory;
 
-    private IEvent currentEvent;
-    private GameEventType currentEventType;
-    private GameEventInfo currentGameEventInfo;
+    //private IEvent currentEvent;
+    //private GameEventType currentEventType;
+    //private GameEventInfo currentGameEventInfo;
 
     private CancellationTokenSource token;
 
@@ -72,24 +84,29 @@ public class EventManager : MonoBehaviour
             return;
         }
 
+        eventDateDic.Clear();
+
+        // 날짜만 다른 같은 이벤트를 날짜를 키값으로 딕셔너리에 추가
         foreach (GameEventInfo info in eventData.EventList)
         {
-            GameDate dateKey = new GameDate
+            // info의 GameEventDateList를 확인해서 딕셔너리에 키값으로 넣어줌
+            foreach (GameEventDate eventDate in info.GameEventDateList)
             {
-                year = 0,
-                month = info.TargetMonth,
-                day = info.TargetDay,
-                hour = 0,
-                minutes = 0
-            };
+                GameDate dateKey = new GameDate
+                {
+                    month = eventDate.Month,
+                    day = eventDate.Day,
+                    hour = eventDate.Hour
+                };
 
-            if (eventDateDic.ContainsKey(dateKey))
-            {
-                Debug.Log($"같은 날짜에 이벤트가 이미 존재합니다. {info.TargetMonth}월 {info.TargetDay}일");
-                continue;
+                if (eventDateDic.ContainsKey(dateKey))
+                {
+                    Debug.Log($"같은 날짜에 이벤트가 이미 존재합니다 : {eventDate.Month}월 {eventDate.Day}일 {eventDate.Hour}시");
+                    continue;
+                }
+
+                eventDateDic.Add(dateKey, info);
             }
-
-            eventDateDic.Add(dateKey, info);
         }
     }
 
@@ -129,127 +146,134 @@ public class EventManager : MonoBehaviour
     /// <summary>
     /// 게임 로드 시 이벤트 불러오는 함수
     /// </summary>
-    /// <param name="eventSaveData"> 저장된 EventSaveData </param>
-    public void CheckEventSave(EventSaveData eventSaveData)
+    /// <param name="eventSaveDatas"> 저장된 이벤트 리스트 </param>
+    public void CheckEventSave(List<EventSaveData> eventSaveDatas)
     {
-        if (eventSaveData == null || !eventSaveData.isEventActive)
+        if (eventSaveDatas == null || eventSaveDatas.Count == 0)
         {
             Utils.Log("저장된 이벤트가 없습니다.");
             return;
         }
-
-        GameEventInfo targetInfo = null;
         
-        foreach (var events in eventDateDic)
+        foreach (EventSaveData saveData in eventSaveDatas)
         {
-            if (events.Value.EventType == eventSaveData.eventType)
+            if (!saveData.isEventActive)
+                continue;
+
+            GameEventInfo targetInfo = null;
+
+            foreach (var events in eventDateDic)
             {
-                targetInfo = events.Value;
-                break;
-            }
-        }
-
-        if (targetInfo == null)
-        {
-            Utils.Log($"이벤트 타입 [{eventSaveData.eventType}]에 해당하는 이벤트를 딕셔너리에서 찾지 못했습니다.");
-            return;
-        }
-
-        if (CalendarManager.instance.CurrentDate < eventSaveData.eventEndDate)
-        {
-            Utils.Log($"진행중인 이벤트 발견 : [{eventSaveData.eventType}] {targetInfo.TargetMonth}월 {targetInfo.TargetDay}일 에 시작함");
-
-            currentGameEventInfo = targetInfo;
-            currentEventType = eventSaveData.eventType;
-            currentEvent = eventFactory.CreateEvent(currentEventType);
-
-            if (currentEvent == null)
-            {
-                Utils.Log($"이벤트 생성 실패 : {currentEventType}");
-                return;
+                if (events.Value.EventType == saveData.eventType)
+                {
+                    targetInfo = events.Value;
+                    break;
+                }
             }
 
-            if (currentEvent is SummerEvent summerEvent)
+            if (targetInfo == null)
             {
-                summerEvent.LoadEvent(eventSaveData.eventEndDate, eventSaveData.isSummerCool);
-            }            
-        }
-        else
-        {
-            Utils.Log("저장된 이벤트의 종료 날짜가 이미 지났습니다.");
-        }
+                Utils.Log($"이벤트 타입 [{saveData.eventType}]을 찾지 못했습니다.");
+                continue;
+            }
+
+            if (CalendarManager.instance.CurrentDate < saveData.eventEndDate)
+            {
+                IEvent newEvent = eventFactory.CreateEvent(saveData.eventType);
+
+                if (newEvent == null)
+                    continue;
+
+                activeEventDic[saveData.eventType] = new ActiveEvent
+                {
+                    Type = saveData.eventType,
+                    Info = targetInfo,
+                    Event = newEvent,
+                    IsStarted = true
+                };
+
+                if (newEvent is AirConditionalEvent airconEvent)
+                {
+                    airconEvent.LoadEvent(saveData.eventEndDate, saveData.isSummerCool);
+                }
+
+                Utils.Log($"이벤트 복구 완료 : {saveData.eventType}");
+            }
+        }        
     }
 
     /// <summary>
     /// 게임 세이브 시 불러오는 함수
     /// </summary>
-    /// <returns> 현재 진행중인 이벤트 정보를 반환  </returns>
-    public EventSaveData GetEventSaveData()
+    /// <returns> 현재 진행중인 이벤트 리스트를 반환  </returns>
+    public List<EventSaveData> GetEventSaveData()
     {
-        EventSaveData saveData = new EventSaveData();
+        List<EventSaveData> saveDatas = new List<EventSaveData>();
 
-        if (currentEvent == null)
+        foreach (var value in activeEventDic)
         {
-            saveData.isEventActive = false;
-            return saveData;
+            ActiveEvent activeEvent = value.Value;
+
+            EventSaveData saveData = new EventSaveData()
+            {
+                eventType = activeEvent.Type,
+                isEventActive = true
+            };
+            activeEvent.Event.SaveEventData(saveData);
+
+            saveDatas.Add(saveData);
         }
 
-        saveData.isEventActive = true;
-        saveData.eventType = currentEventType;
-
-        currentEvent.SaveEventData(saveData);
-        return saveData;
-    }
-
-    /// <summary>
-    /// 여름 이벤트 발동 시 배율 변경
-    /// </summary>
-    /// <param name="multi"> isCool에 따른 배율 변경값 </param>
-    public void SummerMultiplier(float multi)
-    {
-        GameEventBridge.AutoMultiplierChanged(multi);
+        return saveDatas;
     }
     
     // UI 테스트용
     public void OnClickSummerCool(bool value)
     {
-        if (currentEvent is SummerEvent strategy)
-        {
-            strategy.SetCool(value);
+        if (!activeEventDic.TryGetValue(GameEventType.AirConditional, out ActiveEvent activeEvent))
+            return;
 
-            UIManager.Instance.ClosePopup(currentGameEventInfo.PopupName);
+        if (activeEvent.Event is AirConditionalEvent airconEvent)
+        {
+            airconEvent.SetCool(value);
+            UIManager.Instance.ClosePopup(activeEvent.Info.PopupName);
         }
     }
 
     // 이벤트 교체
     private void ChangeEvent(GameDate date)
     {
-        GameEventInfo targetInfo = null;
-        GameDate dateKey = default;
-
         foreach (var kv in eventDateDic)
         {
-            if (kv.Key.EqualMonthDay(date))
+            if (!kv.Key.EqualMonthDayHour(date))
+                continue;
+
+            GameEventInfo eventInfo = kv.Value;
+            GameEventType eventType = kv.Value.EventType;
+
+            if (activeEventDic.ContainsKey(eventType))
             {
-                targetInfo = kv.Value;
-                dateKey = kv.Key;
-                break;
+                Utils.Log($"이미 진행 중인 이벤트 입니다 : {eventType}");
+                continue;
             }
+
+            IEvent newEvent = eventFactory.CreateEvent(eventType);
+
+            if (newEvent == null)
+                continue;
+
+            activeEventDic[eventType] = new ActiveEvent
+            {
+                Type = eventType,
+                Info = eventInfo,
+                EventDate = kv.Key,
+                Event = newEvent,
+                IsStarted = false
+            };
+
+            Utils.Log($"이벤트 등록 성공 : {eventType}_{kv.Key.month}월 {kv.Key.day}일 {kv.Key.hour}시");
         }
 
-        if (targetInfo == null)
-        {
-            currentGameEventInfo = null;
-            currentEvent = null;
-            return;
-        }
-
-        currentGameEventInfo = targetInfo;
-        currentEventType = targetInfo.EventType;
-
-        currentEvent = eventFactory.CreateEvent(currentEventType);
-
-        Utils.Log($"이벤트 등록 성공 : {currentEventType}_{dateKey.month}월 {dateKey.day}일");
     }
 
     // 게임 출시 후 해당 게임의 정산 시작
@@ -304,24 +328,41 @@ public class EventManager : MonoBehaviour
 
     public void StartCurrentEvent()
     {
-        if (currentEvent == null)
+        GameDate currentDate = CalendarManager.instance.CurrentDate;
+
+        // 활성화된 이벤트 딕셔너리의 Key, Value값
+        foreach (var value in activeEventDic)
         {
-            Utils.Log("등록된 이벤트가 없습니다.");
-            return;
-        }
+            ActiveEvent activeEvent = value.Value;
 
-        currentEvent?.StartEvent();
+            if (!currentDate.EqualMonthDayHour(activeEvent.EventDate))
+                continue;
 
-        UIManager.Instance.OpenPopup(currentGameEventInfo.PopupName);
+            if (activeEvent.IsStarted)
+            {
+                Utils.Log($"이미 시작된 이벤트 입니다 : {activeEvent.Type}");
+                continue;
+            }
+
+            activeEvent.Event.StartEvent();
+
+            activeEvent.IsStarted = true;
+
+            UIManager.Instance.OpenPopup(activeEvent.Info.PopupName);
+
+            Utils.Log($"이벤트 시작 : {activeEvent.Type}");
+        }        
     }
 
-    public void EndCurrentEvent()
+    public void EndCurrentEvent(GameEventType type)
     {
-        currentEvent?.EndEvent();
+        if (!activeEventDic.TryGetValue(type, out ActiveEvent activeEvent))
+            return;
 
-        currentEvent = null;
-        currentEventType = GameEventType.None;
-        currentGameEventInfo = null;
+        activeEvent.Event.EndEvent();
+        activeEventDic.Remove(type);
+
+        Utils.Log($"이벤트 종료 : {type}");
     }    
 
     public void PausedChanged(bool isPaused)

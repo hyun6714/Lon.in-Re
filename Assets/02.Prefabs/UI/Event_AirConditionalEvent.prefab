@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8513621500485058589}
   - component: {fileID: 6301843282318123067}
   m_Layer: 5
-  m_Name: SummerEvent_Popup
+  m_Name: Event_AirConditionalEvent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

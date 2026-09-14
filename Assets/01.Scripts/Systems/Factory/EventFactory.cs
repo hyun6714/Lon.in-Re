@@ -5,11 +5,11 @@ public class EventFactory
 {
     private Dictionary<GameEventType, Func<IEvent>> createDic;
 
-    private SummerEventData summerData;
+    private AirConditionalEventData airconData;
 
-    public EventFactory(SummerEventData summerData)
+    public EventFactory(AirConditionalEventData airconData)
     {
-        this.summerData = summerData;
+        this.airconData = airconData;
 
         InitFactory();
     }
@@ -18,8 +18,8 @@ public class EventFactory
     {
         createDic = new Dictionary<GameEventType, Func<IEvent>>()
         {
-            { GameEventType.SpringEvent, () => new SpringEvent() },
-            { GameEventType.SummerEvent, () => new SummerEvent(summerData) },
+            { GameEventType.Burning, () => new BurningEvent() },
+            { GameEventType.AirConditional, () => new AirConditionalEvent(airconData) },
             { GameEventType.FallEvent, () => new FallEvent() },
             { GameEventType.WinterEvent, () => new WinterEvent() }
         };

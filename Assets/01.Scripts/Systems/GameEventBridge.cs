@@ -14,7 +14,7 @@ public static class GameEventBridge
     public static event Action<bool> OnPausedChanged;
 
     /// <summary> 자동 생산 배수 변경 시 발생 (배율) </summary>
-    public static event Action<float> OnAutoMultiplierChanged;
+    public static event Action<GameEventType, float> OnAutoMultiplierChanged;
 
     /// <summary> 탭/클릭 배수 변경 시 발생 (배율) </summary>
     public static event Action<GameEventType, float> OnTapMultiplierChanged;
@@ -27,6 +27,9 @@ public static class GameEventBridge
 
     /// <summary> 재화량 변화 시 발생 </summary>
     public static event Action<CurrencyType, int> OnCurrencyChanged;
+
+    /// <summary> 직원 수 변화 시 발생 </summary>
+    public static event Action OnEmployeeChaned;
     
 
     // 이벤트 실행
@@ -34,9 +37,10 @@ public static class GameEventBridge
     public static void TimeChanged(GameDate date) => OnTimeChanged?.Invoke(date);
     public static void EventStarted() => OnEventStarted?.Invoke();
     public static void PausedChanged(bool isPaused) => OnPausedChanged?.Invoke(isPaused);
-    public static void AutoMultiplierChanged(float multi) => OnAutoMultiplierChanged?.Invoke(multi);
+    public static void AutoMultiplierChanged(GameEventType type, float multi) => OnAutoMultiplierChanged?.Invoke(type, multi);
     public static void TapMultiplierChanged(GameEventType type, float multi) => OnTapMultiplierChanged?.Invoke(type, multi);
     public static void CurrencyAdded(CurrencyType type, int value) => OnCurrencyAdded?.Invoke(type, value);
     public static void CurrencyUsed(CurrencyType type, int value) => OnCurrencyUsed?.Invoke(type, value);
     public static void CurrencyChanged(CurrencyType type, int value) => OnCurrencyChanged?.Invoke(type, value);
+    public static void EmployeeChanged() => OnEmployeeChaned?.Invoke();
 }

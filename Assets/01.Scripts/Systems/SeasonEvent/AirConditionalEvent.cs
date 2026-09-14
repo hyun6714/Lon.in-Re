@@ -2,9 +2,9 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
 
-public class SummerEvent : IEvent
+public class AirConditionalEvent : IEvent
 {
-    private SummerEventData data;
+    private AirConditionalEventData data;
     private bool isCool;
 
     private GameDate eventEndDate;
@@ -18,7 +18,7 @@ public class SummerEvent : IEvent
     public GameDate EventEndDate => eventEndDate;
     public bool IsCool => isCool;
 
-    public SummerEvent(SummerEventData data)
+    public AirConditionalEvent(AirConditionalEventData data)
     {
         this.data = data;
 
@@ -31,7 +31,6 @@ public class SummerEvent : IEvent
         token?.Cancel();
         token?.Dispose();
         token = new CancellationTokenSource();
-        Utils.Log("여름 이벤트 시작");
 
         Utils.Log($"이벤트 종료 날짜 : {eventEndDate.year}년 {eventEndDate.month}월 {eventEndDate.day}일 {eventEndDate.hour}시 {eventEndDate.minutes}분");
 
@@ -47,12 +46,13 @@ public class SummerEvent : IEvent
 
     public void SetMultiplier()
     {
-        coolAutoMultiplier = isCool ? data.CoolAutoMultiplier : data.UnCoolAutoMultiplier;
         coolClickMultiplier = isCool ? data.CoolClickMultiplier : data.UnCoolClickMultiplier;
+        coolAutoMultiplier = isCool ? data.CoolAutoMultiplier : data.UnCoolAutoMultiplier;
 
         string text = isCool ? data.CoolText : data.UnCoolText;
         Utils.Log(text);
-        EventManager.instance.SummerMultiplier(coolAutoMultiplier);
+        GameEventBridge.TapMultiplierChanged(GameEventType.AirConditional, coolClickMultiplier);
+        GameEventBridge.AutoMultiplierChanged(GameEventType.AirConditional, coolAutoMultiplier);
     }
 
     private async UniTask EventTimer(CancellationToken token)
@@ -67,7 +67,7 @@ public class SummerEvent : IEvent
         }
         finally
         {
-            EndEvent();
+            EventManager.instance.EndCurrentEvent(GameEventType.AirConditional);
         }
     }
 
@@ -76,7 +76,8 @@ public class SummerEvent : IEvent
         coolAutoMultiplier = data.AutoMultiplier;
         coolClickMultiplier = data.ClickMultiplier;
 
-        EventManager.instance.SummerMultiplier(coolAutoMultiplier);
+        GameEventBridge.TapMultiplierChanged(GameEventType.AirConditional, coolClickMultiplier);
+        GameEventBridge.AutoMultiplierChanged(GameEventType.AirConditional, coolAutoMultiplier);
 
         Utils.Log("생산 배수 초기화");
     }
@@ -88,8 +89,6 @@ public class SummerEvent : IEvent
         token = null;
 
         ReturnMultiplier();
-        
-        Utils.Log("여름 이벤트 종료");
     }
 
     public void SaveEventData(EventSaveData eventSaveData)
@@ -119,7 +118,7 @@ public class SummerEvent : IEvent
             year = currentDate.year,
             month = eventEndDate.month,
             day = eventEndDate.day,
-            hour = CalendarManager.instance.AllEventStartHour
+            hour = CalendarManager.instance.DefaultEventTriggerHour
         };
 
         if (currentDate < targetDate)
