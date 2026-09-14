@@ -116,8 +116,7 @@ public class NormalShop : PopupBase
                 var slot = obj.GetComponent<PartUpgradeSlot>();
                 if (slot != null)
                 {
-                    // RefreshPartSlots 콜백 전달
-                    slot.SetUp(state, playerUpgrade, RefreshPartSlots);
+                    slot.SetUp(state, playerUpgrade, CheckPartCosts);
                     partSlots.Add(slot);
                 }
             }
@@ -275,7 +274,23 @@ public class NormalShop : PopupBase
             return;
         }
 
-        RefreshCurrentTab();
+        if (currentTab == ShopTab.Part)
+        {
+            if (type == CurrencyType.Normal) CheckPartCosts();
+            return;
+        }
+
+        if (currentTab == ShopTab.Artifact)
+        {
+            if (type == CurrencyType.Special) RefreshArtifactSlots();
+            return;
+        }
+
+        if (currentTab == ShopTab.Employee)
+        {
+            if (type == CurrencyType.Normal) RefreshEmployeeSlots();
+            return;
+        }
     }
 
     // 현재 활성화된 탭의 슬롯들만 갱신
@@ -292,6 +307,17 @@ public class NormalShop : PopupBase
             case ShopTab.Artifact:
                 RefreshArtifactSlots();
                 break;
+        }
+    }
+
+    public void CheckPartCosts()
+    {
+        for (int i = 0; i < partSlots.Count; i++)
+        {
+            if (partSlots[i] != null)
+            {
+                partSlots[i].CheckCost();
+            }
         }
     }
 

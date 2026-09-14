@@ -82,12 +82,7 @@ public class PartUpgradeSlot : MonoBehaviour
             int nextCost = targetState.GetNextCost();
             costText.text = CurrencyFormatter.Format(nextCost);
 
-            // 돈 충분한지 체크
-            bool canAfford = CurrencyManager.instance != null && CurrencyManager.instance.GetAmount(CurrencyType.Normal) >= nextCost;
-
-            // 연출 완료 후 색상 설정
-            costText.DOComplete();
-            costText.color = canAfford ? originCostColor : new Color(0.65f, 0.65f, 0.65f, 1f);
+            CheckCost();
         }
 
         // 버튼 활성화 유지
@@ -95,6 +90,25 @@ public class PartUpgradeSlot : MonoBehaviour
         {
             slotBtn.interactable = true;
         }
+    }
+
+    public void CheckCost()
+    {
+        if (targetState == null || targetState.partData == null || costText == null)
+        {
+            return;
+        }
+
+        bool isUnlocked = RankManager.instance != null && RankManager.instance.currentRank >= targetState.partData.UnlockGrade;
+        if (!isUnlocked)
+        {
+            return;
+        }
+
+        int nextCost = targetState.GetNextCost();
+        bool canBuy = CurrencyManager.instance != null && CurrencyManager.instance.GetAmount(CurrencyType.Normal) >= nextCost;
+
+        costText.color = canBuy ? originCostColor : new Color(0.65f, 0.65f, 0.65f, 1f);
     }
 
     public void OnClickUpgrade()
@@ -111,14 +125,10 @@ public class PartUpgradeSlot : MonoBehaviour
             transform.DOComplete();
             transform.DOPunchScale(Vector3.one * 0.06f, 0.15f, vibrato: 5, elasticity: 0.5f)
                      .SetLink(gameObject);
-            if (onUpgradeSuccess != null)
-            {
-                onUpgradeSuccess.Invoke();
-            }
-            else
-            {
-                Refresh();
-            }
+
+            Refresh();
+
+            onUpgradeSuccess?.Invoke();
         }
         else
         {

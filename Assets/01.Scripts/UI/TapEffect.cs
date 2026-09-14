@@ -14,7 +14,8 @@ public class TapEffect : MonoBehaviour, IPoolable
 
     private GameObject originPrefab;
     private Color originColor = Color.white;
-    private Sequence effectSequence;
+    private float timer;
+    private bool isPlaying;
 
     private void Awake()
     {
@@ -36,9 +37,9 @@ public class TapEffect : MonoBehaviour, IPoolable
 
     public void PlayEffect()
     {
-        effectSequence?.Kill();
+        timer = 0f;
+        isPlaying = true;
 
-        // 초기 상태 초기화
         transform.localScale = startScale;
         if (effectImage != null)
         {
@@ -46,18 +47,38 @@ public class TapEffect : MonoBehaviour, IPoolable
         }
 
         gameObject.SetActive(true);
+    }
 
-        // 크기 확장 + 페이드아웃 트윈
-        effectSequence = DOTween.Sequence();
-        effectSequence.Append(transform.DOScale(targetScale, duration).SetEase(Ease.OutQuad))
-                      .Join(effectImage.DOFade(0f, duration).SetEase(Ease.OutQuad))
-                      .SetUpdate(true)
-                      .OnComplete(ReturnToPool);
+    private void Update()
+    {
+        if (!isPlaying)
+        {
+            return;
+        }
+
+        // 타이머 누적
+        timer += Time.unscaledDeltaTime;
+
+        float t = timer / duration;
+
+        transform.localScale = Vector3.Lerp(startScale, targetScale, t);
+
+        if (effectImage != null)
+        {
+            Color c = originColor;
+            c.a = Mathf.Lerp(originColor.a, 0f, t); // 투명화
+            effectImage.color = c;
+        }
+
+        if (timer >= duration)
+        {
+            ReturnToPool();
+        }
     }
 
     public void ReturnToPool()
     {
-        effectSequence?.Kill();
+        isPlaying = false;
 
         if (ObjectPoolManager.instance != null && originPrefab != null)
         {
