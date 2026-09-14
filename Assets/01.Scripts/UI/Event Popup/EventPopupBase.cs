@@ -11,6 +11,7 @@ public class EventPopupBase : PopupBase
     protected virtual void OnEnable()
     {
         transform.localScale = Vector3.one * data.CloseSize;
+        GameManager.Instance.GamePaused();
     }
 
     public override void OpenPopup()
