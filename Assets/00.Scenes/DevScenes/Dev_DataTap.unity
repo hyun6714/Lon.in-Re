@@ -8932,6 +8932,7 @@ MonoBehaviour:
   peopleBtn: {fileID: 0}
   rebirthBtn: {fileID: 0}
   textGroup: {fileID: 0}
+  buttonGroup: {fileID: 0}
   uiCanvas: {fileID: 562136973}
   effectCanvas: {fileID: 1958653686}
   floatingTextPrefab: {fileID: 4107302407250168393, guid: 18ef8d7347b1c254ebe8848704eb84a9, type: 3}
@@ -18207,6 +18208,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shop
       objectReference: {fileID: 0}
+    - target: {fileID: 4861372512015226525, guid: 41ce3624cdd197640a5c445c70df610b, type: 3}
+      propertyPath: openShopBtn
+      value: 
+      objectReference: {fileID: 1960928880}
+    - target: {fileID: 4861372512015226525, guid: 41ce3624cdd197640a5c445c70df610b, type: 3}
+      propertyPath: playerUpgrade
+      value: 
+      objectReference: {fileID: 3576015679975514026}
+    - target: {fileID: 4861372512015226525, guid: 41ce3624cdd197640a5c445c70df610b, type: 3}
+      propertyPath: employeeManager
+      value: 
+      objectReference: {fileID: 301041355}
     - target: {fileID: 6352154818409637328, guid: 41ce3624cdd197640a5c445c70df610b, type: 3}
       propertyPath: openShopBtn
       value: 
