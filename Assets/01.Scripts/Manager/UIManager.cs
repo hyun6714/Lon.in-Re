@@ -8,7 +8,8 @@ using System;
 public enum UIName
 {
     None,
-    Popup_Event_0715,
+    Popup_Event_AirConditional,
+    Popup_Event_Burning,
     Popup_Shop,
     Popup_Game,
     Popup_Rebirth,

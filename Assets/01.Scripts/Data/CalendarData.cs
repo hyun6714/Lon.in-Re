@@ -41,7 +41,7 @@ public class CalendarData : ScriptableObject
     [SerializeField] private int monthPerSeason = 3;
     [SerializeField] private List<SeasonInfo> seasonList;
 
-    [Header("이벤트 시작 시간")]
+    [Header("이벤트 트리거 시간")]
     [SerializeField] private int baseEventHour = 7;
 
     public int DefaultDaysInMonth => defaultDaysInMonth;

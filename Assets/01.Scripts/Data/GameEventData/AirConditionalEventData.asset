@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4df5ed4c2fdd6749a6dc66425b134a0, type: 3}
-  m_Name: SummerEventData
-  m_EditorClassIdentifier: Assembly-CSharp::SummerEventData
+  m_Name: AirConditionalEventData
+  m_EditorClassIdentifier: Assembly-CSharp::AirConditionalEventData
+  summerEventAddDay: 20
   autoMultiplier: 1
   clickMultiplier: 1
-  coolAutoMultiplier: 2
-  coolClickMultiplier: 3
+  coolAutoMultiplier: 1.5
+  coolClickMultiplier: 0.5
   unCoolAutoMultiplier: 0.5
-  unCoolClickMultiplier: 0.5
+  unCoolClickMultiplier: 2
   coolText: "\uC790\uB3D9 \uBC30\uC218 2\uBC30 \uC801\uC6A9"
   unCoolText: "\uC790\uB3D9 \uBC30\uC218 0.5\uBC30 \uC801\uC6A9"

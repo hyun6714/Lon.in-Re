@@ -12,9 +12,6 @@ public class EmployeeManager : MonoBehaviour
 
     public List<EmployeeState> EmployeeStates => employeeStates;
 
-    // 직원 고용 성공 시 발생하는 이벤트
-    public event Action OnEmployeeChanged;
-
     // 환생 이벤트 구독 / 해제
     private void OnEnable()
     {
@@ -110,7 +107,7 @@ public class EmployeeManager : MonoBehaviour
         rankManager.currentEmployeeCount++;
 
         // 9. 직원 고용 후 생산량 갱신 이벤트
-        OnEmployeeChanged?.Invoke();
+        GameEventBridge.EmployeeChanged();
 
         Utils.Log($"{state.employeeData.EmployeeName} 고용 완료 / " + $"현재 보유 수 : {state.Count}");
     }
@@ -139,7 +136,7 @@ public class EmployeeManager : MonoBehaviour
         }
 
         // 초당 생산량 갱신 이벤트 발생
-        OnEmployeeChanged?.Invoke();
+        GameEventBridge.EmployeeChanged();
 
         Utils.Log($"{state.employeeData.EmployeeName} 해고 완료 / 남은 인원: {state.Count}");
         return true;
@@ -172,7 +169,7 @@ public class EmployeeManager : MonoBehaviour
             state?.ResetCount();
         }
 
-        OnEmployeeChanged?.Invoke();
+        GameEventBridge.EmployeeChanged();
         Utils.Log("모든 직원이 초기화되었습니다.");
     }
 }

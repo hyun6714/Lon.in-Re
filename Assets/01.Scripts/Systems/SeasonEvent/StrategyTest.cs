@@ -50,7 +50,7 @@ public class StrategyTest : MonoBehaviour
                 {
                     if (currentSeason != Season.None)
                     {
-                        EventManager.instance.EndCurrentEvent();
+                        //EventManager.instance.EndCurrentEvent();
 
                     }
                     

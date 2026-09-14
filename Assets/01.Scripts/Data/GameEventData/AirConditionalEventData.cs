@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SummerEventData", menuName = "SeasonEvent/SummerEventData")]
-public class SummerEventData : ScriptableObject
+[CreateAssetMenu(fileName = "AirConditionalEventData", menuName = "Event/AirConditionalEventData")]
+public class AirConditionalEventData : ScriptableObject
 {
     [Header("이벤트 지속 시간")]
     [SerializeField] private int summerEventAddDay = 20;
@@ -11,11 +11,11 @@ public class SummerEventData : ScriptableObject
     [SerializeField] private float clickMultiplier = 1f;
 
     [Header("상태별 생산 배수")]
-    [SerializeField] private float coolAutoMultiplier = 2f;
-    [SerializeField] private float coolClickMultiplier = 3f;
+    [SerializeField] private float coolAutoMultiplier = 1.5f;
+    [SerializeField] private float coolClickMultiplier = 0.5f;
 
     [SerializeField] private float unCoolAutoMultiplier = 0.5f;
-    [SerializeField] private float unCoolClickMultiplier = 0.5f;
+    [SerializeField] private float unCoolClickMultiplier = 2f;
 
     [Header("로그 문장")]
     [SerializeField] private string coolText = "자동 배수 2배 적용";

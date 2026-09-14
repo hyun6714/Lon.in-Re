@@ -109,9 +109,9 @@ public struct GameDate : IEquatable<GameDate>
         return date;
     }
 
-    public bool EqualMonthDay(GameDate other)
+    public readonly bool EqualMonthDayHour(GameDate other)
     {
-        return month == other.month && day == other.day;
+        return month == other.month && day == other.day && hour == other.hour;
     }
 
 #if UNITY_EDITOR
@@ -141,12 +141,12 @@ public struct GameDate : IEquatable<GameDate>
     }
 #endif
     #region 연산자 오버로딩
-    public bool Equals(GameDate other)
+    public readonly bool Equals(GameDate other)
     {
         return year == other.year && month == other.month && day == other.day && hour == other.hour && minutes == other.minutes;
     }
 
-    public int CompareTo(GameDate other)
+    public readonly int CompareTo(GameDate other)
     {
         if (year > other.year)
             return 1;

@@ -34,9 +34,9 @@ public class CalendarManager : MonoBehaviour
     #endregion
 
     #region Event Settings
-    [Header("이벤트 시작 시간")]
-    [SerializeField] private int allEventStartHour;
-    public int AllEventStartHour => allEventStartHour;
+    [Header("이벤트 트리거 시간")]
+    [SerializeField] private int defaultEventTriggerHour;
+    public int DefaultEventTriggerHour => defaultEventTriggerHour;
 
     [Header("일시 정지")]
     [SerializeField] private bool isPaused;
@@ -101,7 +101,6 @@ public class CalendarManager : MonoBehaviour
 
         currentDate = new GameDate(data);        
         
-        allEventStartHour = data.BaseEventHour;
         realTimer = data.RealTime;
         minutePerSec = data.MinutePerSec;
 
@@ -162,10 +161,7 @@ public class CalendarManager : MonoBehaviour
                 NextDay();
             }
 
-            if (currentDate.hour == allEventStartHour)
-            {
-                EventTrigger();
-            }
+            EventTrigger();
         }    
     }
 
@@ -211,7 +207,7 @@ public class CalendarManager : MonoBehaviour
     /// <returns></returns>
     public bool IsEventTime(GameDate date)
     {
-        return currentDate.year == date.year && currentDate.month == date.month && currentDate.day == date.day && currentDate.hour == allEventStartHour;
+        return currentDate.year == date.year && currentDate.month == date.month && currentDate.day == date.day && currentDate.hour == defaultEventTriggerHour;
     }
 
     /// <summary>
@@ -236,10 +232,7 @@ public class CalendarManager : MonoBehaviour
 
         GameEventBridge.DayChanged(currentDate);
 
-        if (currentDate.hour >= allEventStartHour)
-        {
-            EventTrigger();
-        }
+        EventTrigger();
 
         GameEventBridge.TimeChanged(currentDate);
         Utils.Log("날짜 강제 변경 성공");
