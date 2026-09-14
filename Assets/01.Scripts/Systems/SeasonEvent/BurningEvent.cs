@@ -6,14 +6,11 @@ public class BurningEvent : IEvent
 {
     private BurningEventData data;
 
-    private float burningTimer;
-
     private CancellationTokenSource token;
 
     public BurningEvent(BurningEventData data)
     {
         this.data = data;
-        burningTimer = data.BurningTime;
     }
 
     public void StartEvent()
@@ -33,12 +30,14 @@ public class BurningEvent : IEvent
         {
             SetMultiplier();
 
-            await UniTask.Delay(TimeSpan.FromSeconds(burningTimer), cancellationToken: ctk);
+            await UniTask.Delay(TimeSpan.FromSeconds(data.BurningTime), cancellationToken: ctk);
 
             ReturnMultiplier();
 
             await UniTask.Delay(TimeSpan.FromSeconds(data.EndTime), cancellationToken: ctk);
 
+            UIManager.Instance.ClosePopup(UIName.Popup_Event_Burning);
+            EventManager.instance.EndCurrentEvent(GameEventType.Burning);
 
         }
         catch (OperationCanceledException)
