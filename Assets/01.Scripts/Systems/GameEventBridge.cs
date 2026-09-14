@@ -1,37 +1,41 @@
-using System;
+ï»¿using System;
 
 public static class GameEventBridge
 {
-    /// <summary> ³¯Â¥ º¯°æ½Ã ¹ß»ı (¿ù, ÀÏ) </summary>
+    /// <summary> ë‚ ì§œ ë³€ê²½ì‹œ ë°œìƒ (ì›”, ì¼) </summary>
     public static event Action<GameDate> OnDayChanged;
 
     public static event Action<GameDate> OnTimeChanged;
 
-    /// <summary> 7½Ã ¸¶´Ù ÀÌº¥Æ® Ã¼Å© </summary>
+    /// <summary> 7ì‹œ ë§ˆë‹¤ ì´ë²¤íŠ¸ ì²´í¬ </summary>
     public static event Action OnEventStarted;
 
-    /// <summary> °ÔÀÓÀÌ ÀÏ½ÃÁ¤Áö µÇ¾úÀ» ¶§ ¹ß»ı </summary>
+    /// <summary> ê²Œì„ì´ ì¼ì‹œì •ì§€ ë˜ì—ˆì„ ë•Œ ë°œìƒ </summary>
     public static event Action<bool> OnPausedChanged;
 
-    /// <summary> ÀÚµ¿ »ı»ê ¹è¼ö º¯°æ ½Ã ¹ß»ı (¹èÀ²) </summary>
+    /// <summary> ìë™ ìƒì‚° ë°°ìˆ˜ ë³€ê²½ ì‹œ ë°œìƒ (ë°°ìœ¨) </summary>
     public static event Action<float> OnAutoMultiplierChanged;
 
-    /// <summary> ÀçÈ­ È¹µæ ½Ã ¹ß»ı (ÀçÈ­ Å¸ÀÔ, ÀçÈ­·®) </summary>
+    /// <summary> íƒ­/í´ë¦­ ë°°ìˆ˜ ë³€ê²½ ì‹œ ë°œìƒ (ë°°ìœ¨) </summary>
+    public static event Action<GameEventType, float> OnTapMultiplierChanged;
+
+    /// <summary> ì¬í™” íšë“ ì‹œ ë°œìƒ (ì¬í™” íƒ€ì…, ì¬í™”ëŸ‰) </summary>
     public static event Action<CurrencyType, int> OnCurrencyAdded;
 
-    /// <summary> ÀçÈ­ »ç¿ë ½Ã ¹ß»ı (ÀçÈ­ Å¸ÀÔ, ÀçÈ­·®) </summary>
+    /// <summary> ì¬í™” ì‚¬ìš© ì‹œ ë°œìƒ (ì¬í™” íƒ€ì…, ì¬í™”ëŸ‰) </summary>
     public static event Func<CurrencyType, int, bool> OnCurrencyUsed;
 
-    /// <summary> ÀçÈ­·® º¯È­ ½Ã ¹ß»ı </summary>
+    /// <summary> ì¬í™”ëŸ‰ ë³€í™” ì‹œ ë°œìƒ </summary>
     public static event Action<CurrencyType, int> OnCurrencyChanged;
     
 
-    // ÀÌº¥Æ® ½ÇÇà
+    // ì´ë²¤íŠ¸ ì‹¤í–‰
     public static void DayChanged(GameDate date) => OnDayChanged?.Invoke(date);
     public static void TimeChanged(GameDate date) => OnTimeChanged?.Invoke(date);
     public static void EventStarted() => OnEventStarted?.Invoke();
     public static void PausedChanged(bool isPaused) => OnPausedChanged?.Invoke(isPaused);
     public static void AutoMultiplierChanged(float multi) => OnAutoMultiplierChanged?.Invoke(multi);
+    public static void TapMultiplierChanged(GameEventType type, float multi) => OnTapMultiplierChanged?.Invoke(type, multi);
     public static void CurrencyAdded(CurrencyType type, int value) => OnCurrencyAdded?.Invoke(type, value);
     public static void CurrencyUsed(CurrencyType type, int value) => OnCurrencyUsed?.Invoke(type, value);
     public static void CurrencyChanged(CurrencyType type, int value) => OnCurrencyChanged?.Invoke(type, value);
