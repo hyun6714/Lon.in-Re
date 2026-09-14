@@ -24,17 +24,22 @@ public class PlayerTapUpgrade : MonoBehaviour
 
     private int cachedTapPower = 1;     // 캐싱 변수
 
+    // 이벤트 배율 저장 딕셔너리
+    private Dictionary<GameEventType, float> eventMulti = new Dictionary<GameEventType, float>();
+
     public int CurrentTapPower => cachedTapPower;
 
     // 환생 이벤트 구독 / 해제
     private void OnEnable()
     {
         ReincarnationManager.OnReincarnated += ResetUpgrade;
+        GameEventBridge.OnTapMultiplierChanged += SetEventMultiplier;
     }
 
     private void OnDisable()
     {
         ReincarnationManager.OnReincarnated -= ResetUpgrade;
+        GameEventBridge.OnTapMultiplierChanged -= SetEventMultiplier;
     }
 
     private void Start()
@@ -58,13 +63,22 @@ public class PlayerTapUpgrade : MonoBehaviour
             }
         }
 
+        float totalMulti = 1f;
+
         // 2. 아티팩트 배율 반영
         if (ArtifactManager.instance != null)
         {
-            float totalPercent = ArtifactManager.instance.GetTotalGainPerClick();
-            totalPower *= (1f + totalPercent);
+            totalMulti += ArtifactManager.instance.GetTotalGainPerClick();
         }
 
+        // 3. 이벤트 배율 반영
+        foreach(var val in eventMulti)
+        {
+            totalMulti += (val.Value - 1f);
+        }
+        
+        totalMulti = Mathf.Max(0.1f, totalMulti);
+        totalPower *= totalMulti;
         cachedTapPower = Mathf.Max(1, Mathf.RoundToInt(totalPower));
 
         // 최종 탭 파워 브로드캐스팅
@@ -164,6 +178,25 @@ public class PlayerTapUpgrade : MonoBehaviour
         RecalculateTapPower();
     }
 
+    private void SetEventMultiplier(GameEventType type, float multi)
+    {
+        if (type == GameEventType.None)
+        {
+            return;
+        }
+
+        // 1.0배 들어오면 딕셔너리에서 제거
+        if (multi == 1.0f)
+        {
+            eventMulti.Remove(type);
+        }
+        else
+        {
+            eventMulti[type] = multi;
+        }
+
+        RecalculateTapPower();
+    }
 
     // 환생 시 레벨 리셋 함수
     public void ResetUpgrade()
