@@ -28,7 +28,7 @@ public class BurningEventPopup : EventPopupBase
         {
             float timer = 10f;
 
-            while (timer <= 0)
+            while (timer > 0)
             {
                 timer -= Time.deltaTime;
 

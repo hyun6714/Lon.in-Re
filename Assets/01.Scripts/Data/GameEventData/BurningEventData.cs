@@ -14,9 +14,13 @@ public class BurningEventData : ScriptableObject
     [SerializeField] private float baseClickMultiplier = 1f;
     [SerializeField] private float baseAutoMultiplier = 1f;
 
+    [Header("버닝 타임 종료 유예 시간")]
+    [SerializeField] private float endTime = 2f;
+
     public float BurningTime => burningTime;
     public float ClickMultiplier => clickMultiplier;
     public float AutoMultiplier => autoMultiplier;
     public float BaseClickMultiplier => baseClickMultiplier;
     public float BaseAutoMultiplier => baseAutoMultiplier;
+    public float EndTime => endTime;
 }

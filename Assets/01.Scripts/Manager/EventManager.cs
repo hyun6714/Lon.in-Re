@@ -41,8 +41,8 @@ public class EventManager : MonoBehaviour
     [SerializeField] private EventManagerData data;
     [SerializeField] private GameEventData eventData;
 
-    [Header("계절 이벤트 데이터")]
-    [SerializeField] private AirConditionalEventData summerData;
+    [Header("이벤트 데이터")]
+    [SerializeField] private EventDataContainer dataContainer;
 
     // 날짜별 이벤트 저장용 딕셔너리
     private Dictionary<GameDate, GameEventInfo> eventDateDic = new Dictionary<GameDate, GameEventInfo>();
@@ -73,7 +73,7 @@ public class EventManager : MonoBehaviour
 
         InitializeDic();
 
-        eventFactory = new EventFactory(summerData);
+        eventFactory = new EventFactory(dataContainer);
     }
 
     private void InitializeDic()
