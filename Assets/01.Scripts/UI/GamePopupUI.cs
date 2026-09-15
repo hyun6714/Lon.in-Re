@@ -64,6 +64,7 @@ public class GamePopupUI : MonoBehaviour
 
         gameCardUI.SetData(releasedGame, gameReleaseData, eventManagerData, aGradeSprite, bGradeSprite, cGradeSprite);
 
+
         // 표시 완료된 게임 ID 저장
         displayedGameIds.Add(gameId);
 
