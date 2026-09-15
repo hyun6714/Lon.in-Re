@@ -20,7 +20,7 @@ public class EventFactory
         {
             { GameEventType.Burning, () => new BurningEvent(data.burningData) },
             { GameEventType.AirConditional, () => new AirConditionalEvent(data.airconData) },
-            { GameEventType.FallEvent, () => new FallEvent() },
+            { GameEventType.Gift, () => new GiftEvent(data.giftData) },
             { GameEventType.WinterEvent, () => new WinterEvent() }
         };
     }

@@ -5,17 +5,26 @@ public class GiftEventPopup : EventPopupBase
 {
     public override UIName Name => UIName.Popup_Gift;
 
+    [Header("¹öÆ°")]
     [SerializeField] private Button btn;
 
-    private GiftEvent giftEvent;
-
-    private void OnEnable()
+    private void Awake()
     {
-        btn.onClick.AddListener(() => GameEventBridge.CurrencyAdded(CurrencyType.Normal, 10000));
+        btn.onClick.AddListener(OnClickGift);
+    }
+
+    private void OnDestroy()
+    {
+        btn.onClick.RemoveListener(OnClickGift);
     }
 
     private void OnClickGift()
     {
+        GiftEvent giftEvent = EventManager.instance.GetActiveEvent(GameEventType.Gift) as GiftEvent;
 
+        if (giftEvent == null)
+            return;
+
+        giftEvent.RecieveGift();        
     }
 }

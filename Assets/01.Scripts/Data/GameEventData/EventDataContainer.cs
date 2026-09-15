@@ -5,4 +5,5 @@ public class EventDataContainer : ScriptableObject
 {
     public BurningEventData burningData;
     public AirConditionalEventData airconData;
+    public GiftEventData giftData;
 }

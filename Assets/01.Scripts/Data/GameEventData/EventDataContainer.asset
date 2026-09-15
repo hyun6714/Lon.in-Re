@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventDataContainer
   burningData: {fileID: 11400000, guid: fc856b136b5cee947be520ee5fbe250a, type: 2}
   airconData: {fileID: 11400000, guid: 96b8d22b1c54e31488859eddf9e49826, type: 2}
+  giftData: {fileID: 11400000, guid: 7b237e77224f0ef4cbb83fe7719209a1, type: 2}
