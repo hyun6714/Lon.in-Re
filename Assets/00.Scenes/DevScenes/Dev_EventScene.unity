@@ -6998,6 +6998,8 @@ MonoBehaviour:
   - {fileID: 6301843282318123067, guid: db6cfdb65480a3442a6a648f38807df5, type: 3}
   - {fileID: 8440208768747391524, guid: a575e1842cb69b4428e00a1db411135a, type: 3}
   - {fileID: 8311523140973051187, guid: a7ef0e5fae3226b4abbc81bb55d03056, type: 3}
+  - {fileID: 7416937195016022149, guid: 3d664128609c2d14bbc0b63709a4ffd1, type: 3}
+  - {fileID: 6424076619457774933, guid: cccb7f75ad593644aa39992d87d89a37, type: 3}
 --- !u!4 &856832276
 Transform:
   m_ObjectHideFlags: 0
@@ -17933,6 +17935,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2052795135}
   - component: {fileID: 2052795134}
+  - component: {fileID: 2052795136}
   m_Layer: 0
   m_Name: RankManager
   m_TagString: Untagged
@@ -17975,6 +17978,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2052795136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052795133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d89ed92611d4f44ca2ded4d1e579dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RankUI
+  RankPopup: {fileID: 4329008458788694675}
+  RankText: {fileID: 0}
+  RankUpText: {fileID: 0}
+  CostText: {fileID: 0}
+  GameReqText: {fileID: 0}
+  EmployeeReqText: {fileID: 0}
+  rankUpButton: {fileID: 0}
 --- !u!1 &2053563357
 GameObject:
   m_ObjectHideFlags: 0
@@ -19571,6 +19593,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &4329008458788694675 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6877952208915446748, guid: 3d664128609c2d14bbc0b63709a4ffd1, type: 3}
+  m_PrefabInstance: {fileID: 4861415802161373438}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4823600936829121790 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2933547604817023161, guid: 3d664128609c2d14bbc0b63709a4ffd1, type: 3}
