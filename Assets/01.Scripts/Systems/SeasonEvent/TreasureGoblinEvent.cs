@@ -70,7 +70,7 @@ public class TreasureGoblinEvent : IEvent
     {
         try
         {
-            while (!isFinished || timer > 0f)
+            while (!isFinished && timer > 0f)
             {
                 timer -= Time.deltaTime;
                 if (timer <= 0f)

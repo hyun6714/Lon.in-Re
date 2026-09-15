@@ -49,20 +49,20 @@ public class TreasureGoblin : MonoBehaviour
 
         Vector3 viewPosition = camera.WorldToViewportPoint(transform.position);
 
-        if (viewPosition.x <= data.Padding)
+        if (viewPosition.x <= data.PaddingX)
         {
             dir.x = Mathf.Abs(dir.x);
         }
-        else if (viewPosition.x >= 1f - data.Padding)
+        else if (viewPosition.x >= 1f - data.PaddingX)
         {
             dir.x = -Mathf.Abs(dir.x);
         }
 
-        if (viewPosition.y <= data.Padding)
+        if (viewPosition.y <= data.PaddingY)
         {
             dir.y = Mathf.Abs(dir.y);
         }
-        else if (viewPosition.y >= 1f - data.Padding)
+        else if (viewPosition.y >= 1f - data.PaddingY)
         {
             dir.y = -Mathf.Abs(dir.y);
         }

@@ -6,10 +6,12 @@ public class TreasureGoblinData : ScriptableObject
     [Header("스피드")]
     [SerializeField] private float moveSpeed = 2f;
 
-    [Header("카메라 여백")]
-    [SerializeField] private float padding = 0.3f;
+    [Header("최대 이동 공간 제한")]
+    [SerializeField] private float paddingX = 0.02f;
+    [SerializeField] private float paddingY = 0.3f;
 
     public float MoveSpeed => moveSpeed;
 
-    public float Padding => padding;
+    public float PaddingX => paddingX;
+    public float PaddingY => paddingY;
 }
