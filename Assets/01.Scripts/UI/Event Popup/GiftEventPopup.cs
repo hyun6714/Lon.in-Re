@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class GiftEventPopup : EventPopupBase
 {
-    public override UIName Name => UIName.Popup_Gift;
+    public override UIName Name => UIName.Popup_Event_Gift;
 
     [Header("¹öÆ°")]
     [SerializeField] private Button btn;

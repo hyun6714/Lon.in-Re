@@ -21,7 +21,7 @@ public enum GameEventType
     Burning = 3001,
     AirConditional,
     Gift,
-    WinterEvent
+    TreasureGoblin
 }
 
 public class EventManager : MonoBehaviour
