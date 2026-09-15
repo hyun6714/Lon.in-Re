@@ -41,7 +41,7 @@ public class GiftEvent : IEvent
 
         GameEventBridge.CurrencyAdded(CurrencyType.Normal, amount);
         EventManager.instance.EndCurrentEvent(GameEventType.Gift);
-        UIManager.Instance.ClosePopup(UIName.Popup_Gift);
+        UIManager.Instance.ClosePopup(UIName.Popup_Event_Gift);
     }
 
     public void EndEvent()

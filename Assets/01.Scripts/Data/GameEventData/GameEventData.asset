@@ -67,3 +67,42 @@ MonoBehaviour:
       day: 5
       hour: 7
     popupName: 8
+  - eventType: 3004
+    gameEventDateList:
+    - month: 1
+      day: 6
+      hour: 11
+    - month: 2
+      day: 19
+      hour: 8
+    - month: 3
+      day: 28
+      hour: 20
+    - month: 4
+      day: 10
+      hour: 14
+    - month: 5
+      day: 17
+      hour: 13
+    - month: 6
+      day: 9
+      hour: 4
+    - month: 7
+      day: 11
+      hour: 9
+    - month: 8
+      day: 13
+      hour: 22
+    - month: 9
+      day: 19
+      hour: 9
+    - month: 10
+      day: 10
+      hour: 15
+    - month: 11
+      day: 11
+      hour: 6
+    - month: 12
+      day: 18
+      hour: 23
+    popupName: 9

@@ -21,7 +21,7 @@ public class EventFactory
             { GameEventType.Burning, () => new BurningEvent(data.burningData) },
             { GameEventType.AirConditional, () => new AirConditionalEvent(data.airconData) },
             { GameEventType.Gift, () => new GiftEvent(data.giftData) },
-            { GameEventType.WinterEvent, () => new WinterEvent() }
+            { GameEventType.TreasureGoblin, () => new TreasureGoblinEvent(data.treasureGoblinData) }
         };
     }
 

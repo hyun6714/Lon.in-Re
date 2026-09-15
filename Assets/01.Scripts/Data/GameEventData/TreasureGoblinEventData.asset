@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76791d459e110e34b8679f53b3438f68, type: 3}
+  m_Name: TreasureGoblinEventData
+  m_EditorClassIdentifier: Assembly-CSharp::TreasureGoblinEventData
+  eventStartText: "\uBCF4\uBB3C \uACE0\uBE14\uB9B0 \uB4F1\uC7A5!"
+  eventSuccessText: "\uBCF4\uBB3C \uACE0\uBE14\uB9B0\uC744 \uC7A1\uC558\uB2E4!"
+  eventFailText: "\uBCF4\uBB3C \uACE0\uBE14\uB9B0\uC774 \uB3C4\uB9DD\uAC14\uB2E4..."
+  eventTimer: 5
+  requireTouchCount: 10
+  solo: 1000
+  indie: 5000
+  small: 30000
+  midsized: 200000
+  major: 800000

@@ -15,7 +15,8 @@ public enum UIName
     Popup_Rebirth,
     Popup_System,
     Popup_RankUp,
-    Popup_Gift
+    Popup_Event_Gift,
+    Popup_Event_TreasureGoblin
 }
 
 public enum HUDTextType

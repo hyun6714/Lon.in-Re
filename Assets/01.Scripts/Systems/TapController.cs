@@ -11,6 +11,8 @@ public class TapController : MonoBehaviour, IPointerDownHandler
     [SerializeField] private TapEffect tapEffectPrefab;  // 이펙트 프리팹
     [SerializeField] private Transform effectParent;     // 띄울 캔버스
 
+    private Camera camera;
+
     private void Awake()
     {
         // 다중 터치 활성화
@@ -21,10 +23,15 @@ public class TapController : MonoBehaviour, IPointerDownHandler
         {
             playerUpgrade = GetComponent<PlayerTapUpgrade>();
         }
+
+        camera = Camera.main;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (TryClickTreasureGoblin(eventData.position))
+            return;
+
         // 플레이어 강화 수치 가져오기
         int currentPower = playerUpgrade != null ? playerUpgrade.CurrentTapPower : 1;
 
@@ -39,6 +46,38 @@ public class TapController : MonoBehaviour, IPointerDownHandler
 
         // 터치 좌표에 이펙트 출력
         SpawnTapEffect(eventData.position);
+    }
+
+    private bool TryClickTreasureGoblin(Vector2 screenPos)
+    {
+        if (EventManager.instance == null)
+        {
+            return false;
+        }
+
+        TreasureGoblinEvent goblinEvent = EventManager.instance.GetActiveEvent(
+            GameEventType.TreasureGoblin) as TreasureGoblinEvent;
+
+        if (goblinEvent == null || goblinEvent.IsFinished)
+            return false;
+
+        Vector2 worldPos = camera.ScreenToWorldPoint(screenPos);
+
+        Collider2D hit = Physics2D.OverlapPoint(worldPos);
+
+        if (hit == null)
+        {
+            return false;
+        }
+
+        TreasureGoblin goblin = hit.GetComponent<TreasureGoblin>();
+
+        if (goblin == null)
+            return false;
+
+        goblin.OnClick();
+
+        return true;
     }
 
     private void SpawnTapEffect(Vector2 position)
