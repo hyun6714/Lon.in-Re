@@ -16,44 +16,70 @@ MonoBehaviour:
   - artifactId: 100
     type: 0
     artiName: "\uD654\uBD84"
-    icon: {fileID: 0}
+    icon: {fileID: -2966200626249415253, guid: eb5decfa772a1d2418d9af38ec1f47d3, type: 3}
     GainperClick: 0.5
     PerSecond: 0
     Probabilityincrease: 0
     SpecialUnlockCost: 1000
-    isUnlocked: 0
     requiredRebirthCount: 0
     requiredReputation: 0
   - artifactId: 101
     type: 0
     artiName: "\uCC45"
-    icon: {fileID: 0}
+    icon: {fileID: -7371509505491802261, guid: 63d266f6f922b3b47aa9338d49778536, type: 3}
     GainperClick: 1
     PerSecond: 0
     Probabilityincrease: 0
     SpecialUnlockCost: 1500
-    isUnlocked: 0
     requiredRebirthCount: 0
     requiredReputation: 0
   - artifactId: 102
     type: 1
-    artiName: "\uB178\uD2B8\uBD81"
-    icon: {fileID: 0}
-    GainperClick: 2
+    artiName: "\uBB3C"
+    icon: {fileID: -4093987921198194536, guid: ae997dcf1a6274843b3b9d9d32fd40cd, type: 3}
+    GainperClick: 1.5
     PerSecond: 0
     Probabilityincrease: 0
     SpecialUnlockCost: 2500
-    isUnlocked: 0
     requiredRebirthCount: 1
     requiredReputation: 1500
   - artifactId: 103
     type: 1
     artiName: "\uC18C\uD654\uAE30"
-    icon: {fileID: 0}
+    icon: {fileID: -2947526863502713391, guid: e3a664a5ff6e51e47b71337e7a01c7cc, type: 3}
     GainperClick: 2
     PerSecond: 0
     Probabilityincrease: 0
     SpecialUnlockCost: 3000
-    isUnlocked: 0
     requiredRebirthCount: 1
     requiredReputation: 2500
+  - artifactId: 104
+    type: 2
+    artiName: "\uC81C\uC2B5\uAE30"
+    icon: {fileID: -41970534257140035, guid: a7d0df3e95073894ca75ecf3a8023b18, type: 3}
+    GainperClick: 2.5
+    PerSecond: 0
+    Probabilityincrease: 0
+    SpecialUnlockCost: 5000
+    requiredRebirthCount: 1
+    requiredReputation: 4000
+  - artifactId: 105
+    type: 2
+    artiName: "\uB178\uD2B8\uBD81"
+    icon: {fileID: -8868653072870737037, guid: d8057628c51c577438d2ce140c9a807c, type: 3}
+    GainperClick: 2.5
+    PerSecond: 0
+    Probabilityincrease: 0
+    SpecialUnlockCost: 5000
+    requiredRebirthCount: 2
+    requiredReputation: 4000
+  - artifactId: 106
+    type: 3
+    artiName: "\uC790\uD310\uAE30 "
+    icon: {fileID: -5789677524543127715, guid: 8f7808d265cd1274397ea0fff7ae58e9, type: 3}
+    GainperClick: 3
+    PerSecond: 0
+    Probabilityincrease: 0
+    SpecialUnlockCost: 10000
+    requiredRebirthCount: 3
+    requiredReputation: 5000
