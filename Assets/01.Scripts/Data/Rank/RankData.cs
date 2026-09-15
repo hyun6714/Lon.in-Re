@@ -10,7 +10,7 @@ public class RankData : ScriptableObject
     public bool hasEmployees;
     public int maxEmployee;
 
-    [Header("다음 등급 승급 조건")]
+    [Header("해당 등급 승급 조건")]
     public int reqGamesReleased; // 출시 횟수
     public int reqEmployeeCount; // 직원 인원수
     public int reqReputation; // 명성 수치 
