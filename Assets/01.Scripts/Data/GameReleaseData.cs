@@ -23,4 +23,38 @@ public class GameReleaseData : ScriptableObject
 
     public int GradeCCurrencyReward => gradeCCurrencyReward;
     public int GradeCReputationReward => gradeCReputationReward;
+
+    public int GetCurrencyReward(DevelopmentGrade grade)
+    {
+        switch (grade)
+        {
+            case DevelopmentGrade.A:
+                return gradeACurrencyReward;
+
+            case DevelopmentGrade.B:
+                return gradeBCurrencyReward;
+
+            case DevelopmentGrade.C:
+                return gradeCCurrencyReward;
+        }
+
+        return 0;
+    }
+
+    public int GetReputationReward(DevelopmentGrade grade)
+    {
+        switch (grade)
+        {
+            case DevelopmentGrade.A:
+                return gradeAReputationReward;
+
+            case DevelopmentGrade.B:
+                return gradeBReputationReward;
+
+            case DevelopmentGrade.C:
+                return gradeCReputationReward;
+        }
+
+        return 0;
+    }
 }

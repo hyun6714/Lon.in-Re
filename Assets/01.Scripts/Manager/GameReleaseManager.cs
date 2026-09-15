@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 // 게임 출시
 // 출시된 게임 관리
@@ -11,6 +12,7 @@ public class GameReleaseManager : MonoBehaviour
     // 출시된 게임 목록
     public List<ReleasedGameSaveData> releasedGames = new List<ReleasedGameSaveData>();
 
+    public event Action<ReleasedGameSaveData> OnGameReleased;
 
     private void Awake()
     {
@@ -36,13 +38,16 @@ public class GameReleaseManager : MonoBehaviour
         // 출시 직후에는 정산 횟수 0
         releasedGame.settlementCount = 0;
 
-        // 출시 게임 목록에 추가
-        releasedGames.Add(releasedGame);
-
         // 출시 날짜
         releasedGame.releaseYear = currentDate.year;
         releasedGame.releaseMonth = currentDate.month;
         releasedGame.releaseDay = currentDate.day;
+
+        // 출시 게임 목록에 추가
+        releasedGames.Add(releasedGame);
+
+        // 새로 출시된 게임 전달
+        OnGameReleased?.Invoke(releasedGame);
 
         // 출시 날짜를 기준으로 정산 시작
         EventManager.instance.StartGameSettlement(gameResult.gameId);
