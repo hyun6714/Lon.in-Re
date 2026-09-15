@@ -20,7 +20,7 @@ public enum GameEventType
     None,
     Burning = 3001,
     AirConditional,
-    FallEvent,
+    Gift,
     WinterEvent
 }
 

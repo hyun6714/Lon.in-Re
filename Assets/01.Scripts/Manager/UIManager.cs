@@ -13,7 +13,9 @@ public enum UIName
     Popup_Shop,
     Popup_Game,
     Popup_Rebirth,
-    Popup_System
+    Popup_System,
+    Popup_RankUp,
+    Popup_Gift
 }
 
 public enum HUDTextType
@@ -91,6 +93,7 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
 
         InitializeDictionary();
+        InitializeRuntimePopupDic();
     }
 
     private void OnEnable()
@@ -140,6 +143,27 @@ public class UIManager : MonoBehaviour
             }
 
             popupDic.Add(popup.Name, popup);
+        }
+    }
+
+    private void InitializeRuntimePopupDic()
+    {
+        runtimePopupDic.Clear();
+
+        PopupBase[] runtimePopup = uiCanvas.GetComponentsInChildren<PopupBase>(true);
+
+        foreach (PopupBase popup in runtimePopup)
+        {
+            if (popup == null)
+                continue;
+
+            if (runtimePopupDic.ContainsKey(popup.Name))
+            {
+                Utils.Log($"중복된 런타임 팝업 : {popup.Name}");
+                continue;
+            }
+
+            runtimePopupDic.Add(popup.Name, popup);
         }
     }
 
@@ -200,8 +224,10 @@ public class UIManager : MonoBehaviour
 
     public void OpenPopup(UIName name)
     {
+        // 런타임 딕셔너리에 들어있는지 체크
         if (runtimePopupDic.TryGetValue(name, out PopupBase popup))
         {
+            // 이미 열린 팝업창이면 리턴
             if (popup != null && popup.gameObject.activeSelf)
             {
                 Utils.Log($"이미 열린 UI : {name}");
