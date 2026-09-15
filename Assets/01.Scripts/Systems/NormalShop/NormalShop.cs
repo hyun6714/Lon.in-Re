@@ -89,7 +89,7 @@ public class NormalShop : PopupBase
         InitSlots();
 
         // 부품 탭 비주얼 활성화
-        SwitchTab(ShopTab.Part);
+        //SwitchTab(ShopTab.Part);
 
         //재화 변동 이벤트 구독
         GameEventBridge.OnCurrencyChanged += OnCurrencyChanged;

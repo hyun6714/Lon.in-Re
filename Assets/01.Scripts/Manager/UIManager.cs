@@ -123,13 +123,23 @@ public class UIManager : MonoBehaviour
     // 런타임 딕셔너리에 저장된 팝업 비우기
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        runtimePopupDic.Clear();
+        if (scene.name == "MainScene")
+        {
+            runtimePopupDic.Clear();
+        }
+        else if (scene.name == "GameScene")
+        {
+            InitializeDictionary();
+            InitializeRuntimePopupDic();
+        }
     }
 
     private void InitializeDictionary()
     {
         if (popupList == null)
             return;
+
+        popupDic.Clear();
 
         foreach (PopupBase popup in popupList)
         {

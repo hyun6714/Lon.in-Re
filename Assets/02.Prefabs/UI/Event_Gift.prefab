@@ -228,6 +228,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1f4feaaf71949d47807598b8012ee5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GiftEventPopup
+  data: {fileID: 11400000, guid: 7b9861e27ed97524c8b4af88fe02e7bd, type: 2}
+  btn: {fileID: 6985086601278696079}
 --- !u!1 &4979901769110037447
 GameObject:
   m_ObjectHideFlags: 0

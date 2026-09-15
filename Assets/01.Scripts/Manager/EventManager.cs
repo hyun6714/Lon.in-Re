@@ -381,4 +381,12 @@ public class EventManager : MonoBehaviour
 
         StartGameSettlementAsync(releaseDate, releasedGame.gameResult.gameId, releasedGame.settlementCount, token.Token ).Forget();
     }
+
+    public IEvent GetActiveEvent(GameEventType type)
+    {
+        if (activeEventDic.TryGetValue(type, out ActiveEvent activeEvent))
+            return activeEvent.Event;
+
+        return null;
+    }
 }
