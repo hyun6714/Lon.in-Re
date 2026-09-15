@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8441616794d7d4692f66a149a30cde, type: 3}
   m_Name: GameReleaseData
   m_EditorClassIdentifier: Assembly-CSharp::GameReleaseData
-  rewardDayInterval: 30
-  maxRewardCount: 2
-  gradeACurrencyReward: 0
-  gradeAReputationReward: 0
-  gradeBCurrencyReward: 0
-  gradeBReputationReward: 0
-  gradeCCurrencyReward: 0
-  gradeCReputationReward: 0
+  gradeACurrencyReward: 80000
+  gradeAReputationReward: 800
+  gradeBCurrencyReward: 40000
+  gradeBReputationReward: 400
+  gradeCCurrencyReward: 25000
+  gradeCReputationReward: 250

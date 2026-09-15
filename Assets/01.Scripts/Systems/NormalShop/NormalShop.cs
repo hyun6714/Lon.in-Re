@@ -85,14 +85,12 @@ public class NormalShop : PopupBase
 
     private void Start()
     {
-        // 최초 1회만 모든 슬롯 생성
         InitSlots();
 
-        // 부품 탭 비주얼 활성화
-        //SwitchTab(ShopTab.Part);
+        SwitchTab(ShopTab.Part);
 
-        //재화 변동 이벤트 구독
         GameEventBridge.OnCurrencyChanged += OnCurrencyChanged;
+        ReincarnationManager.OnReincarnated += OnReincarnated;
     }
 
     private void OnDestroy()
@@ -100,6 +98,14 @@ public class NormalShop : PopupBase
         shopTween?.Kill();
 
         GameEventBridge.OnCurrencyChanged -= OnCurrencyChanged;
+        ReincarnationManager.OnReincarnated -= OnReincarnated;
+    }
+
+    private void OnReincarnated()
+    {
+        RefreshPartSlots();
+        RefreshEmployeeSlots();
+        RefreshArtifactSlots();
     }
 
     // 슬롯 최초 1회 생성 및 초기화
