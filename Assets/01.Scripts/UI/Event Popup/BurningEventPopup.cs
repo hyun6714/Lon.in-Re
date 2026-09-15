@@ -8,6 +8,9 @@ public class BurningEventPopup : EventPopupBase
 {
     public override UIName Name => UIName.Popup_Event_Burning;
 
+    [Header("이벤트 데이터")]
+    [SerializeField] private BurningEventData burningData;
+
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private TextMeshProUGUI timerText;
 
@@ -20,22 +23,31 @@ public class BurningEventPopup : EventPopupBase
     {
         base.OpenPopup();
 
+        SetTitleText(burningData.BurningStartText);
         TextTimer(token.Token).Forget();
     }
+
     private async UniTaskVoid TextTimer(CancellationToken ctk)
     {
         try
         {
-            float timer = 10f;
+            float timer = burningData.BurningTime;
 
             while (timer > 0)
             {
                 timer -= Time.deltaTime;
 
-                SetText(timer);
+                if (timer <= 0)
+                {
+                    timer = 0f;
+                }
+
+                SetTimerText(timer);
 
                 await UniTask.NextFrame(PlayerLoopTiming.EarlyUpdate, ctk);
             }
+
+            SetTitleText(burningData.BruningEndText);
         }
         catch (OperationCanceledException)
         {
@@ -43,9 +55,13 @@ public class BurningEventPopup : EventPopupBase
         }
     }
 
-    public void SetText(float time)
+    public void SetTimerText(float time)
     {
         timerText.text = $"{time:N2}";
     }
 
+    private void SetTitleText(string text)
+    {
+        titleText.text = text;
+    }
 }

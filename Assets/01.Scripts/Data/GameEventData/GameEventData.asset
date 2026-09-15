@@ -14,9 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameEventData
   eventList:
   - eventType: 3001
-    targetMonth: 5
-    targetDay: 31
-    targetHour: 18
     gameEventDateList:
     - month: 1
       day: 31
@@ -54,11 +51,8 @@ MonoBehaviour:
     - month: 12
       day: 31
       hour: 18
-    popupName: 0
+    popupName: 2
   - eventType: 3002
-    targetMonth: 7
-    targetDay: 15
-    targetHour: 12
     gameEventDateList:
     - month: 7
       day: 15

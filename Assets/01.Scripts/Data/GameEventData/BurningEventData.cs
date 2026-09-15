@@ -17,10 +17,16 @@ public class BurningEventData : ScriptableObject
     [Header("버닝 타임 종료 유예 시간")]
     [SerializeField] private float endTime = 2f;
 
+    [Header("버닝 타임 UI 텍스트")]
+    [SerializeField] private string burningStartText;
+    [SerializeField] private string burningEndText;
+
     public float BurningTime => burningTime;
     public float ClickMultiplier => clickMultiplier;
     public float AutoMultiplier => autoMultiplier;
     public float BaseClickMultiplier => baseClickMultiplier;
     public float BaseAutoMultiplier => baseAutoMultiplier;
     public float EndTime => endTime;
+    public string BurningStartText => burningStartText;
+    public string BruningEndText => burningEndText;
 }
