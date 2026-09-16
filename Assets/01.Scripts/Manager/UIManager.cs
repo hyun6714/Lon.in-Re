@@ -272,7 +272,10 @@ public class UIManager : MonoBehaviour
         //GameManager.Instance.GamePaused();
         popup.gameObject.SetActive(true);
 
-        SetDimPos(popup);
+        if (popup.UseDim)
+        {
+            SetDimPos(popup);
+        }
 
         popup.OpenPopup();
     }
@@ -301,7 +304,10 @@ public class UIManager : MonoBehaviour
 
         popup.gameObject.SetActive(true);
 
-        SetDimPos(popup);
+        if (popup.UseDim)
+        {
+            SetDimPos(popup);
+        }
 
         if (popup is NormalShop shop)
         {

@@ -1129,6 +1129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RebirthPopup
   data: {fileID: 11400000, guid: 7b9861e27ed97524c8b4af88fe02e7bd, type: 2}
+  useDim: 1
   exitBtn: {fileID: 7079443797877435971}
 --- !u!1 &8173601361242864762
 GameObject:

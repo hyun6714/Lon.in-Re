@@ -1368,6 +1368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RankUpPopup
   data: {fileID: 11400000, guid: 7b9861e27ed97524c8b4af88fe02e7bd, type: 2}
+  useDim: 1
   exitBtn: {fileID: 4473279408876840148}
 --- !u!1 &9149916165869068629
 GameObject:

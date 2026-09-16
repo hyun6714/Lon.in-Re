@@ -222,9 +222,9 @@ public class CalendarManager : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    public void SetDateOnlyEditor(int year, int month, int day, int hour)
+    public void SetDateOnlyEditor(GameDate date)
     {
-        currentDate.SetDate(year, month, day, hour);
+        currentDate.SetDate(date);
 
         GameEventBridge.DayChanged(currentDate);
 

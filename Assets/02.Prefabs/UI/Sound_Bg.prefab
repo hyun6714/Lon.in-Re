@@ -660,6 +660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SystemPopup
   data: {fileID: 11400000, guid: 7b9861e27ed97524c8b4af88fe02e7bd, type: 2}
+  useDim: 1
   exitBtn: {fileID: 1488197196237825483}
   saveBtn: {fileID: 6084329638360930735}
 --- !u!1 &5327548273471469024

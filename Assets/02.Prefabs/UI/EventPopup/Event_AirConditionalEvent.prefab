@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SummerEventPopup
   data: {fileID: 11400000, guid: 3ae2396fd4a6c5a4aa3cd8b098b288f8, type: 2}
+  useDim: 1
   button_1: {fileID: 1043421131042623028}
   button_2: {fileID: 3232201778379809029}
 --- !u!1 &728788954279444630
