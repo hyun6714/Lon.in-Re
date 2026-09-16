@@ -42,10 +42,6 @@ public class CalendarManager : MonoBehaviour
     [SerializeField] private bool isPaused;
     #endregion
 
-    [Header("테스트 전용")]
-    [SerializeField] private TextMeshProUGUI text;
-
-
     private Dictionary<Season, string> seasonString = new Dictionary<Season, string>();
 
     private CancellationTokenSource token;

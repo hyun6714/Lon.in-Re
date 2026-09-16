@@ -16,7 +16,8 @@ public enum UIName
     Popup_System,
     Popup_RankUp,
     Popup_Event_Gift,
-    Popup_Event_TreasureGoblin
+    Popup_Event_TreasureGoblin,
+    Dim
 }
 
 public enum HUDTextType
@@ -71,6 +72,9 @@ public class UIManager : MonoBehaviour
 
     [Header("ÆË¾÷ ÇÁ¸®ÆÕ")]
     [SerializeField] private List<PopupBase> popupList;
+
+    [Header("Dim")]
+    [SerializeField] private GameObject dim;
 
     private Dictionary<UIName, PopupBase> popupDic = new Dictionary<UIName, PopupBase>();
     private Dictionary<UIName, PopupBase> runtimePopupDic = new Dictionary<UIName, PopupBase>();
@@ -193,6 +197,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void DimRegister(GameObject dim)
+    {
+        this.dim = dim;
+    }
+
     /// <summary>
     /// ÀçÈ­ È¹µæ ÅØ½ºÆ®¸¦ È­¸é¿¡ ¶ç¿ì´Â ÇÔ¼ö
     /// </summary>
@@ -258,7 +267,9 @@ public class UIManager : MonoBehaviour
         }
 
         //GameManager.Instance.GamePaused();
+        dim.SetActive(true);
         popup.gameObject.SetActive(true);
+        dim.transform.SetAsLastSibling();
         popup.transform.SetAsLastSibling();
         popup.OpenPopup();
     }
