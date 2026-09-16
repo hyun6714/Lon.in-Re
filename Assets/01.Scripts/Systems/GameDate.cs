@@ -114,6 +114,11 @@ public struct GameDate : IEquatable<GameDate>
         return month == other.month && day == other.day && hour == other.hour;
     }
 
+    public readonly bool EqualMonthDay(GameDate other)
+    {
+        return month == other.month && day == other.day;
+    }
+
 #if UNITY_EDITOR
     public void SetDate(int year, int month, int day, int hour)
     {
