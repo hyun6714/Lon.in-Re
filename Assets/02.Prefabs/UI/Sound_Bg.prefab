@@ -33,7 +33,7 @@ RectTransform:
   m_Father: {fileID: 1096169719671822719}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -576,7 +576,7 @@ GameObject:
   - component: {fileID: 4924327889334324101}
   - component: {fileID: 525126267947895357}
   - component: {fileID: 447238791172818031}
-  - component: {fileID: 2861706820284911628}
+  - component: {fileID: 2406437422833340208}
   m_Layer: 5
   m_Name: Sound_Bg
   m_TagString: Untagged
@@ -647,7 +647,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2861706820284911628
+--- !u!114 &2406437422833340208
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -656,9 +656,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4383770869555011172}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2250c53c5450ef419e488b0ec28a695, type: 3}
+  m_Script: {fileID: 11500000, guid: a12292f62f65c264e83afcd2b3ce0310, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SystemPopup
+  m_EditorClassIdentifier: Assembly-CSharp::SoundPopup
   data: {fileID: 11400000, guid: 7b9861e27ed97524c8b4af88fe02e7bd, type: 2}
   useDim: 1
   exitBtn: {fileID: 1488197196237825483}
@@ -1246,7 +1246,7 @@ RectTransform:
   m_Father: {fileID: 348776504287287970}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 28, y: 7}
   m_Pivot: {x: 0.5, y: 0.5}
