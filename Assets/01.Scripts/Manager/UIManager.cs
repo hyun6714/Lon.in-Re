@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using Unity.VisualScripting;
 
 public enum UIName
 {
@@ -16,7 +17,8 @@ public enum UIName
     Popup_System,
     Popup_RankUp,
     Popup_Event_Gift,
-    Popup_Event_TreasureGoblin
+    Popup_Event_TreasureGoblin,
+    Dim
 }
 
 public enum HUDTextType
@@ -71,6 +73,9 @@ public class UIManager : MonoBehaviour
 
     [Header("팝업 프리팹")]
     [SerializeField] private List<PopupBase> popupList;
+
+    [Header("Dim")]
+    [SerializeField] private GameObject dim;
 
     private Dictionary<UIName, PopupBase> popupDic = new Dictionary<UIName, PopupBase>();
     private Dictionary<UIName, PopupBase> runtimePopupDic = new Dictionary<UIName, PopupBase>();
@@ -193,6 +198,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void DimRegister(GameObject dim)
+    {
+        this.dim = dim;
+        Utils.Log("Dim 등록 완료");
+    }
+
     /// <summary>
     /// 재화 획득 텍스트를 화면에 띄우는 함수
     /// </summary>
@@ -233,6 +244,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    #region OpenPopup Method
     public void OpenPopup(UIName name)
     {
         // 런타임 딕셔너리에 들어있는지 체크
@@ -259,7 +271,12 @@ public class UIManager : MonoBehaviour
 
         //GameManager.Instance.GamePaused();
         popup.gameObject.SetActive(true);
-        popup.transform.SetAsLastSibling();
+
+        if (popup.UseDim)
+        {
+            SetDimPos(popup);
+        }
+
         popup.OpenPopup();
     }
 
@@ -286,7 +303,11 @@ public class UIManager : MonoBehaviour
         }
 
         popup.gameObject.SetActive(true);
-        popup.transform.SetAsLastSibling();
+
+        if (popup.UseDim)
+        {
+            SetDimPos(popup);
+        }
 
         if (popup is NormalShop shop)
         {
@@ -296,6 +317,7 @@ public class UIManager : MonoBehaviour
 
         popup.OpenPopup();
     }
+    #endregion
 
     public void ClosePopup(UIName name)
     {
@@ -335,4 +357,59 @@ public class UIManager : MonoBehaviour
         textGroup.SetText(HUDTextType.Date, date);
     }
     #endregion
+
+    private void SetDimPos(PopupBase popup)
+    {
+        if (dim == null)
+            return;
+
+        dim.SetActive(true);
+
+        dim.transform.SetSiblingIndex(popup.transform.GetSiblingIndex() - 1);
+    }
+
+    public void DimCheck()
+    {
+        if (dim == null)
+            return;
+
+        PopupBase topPopup = null;
+        int topIndex = -1;
+
+        foreach (PopupBase popup in runtimePopupDic.Values)
+        {
+            if (popup == null || !popup.gameObject.activeSelf)
+                continue;
+
+            int index = popup.transform.GetSiblingIndex();
+
+            if (index > topIndex)
+            {
+                topIndex = index;
+                topPopup = popup;
+            }
+        }
+
+        if (topPopup == null)
+        {
+            dim.SetActive(false);
+            return;
+        }
+
+        dim.SetActive(true);
+
+        dim.transform.SetSiblingIndex(topIndex - 1);
+    }
+
+    /// <summary> 현재 열린 팝업이 있는지 확인 </summary>
+    public bool HasActivePopup()
+    {
+        foreach (PopupBase popup in runtimePopupDic.Values)
+        {
+            if (popup != null && popup.gameObject.activeSelf)
+                return true;
+        }
+
+        return false;
+    }
 }

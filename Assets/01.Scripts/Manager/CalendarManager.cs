@@ -42,10 +42,6 @@ public class CalendarManager : MonoBehaviour
     [SerializeField] private bool isPaused;
     #endregion
 
-    [Header("테스트 전용")]
-    [SerializeField] private TextMeshProUGUI text;
-
-
     private Dictionary<Season, string> seasonString = new Dictionary<Season, string>();
 
     private CancellationTokenSource token;
@@ -226,9 +222,9 @@ public class CalendarManager : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    public void SetDateOnlyEditor(int year, int month, int day, int hour)
+    public void SetDateOnlyEditor(GameDate date)
     {
-        currentDate.SetDate(year, month, day, hour);
+        currentDate.SetDate(date);
 
         GameEventBridge.DayChanged(currentDate);
 

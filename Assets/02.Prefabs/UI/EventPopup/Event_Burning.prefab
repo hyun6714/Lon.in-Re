@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3600688698631707139}
   - component: {fileID: 8311523140973051187}
   m_Layer: 5
-  m_Name: Popup_BurningEvent
+  m_Name: Event_Burning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

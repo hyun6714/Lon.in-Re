@@ -120,15 +120,15 @@ public struct GameDate : IEquatable<GameDate>
     }
 
 #if UNITY_EDITOR
-    public void SetDate(int year, int month, int day, int hour)
+    public void SetDate(GameDate date)
     {
-        this.year = year;
-        this.month = Math.Clamp(month, 1, maxMonthPerYear);
+        year = date.year;
+        month = Math.Clamp(date.month, 1, maxMonthPerYear);
 
         lastDay = daysInMonthList[this.month - 1]; ;
 
-        this.day = Math.Clamp(day, 1, lastDay);
-        this.hour = Math.Clamp(hour, 0, maxHourPerDay - 1);
+        day = Math.Clamp(date.day, 1, lastDay);
+        hour = Math.Clamp(date.hour, 0, maxHourPerDay - 1);
         minutes = 0;
 
         SetSeason();

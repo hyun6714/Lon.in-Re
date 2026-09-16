@@ -908,6 +908,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NormalShop
   data: {fileID: 0}
+  useDim: 1
   shopPanel: {fileID: 4164926703171886849}
   windowTransform: {fileID: 8132450313777513245}
   confirmPopup: {fileID: 7114400923996665048}

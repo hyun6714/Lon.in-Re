@@ -9,6 +9,9 @@ public abstract class PopupBase : UIBase
     [Header("트윈용 팝업 데이터")]
     [SerializeField] protected PopupTweenData data;
 
+    [SerializeField] protected bool useDim;
+    public bool UseDim => useDim;
+
     protected Sequence seq;
 
     public abstract void OpenPopup();
