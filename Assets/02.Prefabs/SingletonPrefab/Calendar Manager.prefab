@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5376509187144678083
+--- !u!1 &747705688368866585
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6833312614745962138}
-  - component: {fileID: 4758670806929992834}
+  - component: {fileID: 7634750845721004202}
+  - component: {fileID: 156404492662763391}
   m_Layer: 0
-  m_Name: CalendarManager
+  m_Name: Calendar Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6833312614745962138
+--- !u!4 &7634750845721004202
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5376509187144678083}
+  m_GameObject: {fileID: 747705688368866585}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,22 +32,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4758670806929992834
+--- !u!114 &156404492662763391
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5376509187144678083}
+  m_GameObject: {fileID: 747705688368866585}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98a568ca82dd82c41a6fbcd04277f477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CalendarManager
   data: {fileID: 11400000, guid: 4808b4af6c53ddc488dd646c079f885e, type: 2}
-  minutePerSec: 15
-  realTimer: 1
+  minutePerSec: 0
+  realTimer: 0
   totalTime: 0
-  allEventStartHour: 0
+  defaultEventTriggerHour: 0
   isPaused: 0
-  text: {fileID: 0}
