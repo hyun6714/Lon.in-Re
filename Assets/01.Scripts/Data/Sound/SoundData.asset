@@ -12,4 +12,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bac7dd53c60eb46ad6d366f454c85f, type: 3}
   m_Name: SoundData
   m_EditorClassIdentifier: Assembly-CSharp::SoundData
-  sfxList: []
+  bgmList:
+  - bgmType: 0
+    clip: {fileID: 0}
+  - bgmType: 1
+    clip: {fileID: 0}
+  - bgmType: 2
+    clip: {fileID: 0}
+  - bgmType: 3
+    clip: {fileID: 0}
+  - bgmType: 4
+    clip: {fileID: 0}
+  - bgmType: 5
+    clip: {fileID: 0}
+  sfxList:
+  - sfxType: 0
+    clip: {fileID: 0}
+    volume: 0.5
+  - sfxType: 1
+    clip: {fileID: 0}
+    volume: 0.5
+  - sfxType: 2
+    clip: {fileID: 0}
+    volume: 0.5
+  - sfxType: 3
+    clip: {fileID: 0}
+    volume: 0.5
+  - sfxType: 4
+    clip: {fileID: 0}
+    volume: 0.5
+  - sfxType: 5
+    clip: {fileID: 0}
+    volume: 0.5
+  - sfxType: 6
+    clip: {fileID: 0}
+    volume: 0.5
+  - sfxType: 7
+    clip: {fileID: 0}
+    volume: 0.5
