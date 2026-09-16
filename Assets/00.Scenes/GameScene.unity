@@ -10911,6 +10911,34 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -164
       objectReference: {fileID: 0}
+    - target: {fileID: 6943688002138274528, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943688002138274528, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943688002138274528, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1672704723}
+    - target: {fileID: 6943688002138274528, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943688002138274528, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DeleteGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943688002138274528, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameCardUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6943688002138274528, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7355811684551915081, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
       propertyPath: m_Name
       value: GamePopup_Bg
@@ -10929,6 +10957,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 433717858778652917, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
   m_PrefabInstance: {fileID: 1672704721}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1672704723 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7666229579875820636, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
+  m_PrefabInstance: {fileID: 1672704721}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d04722a5b7956d41860c683760bdb3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameCardUI
 --- !u!1 &1694244910
 GameObject:
   m_ObjectHideFlags: 0
