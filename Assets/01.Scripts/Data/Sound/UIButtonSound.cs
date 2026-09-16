@@ -1,16 +1,19 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class UIButtonSound : MonoBehaviour
+public class UIButtonSound : MonoBehaviour, IPointerClickHandler
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private SFXType soundType = SFXType.ButtonClick;
 
-    // Update is called once per frame
-    void Update()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        
+        var selectable = GetComponent<Selectable>();
+        if (selectable != null && !selectable.interactable)
+        {
+            return;
+        }
+
+        SoundManager.instance?.PlaySFX(soundType);
     }
 }
