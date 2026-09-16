@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public struct GameDate : IEquatable<GameDate>
 {
@@ -88,6 +89,7 @@ public struct GameDate : IEquatable<GameDate>
     {
         season = Season.Winter;
 
+        // info에 있는 Season enum 값이 현재 달보다 작거나 같을 떄 계절 변경
         foreach (SeasonInfo info in seasonList)
         {
             if ((int)info.season <= month)
@@ -123,12 +125,12 @@ public struct GameDate : IEquatable<GameDate>
     public void SetDate(GameDate date)
     {
         year = date.year;
-        month = Math.Clamp(date.month, 1, maxMonthPerYear);
+        month = Mathf.Clamp(date.month, 1, maxMonthPerYear);
 
-        lastDay = daysInMonthList[this.month - 1]; ;
+        lastDay = daysInMonthList[this.month - 1];
 
-        day = Math.Clamp(date.day, 1, lastDay);
-        hour = Math.Clamp(date.hour, 0, maxHourPerDay - 1);
+        day = Mathf.Clamp(date.day, 1, lastDay);
+        hour = Mathf.Clamp(date.hour, 0, maxHourPerDay - 1);
         minutes = 0;
 
         SetSeason();

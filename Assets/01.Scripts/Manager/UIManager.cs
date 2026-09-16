@@ -41,25 +41,6 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    [Header("테스트용(삭제 예정)")]
-    [SerializeField] TextMeshProUGUI levelText;
-    [SerializeField] TextMeshProUGUI frameText;
-    [SerializeField] TextMeshProUGUI rebirthText;
-    [SerializeField] TextMeshProUGUI eventTitleText;
-    [SerializeField] TextMeshProUGUI eventCostText;
-    [SerializeField] TextMeshProUGUI specialCoinText;
-    [SerializeField] TextMeshProUGUI goldText;
-    [SerializeField] TextMeshProUGUI goldSecText;
-    [SerializeField] TextMeshProUGUI gameNumText;
-    [SerializeField] TextMeshProUGUI peopleNumText;
-    
-    [SerializeField] Button levelUpBtn;
-    [SerializeField] Button marketBtn;
-    [SerializeField] Button gameBtn;
-    [SerializeField] Button artifactBtn;
-    [SerializeField] Button peopleBtn;
-    [SerializeField] Button rebirthBtn;
-
     [Header("UI 그룹")]
     [SerializeField] private UITextGroup textGroup;
     [SerializeField] private UIButtonGroup buttonGroup;
