@@ -19,6 +19,10 @@ public class GameCardUI : MonoBehaviour
     [Header("정산 시간")]
     [SerializeField] private TMP_Text remainingTimeText;
 
+    [Header("게임 버리기")]
+    [SerializeField] private Button deleteButton;
+
+    private int gameId;
     private ReleasedGameSaveData releasedGameData;
     private EventManagerData settlementData;
 
@@ -44,6 +48,8 @@ public class GameCardUI : MonoBehaviour
     public void SetData(ReleasedGameSaveData releasedGame, GameReleaseData gameReleaseData, EventManagerData eventManagerData,
         Sprite aGradeSprite, Sprite bGradeSprite, Sprite cGradeSprite)
     {
+        gameId = releasedGame.gameResult.gameId;
+
         releasedGameData = releasedGame;
         settlementData = eventManagerData;
 
@@ -141,5 +147,14 @@ public class GameCardUI : MonoBehaviour
                 icon.sprite = cGradeSprite;
                 break;
         }
+    }
+    public void DeleteGame()
+    {
+        bool success = GameReleaseManager.instance.RemoveGame(gameId);
+
+        if (!success)
+            return;
+
+        Destroy(gameObject);
     }
 }

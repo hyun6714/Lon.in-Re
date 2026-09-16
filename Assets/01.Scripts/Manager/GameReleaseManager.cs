@@ -105,4 +105,19 @@ public class GameReleaseManager : MonoBehaviour
             $"현재 정산 횟수 : {releasedGame.settlementCount}"
         );
     }
+
+    // 출시된 게임 버리기
+    public bool RemoveGame(int gameId)
+    {
+        ReleasedGameSaveData releasedGame = GetReleasedGameData(gameId);
+
+        if (releasedGame == null)
+            return false;
+
+        releasedGames.Remove(releasedGame);
+
+        Utils.Log($"게임 버리기 완료 / ID : {gameId}");
+
+        return true;
+    }
 }

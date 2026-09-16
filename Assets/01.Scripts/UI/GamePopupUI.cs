@@ -50,6 +50,7 @@ public class GamePopupUI : MonoBehaviour
     // 새로 출시된 게임 카드 하나 추가
     private void AddGameCard(ReleasedGameSaveData releasedGame)
     {
+        Utils.Log($"AddGameCard 호출됨 / ID : {releasedGame.gameResult.gameId}");
         int gameId = releasedGame.gameResult.gameId;
 
         // 이미 표시된 게임이면 생성하지 않음
