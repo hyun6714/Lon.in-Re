@@ -1393,7 +1393,6 @@ GameObject:
   - component: {fileID: 2636280492541041671}
   - component: {fileID: 4570995154423537448}
   - component: {fileID: 1725122370661813392}
-  - component: {fileID: 5145854118816225494}
   m_Layer: 5
   m_Name: GameFile_Bg
   m_TagString: Untagged
@@ -1492,23 +1491,10 @@ MonoBehaviour:
   funGradeText: {fileID: 8831970911565726986}
   graphicGradeText: {fileID: 5870694044052495157}
   optimizationGradeText: {fileID: 2897844025127185108}
---- !u!114 &5145854118816225494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5585854842935922545}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfb46e60b75f6444592d33d319dc7b4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GamePopupUI
-  gameCardPrefab: {fileID: 5585854842935922545}
-  content: {fileID: 0}
-  aGradeSprite: {fileID: 21300000, guid: f4007ace294b9734e9b23a573c95b7b6, type: 3}
-  bGradeSprite: {fileID: 21300000, guid: dcc535d9e58aca7489348e34366ac7c8, type: 3}
-  cGradeSprite: {fileID: 21300000, guid: 699a08bc9f1110f4e8b5dd0d2c77a298, type: 3}
+  fameRewardText: {fileID: 5067750216140932391}
+  goldRewardText: {fileID: 6519115989799483827}
+  remainingTimeText: {fileID: 8790630678730485914}
+  deleteButton: {fileID: 4427947580358073087}
 --- !u!1 &5761079205056104244
 GameObject:
   m_ObjectHideFlags: 0
