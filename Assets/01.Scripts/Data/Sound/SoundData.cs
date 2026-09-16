@@ -8,6 +8,7 @@ public enum SFXType
     ButtonClick,    // 기본 UI 버튼
     UpgradeSuccess, // 부품 강화 성공
     UpgradeFail,    // 부품 강화 실패
+    LevelUp,        // 레벨업
     Hire,           // 직원 고용
     GameRelease,    // 게임 출시
     Reincarnation   // 환생 연출
