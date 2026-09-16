@@ -5,11 +5,13 @@ public class SystemPopup : NormalPopupBase
 {
     public override UIName Name => UIName.Popup_System;
 
-    [SerializeField] private Button exitBtn;
-    [SerializeField] private Button saveBtn;
+    [SerializeField] private Button backBtn;
+    [SerializeField] private Button soundBtn;
+    [SerializeField] private Button quitBtn;
 
-    private void Awake()
+    private void Start()
     {
-        exitBtn.onClick.AddListener(ClosePopup);
+        backBtn.onClick.AddListener(ClosePopup);
+        soundBtn.onClick.AddListener(() => UIManager.Instance.OpenPopup(UIName.Popup_Sound));
     }
 }

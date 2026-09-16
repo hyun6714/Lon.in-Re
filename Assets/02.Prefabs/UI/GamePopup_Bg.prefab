@@ -1191,8 +1191,8 @@ GameObject:
   - component: {fileID: 433717858778652917}
   - component: {fileID: 8600488859824087952}
   - component: {fileID: 6422652830906376801}
-  - component: {fileID: 2498029800104274936}
   - component: {fileID: 8492875856613814478}
+  - component: {fileID: 2498029800104274936}
   m_Layer: 5
   m_Name: GamePopup_Bg
   m_TagString: Untagged
@@ -1260,19 +1260,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2498029800104274936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7355811684551915081}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe93da689cb5d7547825f6211edfc64d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GamePopup
-  data: {fileID: 11400000, guid: a5d72cd63f8bf74458f8bc988785a27b, type: 2}
 --- !u!114 &8492875856613814478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1292,6 +1279,22 @@ MonoBehaviour:
   cGradeSprite: {fileID: 21300000, guid: 699a08bc9f1110f4e8b5dd0d2c77a298, type: 3}
   gameReleaseData: {fileID: 11400000, guid: 422ec741b1b90bb4c93f5686e26ebe89, type: 2}
   eventManagerData: {fileID: 11400000, guid: f02f7609f7c072141aa8e031d169e62d, type: 2}
+--- !u!114 &2498029800104274936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7355811684551915081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe93da689cb5d7547825f6211edfc64d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GamePopup
+  data: {fileID: 11400000, guid: 7b9861e27ed97524c8b4af88fe02e7bd, type: 2}
+  useDim: 1
+  exitBtn: {fileID: 5521389111248037978}
+  gameMakeBtn: {fileID: 2558435054770290326}
 --- !u!1 &7592434162967683497
 GameObject:
   m_ObjectHideFlags: 0
@@ -2132,6 +2135,7 @@ MonoBehaviour:
   fameRewardText: {fileID: 1980341763153438008}
   goldRewardText: {fileID: 528989183563127212}
   remainingTimeText: {fileID: 2652987043218280581}
+  deleteButton: {fileID: 0}
 --- !u!114 &1980341763153438008 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5067750216140932391, guid: 6d6e95732b17b6f4e9ace017e0ad9b3f, type: 3}

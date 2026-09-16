@@ -18,7 +18,9 @@ public enum UIName
     Popup_RankUp,
     Popup_Event_Gift,
     Popup_Event_TreasureGoblin,
-    Dim
+    Dim,
+    Popup_GameMake,
+    Popup_Sound
 }
 
 public enum HUDTextType
@@ -363,7 +365,6 @@ public class UIManager : MonoBehaviour
                 continue;
 
             int index = popup.transform.GetSiblingIndex();
-
             if (index > topIndex)
             {
                 topIndex = index;
