@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using Unity.VectorGraphics.Editor;
-using Unity.VisualScripting.FullSerializer;
+﻿using DG.Tweening;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -11,13 +10,15 @@ public class SoundManager : MonoBehaviour
 
     [Header("오디오 소스")]
     [SerializeField] private AudioSource bgmSource;
-    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private List<AudioSource> sfxSources = new List<AudioSource>();
 
     [Header("사운드 데이터")]
     [SerializeField] private SoundData soundData;
 
     private Dictionary<SFXType, SFXData> sfxDict = new Dictionary<SFXType, SFXData>();
     private Dictionary<BGMType, AudioClip> bgmDict = new Dictionary<BGMType, AudioClip>();
+
+    private int sfxIndex = 0;
 
     private void Awake()
     {
@@ -41,7 +42,10 @@ public class SoundManager : MonoBehaviour
 
     private void InitSoundDictionary()
     {
-        if (soundData == null || soundData.sfxList == null) return;
+        if (soundData == null || soundData.sfxList == null)
+        {
+            return;
+        }
 
         // SFX 딕셔너리 캐싱
         sfxDict.Clear();
@@ -72,14 +76,22 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySFX(SFXType type, bool randomizePitch = false)
     {
-        if (sfxSource == null) return;
+        if (sfxSources.Count == 0) return;
 
         if (sfxDict.TryGetValue(type, out SFXData data))
         {
             if (data.clip != null)
             {
-                sfxSource.pitch = randomizePitch ? Random.Range(0.94f, 1.06f) : 1.0f;
-                sfxSource.PlayOneShot(data.clip, data.volume);
+                AudioSource currentSource = sfxSources[sfxIndex];
+
+                sfxIndex++;
+                if (sfxIndex >= sfxSources.Count)
+                {
+                    sfxIndex = 0;
+                }
+
+                currentSource.pitch = randomizePitch ? Random.Range(0.94f, 1.06f) : 1.0f;
+                currentSource.PlayOneShot(data.clip, data.volume);
             }
         }
     }
@@ -96,12 +108,36 @@ public class SoundManager : MonoBehaviour
     // 실제 오디오 소스 재생
     public void PlayBGM(AudioClip clip, bool loop = true)
     {
-        if (bgmSource == null || clip == null) return;
-        if (bgmSource.clip == clip && bgmSource.isPlaying) return;
+        if (bgmSource == null || clip == null)
+        {
+            return;
+        }
+        if (bgmSource.clip == clip && bgmSource.isPlaying)
+        {
+            return;
+        }
 
-        bgmSource.clip = clip;
-        bgmSource.loop = loop;
-        bgmSource.Play();
+        float targetVolume = GetBGMVolume() * bgmMasterScale;
+
+        // 이미 노래가 나오고 있다면 볼륨 줄인 뒤 교체
+        if (bgmSource.isPlaying)
+        {
+            bgmSource.DOKill();
+            bgmSource.DOFade(0f, 0.4f).SetUpdate(true).OnComplete(() =>
+            {
+                bgmSource.clip = clip;
+                bgmSource.loop = loop;
+                bgmSource.Play();
+                bgmSource.DOFade(targetVolume, 0.4f).SetUpdate(true);
+            });
+        }
+        else
+        {
+            bgmSource.clip = clip;
+            bgmSource.loop = loop;
+            bgmSource.volume = targetVolume;
+            bgmSource.Play();
+        }
     }
 
     public void StopBGM()
@@ -118,9 +154,11 @@ public class SoundManager : MonoBehaviour
 
     public void SetSFXVolume(float volume)
     {
-        if (sfxSource == null) return;
-        sfxSource.volume = volume;
         PlayerPrefs.SetFloat("SFXVolume", volume);
+        foreach (var source in sfxSources)
+        {
+            if (source != null) source.volume = volume;
+        }
     }
 
     public float GetBGMVolume() => PlayerPrefs.GetFloat("BGMVolume", 1f);
