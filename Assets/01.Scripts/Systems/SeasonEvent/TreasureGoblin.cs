@@ -47,8 +47,10 @@ public class TreasureGoblin : MonoBehaviour
         if (camera == null)
             return;
 
+        // 고블린의 월드 좌표를 뷰포트 좌표로 표시(0~1 사이)
         Vector3 viewPosition = camera.WorldToViewportPoint(transform.position);
 
+        // 고블린의 좌표가 Padding 지점을 벗어났을 경우 강제로 방향 변경
         if (viewPosition.x <= data.PaddingX)
         {
             dir.x = Mathf.Abs(dir.x);
@@ -67,6 +69,7 @@ public class TreasureGoblin : MonoBehaviour
             dir.y = -Mathf.Abs(dir.y);
         }
 
+        // 속도 유지
         dir.Normalize();
     }
 

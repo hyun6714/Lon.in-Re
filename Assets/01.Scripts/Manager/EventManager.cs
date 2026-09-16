@@ -245,7 +245,8 @@ public class EventManager : MonoBehaviour
     {
         foreach (var kv in eventDateDic)
         {
-            if (!kv.Key.EqualMonthDayHour(date))
+            // µñ¼Å³Ê
+            if (!kv.Key.EqualMonthDay(date))
                 continue;
 
             GameEventInfo eventInfo = kv.Value;
