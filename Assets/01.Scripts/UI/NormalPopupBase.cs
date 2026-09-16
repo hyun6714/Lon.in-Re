@@ -1,17 +1,16 @@
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System;
-using Cysharp.Threading.Tasks;
 using System.Threading;
 using UnityEngine;
 
-public class EventPopupBase : PopupBase
+public class NormalPopupBase : PopupBase
 {
     protected CancellationTokenSource token;
 
     protected virtual void OnEnable()
     {
         transform.localScale = Vector3.one * data.CloseSize;
-        GameManager.Instance.GamePaused();
     }
 
     public override void OpenPopup()
@@ -47,7 +46,7 @@ public class EventPopupBase : PopupBase
         }
         catch (OperationCanceledException)
         {
-            
+
         }
     }
 
@@ -66,17 +65,12 @@ public class EventPopupBase : PopupBase
                 {
                     gameObject.SetActive(false);
                     UIManager.Instance.DimCheck();
-
-                    if (UIManager.Instance.HasActivePopup())
-                    {
-                        GameManager.Instance.GameResume();
-                    }
                 })
                 .ToUniTask(TweenCancelBehaviour.CompleteAndCancelAwait, ctk);
         }
         catch (OperationCanceledException)
         {
-            
+
         }
     }
 }

@@ -26,6 +26,7 @@ public enum GameEventType
 
 public class EventManager : MonoBehaviour
 {
+    // 활성화된 이벤트 저장용 중첩 클래스
     private class ActiveEvent
     {
         public GameEventType Type;
@@ -47,7 +48,7 @@ public class EventManager : MonoBehaviour
     // 날짜별 이벤트 저장용 딕셔너리
     private Dictionary<GameDate, GameEventInfo> eventDateDic = new Dictionary<GameDate, GameEventInfo>();
 
-    // 발생한 이벤트 저장용 딕셔너리
+    // 발생할 이벤트 저장용 딕셔너리
     private Dictionary<GameEventType, ActiveEvent> activeEventDic = new Dictionary<GameEventType, ActiveEvent>();
 
     private EventFactory eventFactory;
@@ -89,7 +90,7 @@ public class EventManager : MonoBehaviour
         // 날짜만 다른 같은 이벤트를 날짜를 키값으로 딕셔너리에 추가
         foreach (GameEventInfo info in eventData.EventList)
         {
-            // info의 GameEventDateList를 확인해서 딕셔너리에 키값으로 넣어줌
+            // 이벤트에 저장된 발생 날짜를 확인해서 딕셔너리에 키값에 추가
             foreach (GameEventDate eventDate in info.GameEventDateList)
             {
                 GameDate dateKey = new GameDate
@@ -245,7 +246,7 @@ public class EventManager : MonoBehaviour
     {
         foreach (var kv in eventDateDic)
         {
-            // 딕셔너
+            // 딕셔너리에 저장된 카값이 넘어온 날짜(월/일)과 동일한지 확인
             if (!kv.Key.EqualMonthDay(date))
                 continue;
 
@@ -263,6 +264,7 @@ public class EventManager : MonoBehaviour
             if (newEvent == null)
                 continue;
 
+            // 당일에 실행될 이벤트 저장(월/일/시)
             activeEventDic[eventType] = new ActiveEvent
             {
                 Type = eventType,
@@ -334,6 +336,7 @@ public class EventManager : MonoBehaviour
         // 활성화된 이벤트 딕셔너리의 Key, Value값
         foreach (var value in activeEventDic)
         {
+            // 딕셔너리에 저장된 이벤트 꺼내오기
             ActiveEvent activeEvent = value.Value;
 
             if (!currentDate.EqualMonthDayHour(activeEvent.EventDate))
@@ -383,6 +386,7 @@ public class EventManager : MonoBehaviour
         StartGameSettlementAsync(releaseDate, releasedGame.gameResult.gameId, releasedGame.settlementCount, token.Token ).Forget();
     }
 
+    // 금일 실행 중(또는 예정된) 이벤트 가져오기
     public IEvent GetActiveEvent(GameEventType type)
     {
         if (activeEventDic.TryGetValue(type, out ActiveEvent activeEvent))

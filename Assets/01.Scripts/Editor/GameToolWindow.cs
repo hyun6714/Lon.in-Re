@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class GameToolWindow : EditorWindow
 {
-    private int year = 1;
-    private int month = 3;
-    private int day = 1;
-    private int hour = 7;
+    private int setYear = 1;
+    private int setMonth = 3;
+    private int setDay = 1;
+    private int setHour = 7;
 
     private int normalCurrency = 0;
     private int specialCurrency = 0;
@@ -53,10 +53,10 @@ public class GameToolWindow : EditorWindow
 
         GUILayout.Label("날짜 강제 변경");
         EditorGUILayout.HelpBox("일(Day)은 해당하는 월의 마지막 일수를 초과할 수 없습니다", MessageType.Warning);
-        year = EditorGUILayout.IntField("연도(Year)", year);
-        month = EditorGUILayout.IntSlider("월(Month)", month, 1, 12);
-        day = EditorGUILayout.IntField("일(Day)", day);
-        hour = EditorGUILayout.IntSlider("시(Hour)", hour, 0, 23);
+        setYear = EditorGUILayout.IntField("연도(Year)", setYear);
+        setMonth = EditorGUILayout.IntSlider("월(Month)", setMonth, 1, 12);
+        setDay = EditorGUILayout.IntField("일(Day)", setDay);
+        setHour = EditorGUILayout.IntSlider("시(Hour)", setHour, 0, 23);
 
         EditorGUILayout.Space(5);
 
@@ -64,7 +64,14 @@ public class GameToolWindow : EditorWindow
 
         if (GUILayout.Button("날짜 적용"))
         {
-            CalendarManager.instance.SetDateOnlyEditor(year, month, day, hour);
+            GameDate date = new GameDate()
+            {
+                year = setYear,
+                month = setMonth,
+                day = setDay,
+                hour = setHour
+            };
+            CalendarManager.instance.SetDateOnlyEditor(date);
         }
 
         EditorGUILayout.Space(10);
