@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using Unity.VisualScripting;
 
 public enum UIName
 {
@@ -200,6 +201,7 @@ public class UIManager : MonoBehaviour
     public void DimRegister(GameObject dim)
     {
         this.dim = dim;
+        Utils.Log("Dim 등록 완료");
     }
 
     /// <summary>
@@ -242,6 +244,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    #region OpenPopup Method
     public void OpenPopup(UIName name)
     {
         // 런타임 딕셔너리에 들어있는지 체크
@@ -267,10 +270,10 @@ public class UIManager : MonoBehaviour
         }
 
         //GameManager.Instance.GamePaused();
-        dim.SetActive(true);
         popup.gameObject.SetActive(true);
-        dim.transform.SetAsLastSibling();
-        popup.transform.SetAsLastSibling();
+
+        SetDimPos(popup);
+
         popup.OpenPopup();
     }
 
@@ -297,7 +300,8 @@ public class UIManager : MonoBehaviour
         }
 
         popup.gameObject.SetActive(true);
-        popup.transform.SetAsLastSibling();
+
+        SetDimPos(popup);
 
         if (popup is NormalShop shop)
         {
@@ -307,6 +311,7 @@ public class UIManager : MonoBehaviour
 
         popup.OpenPopup();
     }
+    #endregion
 
     public void ClosePopup(UIName name)
     {
@@ -346,4 +351,59 @@ public class UIManager : MonoBehaviour
         textGroup.SetText(HUDTextType.Date, date);
     }
     #endregion
+
+    private void SetDimPos(PopupBase popup)
+    {
+        if (dim == null)
+            return;
+
+        dim.SetActive(true);
+
+        dim.transform.SetSiblingIndex(popup.transform.GetSiblingIndex() - 1);
+    }
+
+    public void DimCheck()
+    {
+        if (dim == null)
+            return;
+
+        PopupBase topPopup = null;
+        int topIndex = -1;
+
+        foreach (PopupBase popup in runtimePopupDic.Values)
+        {
+            if (popup == null || !popup.gameObject.activeSelf)
+                continue;
+
+            int index = popup.transform.GetSiblingIndex();
+
+            if (index > topIndex)
+            {
+                topIndex = index;
+                topPopup = popup;
+            }
+        }
+
+        if (topPopup == null)
+        {
+            dim.SetActive(false);
+            return;
+        }
+
+        dim.SetActive(true);
+
+        dim.transform.SetSiblingIndex(topIndex - 1);
+    }
+
+    /// <summary> 현재 열린 팝업이 있는지 확인 </summary>
+    public bool HasActivePopup()
+    {
+        foreach (PopupBase popup in runtimePopupDic.Values)
+        {
+            if (popup != null && popup.gameObject.activeSelf)
+                return true;
+        }
+
+        return false;
+    }
 }

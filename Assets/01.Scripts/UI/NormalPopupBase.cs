@@ -63,8 +63,8 @@ public class NormalPopupBase : PopupBase
                 .SetUpdate(true)
                 .OnComplete(() =>
                 {
-                    GameManager.Instance.GameResume();
                     gameObject.SetActive(false);
+                    UIManager.Instance.DimCheck();
                 })
                 .ToUniTask(TweenCancelBehaviour.CompleteAndCancelAwait, ctk);
         }

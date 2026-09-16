@@ -87,8 +87,6 @@ public class NormalShop : PopupBase
     {
         InitSlots();
 
-        SwitchTab(ShopTab.Part);
-
         GameEventBridge.OnCurrencyChanged += OnCurrencyChanged;
         ReincarnationManager.OnReincarnated += OnReincarnated;
     }
@@ -202,7 +200,6 @@ public class NormalShop : PopupBase
         SwitchTab(tab);
     }
 
-
     public void CloseShop()
     {
         if (shopPanel != null && shopPanel.activeSelf)
@@ -218,6 +215,7 @@ public class NormalShop : PopupBase
                                   .OnComplete(() =>
                                   {
                                       shopPanel.SetActive(false);
+                                      UIManager.Instance.DimCheck();
                                       animTarget.localScale = Vector3.one; // 원래 크기 복구
                                   });
         }
