@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.IO;
 using UnityEngine.InputSystem;
 
@@ -53,7 +53,7 @@ public class SaveManager : MonoBehaviour
         SaveGame();
     }
 
-    // °ÔÀÓ ÀúÀå
+    // ê²Œì„ ì €ì¥
     public void SaveGame()
     {
         SaveData saveData = new SaveData();
@@ -67,16 +67,17 @@ public class SaveManager : MonoBehaviour
         SaveReleasedGameData(saveData);
         SaveEventData(saveData);
         SaveArtifactData(saveData);
+        SavePartUpgradeData(saveData);
 
-        // JsonÀ¸·Î º¯È¯
+        // Jsonìœ¼ë¡œ ë³€í™˜
         string json = JsonUtility.ToJson(saveData, true);
 
         File.WriteAllText(savePath, json);
 
-        Utils.Log($"°ÔÀÓ ÀúÀå ¿Ï·á : {savePath}");
+        Utils.Log($"ê²Œì„ ì €ì¥ ì™„ë£Œ : {savePath}");
     }
 
-    // ÀçÈ­ ÀúÀå
+    // ì¬í™” ì €ì¥
     private void SaveCurrencyData(SaveData saveData)
     {
         saveData.normalCurrency = CurrencyManager.instance.GetAmount(CurrencyType.Normal);
@@ -85,7 +86,7 @@ public class SaveManager : MonoBehaviour
     }
 
 
-    // °ÔÀÓ ÁøÇà µ¥ÀÌÅÍ ÀúÀå
+    // ê²Œì„ ì§„í–‰ ë°ì´í„° ì €ì¥
     private void SaveGameData(SaveData saveData)
     {
         saveData.playerRebirthCount = GameManager.instance.playerRebirthCount;
@@ -94,13 +95,13 @@ public class SaveManager : MonoBehaviour
     }
 
 
-    // È¸»ç µî±Ş µ¥ÀÌÅÍ ÀúÀå
+    // íšŒì‚¬ ë“±ê¸‰ ë°ì´í„° ì €ì¥
     private void SaveRankData(SaveData saveData)
     {
         saveData.currentRank = RankManager.instance.currentRank;
     }
 
-    // Á÷¿ø µ¥ÀÌÅÍ ÀúÀå
+    // ì§ì› ë°ì´í„° ì €ì¥
     private void SaveEmployeeData(SaveData saveData)
     {
         foreach (EmployeeState state in EmployeeManager.instance.EmployeeStates)
@@ -115,19 +116,19 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    // °ÔÀÓ °³¹ß µ¥ÀÌÅÍ ÀúÀå
+    // ê²Œì„ ê°œë°œ ë°ì´í„° ì €ì¥
     private void SaveGameDevData(SaveData saveData)
     {
         saveData.nextGameId = GameDevManager.instance.NextGameId;
     }
 
-    // °ÔÀÓ ³» ³¯Â¥ ÀúÀå
+    // ê²Œì„ ë‚´ ë‚ ì§œ ì €ì¥
     private void SaveCalendarData(SaveData saveData)
     {
         saveData.gameDate = CalendarManager.instance.SaveDate();
     }
 
-    // Ãâ½ÃµÈ °ÔÀÓ µ¥ÀÌÅÍ ÀúÀå
+    // ì¶œì‹œëœ ê²Œì„ ë°ì´í„° ì €ì¥
     private void SaveReleasedGameData(SaveData saveData)
     {
         foreach (ReleasedGameSaveData releasedGame in GameReleaseManager.instance.releasedGames)
@@ -136,19 +137,29 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    // ÀÌº¥Æ® ÀúÀå
+    // ì´ë²¤íŠ¸ ì €ì¥
     private void SaveEventData(SaveData saveData)
     {
         saveData.eventSaveDatas = EventManager.instance.GetEventSaveData();
     }
 
-    // ¾ÆÆ¼ÆåÆ® ÀúÀå
+    // ì•„í‹°í™íŠ¸ ì €ì¥
     private void SaveArtifactData(SaveData saveData)
     {
         saveData.artifactSaveData = ArtifactManager.instance.GetSaveData();
     }
 
-    // ÀúÀå µ¥ÀÌÅÍ »èÁ¦
+    // ë¶€í’ˆ ì—…ê·¸ë ˆì´ë“œ ì €ì¥
+    private void SavePartUpgradeData(SaveData saveData)
+    {
+        var tapUpgrade = FindFirstObjectByType<PlayerTapUpgrade>();
+        if (tapUpgrade != null)
+        {
+            saveData.partUpgrades = tapUpgrade.GetSaveData();
+        }
+    }
+
+    // ì €ì¥ ë°ì´í„° ì‚­ì œ
     public void DeleteSaveData()
     {
         isSaveDeleted = true;
@@ -158,11 +169,11 @@ public class SaveManager : MonoBehaviour
         if (File.Exists(savePath))
         {
             File.Delete(savePath);
-            Utils.Log("ÀúÀå µ¥ÀÌÅÍ »èÁ¦ ¿Ï·á");
+            Utils.Log("ì €ì¥ ë°ì´í„° ì‚­ì œ ì™„ë£Œ");
         }
         else
         {
-            Utils.Log("»èÁ¦ÇÒ µ¥ÀÌÅÍ°¡ ¾ø½À´Ï´Ù.");
+            Utils.Log("ì‚­ì œí•  ë°ì´í„°ê°€ ì—†ìŠµë‹ˆë‹¤.");
         }
     }
 }
