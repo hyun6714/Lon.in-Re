@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [Header("총 환생/게임출시 횟수/현재 직원수")]
     public int playerRebirthCount = 0;
     public int gameDevCount = 0;
-    public int currentEmployeeCount;
+    public int currentEmployeeCount = 0;
 
     [Header("일시 정지")]
     public bool IsPaused { get; private set; }
