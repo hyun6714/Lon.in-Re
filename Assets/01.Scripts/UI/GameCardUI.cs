@@ -38,6 +38,8 @@ public class GameCardUI : MonoBehaviour
 
     private void HandleDayChanged(GameDate date)
     {
+        Utils.Log($"게임 카드 날짜 변경 감지 : {date.year}년 {date.month}월 {date.day}일");
+
         if (releasedGameData == null || settlementData == null)
             return;
 
