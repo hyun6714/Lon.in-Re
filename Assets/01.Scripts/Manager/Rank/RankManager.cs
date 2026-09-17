@@ -63,6 +63,7 @@ public class RankManager : MonoBehaviour
 
     public void CheckRankUp()
     {
+        RankUI.instance.UpdateRankUI();
         int currentIndex = (int)currentRank;
         int nextIndex = currentIndex + 1;
 
