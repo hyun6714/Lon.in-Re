@@ -830,7 +830,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ReincarnationManager
   ReincarnationPop: {fileID: 476990847}
-  releasedGames: []
   gameListContentParent: {fileID: 2005329341}
 --- !u!4 &85806892
 Transform:
@@ -2587,7 +2586,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1258473640461858656, guid: bd89842a80856374fa532413852adda5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 106
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1258473640461858656, guid: bd89842a80856374fa532413852adda5, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2611,7 +2610,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8707748592745292709, guid: bd89842a80856374fa532413852adda5, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
