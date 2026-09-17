@@ -53,9 +53,6 @@ public class ReincarnationManager : MonoBehaviour
         OnReincarnated?.Invoke();
         GameManager.instance.UpdateRebirthUI();
 
-        if (ReincarnationPop == null) return;
-        ReincarnationPop.SetActive(false);
-
         Debug.Log($"환생 완료");
     }
 
