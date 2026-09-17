@@ -1,10 +1,10 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "EventDataContainer", menuName = "Event/EventDataContainer")]
 public class EventDataContainer : ScriptableObject
 {
-    public BurningEventData burningData;
-    public AirConditionalEventData airconData;
-    public GiftEventData giftData;
-    public TreasureGoblinEventData treasureGoblinData;
+    [SerializeField] private List<EventFactoryData> eventDataList;
+    
+    public List<EventFactoryData> EventDataList => eventDataList;
 }

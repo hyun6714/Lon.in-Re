@@ -8,9 +8,14 @@ public class UITextGroup : MonoBehaviour
 
     private Dictionary<HUDTextType, TextMeshProUGUI> textDic = new Dictionary<HUDTextType, TextMeshProUGUI>();
 
-    private void Start()
+    private void Awake()
     {
         Initialize();
+    }
+
+    private void Start()
+    {
+        Register();
     }
 
     private void Initialize()
@@ -29,8 +34,11 @@ public class UITextGroup : MonoBehaviour
             }
 
             textDic.Add(info.type, info.text);
-        }
+        }        
+    }
 
+    private void Register()
+    {
         if (UIManager.Instance != null)
         {
             UIManager.Instance.TextRegister(this);

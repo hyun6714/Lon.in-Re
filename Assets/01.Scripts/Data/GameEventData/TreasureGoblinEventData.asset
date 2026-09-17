@@ -12,13 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76791d459e110e34b8679f53b3438f68, type: 3}
   m_Name: TreasureGoblinEventData
   m_EditorClassIdentifier: Assembly-CSharp::TreasureGoblinEventData
+  eventType: 3004
   eventStartText: "\uBCF4\uBB3C \uACE0\uBE14\uB9B0 \uB4F1\uC7A5!"
   eventSuccessText: "\uBCF4\uBB3C \uACE0\uBE14\uB9B0\uC744 \uC7A1\uC558\uB2E4!"
   eventFailText: "\uBCF4\uBB3C \uACE0\uBE14\uB9B0\uC774 \uB3C4\uB9DD\uAC14\uB2E4..."
   eventTimer: 5
   requireTouchCount: 10
-  solo: 2000
-  indie: 8000
-  small: 40000
-  midsized: 250000
-  major: 800000
+  reward:
+  - rank: 0
+    rewardGold: 2000
+  - rank: 1
+    rewardGold: 8000
+  - rank: 2
+    rewardGold: 40000
+  - rank: 3
+    rewardGold: 250000
+  - rank: 4
+    rewardGold: 800000

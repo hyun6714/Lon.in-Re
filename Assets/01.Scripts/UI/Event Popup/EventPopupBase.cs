@@ -67,7 +67,7 @@ public class EventPopupBase : PopupBase
                     gameObject.SetActive(false);
                     UIManager.Instance.DimCheck();
 
-                    if (UIManager.Instance.HasActivePopup())
+                    if (!UIManager.Instance.HasActivePopup())
                     {
                         GameManager.instance.GameResume();
                     }

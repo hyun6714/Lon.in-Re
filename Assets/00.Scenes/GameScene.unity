@@ -11877,6 +11877,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7666229579875820636, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
+      propertyPath: deleteButton
+      value: 
+      objectReference: {fileID: 1672704724}
     - target: {fileID: 8492875856613814478, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
       propertyPath: gameCardPrefab
       value: 
@@ -11909,6 +11913,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d04722a5b7956d41860c683760bdb3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameCardUI
+--- !u!114 &1672704724 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6943688002138274528, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
+  m_PrefabInstance: {fileID: 1672704721}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &1694244910
 GameObject:
   m_ObjectHideFlags: 0

@@ -64,6 +64,9 @@ public class GameSettlementManager : MonoBehaviour
                 break;
         }
 
+        GameEventBridge.CurrencyAdded(CurrencyType.Normal, currencyReward);
+        GameEventBridge.CurrencyAdded(CurrencyType.Reputation, reputationReward);
+
         GameReleaseManager.instance.IncreaseSettlementCount(gameId);
 
         Utils.Log(

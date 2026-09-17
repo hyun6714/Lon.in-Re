@@ -12,8 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4807774b4f7ec4590833ca0c6d258e, type: 3}
   m_Name: GiftEventData
   m_EditorClassIdentifier: Assembly-CSharp::GiftEventData
+  eventType: 3003
   solo: 500
   indie: 2000
   small: 10000
   midsized: 50000
   major: 200000
+  reward:
+  - rank: 0
+    rewardGold: 500
+    rewardFame: 100
+  - rank: 1
+    rewardGold: 2000
+    rewardFame: 500
+  - rank: 2
+    rewardGold: 10000
+    rewardFame: 1000
+  - rank: 3
+    rewardGold: 50000
+    rewardFame: 5000
+  - rank: 4
+    rewardGold: 200000
+    rewardFame: 10000
