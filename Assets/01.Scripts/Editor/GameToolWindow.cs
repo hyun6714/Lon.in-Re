@@ -130,6 +130,13 @@ public class GameToolWindow : EditorWindow
             GameEventBridge.CurrencyUsed(CurrencyType.Reputation, reputationCurrency);
         }
 
+        EditorGUILayout.Space(15);
+
+        if (GUILayout.Button("진행도 초기화 및 종료"))
+        {
+            SaveManager.instance.DeleteSaveData();
+        }
+
         EditorGUILayout.EndScrollView();
     }
 }
