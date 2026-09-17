@@ -25,6 +25,6 @@ public class GiftEventPopup : EventPopupBase
         if (giftEvent == null)
             return;
 
-        giftEvent.RecieveGift();        
+        giftEvent.ReceiveGift();        
     }
 }
