@@ -328,7 +328,7 @@ public class UIManager : MonoBehaviour
     {
         if (!currencyTextDic.TryGetValue(type, out HUDTextType textType))
         {
-            Utils.Log($"등록되지 않는 재화입니다 : {type}");
+            Utils.Log($"등록되지 않은 재화입니다 : {type}");
             return;
         }
 
