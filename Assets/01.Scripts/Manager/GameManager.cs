@@ -1,8 +1,11 @@
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+
+    public TextMeshProUGUI rebirthText;
 
     [Header("ÃÑ È¯»ý/°ÔÀÓÃâ½Ã È½¼ö")]
     public int playerRebirthCount = 0;
@@ -24,6 +27,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void UpdateRebirthUI()
+    {
+        playerRebirthCount++;
+
+        if (rebirthText != null)
+        {
+            rebirthText.text = playerRebirthCount.ToString();
+        }
+    }
     public void GamePaused()
     {
         Time.timeScale = 0;

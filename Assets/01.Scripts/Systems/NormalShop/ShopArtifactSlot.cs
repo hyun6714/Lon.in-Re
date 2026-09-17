@@ -260,7 +260,6 @@ public class ShopArtifactSlot : MonoBehaviour
             else if (targetInfo != null)
             {
                 UpdateUIState(targetInfo);
-                CurrencyManager.instance.UpdateSpecialUI();
             }
         }
     }

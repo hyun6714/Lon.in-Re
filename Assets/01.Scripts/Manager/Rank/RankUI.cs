@@ -50,6 +50,9 @@ public class RankUI : MonoBehaviour
     {
         if (RankManager.instance == null) return;
 
+        Debug.Log("현재 GameManager.Instance 존재 여부: " + (GameManager.Instance != null));
+        Debug.Log("RankManager가 읽은 출시 횟수: " + RankManager.instance.gamesReleased);
+
         RankData currentData = RankManager.instance.CurrentRankData;
         if (currentData != null)
         {
