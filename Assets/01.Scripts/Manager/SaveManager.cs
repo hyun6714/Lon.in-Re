@@ -1,11 +1,16 @@
 using UnityEngine;
 using System.IO;
+using UnityEngine.InputSystem;
 
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager instance;
 
     private string savePath;
+
+    [SerializeField] private float autoSaveInterval = 10f;
+
+    private bool isSaveDeleted = false;
 
     private void Awake()
     {
@@ -23,6 +28,31 @@ public class SaveManager : MonoBehaviour
         savePath = Path.Combine(Application.persistentDataPath, "save.json");
     }
 
+    private void Start()
+    {
+        InvokeRepeating(nameof(SaveGame), autoSaveInterval, autoSaveInterval);
+    }
+
+    private void Update()
+    {
+#if UNITY_EDITOR
+        if (Keyboard.current != null &&
+            Keyboard.current.f1Key.wasPressedThisFrame)
+        {
+            DeleteSaveData();
+        }
+#endif
+    }
+
+
+    private void OnApplicationQuit()
+    {
+        if (isSaveDeleted)
+            return;
+
+        SaveGame();
+    }
+
     // 게임 저장
     public void SaveGame()
     {
@@ -35,6 +65,8 @@ public class SaveManager : MonoBehaviour
         SaveGameDevData(saveData);
         SaveCalendarData(saveData);
         SaveReleasedGameData(saveData);
+        SaveEventData(saveData);
+        SaveArtifactData(saveData);
 
         // Json으로 변환
         string json = JsonUtility.ToJson(saveData, true);
@@ -102,6 +134,36 @@ public class SaveManager : MonoBehaviour
         foreach (ReleasedGameSaveData releasedGame in GameReleaseManager.instance.releasedGames)
         {
             saveData.releasedGames.Add(releasedGame);
+        }
+    }
+
+    // 이벤트 저장
+    private void SaveEventData(SaveData saveData)
+    {
+        saveData.eventSaveDatas = EventManager.instance.GetEventSaveData();
+    }
+
+    // 아티펙트 저장
+    private void SaveArtifactData(SaveData saveData)
+    {
+        saveData.artifactSaveData = ArtifactManager.instance.GetSaveData();
+    }
+
+    // 저장 데이터 삭제
+    public void DeleteSaveData()
+    {
+        isSaveDeleted = true;
+
+        CancelInvoke(nameof(SaveGame));
+
+        if (File.Exists(savePath))
+        {
+            File.Delete(savePath);
+            Utils.Log("저장 데이터 삭제 완료");
+        }
+        else
+        {
+            Utils.Log("삭제할 데이터가 없습니다.");
         }
     }
 }

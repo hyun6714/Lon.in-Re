@@ -61,6 +61,22 @@ public class SaveData
     #endregion
 
 
+    #region 이벤트
+
+    // 현재 진행 중인 게임 이벤트
+    public List<EventSaveData> eventSaveDatas = new List<EventSaveData>();
+
+    #endregion
+
+
+    #region 아티팩트
+
+    // 해금된 아티팩트 정보
+    public ArtifactSaveData artifactSaveData = new ArtifactSaveData();
+
+    #endregion
+
+
     #region 게임 내 날짜
 
     public GameDateSaveData gameDate;
