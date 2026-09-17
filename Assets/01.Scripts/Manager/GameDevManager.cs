@@ -225,7 +225,7 @@ public class GameDevManager : MonoBehaviour
 
         // 게임 개발 결과 생성
         GameDevResult result = GameResult();
-        GameManager.Instance.gameDevCount++;
+        GameManager.instance.gameDevCount++;
 
         // 개발 완료 즉시 게임 출시
         GameReleaseManager.instance.ReleaseGame(result);

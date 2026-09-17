@@ -11,7 +11,7 @@ public class EventPopupBase : PopupBase
     protected virtual void OnEnable()
     {
         transform.localScale = Vector3.one * data.CloseSize;
-        GameManager.Instance.GamePaused();
+        GameManager.instance.GamePaused();
     }
 
     public override void OpenPopup()
@@ -69,7 +69,7 @@ public class EventPopupBase : PopupBase
 
                     if (UIManager.Instance.HasActivePopup())
                     {
-                        GameManager.Instance.GameResume();
+                        GameManager.instance.GameResume();
                     }
                 })
                 .ToUniTask(TweenCancelBehaviour.CompleteAndCancelAwait, ctk);

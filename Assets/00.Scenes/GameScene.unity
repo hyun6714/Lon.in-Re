@@ -13175,6 +13175,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 659203021}
     m_Modifications:
+    - target: {fileID: 291076541147657756, guid: 1da2165cb46a0f145a20ef1e277da9e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 464516144}
+    - target: {fileID: 291076541147657756, guid: 1da2165cb46a0f145a20ef1e277da9e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CheckRankUp
+      objectReference: {fileID: 0}
     - target: {fileID: 1034696023439602280, guid: 1da2165cb46a0f145a20ef1e277da9e2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

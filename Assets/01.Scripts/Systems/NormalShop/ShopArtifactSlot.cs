@@ -148,7 +148,7 @@ public class ShopArtifactSlot : MonoBehaviour
             // 3가지 조건 검사 후 버튼 활성/비활성화
             int currentSpecial = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Special) : 0;
             int currentReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
-            int currentRebirth = GameManager.Instance != null ? GameManager.Instance.playerRebirthCount : 0;
+            int currentRebirth = GameManager.instance != null ? GameManager.instance.playerRebirthCount : 0;
 
             bool canPurchase = (currentSpecial >= info.SpecialUnlockCost) &&
                                (currentRebirth >= info.requiredRebirthCount) &&
@@ -179,7 +179,7 @@ public class ShopArtifactSlot : MonoBehaviour
         {
             return;
         }
-        if (CurrencyManager.instance == null || GameManager.Instance == null)
+        if (CurrencyManager.instance == null || GameManager.instance == null)
         {
             return;
         }
@@ -187,7 +187,7 @@ public class ShopArtifactSlot : MonoBehaviour
         // 현재 값 가져오기
         int currentSpecialCurrency = CurrencyManager.instance.GetAmount(CurrencyType.Special);
         int currentReputation = CurrencyManager.instance.GetAmount(CurrencyType.Reputation);
-        int currentReincarnation = GameManager.Instance.playerRebirthCount;
+        int currentReincarnation = GameManager.instance.playerRebirthCount;
 
         // 해금 조건 검사
         if (currentReincarnation < targetInfo.requiredRebirthCount)
@@ -225,14 +225,14 @@ public class ShopArtifactSlot : MonoBehaviour
     // 실제 구매 함수
     private void ExecuteUnlock()
     {
-        if (CurrencyManager.instance == null || GameManager.Instance == null || ArtifactManager.instance == null)
+        if (CurrencyManager.instance == null || GameManager.instance == null || ArtifactManager.instance == null)
         {
             return;
         }
 
         int currentSpecialCurrency = CurrencyManager.instance.GetAmount(CurrencyType.Special);
         int currentReputation = CurrencyManager.instance.GetAmount(CurrencyType.Reputation);
-        int currentReincarnation = GameManager.Instance.playerRebirthCount;
+        int currentReincarnation = GameManager.instance.playerRebirthCount;
 
         // 실제 구매 및 해금 검사
         bool success = ArtifactManager.instance.TryUnlockArtifact(
