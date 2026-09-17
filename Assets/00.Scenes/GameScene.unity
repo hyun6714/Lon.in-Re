@@ -829,7 +829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bceaf6b41ca848342928c7fcb98f9398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ReincarnationManager
-  ReincarnationPop: {fileID: 0}
+  ReincarnationPop: {fileID: 476990847}
 --- !u!4 &85806892
 Transform:
   m_ObjectHideFlags: 0
@@ -3214,6 +3214,11 @@ MonoBehaviour:
   GameReqText: {fileID: 66918422}
   EmployeeReqText: {fileID: 87627637}
   rankUpButton: {fileID: 281109661}
+--- !u!1 &476990847 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7743515357315088526, guid: f513290a76e8c6c419ddf70effc47329, type: 3}
+  m_PrefabInstance: {fileID: 1626546433}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &496024016
 GameObject:
   m_ObjectHideFlags: 0
@@ -3533,7 +3538,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da67491e41f9d134caf8eed14a7ecc06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CurrencyManager
-  currencyText: {fileID: 0}
+  normalText: {fileID: 645503861}
+  specialText: {fileID: 876125889}
+  reputationText: {fileID: 292376876}
   currencyDatabase: {fileID: 11400000, guid: 1fe5d80301c629c4db1852d69d84c589, type: 2}
 --- !u!4 &517425805
 Transform:
@@ -10128,14 +10135,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.14117648, g: 0.21176471, b: 0.5686275, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -6306955927142638533, guid: 8510558ac29c49549bf8e0d398bb8228, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10503,6 +10510,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 659203021}
     m_Modifications:
+    - target: {fileID: 388736433738765193, guid: f513290a76e8c6c419ddf70effc47329, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 388736433738765193, guid: f513290a76e8c6c419ddf70effc47329, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 388736433738765193, guid: f513290a76e8c6c419ddf70effc47329, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 85806891}
+    - target: {fileID: 388736433738765193, guid: f513290a76e8c6c419ddf70effc47329, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 388736433738765193, guid: f513290a76e8c6c419ddf70effc47329, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BtnReincarnation
+      objectReference: {fileID: 0}
+    - target: {fileID: 388736433738765193, guid: f513290a76e8c6c419ddf70effc47329, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ReincarnationManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 388736433738765193, guid: f513290a76e8c6c419ddf70effc47329, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1137741260850382848, guid: f513290a76e8c6c419ddf70effc47329, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
