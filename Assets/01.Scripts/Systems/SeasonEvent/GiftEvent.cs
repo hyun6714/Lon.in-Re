@@ -5,7 +5,8 @@ public class GiftEvent : IEvent
 {
     private GiftEventData data;
 
-    private Dictionary<RankManager.RankState, int> rankMoney;
+    private Dictionary<RankManager.RankState, int> rankGold = new Dictionary<RankManager.RankState, int>();
+    private Dictionary<RankManager.RankState, int> rankFame = new Dictionary<RankManager.RankState, int>();
 
     public GiftEvent(GiftEventData data)
     {
@@ -19,34 +20,41 @@ public class GiftEvent : IEvent
 
     private void InitDic()
     {
-        rankMoney = new Dictionary<RankManager.RankState, int>()
+        foreach (GiftRewardInfo info in data.Reward)
         {
-            { RankManager.RankState.Solo, data.Solo },
-            { RankManager.RankState.Indie, data.Indie },
-            { RankManager.RankState.Small, data.Small },
-            { RankManager.RankState.Midsized, data.Midsized },
-            { RankManager.RankState.MajorPublisher, data.Major }
-        };
+            if (!rankGold.TryAdd(info.rank, info.rewardGold))
+            {
+                Utils.Log($"이미 등록된 Gold 랭크 보상 : {info.rank}");
+            }
+
+            if (!rankFame.TryAdd(info.rank, info.rewardFame))
+            {
+                Utils.Log($"이미 등록된 Fame 랭크 보상 : {info.rank}");
+            }
+        }
     }
 
-    public void RecieveGift()
+    public void ReceiveGift()
     {
         if (RankManager.instance == null)
             return;
 
         RankManager.RankState rank = RankManager.instance.currentRank;
 
-        if (!rankMoney.TryGetValue(rank, out int amount))
+        if (!rankGold.TryGetValue(rank, out int amountGold) ||
+            !rankFame.TryGetValue(rank, out int amountFame))
             return;
 
-        GameEventBridge.CurrencyAdded(CurrencyType.Normal, amount);
+        GameEventBridge.CurrencyAdded(CurrencyType.Normal, amountGold);
+        GameEventBridge.CurrencyAdded(CurrencyType.Reputation, amountFame);
+
         EventManager.instance.EndCurrentEvent(GameEventType.Gift);
         UIManager.Instance.ClosePopup(UIName.Popup_Event_Gift);
     }
 
     public void EndEvent()
     {
-        rankMoney.Clear();
+        rankGold.Clear();
     }
 
     public void SaveEventData(EventSaveData eventSaveData)
