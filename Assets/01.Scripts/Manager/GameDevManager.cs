@@ -241,6 +241,11 @@ public class GameDevManager : MonoBehaviour
             $"최종 등급 : {result.finalGrade}"
         );
 
+        if (RankUI.instance != null)
+        {
+            RankUI.instance.UpdateRankUI();
+        }
+
         return result;
     }
 

@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class RankUI : MonoBehaviour
 {
+    public static RankUI instance { get; private set; }
+
     public GameObject RankPopup;
     //public TextMeshProUGUI RankText;
     public TextMeshProUGUI RankUpText;
@@ -16,6 +18,18 @@ public class RankUI : MonoBehaviour
     [Header("승급 버튼")]
     public Button rankUpButton;
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private void OnEnable()
     {
         GameEventBridge.OnRankChanged += UpdateRankUI;
@@ -34,10 +48,7 @@ public class RankUI : MonoBehaviour
     public void OpenRankPop()
     {
         if (RankPopup == null) return;
-
-        UpdateRankUI();
         RankPopup.SetActive(true);
-
     }
 
     public void CloseRankPop()
@@ -50,9 +61,6 @@ public class RankUI : MonoBehaviour
     public void UpdateRankUI()
     {
         if (RankManager.instance == null) return;
-
-        Utils.Log("현재 GameManager.Instance 존재 여부: " + (GameManager.instance != null));
-        Utils.Log("RankManager가 읽은 출시 횟수: " + RankManager.instance.gamesReleased);
 
         RankData currentData = RankManager.instance.CurrentRankData;
         if (currentData != null)
