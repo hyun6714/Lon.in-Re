@@ -61,6 +61,7 @@ public class RankManager : MonoBehaviour
         return null;
     }
 
+    //111
     public void CheckRankUp()
     {
         int currentIndex = (int)currentRank;
