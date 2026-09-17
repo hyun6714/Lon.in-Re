@@ -8,7 +8,7 @@ public class TreasureGoblinEvent : IEvent
 {
     private TreasureGoblinEventData data;
 
-    private Dictionary<RankManager.RankState, int> rankMoney;
+    private Dictionary<RankManager.RankState, int> rankMoney = new Dictionary<RankManager.RankState, int>();
 
     private int touchCount;
     private float timer;
@@ -56,14 +56,16 @@ public class TreasureGoblinEvent : IEvent
 
     private void InitDic()
     {
-        rankMoney = new Dictionary<RankManager.RankState, int>()
+        foreach (TreasureGoblinRewardInfo info in data.Reward)
         {
-            { RankManager.RankState.Solo, data.Solo },
-            { RankManager.RankState.Indie, data.Indie },
-            { RankManager.RankState.Small, data.Small },
-            { RankManager.RankState.Midsized, data.Midsized },
-            { RankManager.RankState.MajorPublisher, data.Major }
-        };
+            if (rankMoney.ContainsKey(info.rank))
+            {
+                Utils.Log("이미 등록된 랭크 보상");
+                continue;
+            }
+
+            rankMoney.Add(info.rank, info.rewardGold);
+        }
     }
 
     private async UniTaskVoid UpdateTimer(CancellationToken ctk)

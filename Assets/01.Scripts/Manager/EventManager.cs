@@ -303,10 +303,10 @@ public class EventManager : MonoBehaviour
                 int addDay = data.NextSettlements[i - 1];
 
                 GameDate targetDate = date.GetAfterDay(addDay);
+                Utils.Log($"종료 날짜 : {targetDate.year}년 {targetDate.month}월 {targetDate.day}일 {targetDate.hour}시");
 
                 await UniTask.WaitUntil(() =>
-                !isPaused &&
-                CalendarManager.instance.IsEventTime(targetDate),
+                CalendarManager.instance.CurrentDate >= targetDate,
                 cancellationToken: token);
 
                 OnGameSettlement?.Invoke(gameId, i);
