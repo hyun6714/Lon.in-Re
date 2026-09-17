@@ -287,15 +287,6 @@ public class EventManager : MonoBehaviour
         StartGameSettlementAsync(nowDate, gameId, 0, token.Token).Forget();
     }
 
-    // 개발 버튼 눌렀을 시 실행
-    public void StartGameDevEvent()
-    {
-        // 게임 개발 이벤트 실행
-        Utils.Log("게임 개발 이벤트 시작");
-        
-        // 일시 정지 후 UI 불러오기    
-    }
-
     /// <summary>
     /// 게임 출시 후 일정 주기마다 판매금 지급.
     /// 한 달에 한 번 지급. 총 2번
