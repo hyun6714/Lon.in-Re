@@ -106,6 +106,7 @@ public class GameReleaseManager : MonoBehaviour
         );
     }
 
+
     // 출시된 게임 버리기
     public bool RemoveGame(int gameId)
     {
