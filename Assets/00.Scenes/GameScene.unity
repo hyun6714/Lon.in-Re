@@ -11637,6 +11637,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1201094191158636398, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1271230064569236670, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -11781,6 +11785,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8492875856613814478, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
+      propertyPath: gameCardPrefab
+      value: 
+      objectReference: {fileID: 5585854842935922545, guid: 6d6e95732b17b6f4e9ace017e0ad9b3f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7975890342869796079, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
