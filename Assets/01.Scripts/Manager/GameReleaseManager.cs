@@ -120,4 +120,20 @@ public class GameReleaseManager : MonoBehaviour
 
         return true;
     }
+
+    private void OnEnable()
+    {
+        ReincarnationManager.OnReincarnated += ResetDataOnRebirth;
+    }
+
+    private void OnDisable()
+    {
+        ReincarnationManager.OnReincarnated -= ResetDataOnRebirth;
+    }
+
+    //환생할 떄 게임 지우는 것
+    private void ResetDataOnRebirth()
+    {
+        releasedGames.Clear();
+    }
 }

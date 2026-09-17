@@ -830,6 +830,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ReincarnationManager
   ReincarnationPop: {fileID: 476990847}
+  releasedGames: []
+  gameListContentParent: {fileID: 2005329341}
 --- !u!4 &85806892
 Transform:
   m_ObjectHideFlags: 0
@@ -4154,7 +4156,7 @@ RectTransform:
   - {fileID: 1770938922}
   m_Father: {fileID: 575723480}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.20249999}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: -80}
@@ -11549,6 +11551,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 659203021}
     m_Modifications:
     - target: {fileID: 226468722875782187, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 328
+      objectReference: {fileID: 0}
+    - target: {fileID: 226468722875782187, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0.0001133208
       objectReference: {fileID: 0}
@@ -13082,8 +13088,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 598434989}
   m_HandleRect: {fileID: 598434988}
   m_Direction: 2
-  m_Value: 1.0000004
-  m_Size: 0.7975
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13501,6 +13507,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!224 &2005329341 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 226468722875782187, guid: 40b3d2e5a84505243a9cfc9178a4a5fc, type: 3}
+  m_PrefabInstance: {fileID: 1672704721}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2011628564
 GameObject:
   m_ObjectHideFlags: 0
@@ -14695,6 +14706,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1766930933}
+    - target: {fileID: 2561070804786554152, guid: 3f46b9e4eeb25df428328962404bbf47, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3262450608694367435, guid: 3f46b9e4eeb25df428328962404bbf47, type: 3}
       propertyPath: m_Name
       value: GameMake_Bg
