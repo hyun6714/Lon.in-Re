@@ -1,4 +1,4 @@
-using System.IO;
+ï»¿using System.IO;
 using UnityEngine;
 
 public class LoadManager : MonoBehaviour
@@ -28,23 +28,23 @@ public class LoadManager : MonoBehaviour
         LoadGame();
     }
 
-    // °ÔÀÓ ºÒ·¯¿À±â
+    // ê²Œì„ ë¶ˆëŸ¬ì˜¤ê¸°
     public void LoadGame()
     {
-        // ÀúÀå ÆÄÀÏÀÌ ¾øÀ¸¸é ºÒ·¯¿ÀÁö ¾ÊÀ½
+        // ì €ì¥ íŒŒì¼ì´ ì—†ìœ¼ë©´ ë¶ˆëŸ¬ì˜¤ì§€ ì•ŠìŒ
         if (!File.Exists(savePath))
         {
-            Utils.Log("ÀúÀåµÈ °ÔÀÓ µ¥ÀÌÅÍ°¡ ¾ø½À´Ï´Ù.");
+            Utils.Log("ì €ì¥ëœ ê²Œì„ ë°ì´í„°ê°€ ì—†ìŠµë‹ˆë‹¤.");
             return;
         }
 
-        // JSON ÆÄÀÏ ÀĞ±â
+        // JSON íŒŒì¼ ì½ê¸°
         string json = File.ReadAllText(savePath);
 
-        // JSON -> SaveData º¯È¯
+        // JSON -> SaveData ë³€í™˜
         SaveData saveData = JsonUtility.FromJson<SaveData>(json);
 
-        // °¢ ½Ã½ºÅÛ µ¥ÀÌÅÍ ºÒ·¯¿À±â
+        // ê° ì‹œìŠ¤í…œ ë°ì´í„° ë¶ˆëŸ¬ì˜¤ê¸°
         LoadCurrencyData(saveData);
         LoadGameData(saveData);
         LoadRankData(saveData);
@@ -54,11 +54,12 @@ public class LoadManager : MonoBehaviour
         LoadEventData(saveData);
         LoadArtifactData(saveData);
         LoadReleasedGameData(saveData);
+        LoadPartUpgradeData(saveData);
 
-        Utils.Log("°ÔÀÓ ºÒ·¯¿À±â ¿Ï·á");
+        Utils.Log("ê²Œì„ ë¶ˆëŸ¬ì˜¤ê¸° ì™„ë£Œ");
     }
 
-    // ÀçÈ­ µ¥ÀÌÅÍ ºÒ·¯¿À±â
+    // ì¬í™” ë°ì´í„° ë¶ˆëŸ¬ì˜¤ê¸°
     private void LoadCurrencyData(SaveData saveData)
     {
         CurrencyManager.instance.SetCurrency(CurrencyType.Normal, saveData.normalCurrency);
@@ -68,7 +69,7 @@ public class LoadManager : MonoBehaviour
         CurrencyManager.instance.SetCurrency(CurrencyType.Reputation, saveData.reputation);
     }
 
-    // °ÔÀÓ ÁøÇà µ¥ÀÌÅÍ ºÒ·¯¿À±â
+    // ê²Œì„ ì§„í–‰ ë°ì´í„° ë¶ˆëŸ¬ì˜¤ê¸°
     private void LoadGameData(SaveData saveData)
     {
         GameManager.instance.playerRebirthCount = saveData.playerRebirthCount;
@@ -78,13 +79,13 @@ public class LoadManager : MonoBehaviour
         GameManager.instance.currentEmployeeCount = saveData.currentEmployeeCount;
     }
 
-    // È¸»ç µî±Ş µ¥ÀÌÅÍ ºÒ·¯¿À±â
+    // íšŒì‚¬ ë“±ê¸‰ ë°ì´í„° ë¶ˆëŸ¬ì˜¤ê¸°
     private void LoadRankData(SaveData saveData)
     {
         RankManager.instance.currentRank = saveData.currentRank;
     }
  
-    // Á÷¿ø µ¥ÀÌÅÍ ºÒ·¯¿À±â
+    // ì§ì› ë°ì´í„° ë¶ˆëŸ¬ì˜¤ê¸°
     private void LoadEmployeeData(SaveData saveData)
     {
         foreach (EmployeeSaveData employeeSaveData in saveData.employees)
@@ -95,19 +96,19 @@ public class LoadManager : MonoBehaviour
         }
     }
 
-    // °ÔÀÓ °³¹ß µ¥ÀÌÅÍ ºÒ·¯¿À±â
+    // ê²Œì„ ê°œë°œ ë°ì´í„° ë¶ˆëŸ¬ì˜¤ê¸°
     private void LoadGameDevData(SaveData saveData)
     {
         GameDevManager.instance.LoadNextGameId(saveData.nextGameId);
     }
 
-    // °ÔÀÓ ³» ³¯Â¥ ºÒ·¯¿À±â
+    // ê²Œì„ ë‚´ ë‚ ì§œ ë¶ˆëŸ¬ì˜¤ê¸°
     private void LoadCalendarData(SaveData saveData)
     {
         CalendarManager.instance.LoadDate(saveData.gameDate);
     }
 
-    // Ãâ½ÃµÈ °ÔÀÓ µ¥ÀÌÅÍ ºÒ·¯¿À±â
+    // ì¶œì‹œëœ ê²Œì„ ë°ì´í„° ë¶ˆëŸ¬ì˜¤ê¸°
     private void LoadReleasedGameData(SaveData saveData)
     {
         GameReleaseManager.instance.releasedGames.Clear();
@@ -128,5 +129,15 @@ public class LoadManager : MonoBehaviour
     private void LoadArtifactData(SaveData saveData)
     {
         ArtifactManager.instance.LoadSaveData(saveData.artifactSaveData);
+    }
+
+    // ë¶€í’ˆ ì—…ê·¸ë ˆì´ë“œ ë¶ˆëŸ¬ì˜¤ê¸°
+    private void LoadPartUpgradeData(SaveData saveData)
+    {
+        var tapUpgrade = FindFirstObjectByType<PlayerTapUpgrade>();
+        if (tapUpgrade != null && saveData.partUpgrades != null)
+        {
+            tapUpgrade.LoadSaveData(saveData.partUpgrades);
+        }
     }
 }

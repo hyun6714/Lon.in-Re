@@ -1,102 +1,107 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-// °ÔÀÓ ÀüÃ¼ ÀúÀå µ¥ÀÌÅÍ
+// ê²Œì„ ì „ì²´ ì €ì¥ ë°ì´í„°
 [Serializable]
 public class SaveData
 {
-    #region ÀçÈ­
+    #region ì¬í™”
 
-    // ÀÏ¹İ ÀçÈ­
+    // ì¼ë°˜ ì¬í™”
     public int normalCurrency;
 
-    // Æ¯¼ö ÀçÈ­
+    // íŠ¹ìˆ˜ ì¬í™”
     public int specialCurrency;
 
-    // ¸í¼º
+    // ëª…ì„±
     public int reputation;
 
     #endregion
 
 
-    #region °ÔÀÓ ÁøÇà
+    #region ê²Œì„ ì§„í–‰
 
-    // ÃÑ È¯»ı È½¼ö
+    // ì´ í™˜ìƒ íšŸìˆ˜
     public int playerRebirthCount;
 
-    // °ÔÀÓ °³¹ß / Ãâ½Ã È½¼ö
+    // ê²Œì„ ê°œë°œ / ì¶œì‹œ íšŸìˆ˜
     public int gameDevCount;
 
     #endregion
 
 
-    #region È¸»ç µî±Ş
+    #region íšŒì‚¬ ë“±ê¸‰
 
-    // ÇöÀç È¸»ç µî±Ş
+    // í˜„ì¬ íšŒì‚¬ ë“±ê¸‰
     public RankManager.RankState currentRank;
 
-    // ÇöÀç ÃÑ Á÷¿ø ¼ö
+    // í˜„ì¬ ì´ ì§ì› ìˆ˜
     public int currentEmployeeCount;
 
     #endregion
 
 
-    #region Á÷¿ø
+    #region ì§ì›
 
-    // Á÷¿øº° º¸À¯ ¼ö
+    // ì§ì›ë³„ ë³´ìœ  ìˆ˜
     public List<EmployeeSaveData> employees = new List<EmployeeSaveData>();
 
     #endregion
 
 
-    #region °ÔÀÓ °³¹ß / Ãâ½Ã
+    #region ê²Œì„ ê°œë°œ / ì¶œì‹œ
 
-    // ´ÙÀ½ °ÔÀÓ¿¡ ºÎ¿©ÇÒ ID
+    // ë‹¤ìŒ ê²Œì„ì— ë¶€ì—¬í•  ID
     public int nextGameId;
 
-    // Ãâ½ÃµÈ °ÔÀÓ Á¤º¸
+    // ì¶œì‹œëœ ê²Œì„ ì •ë³´
     public List<ReleasedGameSaveData> releasedGames = new List<ReleasedGameSaveData>();
 
     #endregion
 
 
-    #region ÀÌº¥Æ®
+    #region ì´ë²¤íŠ¸
 
-    // ÇöÀç ÁøÇà ÁßÀÎ °ÔÀÓ ÀÌº¥Æ®
+    // í˜„ì¬ ì§„í–‰ ì¤‘ì¸ ê²Œì„ ì´ë²¤íŠ¸
     public List<EventSaveData> eventSaveDatas = new List<EventSaveData>();
 
     #endregion
 
 
-    #region ¾ÆÆ¼ÆÑÆ®
+    #region ì•„í‹°íŒ©íŠ¸
 
-    // ÇØ±İµÈ ¾ÆÆ¼ÆÑÆ® Á¤º¸
+    // í•´ê¸ˆëœ ì•„í‹°íŒ©íŠ¸ ì •ë³´
     public ArtifactSaveData artifactSaveData = new ArtifactSaveData();
 
     #endregion
 
 
-    #region °ÔÀÓ ³» ³¯Â¥
+    #region ê²Œì„ ë‚´ ë‚ ì§œ
 
     public GameDateSaveData gameDate;
 
     #endregion
 
 
-    #region ¿ÀÇÁ¶óÀÎ º¸»ó
+    #region ì˜¤í”„ë¼ì¸ ë³´ìƒ
 
-    // ¸¶Áö¸· °ÔÀÓ Á¾·á ½ÇÁ¦ ½Ã°£
+    // ë§ˆì§€ë§‰ ê²Œì„ ì¢…ë£Œ ì‹¤ì œ ì‹œê°„
     public long lastQuitTime;
 
-    // °ÔÀÓ Á¾·á ´ç½Ã ÃÊ´ç »ı»ê·®
+    // ê²Œì„ ì¢…ë£Œ ë‹¹ì‹œ ì´ˆë‹¹ ìƒì‚°ëŸ‰
     public int lastProductionPerSecond;
 
+    #endregion
+
+
+    #region ë¶€í’ˆ ì—…ê·¸ë ˆì´ë“œ
+    public List<PartSaveData> partUpgrades = new List<PartSaveData>();
     #endregion
 }
 
 
-// Á÷¿ø ÇÑ Á¾·ùÀÇ ÀúÀå µ¥ÀÌÅÍ
+// ì§ì› í•œ ì¢…ë¥˜ì˜ ì €ì¥ ë°ì´í„°
 [Serializable]
 public class EmployeeSaveData
 {
