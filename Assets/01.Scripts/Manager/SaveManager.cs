@@ -175,5 +175,10 @@ public class SaveManager : MonoBehaviour
         {
             Utils.Log("삭제할 데이터가 없습니다.");
         }
+
+#if UNITY_EDITOR
+
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 }
