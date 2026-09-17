@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ab81664621328845bb34ebf3e815818, type: 3}
   m_Name: BurningEventData
   m_EditorClassIdentifier: Assembly-CSharp::BurningEventData
+  eventType: 3001
   burningTime: 10
   clickMultiplier: 5
   autoMultiplier: 2

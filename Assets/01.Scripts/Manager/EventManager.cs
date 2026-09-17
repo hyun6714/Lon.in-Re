@@ -5,7 +5,7 @@ using System.Threading;
 using UnityEngine;
 
 /// <summary>
-/// 계절별 이벤트 시작, 종료를 정의하는 인터페이스
+/// 이벤트 시작, 종료를 정의하는 인터페이스
 /// </summary>
 public interface IEvent
 {
@@ -228,7 +228,6 @@ public class EventManager : MonoBehaviour
         return saveDatas;
     }
     
-    // UI 테스트용
     public void OnClickSummerCool(bool value)
     {
         if (!activeEventDic.TryGetValue(GameEventType.AirConditional, out ActiveEvent activeEvent))

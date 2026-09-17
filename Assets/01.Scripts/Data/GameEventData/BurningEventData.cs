@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BurningEventData", menuName = "Event/BurningEventData")]
-public class BurningEventData : ScriptableObject
+public class BurningEventData : EventFactoryData
 {
     [Header("버닝 타임 지속 시간")]
     [SerializeField] private float burningTime = 10f;
@@ -29,4 +29,9 @@ public class BurningEventData : ScriptableObject
     public float EndTime => endTime;
     public string BurningStartText => burningStartText;
     public string BruningEndText => burningEndText;
+
+    public override IEvent CreateEvent()
+    {
+        return new BurningEvent(this);
+    }
 }

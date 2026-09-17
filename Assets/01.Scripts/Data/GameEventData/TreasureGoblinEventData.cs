@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TreasureGoblinEventData", menuName = "Event/TreasureGoblinEventData")]
-public class TreasureGoblinEventData : ScriptableObject
+public class TreasureGoblinEventData : EventFactoryData
 {
     [Header("이벤트 텍스트")]
     [SerializeField] private string eventStartText = "보물 고블린 등장!";
@@ -31,4 +31,9 @@ public class TreasureGoblinEventData : ScriptableObject
     public int Small => small;
     public int Midsized => midsized;
     public int Major => major;
+
+    public override IEvent CreateEvent()
+    {
+        return new TreasureGoblinEvent(this);
+    }
 }
