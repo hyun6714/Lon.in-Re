@@ -3,22 +3,23 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
+    public static GameManager instance { get; private set; }
 
     public TextMeshProUGUI rebirthText;
 
-    [Header("총 환생/게임출시 횟수")]
+    [Header("총 환생/게임출시 횟수/현재 직원수")]
     public int playerRebirthCount = 0;
     public int gameDevCount = 0;
+    public int currentEmployeeCount;
 
     [Header("일시 정지")]
     public bool IsPaused { get; private set; }
 
     private void Awake()
     {
-        if (Instance == null)
+        if (instance == null)
         {
-            Instance = this;
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else

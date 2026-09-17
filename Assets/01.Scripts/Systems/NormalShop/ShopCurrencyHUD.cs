@@ -107,10 +107,10 @@ public class ShopCurrencyHUD : MonoBehaviour
     [ContextMenu("Debug/환생 횟수 +1")]
     private void DebugAddRebirthCount()
     {
-        if (GameManager.Instance != null)
+        if (GameManager.instance != null)
         {
-            GameManager.Instance.playerRebirthCount++;
-            Debug.Log($"[디버그] 환생 횟수 +1! (현재: {GameManager.Instance.playerRebirthCount}회)");
+            GameManager.instance.playerRebirthCount++;
+            Debug.Log($"[디버그] 환생 횟수 +1! (현재: {GameManager.instance.playerRebirthCount}회)");
         }
     }
 
@@ -142,9 +142,9 @@ public class ShopCurrencyHUD : MonoBehaviour
             CurrencyManager.instance.AddCurrency(CurrencyType.Special, 10000);
             CurrencyManager.instance.AddCurrency(CurrencyType.Reputation, 3000);
         }
-        if (GameManager.Instance != null)
+        if (GameManager.instance != null)
         {
-            GameManager.Instance.playerRebirthCount += 5;
+            GameManager.instance.playerRebirthCount += 5;
         }
         if (RankManager.instance != null)
         {

@@ -41,12 +41,12 @@ public class GameToolWindow : EditorWindow
 
         if (GUILayout.Button("자동 생산, 이벤트, 캘린더 일시 정지"))
         {
-            GameManager.Instance.GamePaused();
+            GameManager.instance.GamePaused();
         }
 
         if (GUILayout.Button("자동 생산, 이벤트, 캘린더 재생"))
         {
-            GameManager.Instance.GameResume();
+            GameManager.instance.GameResume();
         }
 
         EditorGUILayout.Space(10);

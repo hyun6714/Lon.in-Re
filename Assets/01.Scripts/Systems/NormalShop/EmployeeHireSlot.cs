@@ -70,7 +70,7 @@ public class EmployeeHireSlot : MonoBehaviour
         {
             return false;
         }
-        if (RankManager.instance.currentEmployeeCount >= RankManager.instance.maxEmployee)
+        if (GameManager.instance.currentEmployeeCount >= RankManager.instance.maxEmployee)
         {
             return false;
         }
@@ -122,7 +122,7 @@ public class EmployeeHireSlot : MonoBehaviour
         }
 
         // 비용 / MAX 표시
-        bool isMaxCapacity = RankManager.instance != null && RankManager.instance.currentEmployeeCount >= RankManager.instance.maxEmployee;
+        bool isMaxCapacity = GameManager.instance != null && RankManager.instance !=null && GameManager.instance.currentEmployeeCount >= RankManager.instance.maxEmployee;
         if (costText != null)
         {
             costText.DOComplete();

@@ -28,7 +28,7 @@ public class ReincarnationManager : MonoBehaviour
         }
 
         OnReincarnated?.Invoke();
-        GameManager.Instance.UpdateRebirthUI();
+        GameManager.instance.UpdateRebirthUI();
 
         if (ReincarnationPop == null) return;
         ReincarnationPop.SetActive(false);

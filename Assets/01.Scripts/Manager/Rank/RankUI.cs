@@ -35,8 +35,9 @@ public class RankUI : MonoBehaviour
     {
         if (RankPopup == null) return;
 
-        RankPopup.SetActive(true);
         UpdateRankUI();
+        RankPopup.SetActive(true);
+
     }
 
     public void CloseRankPop()
@@ -50,7 +51,7 @@ public class RankUI : MonoBehaviour
     {
         if (RankManager.instance == null) return;
 
-        Debug.Log("현재 GameManager.Instance 존재 여부: " + (GameManager.Instance != null));
+        Debug.Log("현재 GameManager.Instance 존재 여부: " + (GameManager.instance != null));
         Debug.Log("RankManager가 읽은 출시 횟수: " + RankManager.instance.gamesReleased);
 
         RankData currentData = RankManager.instance.CurrentRankData;
@@ -107,7 +108,7 @@ public class RankUI : MonoBehaviour
 
             if (EmployeeReqText != null)
             {
-                EmployeeReqText.text = $"{RankManager.instance.currentEmployeeCount} / {targetData.reqEmployeeCount}";
+                EmployeeReqText.text = $"{GameManager.instance.currentEmployeeCount} / {targetData.reqEmployeeCount}";
             }
         }
 
