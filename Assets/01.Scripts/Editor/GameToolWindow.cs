@@ -130,6 +130,13 @@ public class GameToolWindow : EditorWindow
             GameEventBridge.CurrencyUsed(CurrencyType.Reputation, reputationCurrency);
         }
 
+        EditorGUILayout.Space(10);
+
+        if (GUILayout.Button("세이브 삭제"))
+        {
+            SaveManager.instance.DeleteSaveData();
+        }
+
         EditorGUILayout.EndScrollView();
     }
 }
