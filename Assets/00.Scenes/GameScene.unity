@@ -2125,7 +2125,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 300
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5d9e5318009bb154b8acceb689434181, type: 2}
   m_sharedMaterial: {fileID: -8858597400809627153, guid: 5d9e5318009bb154b8acceb689434181, type: 2}
@@ -3579,9 +3579,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da67491e41f9d134caf8eed14a7ecc06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CurrencyManager
-  normalText: {fileID: 645503861}
-  specialText: {fileID: 876125889}
-  reputationText: {fileID: 292376876}
   currencyDatabase: {fileID: 11400000, guid: 1fe5d80301c629c4db1852d69d84c589, type: 2}
 --- !u!4 &517425805
 Transform:
@@ -4097,8 +4094,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dde6f4bc6817634bb85494ad39144cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  rebirthText: {fileID: 679041428}
   playerRebirthCount: 0
-  gameDevCount: 0
+  gameDevCount: 1
 --- !u!4 &603302906
 Transform:
   m_ObjectHideFlags: 0
