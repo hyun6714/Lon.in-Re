@@ -15,6 +15,4 @@ public class RankData : ScriptableObject
     public int reqEmployeeCount; // 직원 인원수
     public int reqReputation; // 명성 수치 
 
-    [Header("타일맵 배경 설정")]
-    public GameObject backgroundPrefabOrObject;
 }

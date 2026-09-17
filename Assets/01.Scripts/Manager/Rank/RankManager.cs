@@ -15,6 +15,9 @@ public class RankManager : MonoBehaviour
 
     public static RankManager instance { get; private set; }
 
+    [Header("등급별 배경 오브젝트 (Solo, Indie, Small, Midsized, Major 순서로 씬 오브젝트 드래그)")]
+    [SerializeField] private List<GameObject> backgroundObjectList;
+
     [Header("등급 데이터 에셋 (순서대로 배치)")]
     [SerializeField] private List<RankData> rankDataList;
 
@@ -109,19 +112,21 @@ public class RankManager : MonoBehaviour
             GameManager.instance.currentEmployeeCount = 0;
         }
 
+        UpdateOfficeVisual();
         Debug.Log("등급 초기화 완료");
     }
 
     private void UpdateOfficeVisual()
     {
-        // 모든 랭크 데이터에 등록된 배경 오브젝트들을 순회하며 켜고 끄기
-        foreach (var data in rankDataList)
+        int currentIndex = (int)currentRank;
+
+        for (int i = 0; i < backgroundObjectList.Count; i++)
         {
-            if (data != null && data.backgroundPrefabOrObject != null)
+            if (backgroundObjectList[i] != null)
             {
-                // 현재 랭크인 것만 켜고, 나머지는 끕니다.
-                bool isActive = (data == CurrentRankData);
-                data.backgroundPrefabOrObject.SetActive(isActive);
+                // 현재 등급 인덱스와 일치하는 배경만 켜고 나머지는 끕니다.
+                bool isActive = (i == currentIndex);
+                backgroundObjectList[i].SetActive(isActive);
             }
         }
     }
