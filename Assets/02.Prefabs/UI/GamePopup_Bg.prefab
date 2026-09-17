@@ -1963,6 +1963,34 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 2606919047932886269, guid: 40cd2caf1fdcb4b468c552726025b83c, type: 3}
+    - target: {fileID: 4427947580358073087, guid: 6d6e95732b17b6f4e9ace017e0ad9b3f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427947580358073087, guid: 6d6e95732b17b6f4e9ace017e0ad9b3f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427947580358073087, guid: 6d6e95732b17b6f4e9ace017e0ad9b3f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 7666229579875820636}
+    - target: {fileID: 4427947580358073087, guid: 6d6e95732b17b6f4e9ace017e0ad9b3f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427947580358073087, guid: 6d6e95732b17b6f4e9ace017e0ad9b3f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DeleteGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427947580358073087, guid: 6d6e95732b17b6f4e9ace017e0ad9b3f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameCardUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427947580358073087, guid: 6d6e95732b17b6f4e9ace017e0ad9b3f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4531099798591046554, guid: 6d6e95732b17b6f4e9ace017e0ad9b3f, type: 3}
       propertyPath: m_Sprite
       value: 

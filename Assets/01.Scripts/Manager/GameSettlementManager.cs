@@ -63,6 +63,7 @@ public class GameSettlementManager : MonoBehaviour
                 reputationReward = gameReleaseData.GradeCReputationReward;
                 break;
         }
+
         GameEventBridge.CurrencyAdded(CurrencyType.Normal, currencyReward);
         GameEventBridge.CurrencyAdded(CurrencyType.Reputation, reputationReward);
 
