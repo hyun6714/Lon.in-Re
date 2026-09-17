@@ -30,7 +30,10 @@ public static class GameEventBridge
 
     /// <summary> 직원 수 변화 시 발생 </summary>
     public static event Action OnEmployeeChaned;
-    
+
+    /// <summary> 랭크 변화 시 발생 </summary>
+    public static event Action OnRankChanged;
+
 
     // 이벤트 실행
     public static void DayChanged(GameDate date) => OnDayChanged?.Invoke(date);
@@ -43,4 +46,5 @@ public static class GameEventBridge
     public static void CurrencyUsed(CurrencyType type, int value) => OnCurrencyUsed?.Invoke(type, value);
     public static void CurrencyChanged(CurrencyType type, int value) => OnCurrencyChanged?.Invoke(type, value);
     public static void EmployeeChanged() => OnEmployeeChaned?.Invoke();
+    public static void RankChanged() => OnRankChanged?.Invoke();
 }

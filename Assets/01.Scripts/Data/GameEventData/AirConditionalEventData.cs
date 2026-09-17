@@ -21,6 +21,9 @@ public class AirConditionalEventData : ScriptableObject
     [SerializeField] private string coolText = "자동 배수 2배 적용";
     [SerializeField] private string unCoolText = "자동 배수 0.5배 적용";
 
+    [Header("명성 보상")]
+    [SerializeField] private int rewardFame = 100;
+
     public int SummerEventAddDay => summerEventAddDay;
     public float AutoMultiplier => autoMultiplier;
     public float ClickMultiplier => clickMultiplier;
@@ -30,4 +33,5 @@ public class AirConditionalEventData : ScriptableObject
     public float UnCoolClickMultiplier => unCoolClickMultiplier;
     public string CoolText => coolText;
     public string UnCoolText => unCoolText;
+    public int RewardFame => rewardFame;
 }

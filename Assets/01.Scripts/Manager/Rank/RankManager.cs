@@ -14,15 +14,12 @@ public class RankManager : MonoBehaviour
         MajorPublisher //대기업
     }
 
-    public static event Action OnRankChanged;
-
     public static RankManager instance { get; private set; }
 
     [Header("등급 데이터 에셋 (순서대로 배치)")]
     [SerializeField] private List<RankData> rankDataList;
 
     public RankState currentRank = RankState.Solo;
-    public int currentEmployeeCount = 0;
 
     // 현재 등급의 ScriptableObject 데이터 읽기
     public RankData CurrentRankData => GetRankData(currentRank);
@@ -30,7 +27,8 @@ public class RankManager : MonoBehaviour
     // 기존 변수 호환용 프로퍼티 (실시간 반영)
     public bool hasEmployees => CurrentRankData != null && CurrentRankData.hasEmployees;
     public int maxEmployee => CurrentRankData != null ? CurrentRankData.maxEmployee : 0;
-    public int gamesReleased => GameManager.Instance != null ? GameManager.Instance.gameDevCount : 0;
+    public int gamesReleased => GameManager.instance != null ? GameManager.instance.gameDevCount : 0;
+    public int currenyEmployee => GameManager.instance != null ? GameManager.instance.currentEmployeeCount : 0;
 
     private void Awake()
     {
@@ -77,14 +75,14 @@ public class RankManager : MonoBehaviour
 
         // 승급 조건 검사 (다음 등급 에셋에 적힌 수치와 비교)
         bool isGameSatisfied = gamesReleased >= nextData.reqGamesReleased;
-        bool isEmployeeSatisfied = currentEmployeeCount >= nextData.reqEmployeeCount;
+        bool isEmployeeSatisfied = currenyEmployee >= nextData.reqEmployeeCount;
         bool isReputationSatisfied = currentReputation >= nextData.reqReputation;
 
         if (isGameSatisfied && isEmployeeSatisfied && isReputationSatisfied)
         {
             currentRank = (RankState)nextIndex;
 
-            OnRankChanged?.Invoke();
+            GameEventBridge.RankChanged();
         }
         else
         {
@@ -97,11 +95,11 @@ public class RankManager : MonoBehaviour
     public void ResetRank()
     {
         currentRank = RankState.Solo;
-        currentEmployeeCount = 0;
 
-        if (GameManager.Instance != null)
+        if (GameManager.instance != null)
         {
-            GameManager.Instance.gameDevCount = 0;
+            GameManager.instance.gameDevCount = 0;
+            GameManager.instance.currentEmployeeCount = 0;
         }
         Debug.Log("등급 초기화 완료");
     }

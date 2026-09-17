@@ -1,43 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+
 
 public class CurrencyManager : MonoBehaviour
 {
-    public TextMeshProUGUI normalText;      // 일반 재화 텍스트
-    public TextMeshProUGUI specialText;     // 특수 재화 텍스트
-    public TextMeshProUGUI reputationText;  // 명성 재화 텍스트
-
-    //일반 재화
-    public void UpdateNormalUI()
-    {
-        if (normalText != null && CurrencyManager.instance != null)
-        {
-            int normal = CurrencyManager.instance.GetAmount(CurrencyType.Normal);
-            normalText.text = $"{normal:N0}";
-        }
-    }
-
-    //특수 재화 
-    public void UpdateSpecialUI()
-    {
-        if (specialText != null && CurrencyManager.instance != null)
-        {
-            int special = CurrencyManager.instance.GetAmount(CurrencyType.Special);
-            specialText.text = $"{special:N0}";
-        }
-    }
-
-    //명성 재화
-    public void UpdateReputationUI()
-    {
-        if (reputationText != null && CurrencyManager.instance != null)
-        {
-            int reputation = CurrencyManager.instance.GetAmount(CurrencyType.Reputation);
-            reputationText.text = $"{reputation:N0}";
-        }
-    }
 
     public static CurrencyManager instance { get; private set; }
 
@@ -58,10 +25,6 @@ public class CurrencyManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        UpdateNormalUI();
-        UpdateSpecialUI();
-        UpdateReputationUI();
     }
 
     private void OnEnable()

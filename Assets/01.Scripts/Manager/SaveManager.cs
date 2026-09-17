@@ -88,8 +88,9 @@ public class SaveManager : MonoBehaviour
     // 게임 진행 데이터 저장
     private void SaveGameData(SaveData saveData)
     {
-        saveData.playerRebirthCount = GameManager.Instance.playerRebirthCount;
-        saveData.gameDevCount = GameManager.Instance.gameDevCount;
+        saveData.playerRebirthCount = GameManager.instance.playerRebirthCount;
+        saveData.gameDevCount = GameManager.instance.gameDevCount;
+        saveData.currentEmployeeCount = GameManager.instance.currentEmployeeCount;
     }
 
 
@@ -97,8 +98,6 @@ public class SaveManager : MonoBehaviour
     private void SaveRankData(SaveData saveData)
     {
         saveData.currentRank = RankManager.instance.currentRank;
-        saveData.currentEmployeeCount = RankManager.instance.currentEmployeeCount;
-
     }
 
     // 직원 데이터 저장

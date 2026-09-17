@@ -6,6 +6,7 @@ public class EmployeeManager : MonoBehaviour
     public static EmployeeManager instance { get; private set; }
 
     [SerializeField] private RankManager rankManager;
+    [SerializeField] private GameManager gameManger;
 
     [Header("직원 상태 목록")]
     [SerializeField] private List<EmployeeState> employeeStates = new List<EmployeeState>();
@@ -39,6 +40,11 @@ public class EmployeeManager : MonoBehaviour
         if (rankManager == null && RankManager.instance != null)
         {
             rankManager = RankManager.instance;
+        }
+
+        if (gameManger == null && GameManager.instance != null)
+        {
+            gameManger = GameManager.instance;
         }
     }
 
@@ -75,7 +81,7 @@ public class EmployeeManager : MonoBehaviour
         }
 
         // 3. 등급별 최대 고용 인원 확인
-        if (rankManager.currentEmployeeCount >= rankManager.maxEmployee)
+        if (gameManger.currentEmployeeCount >= rankManager.maxEmployee)
         {
             Utils.Log("최대 고용 인원에 도달했습니다.");
             return;
@@ -104,7 +110,7 @@ public class EmployeeManager : MonoBehaviour
         state.AddEmployee();
 
         // 8. 전체 직원 수 증가
-        rankManager.currentEmployeeCount++;
+        gameManger.currentEmployeeCount++;
 
         // 9. 직원 고용 후 생산량 갱신 이벤트
         GameEventBridge.EmployeeChanged();
@@ -128,11 +134,11 @@ public class EmployeeManager : MonoBehaviour
         // 전체 직원 카운트 감소 (최소 0)
         if (rankManager != null)
         {
-            rankManager.currentEmployeeCount = Mathf.Max(0, rankManager.currentEmployeeCount - 1);
+            gameManger.currentEmployeeCount = Mathf.Max(0, gameManger.currentEmployeeCount - 1);
         }
-        else if (RankManager.instance != null)
+        else if (GameManager.instance != null)
         {
-            RankManager.instance.currentEmployeeCount = Mathf.Max(0, RankManager.instance.currentEmployeeCount - 1);
+            GameManager.instance.currentEmployeeCount = Mathf.Max(0, GameManager.instance.currentEmployeeCount - 1);
         }
 
         // 초당 생산량 갱신 이벤트 발생

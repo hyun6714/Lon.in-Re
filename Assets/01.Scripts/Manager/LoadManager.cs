@@ -71,17 +71,17 @@ public class LoadManager : MonoBehaviour
     // 게임 진행 데이터 불러오기
     private void LoadGameData(SaveData saveData)
     {
-        GameManager.Instance.playerRebirthCount = saveData.playerRebirthCount;
+        GameManager.instance.playerRebirthCount = saveData.playerRebirthCount;
 
-        GameManager.Instance.gameDevCount = saveData.gameDevCount;
+        GameManager.instance.gameDevCount = saveData.gameDevCount;
+
+        GameManager.instance.currentEmployeeCount = saveData.currentEmployeeCount;
     }
 
     // 회사 등급 데이터 불러오기
     private void LoadRankData(SaveData saveData)
     {
         RankManager.instance.currentRank = saveData.currentRank;
-
-        RankManager.instance.currentEmployeeCount = saveData.currentEmployeeCount;
     }
  
     // 직원 데이터 불러오기

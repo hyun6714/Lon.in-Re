@@ -1,11 +1,34 @@
-using UnityEngine;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class ReincarnationManager : MonoBehaviour
 {
+    public static ReincarnationManager instance;
+
     public static event Action OnReincarnated;
 
     public GameObject ReincarnationPop;
+
+    public Transform gameListContentParent;
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
+
+    private void OnEnable()
+    {
+        OnReincarnated += ResetDataOnRebirth;
+    }
+
+    private void OnDisable()
+    {
+        OnReincarnated -= ResetDataOnRebirth;
+    }
 
     public void BtnReincarnation()
     {
@@ -28,17 +51,13 @@ public class ReincarnationManager : MonoBehaviour
         }
 
         OnReincarnated?.Invoke();
-        GameManager.Instance.playerRebirthCount++;
-        CurrencyManager.instance.UpdateSpecialUI();
-
-        if (ReincarnationPop == null) return;
-        ReincarnationPop.SetActive(false);
+        GameManager.instance.UpdateRebirthUI();
 
         Debug.Log($"환생 완료");
     }
 
     //환생 조건 
-    private bool CanReincarnation()
+    public bool CanReincarnation()
     {
         int currentReputation = GetCurrentReputation();
 
@@ -59,5 +78,27 @@ public class ReincarnationManager : MonoBehaviour
         }
 
         return 0;
+    }
+
+    public void ResetDataOnRebirth()
+    {
+        if (GameReleaseManager.instance != null)
+        {
+            GameReleaseManager.instance.releasedGames.Clear();
+        }
+
+        if (gameListContentParent != null)
+        {
+            GameCardUI[] spawnedCards = gameListContentParent.GetComponentsInChildren<GameCardUI>();
+
+            foreach (Transform child in gameListContentParent)
+            {
+                GameCardUI cardUI = child.GetComponent<GameCardUI>();
+                if (cardUI != null)
+                {
+                    Destroy(cardUI.gameObject);
+                }
+            }
+        }
     }
 }
