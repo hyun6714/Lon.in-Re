@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "GiftEventData", menuName = "Event/GiftEventData")]
-public class GiftEventData : ScriptableObject
+public class GiftEventData : EventFactoryData
 {
     [Header("등급별 수령 금액")]
     [SerializeField] private int solo = 500;
@@ -15,4 +15,9 @@ public class GiftEventData : ScriptableObject
     public int Small => small;
     public int Midsized => midsized;
     public int Major => major;
+
+    public override IEvent CreateEvent()
+    {
+        return new GiftEvent(this);
+    }
 }

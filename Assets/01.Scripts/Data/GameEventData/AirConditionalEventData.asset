@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4df5ed4c2fdd6749a6dc66425b134a0, type: 3}
   m_Name: AirConditionalEventData
   m_EditorClassIdentifier: Assembly-CSharp::AirConditionalEventData
+  eventType: 3002
   summerEventAddDay: 20
   autoMultiplier: 1
   clickMultiplier: 1
@@ -21,3 +22,4 @@ MonoBehaviour:
   unCoolClickMultiplier: 2
   coolText: "\uC790\uB3D9 \uBC30\uC218 2\uBC30 \uC801\uC6A9"
   unCoolText: "\uC790\uB3D9 \uBC30\uC218 0.5\uBC30 \uC801\uC6A9"
+  rewardFame: 100

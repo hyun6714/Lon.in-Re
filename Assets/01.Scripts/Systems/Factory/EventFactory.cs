@@ -16,13 +16,22 @@ public class EventFactory
 
     private void InitFactory()
     {
-        createDic = new Dictionary<GameEventType, Func<IEvent>>()
+        createDic = new Dictionary<GameEventType, Func<IEvent>>();
+                
+        foreach (EventFactoryData eventData in data.EventDataList)
         {
-            { GameEventType.Burning, () => new BurningEvent(data.burningData) },
-            { GameEventType.AirConditional, () => new AirConditionalEvent(data.airconData) },
-            { GameEventType.Gift, () => new GiftEvent(data.giftData) },
-            { GameEventType.TreasureGoblin, () => new TreasureGoblinEvent(data.treasureGoblinData) }
-        };
+            if (eventData == null)
+                continue;
+
+            if (createDic.ContainsKey(eventData.EventType))
+            {
+                Utils.Log($"중복된 이벤트 타입 : {eventData.EventType}");
+                continue;
+            }
+
+            // 데이터 안의 리스트를 꺼내와서 타입을 Key값으로, 이벤트 실행 함수를 Value로 등록
+            createDic.Add(eventData.EventType, eventData.CreateEvent);
+        }
     }
 
     public IEvent CreateEvent(GameEventType type)

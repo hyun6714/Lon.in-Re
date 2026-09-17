@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "AirConditionalEventData", menuName = "Event/AirConditionalEventData")]
-public class AirConditionalEventData : ScriptableObject
+public class AirConditionalEventData : EventFactoryData
 {
     [Header("이벤트 지속 시간")]
     [SerializeField] private int summerEventAddDay = 20;
@@ -34,4 +34,9 @@ public class AirConditionalEventData : ScriptableObject
     public string CoolText => coolText;
     public string UnCoolText => unCoolText;
     public int RewardFame => rewardFame;
+
+    public override IEvent CreateEvent()
+    {
+        return new AirConditionalEvent(this);
+    }
 }
