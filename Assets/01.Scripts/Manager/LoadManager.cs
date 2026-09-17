@@ -23,6 +23,11 @@ public class LoadManager : MonoBehaviour
         savePath = Path.Combine(Application.persistentDataPath, "save.json");
     }
 
+    private void Start()
+    {
+        LoadGame();
+    }
+
     // 게임 불러오기
     public void LoadGame()
     {
@@ -46,6 +51,8 @@ public class LoadManager : MonoBehaviour
         LoadEmployeeData(saveData);
         LoadGameDevData(saveData);
         LoadCalendarData(saveData);
+        LoadEventData(saveData);
+        LoadArtifactData(saveData);
         LoadReleasedGameData(saveData);
 
         Utils.Log("게임 불러오기 완료");
@@ -111,5 +118,15 @@ public class LoadManager : MonoBehaviour
 
             EventManager.instance.LoadGameSettlement(releasedGame);
         }
+    }
+
+    private void LoadEventData(SaveData saveData)
+    {
+        EventManager.instance.CheckEventSave(saveData.eventSaveDatas);
+    }
+
+    private void LoadArtifactData(SaveData saveData)
+    {
+        ArtifactManager.instance.LoadSaveData(saveData.artifactSaveData);
     }
 }

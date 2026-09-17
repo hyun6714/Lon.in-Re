@@ -121,4 +121,35 @@ public class ArtifactManager : MonoBehaviour
         }
         return total;
     }
+
+    // 아티팩트 저장 데이터 반환
+    public ArtifactSaveData GetSaveData()
+    {
+        ArtifactSaveData saveData = new ArtifactSaveData();
+
+        foreach (var state in unlockedStates)
+        {
+            if (state.Value)
+            {
+                saveData.unlockedArtifactIDs.Add(state.Key);
+            }
+        }
+
+        return saveData;
+    }
+
+    // 아티팩트 저장 데이터 불러오기
+    public void LoadSaveData(ArtifactSaveData saveData)
+    {
+        unlockedStates.Clear();
+        InitUnlockedStates();
+
+        foreach (int artifactId in saveData.unlockedArtifactIDs)
+        {
+            if (unlockedStates.ContainsKey(artifactId))
+            {
+                unlockedStates[artifactId] = true;
+            }
+        }
+    }
 }
