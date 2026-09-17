@@ -4,11 +4,21 @@ using UnityEngine;
 
 public class ReincarnationManager : MonoBehaviour
 {
+    public static ReincarnationManager instance;
+
     public static event Action OnReincarnated;
 
     public GameObject ReincarnationPop;
 
     public Transform gameListContentParent;
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
 
     private void OnEnable()
     {
@@ -50,7 +60,7 @@ public class ReincarnationManager : MonoBehaviour
     }
 
     //환생 조건 
-    private bool CanReincarnation()
+    public bool CanReincarnation()
     {
         int currentReputation = GetCurrentReputation();
 

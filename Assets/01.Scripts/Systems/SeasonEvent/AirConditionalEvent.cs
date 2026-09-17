@@ -42,6 +42,15 @@ public class AirConditionalEvent : IEvent
         isCool = value;
 
         SetMultiplier();
+        Reward();
+    }
+
+    public void Reward()
+    {
+        if (!isCool)
+            return;
+
+        GameEventBridge.CurrencyAdded(CurrencyType.Reputation, data.RewardFame);
     }
 
     public void SetMultiplier()
