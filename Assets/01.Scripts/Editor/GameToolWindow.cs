@@ -8,9 +8,9 @@ public class GameToolWindow : EditorWindow
     private int setDay = 1;
     private int setHour = 7;
 
-    private int normalCurrency = 0;
-    private int specialCurrency = 0;
-    private int reputationCurrency = 0;
+    private int normalCurrency = 10000;
+    private int specialCurrency = 10000;
+    private int reputationCurrency = 10000;
 
     private Vector2 scrollPos;
 

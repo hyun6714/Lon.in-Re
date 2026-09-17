@@ -19,12 +19,16 @@ public class TreasureGoblin : MonoBehaviour
 
         if (dir == Vector2.zero)
             dir = Vector2.right;
+
+        ScaleCheck();
     }
 
     private void OnEnable()
     {
         // ·£´ý ¹æÇâ
         dir = Random.insideUnitCircle.normalized;
+
+        ScaleCheck();
     }
 
     private void Update()
@@ -35,6 +39,22 @@ public class TreasureGoblin : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+    }
+
+    private void ScaleCheck()
+    {
+        Vector3 targetScale = transform.localScale;
+
+        if (dir.x < 0)
+        {
+            targetScale.x = data.NonFlipX;
+        }
+        else
+        {
+            targetScale.x = data.FlipX;
+        }
+
+        transform.localScale = targetScale;
     }
 
     private void Move()
@@ -54,10 +74,18 @@ public class TreasureGoblin : MonoBehaviour
         if (viewPosition.x <= data.PaddingX)
         {
             dir.x = Mathf.Abs(dir.x);
+
+            Vector3 targetScale = transform.localScale;
+            targetScale.x = data.FlipX;
+            transform.localScale = targetScale;
         }
         else if (viewPosition.x >= 1f - data.PaddingX)
         {
             dir.x = -Mathf.Abs(dir.x);
+
+            Vector3 targetScale = transform.localScale;
+            targetScale.x = data.NonFlipX;
+            transform.localScale = targetScale;
         }
 
         if (viewPosition.y <= data.PaddingY)
