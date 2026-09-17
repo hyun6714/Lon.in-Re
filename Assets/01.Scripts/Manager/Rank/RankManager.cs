@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using System;
 
@@ -42,6 +41,11 @@ public class RankManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void Start()
+    {
+        // 게임 시작 시 현재 랭크 배경 반영
+        UpdateOfficeVisual();
+    }
 
     private void OnEnable() => ReincarnationManager.OnReincarnated += ResetRank;
     private void OnDisable() => ReincarnationManager.OnReincarnated -= ResetRank;
@@ -82,6 +86,8 @@ public class RankManager : MonoBehaviour
         {
             currentRank = (RankState)nextIndex;
 
+            UpdateOfficeVisual();
+
             GameEventBridge.RankChanged();
         }
         else
@@ -101,6 +107,22 @@ public class RankManager : MonoBehaviour
             GameManager.instance.gameDevCount = 0;
             GameManager.instance.currentEmployeeCount = 0;
         }
+
         Debug.Log("등급 초기화 완료");
     }
+
+    private void UpdateOfficeVisual()
+    {
+        // 모든 랭크 데이터에 등록된 배경 오브젝트들을 순회하며 켜고 끄기
+        foreach (var data in rankDataList)
+        {
+            if (data != null && data.backgroundPrefabOrObject != null)
+            {
+                // 현재 랭크인 것만 켜고, 나머지는 끕니다.
+                bool isActive = (data == CurrentRankData);
+                data.backgroundPrefabOrObject.SetActive(isActive);
+            }
+        }
+    }
+
 }
