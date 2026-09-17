@@ -3270,7 +3270,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RankUI
   RankPopup: {fileID: 1474302685}
-  RankText: {fileID: 1052987564}
   RankUpText: {fileID: 125111872}
   CostText: {fileID: 2104444169}
   GameReqText: {fileID: 66918422}
@@ -11129,7 +11128,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 388736433738765193, guid: f513290a76e8c6c419ddf70effc47329, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 388736433738765193, guid: f513290a76e8c6c419ddf70effc47329, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -11155,6 +11154,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 929278492511033338, guid: f513290a76e8c6c419ddf70effc47329, type: 3}
+      propertyPath: rebirthBtn
+      value: 
+      objectReference: {fileID: 1626546435}
     - target: {fileID: 1137741260850382848, guid: f513290a76e8c6c419ddf70effc47329, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -11268,6 +11271,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1137741260850382848, guid: f513290a76e8c6c419ddf70effc47329, type: 3}
   m_PrefabInstance: {fileID: 1626546433}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1626546435 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 388736433738765193, guid: f513290a76e8c6c419ddf70effc47329, type: 3}
+  m_PrefabInstance: {fileID: 1626546433}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1001 &1631279400
 PrefabInstance:
   m_ObjectHideFlags: 0
