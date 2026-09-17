@@ -29,7 +29,7 @@ public class ReincarnationManager : MonoBehaviour
 
         OnReincarnated?.Invoke();
         GameManager.Instance.playerRebirthCount++;
-        CurrencyManager.instance.CurrencyTestSet();
+        CurrencyManager.instance.UpdateSpecialUI();
 
         if (ReincarnationPop == null) return;
         ReincarnationPop.SetActive(false);
