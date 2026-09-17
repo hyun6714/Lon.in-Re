@@ -19,3 +19,4 @@ MonoBehaviour:
   reqGamesReleased: 0
   reqEmployeeCount: 0
   reqReputation: 0
+  backgroundPrefabOrObject: {fileID: 4759380736817278210, guid: 6360abdfc61d17f4a9ab14c8b8fe419a, type: 3}
