@@ -10,8 +10,15 @@ public class TreasureGoblinData : ScriptableObject
     [SerializeField] private float paddingX = 0.02f;
     [SerializeField] private float paddingY = 0.3f;
 
+    [Header("¹æÇâ")]
+    [SerializeField] private float nonFlipX = 1f;
+    [SerializeField] private float flipX = -1f;
+
     public float MoveSpeed => moveSpeed;
 
     public float PaddingX => paddingX;
     public float PaddingY => paddingY;
+
+    public float NonFlipX => nonFlipX;
+    public float FlipX => flipX;
 }

@@ -17,8 +17,8 @@ MonoBehaviour:
   eventFailText: "\uBCF4\uBB3C \uACE0\uBE14\uB9B0\uC774 \uB3C4\uB9DD\uAC14\uB2E4..."
   eventTimer: 5
   requireTouchCount: 10
-  solo: 1000
-  indie: 5000
-  small: 30000
-  midsized: 200000
+  solo: 2000
+  indie: 8000
+  small: 40000
+  midsized: 250000
   major: 800000
