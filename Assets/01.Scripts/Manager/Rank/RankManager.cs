@@ -14,8 +14,6 @@ public class RankManager : MonoBehaviour
         MajorPublisher //대기업
     }
 
-    public static event Action OnRankChanged;
-
     public static RankManager instance { get; private set; }
 
     [Header("등급 데이터 에셋 (순서대로 배치)")]
@@ -84,7 +82,7 @@ public class RankManager : MonoBehaviour
         {
             currentRank = (RankState)nextIndex;
 
-            OnRankChanged?.Invoke();
+            GameEventBridge.RankChanged();
         }
         else
         {

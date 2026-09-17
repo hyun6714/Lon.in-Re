@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class RankUI : MonoBehaviour
 {
     public GameObject RankPopup;
-    public TextMeshProUGUI RankText;
+    //public TextMeshProUGUI RankText;
     public TextMeshProUGUI RankUpText;
 
     [Header("승급 조건 텍스트 UI")]
@@ -18,7 +18,7 @@ public class RankUI : MonoBehaviour
 
     private void OnEnable()
     {
-        RankManager.OnRankChanged += UpdateRankUI;
+        GameEventBridge.OnRankChanged += UpdateRankUI;
         ReincarnationManager.OnReincarnated += UpdateRankUI;
         ReincarnationManager.OnReincarnated += RankUpOnBtn;
         UpdateRankUI();
@@ -26,7 +26,7 @@ public class RankUI : MonoBehaviour
 
     private void OnDisable()
     {
-        RankManager.OnRankChanged -= UpdateRankUI;
+        GameEventBridge.OnRankChanged -= UpdateRankUI;
         ReincarnationManager.OnReincarnated -= UpdateRankUI;
         ReincarnationManager.OnReincarnated -= RankUpOnBtn;
     }
@@ -51,16 +51,20 @@ public class RankUI : MonoBehaviour
     {
         if (RankManager.instance == null) return;
 
-        Debug.Log("현재 GameManager.Instance 존재 여부: " + (GameManager.instance != null));
-        Debug.Log("RankManager가 읽은 출시 횟수: " + RankManager.instance.gamesReleased);
+        Utils.Log("현재 GameManager.Instance 존재 여부: " + (GameManager.instance != null));
+        Utils.Log("RankManager가 읽은 출시 횟수: " + RankManager.instance.gamesReleased);
 
         RankData currentData = RankManager.instance.CurrentRankData;
         if (currentData != null)
         {
-            if (RankText != null)
+            if (UIManager.Instance != null)
             {
-                RankText.text = currentData.rankDisplayName;
+                UIManager.Instance.SetText(HUDTextType.Level, currentData.rankDisplayName);
             }
+            //if (RankText != null)
+            //{
+            //    RankText.text = currentData.rankDisplayName;
+            //}
         }
 
         int currentIndex = (int)RankManager.instance.currentRank;
