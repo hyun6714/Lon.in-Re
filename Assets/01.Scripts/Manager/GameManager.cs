@@ -28,6 +28,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        GameEventBridge.OnReincarnated += UpdateRebirthUI;
+    }
+
+    private void OnDisable()
+    {
+        GameEventBridge.OnReincarnated -= UpdateRebirthUI;
+    }
+
     public void UpdateRebirthUI()
     {
         playerRebirthCount++;

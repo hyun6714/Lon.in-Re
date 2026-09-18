@@ -52,13 +52,13 @@ public class RankManager : MonoBehaviour
 
     private void OnEnable()
     {
-        ReincarnationManager.OnReincarnated += ResetRank;
+        GameEventBridge.OnReincarnated += ResetRank;
         SceneManager.sceneLoaded += OnSceneLoaded; 
     }
 
     private void OnDisable()
     {
-        ReincarnationManager.OnReincarnated -= ResetRank;
+        GameEventBridge.OnReincarnated -= ResetRank;
         SceneManager.sceneLoaded -= OnSceneLoaded; 
     }
 

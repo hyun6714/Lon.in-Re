@@ -124,12 +124,12 @@ public class GameReleaseManager : MonoBehaviour
 
     private void OnEnable()
     {
-        ReincarnationManager.OnReincarnated += ResetDataOnRebirth;
+        GameEventBridge.OnReincarnated += ResetDataOnRebirth;
     }
 
     private void OnDisable()
     {
-        ReincarnationManager.OnReincarnated -= ResetDataOnRebirth;
+        GameEventBridge.OnReincarnated -= ResetDataOnRebirth;
     }
 
     //환생할 떄 게임 지우는 것

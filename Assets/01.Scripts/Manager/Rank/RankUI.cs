@@ -33,16 +33,16 @@ public class RankUI : MonoBehaviour
     private void OnEnable()
     {
         GameEventBridge.OnRankChanged += UpdateRankUI;
-        ReincarnationManager.OnReincarnated += UpdateRankUI;
-        ReincarnationManager.OnReincarnated += RankUpOnBtn;
+        GameEventBridge.OnReincarnated += UpdateRankUI;
+        GameEventBridge.OnReincarnated += RankUpOnBtn;
         UpdateRankUI();
     }
 
     private void OnDisable()
     {
         GameEventBridge.OnRankChanged -= UpdateRankUI;
-        ReincarnationManager.OnReincarnated -= UpdateRankUI;
-        ReincarnationManager.OnReincarnated -= RankUpOnBtn;
+        GameEventBridge.OnReincarnated -= UpdateRankUI;
+        GameEventBridge.OnReincarnated -= RankUpOnBtn;
     }
 
     public void OpenRankPop()
