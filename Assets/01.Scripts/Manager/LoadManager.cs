@@ -93,6 +93,7 @@ public class LoadManager : MonoBehaviour
             EmployeeState state = EmployeeManager.instance.GetEmployeeState(employeeSaveData.employeeId);
 
             state.SetCount(employeeSaveData.count);
+            GameEventBridge.EmployeeChanged();
         }
     }
 

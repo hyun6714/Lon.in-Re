@@ -55,6 +55,12 @@ public class AutoProduction : MonoBehaviour
 
     private void AutoProductionInit()
     {
+        if (data == null)
+        {
+            Utils.Log("자동 생산 데이터가 존재하지 않습니다.");
+            return;
+        }
+
         moneyPerSec = data.BaseMoneyPerSec;
         autoSec = data.BaseAutoSec;
     }
@@ -85,10 +91,18 @@ public class AutoProduction : MonoBehaviour
     // n초당 생산량 갱신 함수. 고용 인원 + 업그레이드 증가량(임시 계산)
     private void UpdateMoneyPerSec()
     {
-        moneyPerSec = upgrade.TotalPerSec;
-        Utils.Log($"초당 생산량 갱신 완료 : {moneyPerSec}G/초");
+        Utils.Log("업데이트 시작");
+        if (upgrade == null)
+        {
+            Utils.Log("자동 생산 업그레이드가 존재하지 않습니다.");
+            return;
+        }
 
-        UIManager.Instance.SetText(HUDTextType.CoinSec, $"{moneyPerSec}G/초");
+        moneyPerSec = upgrade.TotalPerSec;
+        Utils.Log(string.Format(data.MoneyPerSecText, moneyPerSec));
+
+        UIManager.Instance.SetText(HUDTextType.CoinSec, 
+            string.Format(data.MoneyPerSecText, moneyPerSec));
     }
 
     // 자동 생산
