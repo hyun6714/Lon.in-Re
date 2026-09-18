@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SystemPopup : NormalPopupBase
+public class SystemPopup : EventPopupBase
 {
     public override UIName Name => UIName.Popup_System;
 
