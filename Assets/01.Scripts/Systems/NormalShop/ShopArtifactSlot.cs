@@ -61,17 +61,20 @@ public class ShopArtifactSlot : MonoBehaviour
         if (descText != null)
         {
             string descStr = "";
-            if (info.GainperClick > 0)
+            foreach (var effect in info.effects)
             {
-                descStr += $"탭 골드 +{info.GainperClick * 100}%  ";
-            }
-            if (info.PerSecond > 0)
-            {
-                descStr += $"초당 생산 +{CurrencyFormatter.Format(info.PerSecond*100)}% ";
-            }
-            if (info.Probabilityincrease > 0)
-            {
-                descStr += $"개발 성공률 +{info.Probabilityincrease}%";
+                switch (effect.effectType)
+                {
+                    case EffectType.GainPerClick:
+                        descStr += $"탭 골드 +{effect.effectValue * 100}%  ";
+                        break;
+                    case EffectType.PerSecond:
+                        descStr += $"초당 생산 +{CurrencyFormatter.Format(effect.effectValue * 100)}% ";
+                        break;
+                    case EffectType.ProbabilityIncrease:
+                        descStr += $"개발 성공률 +{effect.effectValue}% ";
+                        break;
+                }
             }
 
             descText.text = descStr.TrimEnd();

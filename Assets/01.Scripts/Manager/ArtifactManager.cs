@@ -82,7 +82,13 @@ public class ArtifactManager : MonoBehaviour
         {
             if (IsUnlocked(info.artifactId))
             {
-                total += info.GainperClick; 
+                foreach (var effect in info.effects)
+                {
+                    if (effect.effectType == EffectType.GainPerClick)
+                    {
+                        total += effect.effectValue;
+                    }
+                }
             }
         }
         return total;
@@ -96,7 +102,14 @@ public class ArtifactManager : MonoBehaviour
         {
             if (IsUnlocked(info.artifactId))
             {
-                total *= info.PerSecond;
+                // 리스트 안의 효과들을 순회
+                foreach (var effect in info.effects)
+                {
+                    if (effect.effectType == EffectType.PerSecond)
+                    {
+                        total *= effect.effectValue;
+                    }
+                }
             }
         }
         return total;
@@ -110,7 +123,14 @@ public class ArtifactManager : MonoBehaviour
         {
             if (IsUnlocked(info.artifactId))
             {
-                total += info.Probabilityincrease;
+                // 리스트 안의 효과들을 순회
+                foreach (var effect in info.effects)
+                {
+                    if (effect.effectType == EffectType.ProbabilityIncrease)
+                    {
+                        total += effect.effectValue;
+                    }
+                }
             }
         }
         return total;
