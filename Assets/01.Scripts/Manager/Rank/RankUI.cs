@@ -69,10 +69,6 @@ public class RankUI : MonoBehaviour
             {
                 UIManager.Instance.SetText(HUDTextType.Level, currentData.rankDisplayName);
             }
-            //if (RankText != null)
-            //{
-            //    RankText.text = currentData.rankDisplayName;
-            //}
         }
 
         int currentIndex = (int)RankManager.instance.currentRank;
