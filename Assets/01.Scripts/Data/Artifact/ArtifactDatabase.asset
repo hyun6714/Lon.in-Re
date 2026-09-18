@@ -83,3 +83,73 @@ MonoBehaviour:
     SpecialUnlockCost: 10000
     requiredRebirthCount: 3
     requiredReputation: 5000
+  - artifactId: 200
+    type: 1
+    artiName: "\uC758\uC790"
+    icon: {fileID: 6132618406234632, guid: 5e51191ad6a240946a6454742f57c182, type: 3}
+    GainperClick: 0
+    PerSecond: 2
+    Probabilityincrease: 0
+    SpecialUnlockCost: 2000
+    requiredRebirthCount: 0
+    requiredReputation: 0
+  - artifactId: 201
+    type: 0
+    artiName: "\uC2AC\uB9AC\uD37C"
+    icon: {fileID: 5616075518325981702, guid: 2c6018efb8d3c7643826a84ff1171106, type: 3}
+    GainperClick: 0
+    PerSecond: 2
+    Probabilityincrease: 0
+    SpecialUnlockCost: 2000
+    requiredRebirthCount: 0
+    requiredReputation: 0
+  - artifactId: 202
+    type: 1
+    artiName: "\uD504\uB85C\uADF8\uB7A8"
+    icon: {fileID: -6172548384692717979, guid: 9708eb3e625481e44932dabb0fa0cb8f, type: 3}
+    GainperClick: 0
+    PerSecond: 2.5
+    Probabilityincrease: 0
+    SpecialUnlockCost: 3000
+    requiredRebirthCount: 0
+    requiredReputation: 1000
+  - artifactId: 203
+    type: 1
+    artiName: "\uD140\uBE14\uB7EC"
+    icon: {fileID: 6286643261106798013, guid: 0b5daba0dadf7ae4a8b3640e3ebf02dd, type: 3}
+    GainperClick: 0
+    PerSecond: 2.5
+    Probabilityincrease: 0
+    SpecialUnlockCost: 3000
+    requiredRebirthCount: 1
+    requiredReputation: 1000
+  - artifactId: 204
+    type: 2
+    artiName: "\uC2A4\uD0E0\uB4DC"
+    icon: {fileID: 288847819329685680, guid: 2b73ece5f7eacec48aa9c85a9a37dd43, type: 3}
+    GainperClick: 0
+    PerSecond: 3
+    Probabilityincrease: 0
+    SpecialUnlockCost: 4000
+    requiredRebirthCount: 1
+    requiredReputation: 2000
+  - artifactId: 205
+    type: 2
+    artiName: "\uC120\uD48D\uAE30"
+    icon: {fileID: -2849204910212236749, guid: 2e4bfce44eba97c4b880fa5ad79491ba, type: 3}
+    GainperClick: 0
+    PerSecond: 3
+    Probabilityincrease: 0
+    SpecialUnlockCost: 4000
+    requiredRebirthCount: 2
+    requiredReputation: 200
+  - artifactId: 206
+    type: 3
+    artiName: "\uD578\uB4DC\uD3F0"
+    icon: {fileID: 7965088197702528346, guid: 5e685d6d40d25984a8dca39826d2b0b9, type: 3}
+    GainperClick: 0
+    PerSecond: 4
+    Probabilityincrease: 0
+    SpecialUnlockCost: 12000
+    requiredRebirthCount: 3
+    requiredReputation: 3000

@@ -42,12 +42,14 @@ public class AutoProductionUpgrade : MonoBehaviour
     {
         GameEventBridge.OnAutoMultiplierChanged += SetMultiplier;
         GameEventBridge.OnEmployeeChaned += TotalPerSecond;
+        GameEventBridge.OnArtifactUnlocked += TotalPerSecond;
     }
 
     private void UnSubscribeEvent()
     {
         GameEventBridge.OnAutoMultiplierChanged -= SetMultiplier;
         GameEventBridge.OnEmployeeChaned -= TotalPerSecond;
+        GameEventBridge.OnArtifactUnlocked -= TotalPerSecond;
     }
 
     public void TotalPerSecond()
@@ -62,15 +64,15 @@ public class AutoProductionUpgrade : MonoBehaviour
 
         Utils.Log($"초당 생산랑 업그레이드 1 : {total}");
 
+        float totalMulti = defaultAutoMultiplier;
+
         // 아티펙트 계산(임시)
         if (ArtifactManager.instance != null)
         {
-            total += ArtifactManager.instance.GetTotalPerSecond();
+            totalMulti += ArtifactManager.instance.GetTotalPerSecond();
         }
 
         Utils.Log($"초당 생산랑 업그레이드 2 : {total}");
-
-        float totalMulti = defaultAutoMultiplier;
 
         // 변경된 배율 계산
         foreach (var value in eventMulti)
