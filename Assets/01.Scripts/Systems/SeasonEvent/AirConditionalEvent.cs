@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 public class AirConditionalEvent : IEvent
@@ -13,6 +14,8 @@ public class AirConditionalEvent : IEvent
     private float coolClickMultiplier;
 
     private CancellationTokenSource token;
+
+    private Dictionary<RankManager.RankState, int> rankFame = new Dictionary<RankManager.RankState, int>();
 
     public bool IsActive => token != null;
     public GameDate EventEndDate => eventEndDate;
@@ -31,10 +34,26 @@ public class AirConditionalEvent : IEvent
         token?.Cancel();
         token?.Dispose();
         token = new CancellationTokenSource();
-
+        
         Utils.Log($"이벤트 종료 날짜 : {eventEndDate.year}년 {eventEndDate.month}월 {eventEndDate.day}일 {eventEndDate.hour}시 {eventEndDate.minutes}분");
 
+        InitDic();
+
         EventTimer(token.Token).Forget();
+    }
+
+    private void InitDic()
+    {
+        foreach (AirConditionalRewardInfo info in data.Reward)
+        {
+            if (rankFame.ContainsKey(info.rank))
+            {
+                Utils.Log($"이미 등록된 랭크 보상 : {info.rewardFame}");
+                continue;
+            }
+
+            rankFame.Add(info.rank, info.rewardFame);
+        }
     }
 
     public void SetCool(bool value)
@@ -50,7 +69,12 @@ public class AirConditionalEvent : IEvent
         if (!isCool)
             return;
 
-        GameEventBridge.CurrencyAdded(CurrencyType.Reputation, data.RewardFame);
+        RankManager.RankState rank = RankManager.instance.currentRank;
+
+        if (!rankFame.TryGetValue(rank, out int amount))
+            return;
+
+        GameEventBridge.CurrencyAdded(CurrencyType.Reputation, amount);
     }
 
     public void SetMultiplier()

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "AirConditionalEventData", menuName = "Event/AirConditionalEventData")]
 public class AirConditionalEventData : EventFactoryData
@@ -23,6 +24,7 @@ public class AirConditionalEventData : EventFactoryData
 
     [Header("명성 보상")]
     [SerializeField] private int rewardFame = 100;
+    [SerializeField] private List<AirConditionalRewardInfo> reward;
 
     public int SummerEventAddDay => summerEventAddDay;
     public float AutoMultiplier => autoMultiplier;
@@ -34,6 +36,8 @@ public class AirConditionalEventData : EventFactoryData
     public string CoolText => coolText;
     public string UnCoolText => unCoolText;
     public int RewardFame => rewardFame;
+    public List<AirConditionalRewardInfo> Reward => reward;
+
 
     public override IEvent CreateEvent()
     {
