@@ -69,7 +69,7 @@ public class AutoProductionUpgrade : MonoBehaviour
         // 아티펙트 계산(임시)
         if (ArtifactManager.instance != null)
         {
-            totalMulti += ArtifactManager.instance.GetTotalPerSecond();
+            totalMulti += ArtifactManager.instance.GetTotalPerSecond() -1f ; 
         }
 
         Utils.Log($"초당 생산랑 업그레이드 2 : {total}");
