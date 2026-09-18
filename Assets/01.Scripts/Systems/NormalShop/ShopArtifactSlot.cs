@@ -67,7 +67,7 @@ public class ShopArtifactSlot : MonoBehaviour
             }
             if (info.PerSecond > 0)
             {
-                descStr += $"초당 생산 +{CurrencyFormatter.Format(info.PerSecond)}  ";
+                descStr += $"초당 생산 +{CurrencyFormatter.Format(info.PerSecond*100)}% ";
             }
             if (info.Probabilityincrease > 0)
             {
