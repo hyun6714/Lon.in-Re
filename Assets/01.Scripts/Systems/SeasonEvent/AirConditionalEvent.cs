@@ -126,17 +126,24 @@ public class AirConditionalEvent : IEvent
 
     public void SaveEventData(EventSaveData eventSaveData)
     {
-        eventSaveData.eventEndDate = eventEndDate;
+        eventSaveData.eventEndDate = new GameDateSaveData(eventEndDate);
         eventSaveData.isSummerCool = isCool;
     }
 
-    public void LoadEvent(GameDate endDate, bool isSummerCool)
+    public void LoadEvent(GameDateSaveData endDate, bool isSummerCool)
     {
-        eventEndDate = endDate;
+        GameDate loadEndDate = CalendarManager.instance.CurrentDate;
+
+        loadEndDate.LoadDate(endDate);
+
+        eventEndDate = loadEndDate;
         isCool = isSummerCool;
 
-        if (CalendarManager.instance.CurrentDate >= eventEndDate)
+        GameDate currentDate = CalendarManager.instance.CurrentDate;
+
+        if (currentDate >= eventEndDate)
         {
+            Utils.Log("이벤트 종료 시간이 지나서 로드하지 않음");
             EndEvent();
             return;
         }
@@ -144,21 +151,6 @@ public class AirConditionalEvent : IEvent
         token?.Cancel();
         token?.Dispose();
         token = new CancellationTokenSource();
-
-        GameDate currentDate = CalendarManager.instance.CurrentDate;
-        GameDate targetDate = new GameDate()
-        {
-            year = currentDate.year,
-            month = eventEndDate.month,
-            day = eventEndDate.day,
-            hour = CalendarManager.instance.DefaultEventTriggerHour
-        };
-
-        if (currentDate < targetDate)
-        {
-            Utils.Log("여름 이벤트 복원 완료(이벤트 시작 전)");
-            return;
-        }
 
         SetMultiplier();
         EventTimer(token.Token).Forget();
