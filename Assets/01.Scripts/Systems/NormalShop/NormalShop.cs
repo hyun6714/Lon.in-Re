@@ -151,12 +151,8 @@ public class NormalShop : PopupBase
                 var slot = obj.GetComponent<ShopArtifactSlot>();
                 if (slot != null)
                 {
-                    int currentSpecial = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Special) : 0;
-                    int currentReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
-                    int currentRebirth = GameManager.instance != null ? GameManager.instance.playerRebirthCount : 0;
-
                     // RefreshArtifactSlots 콜백 전달
-                    slot.SetUp(info, currentSpecial, currentReputation, currentRebirth, RefreshArtifactSlots, ShowConfirmPopup);
+                    slot.SetUp(info, RefreshArtifactSlots, ShowConfirmPopup);
                     artifactSlots.Add(slot);
                 }
             }

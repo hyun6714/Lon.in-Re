@@ -33,10 +33,6 @@ public class ArtifactShopUI : MonoBehaviour
         }
         spawnedSlots.Clear();
 
-        int currentSpecial = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Special) : 0;
-        int currentReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
-        int currentRebirth = GameManager.instance != null ? GameManager.instance.playerRebirthCount : 0;
-
         // 데이터베이스의 아티팩트 목록을 기반으로 슬롯 생성
         foreach (var info in artifactDatabase.artifacts)
         {
@@ -45,7 +41,7 @@ public class ArtifactShopUI : MonoBehaviour
 
             if (slot != null)
             {
-                slot.SetUp(info, currentSpecial, currentReputation, currentRebirth, RefreshShop, null);
+                slot.SetUp(info, RefreshShop, null);
                 spawnedSlots.Add(slot);
             }
         }

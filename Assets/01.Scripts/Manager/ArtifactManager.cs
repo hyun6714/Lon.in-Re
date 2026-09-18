@@ -43,7 +43,7 @@ public class ArtifactManager : MonoBehaviour
         return unlockedStates.TryGetValue(artifactID, out bool isUnlocked) && isUnlocked;
     }
 
-    public bool TryUnlockArtifact(int artifactID, int playerRebirth, int playerReputation, int playerSpecialCurrency)
+    public bool TryUnlockArtifact(int artifactID)
     {
         ArtifactInfo info = artifactDatabase.GetArtifactsInfo(artifactID);
         if(info==null || IsUnlocked(artifactID))
@@ -51,23 +51,15 @@ public class ArtifactManager : MonoBehaviour
             return false;
         }
 
-        //환생 횟수조건 검사 
-        if(info.requiredRebirthCount > 0 && playerRebirth< info.requiredRebirthCount)
-        {
-            Debug.Log($"환생 횟수가 부족합니다 필요한 횟수 :{info.requiredRebirthCount}");
-            return false;
-        }
+        int playerRebirth = GameManager.instance != null ? GameManager.instance.playerRebirthCount : 0;
+        int playerReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
+        int playerSpecial = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Special) : 0;
 
-        //명성 수치 검사
-        if (info.requiredReputation > 0 && playerReputation < info.requiredReputation)
+        if (playerRebirth < info.requiredRebirthCount ||
+            playerReputation < info.requiredReputation ||
+            playerSpecial < info.SpecialUnlockCost)
         {
-            Debug.Log($"명성 부족 필요한 명성:{info.requiredReputation}");
-            return false;
-        }
-
-        if(info.SpecialUnlockCost > 0 && playerSpecialCurrency < info.SpecialUnlockCost)
-        {
-            Debug.Log($"특수 재화 부족 필요한 특수 재화 : {info.SpecialUnlockCost}");
+            Debug.Log("조건 부족으로 해금 실패");
             return false;
         }
 

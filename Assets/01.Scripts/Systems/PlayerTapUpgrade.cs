@@ -70,7 +70,7 @@ public class PlayerTapUpgrade : MonoBehaviour
         // 2. 아티팩트 배율 반영
         if (ArtifactManager.instance != null)
         {
-            totalMulti += ArtifactManager.instance.GetTotalGainPerClick();
+            totalMulti *= ArtifactManager.instance.GetTotalGainPerClick();
         }
 
         // 3. 이벤트 배율 반영
