@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoundData
   bgmList:
   - bgmType: 0
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 01c9d14b77cef86419d4d7feab2141ec, type: 3}
   - bgmType: 1
     clip: {fileID: 0}
   - bgmType: 2
