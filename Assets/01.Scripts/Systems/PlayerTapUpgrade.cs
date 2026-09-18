@@ -34,12 +34,14 @@ public class PlayerTapUpgrade : MonoBehaviour
     {
         ReincarnationManager.OnReincarnated += ResetUpgrade;
         GameEventBridge.OnTapMultiplierChanged += SetEventMultiplier;
+        GameEventBridge.OnArtifactUnlocked += RecalculateTapPower;
     }
 
     private void OnDisable()
     {
         ReincarnationManager.OnReincarnated -= ResetUpgrade;
         GameEventBridge.OnTapMultiplierChanged -= SetEventMultiplier;
+        GameEventBridge.OnArtifactUnlocked -= RecalculateTapPower;
     }
 
     private void Start()

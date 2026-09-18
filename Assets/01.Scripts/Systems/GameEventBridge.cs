@@ -34,6 +34,8 @@ public static class GameEventBridge
     /// <summary> 랭크 변화 시 발생 </summary>
     public static event Action OnRankChanged;
 
+    /// <summary> 아티팩트 언락 시 발생 </summary>
+    public static event Action OnArtifactUnlocked;
 
     // 이벤트 실행
     public static void DayChanged(GameDate date) => OnDayChanged?.Invoke(date);
@@ -47,4 +49,5 @@ public static class GameEventBridge
     public static void CurrencyChanged(CurrencyType type, int value) => OnCurrencyChanged?.Invoke(type, value);
     public static void EmployeeChanged() => OnEmployeeChaned?.Invoke();
     public static void RankChanged() => OnRankChanged?.Invoke();
+    public static void ArtifactUnlocked() => OnArtifactUnlocked?.Invoke();
 }

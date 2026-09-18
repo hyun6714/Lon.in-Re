@@ -74,6 +74,8 @@ public class ArtifactManager : MonoBehaviour
         unlockedStates[artifactID] = true;
 
         GameEventBridge.CurrencyUsed(CurrencyType.Special, info.SpecialUnlockCost);
+
+        GameEventBridge.ArtifactUnlocked();
         Debug.Log($"{info.artiName} 아티팩트 해금");
         return true;
     }
