@@ -72,7 +72,7 @@ public class GameToolWindow : EditorWindow
             int maxDay = calendar.GetLastDay(setMonth);
             
             setDay = EditorGUILayout.IntSlider("¿œ(Day)", setDay, 1, maxDay);
-            setHour = EditorGUILayout.IntSlider("Ω√(Hour)", setHour, 0, maxHour);
+            setHour = EditorGUILayout.IntSlider("Ω√(Hour)", setHour, 0, maxHour - 1);
 
             EditorGUILayout.Space(5);
 
