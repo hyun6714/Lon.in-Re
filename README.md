@@ -6,3 +6,10 @@
 
 [조작법]
 마우스 클릭만 으로 플레이 합니다
+
+[Project Name] Developer Tycoon
+[How to Run]
+Double-click Developer Tycoon.exe to launch the game.
+
+[Controls]
+Play using only mouse clicks.
