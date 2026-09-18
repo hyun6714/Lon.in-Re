@@ -32,14 +32,14 @@ public class PlayerTapUpgrade : MonoBehaviour
     // 환생 이벤트 구독 / 해제
     private void OnEnable()
     {
-        ReincarnationManager.OnReincarnated += ResetUpgrade;
+        GameEventBridge.OnReincarnated += ResetUpgrade;
         GameEventBridge.OnTapMultiplierChanged += SetEventMultiplier;
         GameEventBridge.OnArtifactUnlocked += RecalculateTapPower;
     }
 
     private void OnDisable()
     {
-        ReincarnationManager.OnReincarnated -= ResetUpgrade;
+        GameEventBridge.OnReincarnated -= ResetUpgrade;
         GameEventBridge.OnTapMultiplierChanged -= SetEventMultiplier;
         GameEventBridge.OnArtifactUnlocked -= RecalculateTapPower;
     }

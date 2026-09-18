@@ -26,7 +26,7 @@ public class GamePopupUI : MonoBehaviour
     {
         GameReleaseManager.instance.OnGameReleased += AddGameCard;
 
-        ReincarnationManager.OnReincarnated += ResetDataOnRebirth;
+        GameEventBridge.OnReincarnated += ResetDataOnRebirth;
 
         RefreshGameList();
     }
@@ -37,7 +37,7 @@ public class GamePopupUI : MonoBehaviour
             GameReleaseManager.instance.OnGameReleased -= AddGameCard;
         }
 
-        ReincarnationManager.OnReincarnated -= ResetDataOnRebirth;
+        GameEventBridge.OnReincarnated -= ResetDataOnRebirth;
     }
 
     // 출시된 게임 목록을 UI에 표시

@@ -37,6 +37,9 @@ public static class GameEventBridge
     /// <summary> 아티팩트 언락 시 발생 </summary>
     public static event Action OnArtifactUnlocked;
 
+    /// <summary> 환생 시 발생 </summary>
+    public static event Action OnReincarnated;
+
     // 이벤트 실행
     public static void DayChanged(GameDate date) => OnDayChanged?.Invoke(date);
     public static void TimeChanged(GameDate date) => OnTimeChanged?.Invoke(date);
@@ -50,4 +53,6 @@ public static class GameEventBridge
     public static void EmployeeChanged() => OnEmployeeChaned?.Invoke();
     public static void RankChanged() => OnRankChanged?.Invoke();
     public static void ArtifactUnlocked() => OnArtifactUnlocked?.Invoke();
+
+    public static void Reincarnated() => OnReincarnated?.Invoke();
 }

@@ -16,12 +16,12 @@ public class EmployeeManager : MonoBehaviour
     // 환생 이벤트 구독 / 해제
     private void OnEnable()
     {
-        ReincarnationManager.OnReincarnated += ResetAllEmployees;
+        GameEventBridge.OnReincarnated += ResetAllEmployees;
     }
 
     private void OnDisable()
     {
-        ReincarnationManager.OnReincarnated -= ResetAllEmployees;
+        GameEventBridge.OnReincarnated -= ResetAllEmployees;
     }
 
     private void Awake()
