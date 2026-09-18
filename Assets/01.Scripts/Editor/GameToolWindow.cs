@@ -39,45 +39,68 @@ public class GameToolWindow : EditorWindow
 
         EditorGUILayout.Space(10);
 
-        if (GUILayout.Button("자동 생산, 이벤트, 캘린더 일시 정지"))
+        #region 일시정지
+        if (GUILayout.Button("일시정지"))
         {
             GameManager.instance.GamePaused();
         }
 
-        if (GUILayout.Button("자동 생산, 이벤트, 캘린더 재생"))
+        if (GUILayout.Button("일시정지 해제"))
         {
             GameManager.instance.GameResume();
         }
+        #endregion
 
         EditorGUILayout.Space(10);
 
+        #region 날짜 변경
         GUILayout.Label("날짜 강제 변경");
-        EditorGUILayout.HelpBox("일(Day)은 해당하는 월의 마지막 일수를 초과할 수 없습니다", MessageType.Warning);
-        setYear = EditorGUILayout.IntField("연도(Year)", setYear);
-        setMonth = EditorGUILayout.IntSlider("월(Month)", setMonth, 1, 12);
-        setDay = EditorGUILayout.IntField("일(Day)", setDay);
-        setHour = EditorGUILayout.IntSlider("시(Hour)", setHour, 0, 23);
 
-        EditorGUILayout.Space(5);
+        CalendarManager calendar = CalendarManager.instance;
 
-        GUI.enabled = CalendarManager.instance != null;
-
-        if (GUILayout.Button("날짜 적용"))
+        
+        if (calendar != null)
         {
-            GameDate date = new GameDate()
+            GameDate currentDate = calendar.CurrentDate;
+
+            int maxMonth = currentDate.maxMonthPerYear;
+            int maxHour = currentDate.maxHourPerDay;
+
+            setYear = EditorGUILayout.IntField("연도(Year)", setYear);
+            setMonth = EditorGUILayout.IntSlider("월(Month)", setMonth, 1, maxMonth);
+            
+            int maxDay = calendar.GetLastDay(setMonth);
+            
+            setDay = EditorGUILayout.IntSlider("일(Day)", setDay, 1, maxDay);
+            setHour = EditorGUILayout.IntSlider("시(Hour)", setHour, 0, maxHour);
+
+            EditorGUILayout.Space(5);
+
+            if (GUILayout.Button("날짜 적용"))
             {
-                year = setYear,
-                month = setMonth,
-                day = setDay,
-                hour = setHour
-            };
-            CalendarManager.instance.SetDateOnlyEditor(date);
+                GameDate date = new GameDate()
+                {
+                    year = setYear,
+                    month = setMonth,
+                    day = setDay,
+                    hour = setHour
+                };
+                CalendarManager.instance.SetDateOnlyEditor(date);
+            }
         }
+        else
+        {
+            EditorGUILayout.HelpBox("CalendarManager가 존재하지 않습니다.", MessageType.Warning);
 
-        EditorGUILayout.Space(10);
+        }        
+        #endregion
 
+        EditorGUILayout.Space(15);
+
+        #region 재화 획득
         GUILayout.Label("재화 획득, 감소");
         EditorGUILayout.HelpBox("버튼을 누르면 작성한 수치만큼 재화를 획득하거나 잃습니다.", MessageType.Info);
+       
         normalCurrency = EditorGUILayout.IntField("일반 재화", normalCurrency);
 
         EditorGUILayout.Space(5);
@@ -94,7 +117,7 @@ public class GameToolWindow : EditorWindow
             GameEventBridge.CurrencyUsed(CurrencyType.Normal, normalCurrency);
         }
 
-        EditorGUILayout.Space(7);
+        EditorGUILayout.Space(10);
 
         specialCurrency = EditorGUILayout.IntField("특수 재화", specialCurrency);
 
@@ -112,7 +135,7 @@ public class GameToolWindow : EditorWindow
             GameEventBridge.CurrencyUsed(CurrencyType.Special, specialCurrency);
         }
 
-        EditorGUILayout.Space(7);
+        EditorGUILayout.Space(10);
 
         reputationCurrency = EditorGUILayout.IntField("명성", reputationCurrency);
 
@@ -129,6 +152,7 @@ public class GameToolWindow : EditorWindow
         {
             GameEventBridge.CurrencyUsed(CurrencyType.Reputation, reputationCurrency);
         }
+        #endregion
 
         EditorGUILayout.Space(15);
 

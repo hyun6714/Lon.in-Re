@@ -130,7 +130,7 @@ public struct GameDate : IEquatable<GameDate>
         lastDay = daysInMonthList[this.month - 1];
 
         day = Mathf.Clamp(date.day, 1, lastDay);
-        hour = Mathf.Clamp(date.hour, 0, maxHourPerDay - 1);
+        hour = Mathf.Clamp(date.hour, 0, maxHourPerDay);
         minutes = 0;
 
         SetSeason();
