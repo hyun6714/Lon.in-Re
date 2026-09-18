@@ -155,11 +155,16 @@ public class EventManager : MonoBehaviour
             Utils.Log("저장된 이벤트가 없습니다.");
             return;
         }
+
+        Utils.Log($"저장된 이벤트 수 : {eventSaveDatas.Count}");
         
         foreach (EventSaveData saveData in eventSaveDatas)
         {
             if (!saveData.isEventActive)
+            {
+                Utils.Log($"활성화 이벤트가 아님 : {saveData.eventType}");
                 continue;
+            }
 
             GameEventInfo targetInfo = null;
 
@@ -178,28 +183,44 @@ public class EventManager : MonoBehaviour
                 continue;
             }
 
-            if (CalendarManager.instance.CurrentDate < saveData.eventEndDate)
+            GameDate loadEndDate = CalendarManager.instance.CurrentDate;
+
+            loadEndDate.LoadDate(saveData.eventEndDate);
+
+            GameDate currentDate = CalendarManager.instance.CurrentDate;
+
+            Utils.Log($"현재 : {currentDate.year}/{currentDate.month}/{currentDate.day} {currentDate.hour}:{currentDate.minutes}");
+            Utils.Log($"종료 : {loadEndDate.year}/{loadEndDate.month}/{loadEndDate.day} {loadEndDate.hour}:{loadEndDate.minutes}");
+
+            if (currentDate >= loadEndDate)
             {
-                IEvent newEvent = eventFactory.CreateEvent(saveData.eventType);
-
-                if (newEvent == null)
-                    continue;
-
-                activeEventDic[saveData.eventType] = new ActiveEvent
-                {
-                    Type = saveData.eventType,
-                    Info = targetInfo,
-                    Event = newEvent,
-                    IsStarted = true
-                };
-
-                if (newEvent is AirConditionalEvent airconEvent)
-                {
-                    airconEvent.LoadEvent(saveData.eventEndDate, saveData.isSummerCool);
-                }
-
-                Utils.Log($"이벤트 복구 완료 : {saveData.eventType}");
+                Utils.Log($"이벤트 시간이 지남 : {saveData.eventType}");
+                continue;
             }
+
+            IEvent newEvent = eventFactory.CreateEvent(saveData.eventType);
+
+            if (newEvent == null)
+            {
+                Utils.Log($"이벤트 생성 실패 : {saveData.eventType}");
+                continue;
+            }
+
+            activeEventDic[saveData.eventType] = new ActiveEvent
+            {
+                Type = saveData.eventType,
+                Info = targetInfo,
+                EventDate = default,
+                Event = newEvent,
+                IsStarted = true
+            };
+
+            if (newEvent is AirConditionalEvent airconEvent)
+            {
+                airconEvent.LoadEvent(saveData.eventEndDate, saveData.isSummerCool);
+            }
+
+            Utils.Log($"이벤트 복구 완료 : {saveData.eventType}");
         }        
     }
 
