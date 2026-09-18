@@ -123,7 +123,6 @@ public class CalendarManager : MonoBehaviour
     {
         try
         {
-            //float elapsedTime = 0f;
             while (!token.IsCancellationRequested)
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(realTimer), cancellationToken: token);
@@ -131,8 +130,6 @@ public class CalendarManager : MonoBehaviour
                 AddTime(minutePerSec);
 
                 GameEventBridge.TimeChanged(currentDate);
-
-                await UniTask.NextFrame(PlayerLoopTiming.EarlyUpdate, token);
             }
         }
         catch (OperationCanceledException)
