@@ -91,12 +91,12 @@ public class ArtifactManager : MonoBehaviour
     //√ ¥Á »πµÊ∑Æ ¡ı∞°
     public float GetTotalPerSecond()
     {
-        float total = 0f;
+        float total = 1f;
         foreach (var info in artifactDatabase.artifacts)
         {
             if (IsUnlocked(info.artifactId))
             {
-                total += info.PerSecond;
+                total *= info.PerSecond;
             }
         }
         return total;
