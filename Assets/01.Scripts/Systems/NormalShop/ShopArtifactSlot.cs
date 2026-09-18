@@ -66,10 +66,10 @@ public class ShopArtifactSlot : MonoBehaviour
                 switch (effect.effectType)
                 {
                     case EffectType.GainPerClick:
-                        descStr += $"탭 골드 +{effect.effectValue * 100}%  ";
+                        descStr += $"탭 골드 +{effect.effectValue}배  ";
                         break;
                     case EffectType.PerSecond:
-                        descStr += $"초당 생산 +{CurrencyFormatter.Format(effect.effectValue * 100)}% ";
+                        descStr += $"초당 생산 +{CurrencyFormatter.Format(effect.effectValue)}배";
                         break;
                     case EffectType.ProbabilityIncrease:
                         descStr += $"개발 성공률 +{effect.effectValue}% ";
