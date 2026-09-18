@@ -11122,7 +11122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   rebirthText: {fileID: 679041428}
   playerRebirthCount: 0
-  gameDevCount: 1
+  gameDevCount: 0
   currentEmployeeCount: 0
 --- !u!4 &603302906
 Transform:

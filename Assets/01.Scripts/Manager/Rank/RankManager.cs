@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
+using System.Collections;
+
 
 public class RankManager : MonoBehaviour
 {
@@ -43,16 +46,21 @@ public class RankManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-    private void Start()
-    {
-        // 게임 시작 시 현재 랭크 배경 반영
+
         UpdateOfficeVisual();
     }
 
-    private void OnEnable() => ReincarnationManager.OnReincarnated += ResetRank;
-    private void OnDisable() => ReincarnationManager.OnReincarnated -= ResetRank;
+    private void OnEnable()
+    {
+        ReincarnationManager.OnReincarnated += ResetRank;
+        SceneManager.sceneLoaded += OnSceneLoaded; 
+    }
 
+    private void OnDisable()
+    {
+        ReincarnationManager.OnReincarnated -= ResetRank;
+        SceneManager.sceneLoaded -= OnSceneLoaded; 
+    }
 
     public RankData GetRankData(RankState state)
     {
@@ -116,7 +124,24 @@ public class RankManager : MonoBehaviour
         Debug.Log("등급 초기화 완료");
     }
 
-    private void UpdateOfficeVisual()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        StartCoroutine(DelayedInitializeRank());
+    }
+
+    private IEnumerator DelayedInitializeRank()
+    {
+        yield return null; 
+
+        UpdateOfficeVisual();
+
+        if (RankUI.instance != null)
+        {
+            RankUI.instance.UpdateRankUI();
+        }
+    }
+
+    public void UpdateOfficeVisual()
     {
         int currentIndex = (int)currentRank;
 
