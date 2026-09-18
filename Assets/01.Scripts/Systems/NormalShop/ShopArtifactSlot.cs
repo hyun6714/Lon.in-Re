@@ -18,10 +18,6 @@ public class ShopArtifactSlot : MonoBehaviour
 
     private ArtifactInfo targetInfo;
 
-    private int cachedPlayerSpecial;
-    private int cachedPlayerReputation;
-    private int cachedPlayerRebirth;
-
     private Action onPurchaseSuccess;      // 상점의 일괄 갱신 함수를 기억해 둘 콜백 변수
     private Action<string, string, Action> onRequestConfirm;    // 팝업 출력 요청할 콜백
 
@@ -34,12 +30,9 @@ public class ShopArtifactSlot : MonoBehaviour
     }
 
     public void SetUp(
-            ArtifactInfo info,
-            int playerSpecial,       
-            int playerReputation,    
-            int playerRebirth,  
-            Action onPurchaseSuccessCallback = null,
-            Action<string, string, Action> onRequestConfirmCallback = null)
+        ArtifactInfo info, 
+        Action onPurchaseSuccessCallback = null,
+        Action<string, string, Action> onRequestConfirmCallback = null)
 
     {
         if (info == null)
@@ -49,11 +42,6 @@ public class ShopArtifactSlot : MonoBehaviour
 
         targetInfo = info;
         targetArtifactID = info.artifactId;
-
-        // 주입받은 데이터 캐싱 (Refresh 등에서 재사용)
-        cachedPlayerSpecial = playerSpecial;
-        cachedPlayerReputation = playerReputation;
-        cachedPlayerRebirth = playerRebirth;
 
         // 전달받은 콜백 함수 저장
         onPurchaseSuccess = onPurchaseSuccessCallback;
@@ -139,9 +127,13 @@ public class ShopArtifactSlot : MonoBehaviour
             if (costText != null) costText.text = CurrencyFormatter.Format(targetInfo.SpecialUnlockCost);
 
             // 전달받은 값으로 조건 검사
-            bool canPurchase = (cachedPlayerSpecial >= targetInfo.SpecialUnlockCost) &&
-                               (cachedPlayerRebirth >= targetInfo.requiredRebirthCount) &&
-                               (cachedPlayerReputation >= targetInfo.requiredReputation);
+            int currentSpecial = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Special) : 0;
+            int currentReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
+            int currentRebirth = GameManager.instance != null ? GameManager.instance.playerRebirthCount : 0;
+
+            bool canPurchase = (currentSpecial >= targetInfo.SpecialUnlockCost) &&
+                               (currentRebirth >= targetInfo.requiredRebirthCount) &&
+                               (currentReputation >= targetInfo.requiredReputation);
 
             if (unlockBtn != null)
             {
@@ -188,12 +180,7 @@ public class ShopArtifactSlot : MonoBehaviour
     {
         if (ArtifactManager.instance == null) return;
 
-        bool success = ArtifactManager.instance.TryUnlockArtifact(
-            targetArtifactID,
-            cachedPlayerRebirth,
-            cachedPlayerReputation,
-            cachedPlayerSpecial
-        );
+        bool success = ArtifactManager.instance.TryUnlockArtifact(targetArtifactID);
 
         if (success)
         {
