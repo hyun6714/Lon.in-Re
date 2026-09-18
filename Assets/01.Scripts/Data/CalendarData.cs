@@ -34,7 +34,7 @@ public class CalendarData : ScriptableObject
 
     [Header("시간 단위")]
     [SerializeField] private int maxMonthPerYear = 12;
-    [SerializeField] private int maxHourPerDay = 23;
+    [SerializeField] private int maxHourPerDay = 24;
     [SerializeField] private int maxMinutePerHour = 60;
 
     [Header("계절")]
