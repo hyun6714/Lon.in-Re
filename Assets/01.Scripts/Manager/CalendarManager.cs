@@ -74,6 +74,11 @@ public class CalendarManager : MonoBehaviour
         UnSubscribeEvent();
     }
 
+    private void Start()
+    {
+        GameEventBridge.TimeChanged(currentDate);
+    }
+
     public void SubscribeEvent()
     {
         GameEventBridge.OnPausedChanged += PausedChanged;
@@ -104,7 +109,6 @@ public class CalendarManager : MonoBehaviour
         {
             seasonString[info.season] = info.seasonName;
         }
-
     }
 
     public GameDateSaveData SaveDate()
@@ -116,6 +120,7 @@ public class CalendarManager : MonoBehaviour
     public void LoadDate(GameDateSaveData saveData)
     {
         currentDate.LoadDate(saveData);
+        GameEventBridge.TimeChanged(currentDate);
     }
 
     private async UniTaskVoid UpdateTimeTick(CancellationToken token)
