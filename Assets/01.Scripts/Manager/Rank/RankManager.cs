@@ -101,6 +101,7 @@ public class RankManager : MonoBehaviour
             UpdateOfficeVisual();
 
             GameEventBridge.RankChanged();
+            GameEventBridge.EmployeeCountChanged(currenyEmployee, maxEmployee);
         }
         else
         {

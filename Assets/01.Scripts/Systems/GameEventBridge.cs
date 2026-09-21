@@ -40,6 +40,9 @@ public static class GameEventBridge
     /// <summary> 환생 시 발생 </summary>
     public static event Action OnReincarnated;
 
+    /// <summary> 직원 수 텍스트 변경 용 이벤트 </summary>
+    public static event Action<int, int> OnEmployeeCountChanged;
+
     // 이벤트 실행
     public static void DayChanged(GameDate date) => OnDayChanged?.Invoke(date);
     public static void TimeChanged(GameDate date) => OnTimeChanged?.Invoke(date);
@@ -55,4 +58,5 @@ public static class GameEventBridge
     public static void ArtifactUnlocked() => OnArtifactUnlocked?.Invoke();
 
     public static void Reincarnated() => OnReincarnated?.Invoke();
+    public static void EmployeeCountChanged(int current, int max) => OnEmployeeCountChanged?.Invoke(current, max);
 }

@@ -56,6 +56,10 @@ public class LoadManager : MonoBehaviour
         LoadReleasedGameData(saveData);
         LoadPartUpgradeData(saveData);
 
+        GameEventBridge.EmployeeChanged();
+        GameEventBridge.EmployeeCountChanged(GameManager.instance.currentEmployeeCount, RankManager.instance.maxEmployee);
+        GameEventBridge.ArtifactUnlocked();
+
         Utils.Log("게임 불러오기 완료");
     }
 
@@ -93,7 +97,6 @@ public class LoadManager : MonoBehaviour
             EmployeeState state = EmployeeManager.instance.GetEmployeeState(employeeSaveData.employeeId);
 
             state.SetCount(employeeSaveData.count);
-            GameEventBridge.EmployeeChanged();
         }
     }
 
@@ -130,7 +133,6 @@ public class LoadManager : MonoBehaviour
     private void LoadArtifactData(SaveData saveData)
     {
         ArtifactManager.instance.LoadSaveData(saveData.artifactSaveData);
-        GameEventBridge.ArtifactUnlocked();
     }
 
     // 부품 업그레이드 불러오기

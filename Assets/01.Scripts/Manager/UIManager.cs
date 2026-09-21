@@ -100,6 +100,7 @@ public class UIManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
         GameEventBridge.OnCurrencyChanged += SetText;
         GameEventBridge.OnTimeChanged += SetText;
+        GameEventBridge.OnEmployeeCountChanged += SetText;
     }
 
     private void UnSubscribeEvent()
@@ -107,6 +108,7 @@ public class UIManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
         GameEventBridge.OnCurrencyChanged -= SetText;
         GameEventBridge.OnTimeChanged -= SetText;
+        GameEventBridge.OnEmployeeCountChanged -= SetText;
     }
 
     // 런타임 딕셔너리에 저장된 팝업 비우기
@@ -324,6 +326,11 @@ public class UIManager : MonoBehaviour
         textGroup.SetText(type, amount);
     }
 
+    /// <summary>
+    /// 재화 변동 텍스트
+    /// </summary>
+    /// <param name="type"> 재화 타입 </param>
+    /// <param name="amount"> 보유 수량 </param>
     public void SetText(CurrencyType type, int amount)
     {
         if (!currencyTextDic.TryGetValue(type, out HUDTextType textType))
@@ -335,9 +342,24 @@ public class UIManager : MonoBehaviour
         textGroup.SetText(textType, amount);
     }
 
+    /// <summary>
+    /// 날짜 변동 텍스트
+    /// </summary>
+    /// <param name="date"> 현재 날짜가 담긴 구조체 </param>
     public void SetText(GameDate date)
     {
         textGroup.SetText(HUDTextType.Date, date);
+    }
+
+    /// <summary>
+    /// 고용 직원 수량 텍스트
+    /// </summary>
+    /// <param name="currentCount"> 고용한 총 직원수 </param>
+    /// <param name="maxCount"> 현재 등급에 가능한 총 직원수 </param>
+    public void SetText(int currentCount, int maxCount)
+    {
+        string text = $"{currentCount}/{maxCount}";
+        textGroup.SetText(HUDTextType.Employee, text);
     }
     #endregion
 

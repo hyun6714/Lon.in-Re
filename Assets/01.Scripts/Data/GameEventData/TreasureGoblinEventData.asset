@@ -20,12 +20,12 @@ MonoBehaviour:
   requireTouchCount: 10
   reward:
   - rank: 0
-    rewardGold: 2000
+    rewardGold: 5000
   - rank: 1
-    rewardGold: 8000
+    rewardGold: 20000
   - rank: 2
-    rewardGold: 40000
+    rewardGold: 80000
   - rank: 3
-    rewardGold: 250000
+    rewardGold: 300000
   - rank: 4
-    rewardGold: 800000
+    rewardGold: 1000000
