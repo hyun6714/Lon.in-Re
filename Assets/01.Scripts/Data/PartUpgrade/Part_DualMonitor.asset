@@ -18,4 +18,4 @@ MonoBehaviour:
   unlockGrade: 0
   baseCost: 150
   costMultiplier: 1.3
-  powerPerLevel: 5
+  powerPerLevel: 25
