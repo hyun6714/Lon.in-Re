@@ -15,6 +15,7 @@ public struct GameDate : IEquatable<GameDate>
     public int defaultDaysInMonth;
     public int maxMonthPerYear;
     public int maxHourPerDay;
+    public int maxMinutePerHour;
 
     public int monthPerSeason;
 
@@ -33,6 +34,7 @@ public struct GameDate : IEquatable<GameDate>
         defaultDaysInMonth = data.DefaultDaysInMonth;
         maxMonthPerYear = data.MaxMonthPerYear;
         maxHourPerDay = data.MaxHourPerDay;
+        maxMinutePerHour = data.MaxMinutePerHour;
 
         monthPerSeason = data.MonthPerSeason;
 
@@ -120,6 +122,12 @@ public struct GameDate : IEquatable<GameDate>
     {
         return month == other.month && day == other.day;
     }
+
+    //public readonly void GetRemainingTime(GameDate targetDate, out int day, out int hour)
+    //{
+    //    int totalMinutes = GetRemainingMinutes(targetDate);
+    //    int minutesPerHour = maxMinutePerHour;
+    //}
 
     public readonly int GetRemainingMinutes(GameDate targetDate)
     {
