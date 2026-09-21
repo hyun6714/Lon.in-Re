@@ -183,11 +183,11 @@ public class EventManager : MonoBehaviour
                 continue;
             }
 
-            GameDate loadEndDate = CalendarManager.instance.CurrentDate;
+            GameDate loadEndDate = GameDataGetter<GameDate>.GetData(); ;
 
             loadEndDate.LoadDate(saveData.eventEndDate);
 
-            GameDate currentDate = CalendarManager.instance.CurrentDate;
+            GameDate currentDate = GameDataGetter<GameDate>.GetData();
 
             Utils.Log($"현재 : {currentDate.year}/{currentDate.month}/{currentDate.day} {currentDate.hour}:{currentDate.minutes}");
             Utils.Log($"종료 : {loadEndDate.year}/{loadEndDate.month}/{loadEndDate.day} {loadEndDate.hour}:{loadEndDate.minutes}");
@@ -257,7 +257,7 @@ public class EventManager : MonoBehaviour
         if (activeEvent.Event is AirConditionalEvent airconEvent)
         {
             airconEvent.SetCool(value);
-            UIManager.Instance.ClosePopup(activeEvent.Info.PopupName);
+            GameEventBridge.PopupClosed(activeEvent.Info.PopupName);
         }
     }
 
@@ -303,7 +303,7 @@ public class EventManager : MonoBehaviour
     // 저장된 개발 이벤트 날짜와 gameId를 사용하여 게임별 정산
     public void StartGameSettlement(int gameId)
     {
-        GameDate nowDate = CalendarManager.instance.CurrentDate;
+        GameDate nowDate = GameDataGetter<GameDate>.GetData();
         StartGameSettlementAsync(nowDate, gameId, 0, token.Token).Forget();
     }
 
@@ -327,7 +327,7 @@ public class EventManager : MonoBehaviour
                 Utils.Log($"종료 날짜 : {targetDate.year}년 {targetDate.month}월 {targetDate.day}일 {targetDate.hour}시");
 
                 await UniTask.WaitUntil(() =>
-                CalendarManager.instance.CurrentDate >= targetDate,
+                GameDataGetter<GameDate>.GetData() >= targetDate,
                 cancellationToken: token);
 
                 OnGameSettlement?.Invoke(gameId, i);
@@ -342,7 +342,7 @@ public class EventManager : MonoBehaviour
 
     public void StartCurrentEvent()
     {
-        GameDate currentDate = CalendarManager.instance.CurrentDate;
+        GameDate currentDate = GameDataGetter<GameDate>.GetData();
 
         // 활성화된 이벤트 딕셔너리의 Key, Value값
         foreach (var value in activeEventDic)
@@ -363,7 +363,7 @@ public class EventManager : MonoBehaviour
 
             activeEvent.IsStarted = true;
 
-            UIManager.Instance.OpenPopup(activeEvent.Info.PopupName);
+            GameEventBridge.PopupOpened(activeEvent.Info.PopupName);
 
             Utils.Log($"이벤트 시작 : {activeEvent.Type}");
         }        
@@ -388,7 +388,7 @@ public class EventManager : MonoBehaviour
     // 저장된 게임 정산 이어서 시작
     public void LoadGameSettlement(ReleasedGameSaveData releasedGame)
     {
-        GameDate releaseDate = CalendarManager.instance.CurrentDate;
+        GameDate releaseDate = GameDataGetter<GameDate>.GetData();
 
         releaseDate.year = releasedGame.releaseYear;
         releaseDate.month = releasedGame.releaseMonth;

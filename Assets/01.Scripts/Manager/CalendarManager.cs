@@ -13,7 +13,7 @@ public enum Season
     Winter = 12
 }
 
-public class CalendarManager : MonoBehaviour
+public class CalendarManager : MonoBehaviour, IGameDataGet<GameDate>
 {
     public static CalendarManager instance;
 
@@ -53,6 +53,8 @@ public class CalendarManager : MonoBehaviour
             Destroy(gameObject);
 
         StartDayInit();
+
+        GameDataGetter<GameDate>.Register(this);
     }
 
     private void OnEnable()
@@ -72,6 +74,11 @@ public class CalendarManager : MonoBehaviour
         token = null;
 
         UnSubscribeEvent();
+    }
+
+    private void OnDestroy()
+    {
+        GameDataGetter<GameDate>.UnRegister(this);
     }
 
     private void Start()
@@ -222,6 +229,11 @@ public class CalendarManager : MonoBehaviour
     public void PausedChanged(bool isPaused)
     {
         this.isPaused = isPaused;
+    }
+
+    public GameDate GetData()
+    {
+        return currentDate;
     }
 
 #if UNITY_EDITOR
