@@ -11420,11 +11420,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1251666893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -358, y: 397.5}
-  m_SizeDelta: {x: 200, y: 33.17}
-  m_Pivot: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -358, y: -126}
+  m_SizeDelta: {x: 200, y: 33.169983}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &496448719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49635,17 +49635,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!114 &1422242813 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 810205940127814867, guid: 3f46b9e4eeb25df428328962404bbf47, type: 3}
-  m_PrefabInstance: {fileID: 8928029871091366163}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &1429729551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55907,8 +55896,6 @@ MonoBehaviour:
   funIcon: {fileID: 794207709}
   graphicIcon: {fileID: 1383957107}
   optimizationIcon: {fileID: 750123449}
-  developmentCostText: {fileID: 1422242813}
-  defaultGradeSprite: {fileID: 21300000, guid: f738815bdee12d442a8cc3f19ca0199c, type: 3}
   aGradeSprite: {fileID: 21300000, guid: f4007ace294b9734e9b23a573c95b7b6, type: 3}
   bGradeSprite: {fileID: 21300000, guid: dcc535d9e58aca7489348e34366ac7c8, type: 3}
   cGradeSprite: {fileID: 21300000, guid: 699a08bc9f1110f4e8b5dd0d2c77a298, type: 3}
@@ -70690,7 +70677,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1150273375305965054, guid: 6a08cf37cba6ded468d079bb49aa6c46, type: 3}
   m_PrefabInstance: {fileID: 471685632}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 471685633}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d950e41d0a11244f965c22b03291dc1, type: 3}
