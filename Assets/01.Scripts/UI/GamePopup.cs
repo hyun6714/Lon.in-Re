@@ -15,6 +15,6 @@ public class GamePopup : NormalPopupBase
     private void Start()
     {
         exitBtn.onClick.AddListener(ClosePopup);
-        gameMakeBtn.onClick.AddListener(() => UIManager.Instance.OpenPopup(UIName.Popup_GameMake));
+        gameMakeBtn.onClick.AddListener(() => GameEventBridge.PopupOpened(UIName.Popup_GameMake));
     }
 }

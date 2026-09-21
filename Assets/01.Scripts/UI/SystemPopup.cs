@@ -12,6 +12,6 @@ public class SystemPopup : EventPopupBase
     private void Start()
     {
         backBtn.onClick.AddListener(ClosePopup);
-        soundBtn.onClick.AddListener(() => UIManager.Instance.OpenPopup(UIName.Popup_Sound));
+        soundBtn.onClick.AddListener(() => GameEventBridge.PopupOpened(UIName.Popup_Sound));
     }
 }
