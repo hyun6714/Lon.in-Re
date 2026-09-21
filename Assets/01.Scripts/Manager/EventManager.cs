@@ -42,6 +42,8 @@ public class EventManager : MonoBehaviour
     [SerializeField] private EventManagerData data;
     [SerializeField] private GameEventData eventData;
 
+    public int SettlementNum => data.SettlementNum;
+
     [Header("이벤트 데이터")]
     [SerializeField] private EventDataContainer dataContainer;
 

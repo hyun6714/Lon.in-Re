@@ -13,10 +13,12 @@ public class GameMakePopup : NormalPopupBase
         exitBtn.onClick.AddListener(ClosePopup);
         developBtn.onClick.AddListener(OnClickDevelopGame);
     }
-    private void OnEnable()
+
+    protected override void OnEnable()
     {
         GameDevManager.instance.ResetGameMakeUI();
     }
+
     private void OnClickDevelopGame()
     {
         GameDevResult result = GameDevManager.instance.OnClickDevelopGame();

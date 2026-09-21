@@ -28,6 +28,9 @@ public class GameDevData : ScriptableObject
     [SerializeField] private int finalAGradeScore = 7;
     [SerializeField] private int finalBGradeScore = 5;
 
+    [Header("최대 동시 개발 게임 수")]
+    [SerializeField] private int maxActiveGameCount = 10;
+
     public int DevelopmentCost => developmentCost;
 
     public int ProbabilityUpgradeCost => probabilityUpgradeCost;
@@ -44,4 +47,6 @@ public class GameDevData : ScriptableObject
 
     public int FinalAGradeScore => finalAGradeScore;
     public int FinalBGradeScore => finalBGradeScore;
+
+    public int MaxActiveGameCount => maxActiveGameCount;
 }
