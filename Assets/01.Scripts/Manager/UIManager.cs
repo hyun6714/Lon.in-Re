@@ -62,6 +62,9 @@ public class UIManager : MonoBehaviour
     [Header("Dim")]
     [SerializeField] private GameObject dim;
 
+    private GameDate nextEventDate;
+    private bool hasNextEvent;
+
     private Dictionary<UIName, PopupBase> popupDic = new Dictionary<UIName, PopupBase>();
     private Dictionary<UIName, PopupBase> runtimePopupDic = new Dictionary<UIName, PopupBase>();
 
@@ -102,10 +105,11 @@ public class UIManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
         GameEventBridge.OnCurrencyChanged += SetText;
         GameEventBridge.OnTimeChanged += SetText;
+        GameEventBridge.OnTimeChanged += SetNextEventText;
         GameEventBridge.OnEmployeeCountChanged += SetText;
         GameEventBridge.OnPopupOpened += OpenPopup;
         GameEventBridge.OnPopupClosed += ClosePopup;
-        GameEventBridge.OnNextEventChanged += SetEventText;
+        GameEventBridge.OnNextEventChanged += SetNextEvent;
     }
 
     private void UnSubscribeEvent()
@@ -113,10 +117,11 @@ public class UIManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
         GameEventBridge.OnCurrencyChanged -= SetText;
         GameEventBridge.OnTimeChanged -= SetText;
+        GameEventBridge.OnTimeChanged -= SetNextEventText;
         GameEventBridge.OnEmployeeCountChanged -= SetText;
         GameEventBridge.OnPopupOpened -= OpenPopup;
         GameEventBridge.OnPopupClosed -= ClosePopup;
-        GameEventBridge.OnNextEventChanged -= SetEventText;
+        GameEventBridge.OnNextEventChanged -= SetNextEvent;
     }
 
     // 런타임 딕셔너리에 저장된 팝업 비우기
@@ -369,20 +374,28 @@ public class UIManager : MonoBehaviour
         string text = $"{currentCount}/{maxCount}";
         textGroup.SetText(HUDTextType.Employee, text);
     }
+    #endregion
 
-    public void SetEventText(GameDate nextEventDate)
+    private void SetNextEvent(GameDate date)
     {
-        GameDate currentDate = GameDataGetter<GameDate>.GetData();
+        nextEventDate = date;
+        hasNextEvent = true;
+
+        SetNextEventText(date);
+    }
+
+    public void SetNextEventText(GameDate currentDate)
+    {
+        if (!hasNextEvent)
+            return;
 
         int remainMinutes = currentDate.GetRemainingMinutes(nextEventDate);
 
         int days = remainMinutes / (24 * 60);
-        int hours = (remainMinutes % (24 * 60)) / 60);
+        int hours = (remainMinutes % (24 * 60)) / 60;
 
-        SetText(HUDTextType.NextEvent, $"다음 이벤트까지 {days}일 {hours}시간");
+        SetText(HUDTextType.NextEvent, $"다음 이벤트까지/n{days}일 {hours}시간");
     }
-
-    #endregion
 
     private void SetDimPos(PopupBase popup)
     {
