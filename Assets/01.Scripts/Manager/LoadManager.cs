@@ -55,6 +55,7 @@ public class LoadManager : MonoBehaviour
         LoadArtifactData(saveData);
         LoadReleasedGameData(saveData);
         LoadPartUpgradeData(saveData);
+        LoadOfflineData(saveData);
 
         GameEventBridge.EmployeeChanged();
         GameEventBridge.EmployeeCountChanged(GameManager.instance.currentEmployeeCount, RankManager.instance.maxEmployee);
@@ -142,6 +143,20 @@ public class LoadManager : MonoBehaviour
         if (tapUpgrade != null && saveData.partUpgrades != null)
         {
             tapUpgrade.LoadSaveData(saveData.partUpgrades);
+        }
+    }
+
+    // 오프라인 보상 불러오기
+    private void LoadOfflineData(SaveData saveData)
+    {
+        int offlineReward = OfflineManager.instance.CalculateOfflineReward(saveData.lastQuitTime, saveData.lastProductionPerSecond);
+
+        // 계산된 오프라인 보상 지급
+        if (offlineReward > 0)
+        {
+            GameEventBridge.CurrencyAdded( CurrencyType.Normal, offlineReward);
+
+            Utils.Log($"오프라인 보상 : {offlineReward:N0}G");
         }
     }
 }
