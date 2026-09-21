@@ -37,16 +37,23 @@ public class ReincarnationManager : MonoBehaviour
 
         int currentReputation = GetCurrentReputation();
 
-        int requirement = DataManager.instance.reincarnationData.reincarnationRequirement;
 
-        if (CurrencyManager.instance != null)
+
+        if (DataManager.instance != null && DataManager.instance.reincarnationData != null && CurrencyManager.instance != null)
         {
+            int requirement = DataManager.instance.reincarnationData.reincarnationRequirement;
+
             //특수 재화 주는 식
-            int excesReputation = currentReputation - requirement;
-            if (excesReputation > 0 && CurrencyManager.instance != null)
+            int excessReputation = currentReputation - requirement;
+
+            if (excessReputation > 0)
             {
-                GameEventBridge.CurrencyAdded(CurrencyType.Special, excesReputation);
-                Debug.Log($"환생 완료 초과명성 {excesReputation}만큼 특수재화를 획득 ");
+                int specialCurrencyGained = excessReputation / 2;
+
+                if (specialCurrencyGained > 0)
+                {
+                    GameEventBridge.CurrencyAdded(CurrencyType.Special, specialCurrencyGained);
+                }
             }
         }
 

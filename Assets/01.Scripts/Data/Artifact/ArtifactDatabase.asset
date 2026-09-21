@@ -70,7 +70,7 @@ MonoBehaviour:
     effects:
     - effectType: 0
       effectValue: 3
-    SpecialUnlockCost: 5000
+    SpecialUnlockCost: 10000
     requiredRebirthCount: 2
     requiredReputation: 4000
   - artifactId: 106
@@ -80,11 +80,11 @@ MonoBehaviour:
     effects:
     - effectType: 0
       effectValue: 4
-    SpecialUnlockCost: 10000
+    SpecialUnlockCost: 30000
     requiredRebirthCount: 3
     requiredReputation: 5000
   - artifactId: 200
-    type: 1
+    type: 0
     artiName: "\uC758\uC790"
     icon: {fileID: 6132618406234632, guid: 5e51191ad6a240946a6454742f57c182, type: 3}
     effects:
@@ -120,7 +120,7 @@ MonoBehaviour:
     effects:
     - effectType: 1
       effectValue: 2.5
-    SpecialUnlockCost: 3000
+    SpecialUnlockCost: 4500
     requiredRebirthCount: 1
     requiredReputation: 1000
   - artifactId: 204
@@ -130,7 +130,7 @@ MonoBehaviour:
     effects:
     - effectType: 1
       effectValue: 3
-    SpecialUnlockCost: 4000
+    SpecialUnlockCost: 6000
     requiredRebirthCount: 1
     requiredReputation: 2000
   - artifactId: 205
@@ -140,7 +140,7 @@ MonoBehaviour:
     effects:
     - effectType: 1
       effectValue: 3
-    SpecialUnlockCost: 4000
+    SpecialUnlockCost: 8000
     requiredRebirthCount: 2
     requiredReputation: 200
   - artifactId: 206
@@ -150,6 +150,6 @@ MonoBehaviour:
     effects:
     - effectType: 1
       effectValue: 4
-    SpecialUnlockCost: 12000
+    SpecialUnlockCost: 24000
     requiredRebirthCount: 3
     requiredReputation: 3000
