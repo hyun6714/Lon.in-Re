@@ -136,6 +136,7 @@ public class EventManager : MonoBehaviour
         GameEventBridge.OnDayChanged += ChangeEvent;
         GameEventBridge.OnEventStarted += StartCurrentEvent;
         GameEventBridge.OnPausedChanged += PausedChanged;
+        GameEventBridge.OnTimeChanged += RefreshNextEvent;
         Utils.Log("EventManager 구독 완료");
     }
 
@@ -144,6 +145,7 @@ public class EventManager : MonoBehaviour
         GameEventBridge.OnDayChanged -= ChangeEvent;
         GameEventBridge.OnEventStarted -= StartCurrentEvent;
         GameEventBridge.OnPausedChanged -= PausedChanged;
+        GameEventBridge.OnTimeChanged -= RefreshNextEvent;
     }
 
     /// <summary>
@@ -223,7 +225,9 @@ public class EventManager : MonoBehaviour
             }
 
             Utils.Log($"이벤트 복구 완료 : {saveData.eventType}");
-        }        
+        }
+
+        UpdateNextEvent();
     }
 
     /// <summary>
@@ -450,5 +454,10 @@ public class EventManager : MonoBehaviour
             return;
 
         GameEventBridge.NextEventChanged(nextEventDate);
+    }
+
+    public void RefreshNextEvent(GameDate _)
+    {
+        UpdateNextEvent();
     }
 }
