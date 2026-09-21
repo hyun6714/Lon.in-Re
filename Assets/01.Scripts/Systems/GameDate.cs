@@ -123,6 +123,12 @@ public struct GameDate : IEquatable<GameDate>
         return month == other.month && day == other.day;
     }
 
+    /// <summary>
+    /// 현재 날짜 기준 남은 날짜 계산 함수
+    /// </summary>
+    /// <param name="targetDate"> 목표 날짜 </param>
+    /// <param name="day"> 남은 일 수 </param>
+    /// <param name="hour"> 남은 시간 </param>
     public readonly void GetRemainingTime(GameDate targetDate, out int day, out int hour)
     {
         int totalMinutes = GetRemainingMinutes(targetDate);
@@ -132,6 +138,11 @@ public struct GameDate : IEquatable<GameDate>
         hour = (totalMinutes % minutesPerDay) / maxMinutePerHour;
     }
 
+    /// <summary>
+    /// 현재 날짜 기준 targetDate 날짜 확인
+    /// </summary>
+    /// <param name="targetDate"> 목표 날짜 </param>
+    /// <returns></returns>
     public readonly int GetRemainingMinutes(GameDate targetDate)
     {
         if (targetDate <= this)
