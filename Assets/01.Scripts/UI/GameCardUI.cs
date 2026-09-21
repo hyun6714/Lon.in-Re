@@ -29,6 +29,11 @@ public class GameCardUI : MonoBehaviour
     private void OnEnable()
     {
         GameEventBridge.OnDayChanged += HandleDayChanged;
+
+        if (releasedGameData != null && settlementData != null)
+        {
+            UpdateRemainingTime(releasedGameData, settlementData);
+        }
     }
 
     private void OnDisable()
