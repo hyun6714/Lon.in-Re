@@ -10462,9 +10462,9 @@ MonoBehaviour:
   backgroundObjectList:
   - {fileID: 737447218}
   - {fileID: 361111698}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 498764823}
+  - {fileID: 1405248714}
+  - {fileID: 500383050}
   rankDataList:
   - {fileID: 11400000, guid: 484695b4244307544bc13fb9a34966f6, type: 2}
   - {fileID: 11400000, guid: 8574d52ce7effdb438d7ba7e49c8c37e, type: 2}
@@ -70384,7 +70384,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1150273375305965054, guid: 6a08cf37cba6ded468d079bb49aa6c46, type: 3}
   m_PrefabInstance: {fileID: 471685632}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 471685633}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d950e41d0a11244f965c22b03291dc1, type: 3}
