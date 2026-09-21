@@ -92,7 +92,7 @@ public class AirConditionalEvent : IEvent
     {
         try
         {
-            await UniTask.WaitUntil(() => CalendarManager.instance.CurrentDate >= eventEndDate, cancellationToken: token);
+            await UniTask.WaitUntil(() => GameDataGetter<GameDate>.GetData() >= eventEndDate, cancellationToken: token);
         }
         catch (OperationCanceledException)
         {
@@ -132,14 +132,14 @@ public class AirConditionalEvent : IEvent
 
     public void LoadEvent(GameDateSaveData endDate, bool isSummerCool)
     {
-        GameDate loadEndDate = CalendarManager.instance.CurrentDate;
+        GameDate loadEndDate = GameDataGetter<GameDate>.GetData();
 
         loadEndDate.LoadDate(endDate);
 
         eventEndDate = loadEndDate;
         isCool = isSummerCool;
 
-        GameDate currentDate = CalendarManager.instance.CurrentDate;
+        GameDate currentDate = GameDataGetter<GameDate>.GetData();
 
         if (currentDate >= eventEndDate)
         {
