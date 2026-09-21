@@ -232,7 +232,7 @@ public class NormalShop : PopupBase
             if (tab == ShopTab.Artifact)
             {
                 // 아티팩트 슬롯 높이
-                grid.cellSize = new Vector2(grid.cellSize.x, 256f);
+                grid.cellSize = new Vector2(grid.cellSize.x, 158f);
             }
             else
             {
