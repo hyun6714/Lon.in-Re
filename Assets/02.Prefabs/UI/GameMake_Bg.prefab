@@ -1032,6 +1032,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 7b9861e27ed97524c8b4af88fe02e7bd, type: 2}
   useDim: 1
   exitBtn: {fileID: 5820400027163477665}
+  developBtn: {fileID: 623496964178400744}
 --- !u!1 &3716322216706658241
 GameObject:
   m_ObjectHideFlags: 0
