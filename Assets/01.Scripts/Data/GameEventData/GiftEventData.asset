@@ -21,7 +21,7 @@ MonoBehaviour:
   reward:
   - rank: 0
     rewardGold: 500
-    rewardFame: 100
+    rewardFame: 200
   - rank: 1
     rewardGold: 2000
     rewardFame: 500

@@ -25,7 +25,7 @@ MonoBehaviour:
   rewardFame: 100
   reward:
   - rank: 0
-    rewardFame: 1000
+    rewardFame: 500
   - rank: 1
     rewardFame: 2500
   - rank: 2
