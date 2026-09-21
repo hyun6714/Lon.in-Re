@@ -36,7 +36,9 @@ public enum HUDTextType
     Date,
 
     Employee,
-    Game
+    Game,
+
+    NextEvent
 }
 
 public class UIManager : MonoBehaviour
@@ -103,6 +105,7 @@ public class UIManager : MonoBehaviour
         GameEventBridge.OnEmployeeCountChanged += SetText;
         GameEventBridge.OnPopupOpened += OpenPopup;
         GameEventBridge.OnPopupClosed += ClosePopup;
+        GameEventBridge.OnNextEventChanged += SetEventText;
     }
 
     private void UnSubscribeEvent()
@@ -113,6 +116,7 @@ public class UIManager : MonoBehaviour
         GameEventBridge.OnEmployeeCountChanged -= SetText;
         GameEventBridge.OnPopupOpened -= OpenPopup;
         GameEventBridge.OnPopupClosed -= ClosePopup;
+        GameEventBridge.OnNextEventChanged -= SetEventText;
     }
 
     // 런타임 딕셔너리에 저장된 팝업 비우기
@@ -365,6 +369,19 @@ public class UIManager : MonoBehaviour
         string text = $"{currentCount}/{maxCount}";
         textGroup.SetText(HUDTextType.Employee, text);
     }
+
+    public void SetEventText(GameDate nextEventDate)
+    {
+        GameDate currentDate = GameDataGetter<GameDate>.GetData();
+
+        int remainMinutes = currentDate.GetRemainingMinutes(nextEventDate);
+
+        int days = remainMinutes / (24 * 60);
+        int hours = (remainMinutes % (24 * 60)) / 60);
+
+        SetText(HUDTextType.NextEvent, $"다음 이벤트까지 {days}일 {hours}시간");
+    }
+
     #endregion
 
     private void SetDimPos(PopupBase popup)

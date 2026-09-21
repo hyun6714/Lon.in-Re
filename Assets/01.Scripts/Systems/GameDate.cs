@@ -121,6 +121,42 @@ public struct GameDate : IEquatable<GameDate>
         return month == other.month && day == other.day;
     }
 
+    public readonly int GetRemainingMinutes(GameDate targetDate)
+    {
+        if (targetDate <= this)
+            return 0;
+
+        GameDate currentDate = this;
+        int totalMinutes = 0;
+
+        if (currentDate.year == targetDate.year && currentDate.month == targetDate.month
+            && currentDate.day == targetDate.day)
+        {
+            return (targetDate.hour * 60 + targetDate.minutes) - (currentDate.hour * 60 + currentDate.minutes);
+        }
+
+        totalMinutes += (maxHourPerDay * 60) - (currentDate.hour + currentDate.minutes);
+
+        currentDate.NextDay();
+
+        currentDate.hour = 0;
+        currentDate.minutes = 0;
+
+        while (currentDate.year != targetDate.year || currentDate.month != targetDate.month
+            || currentDate.day != targetDate.day)
+        {
+            totalMinutes += (maxHourPerDay * 60);
+            currentDate.NextDay();
+
+            currentDate.hour = 0;
+            currentDate.minutes = 0;
+        }
+
+        totalMinutes += targetDate.hour * 60 + targetDate.minutes;
+
+        return totalMinutes;
+    }
+
 #if UNITY_EDITOR
     public void SetDate(GameDate date)
     {
