@@ -45,6 +45,9 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
+    [Header("데이터")]
+    [SerializeField] private UIManagerData data;
+
     [Header("UI 그룹")]
     [SerializeField] private UITextGroup textGroup;
     [SerializeField] private UIButtonGroup buttonGroup;
@@ -381,20 +384,17 @@ public class UIManager : MonoBehaviour
         nextEventDate = date;
         hasNextEvent = true;
 
-        SetNextEventText(date);
+        SetNextEventText(GameDataGetter<GameDate>.GetData());
     }
 
     public void SetNextEventText(GameDate currentDate)
     {
-        if (!hasNextEvent)
+        if (!hasNextEvent || data == null)
             return;
 
-        int remainMinutes = currentDate.GetRemainingMinutes(nextEventDate);
+        currentDate.GetRemainingTime(nextEventDate, out int day, out int hour);
 
-        int days = remainMinutes / (24 * 60);
-        int hours = (remainMinutes % (24 * 60)) / 60;
-
-        SetText(HUDTextType.NextEvent, $"다음 이벤트까지/n{days}일 {hours}시간");
+        SetText(HUDTextType.NextEvent, string.Format(data.NextEventText, day, hour));
     }
 
     private void SetDimPos(PopupBase popup)

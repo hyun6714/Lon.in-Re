@@ -16,6 +16,6 @@ MonoBehaviour:
   rankDisplayName: "\uC911\uC18C \uAE30\uC5C5"
   hasEmployees: 1
   maxEmployee: 10
-  reqGamesReleased: 5
-  reqEmployeeCount: 0
-  reqReputation: 5000
+  reqGamesReleased: 10
+  reqEmployeeCount: 10
+  reqReputation: 15000

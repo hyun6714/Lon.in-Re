@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8544d468df151b84b85a8ce4b65858c9, type: 3}
   m_Name: GameDevelopmentData
   m_EditorClassIdentifier: Assembly-CSharp::GameDevData
-  developmentCost: 10000
-  probabilityUpgradeCost: 1000
+  developmentCost: 50000
+  probabilityUpgradeCost: 50000
   maxProbabilityUpgradeCount: 3
-  gradeARate: 33
-  gradeBRate: 33
-  gradeCRate: 34
-  gradeAIncreaseRate: 3
+  gradeARate: 15
+  gradeBRate: 30
+  gradeCRate: 55
+  gradeAIncreaseRate: 8
   gradeBIncreaseRate: 2
-  gradeCDecreaseRate: 5
+  gradeCDecreaseRate: 10
   finalAGradeScore: 7
   finalBGradeScore: 5

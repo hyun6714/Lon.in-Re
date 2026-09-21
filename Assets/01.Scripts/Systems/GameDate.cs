@@ -123,11 +123,14 @@ public struct GameDate : IEquatable<GameDate>
         return month == other.month && day == other.day;
     }
 
-    //public readonly void GetRemainingTime(GameDate targetDate, out int day, out int hour)
-    //{
-    //    int totalMinutes = GetRemainingMinutes(targetDate);
-    //    int minutesPerHour = maxMinutePerHour;
-    //}
+    public readonly void GetRemainingTime(GameDate targetDate, out int day, out int hour)
+    {
+        int totalMinutes = GetRemainingMinutes(targetDate);
+        int minutesPerDay = maxHourPerDay * maxMinutePerHour;
+
+        day = totalMinutes / minutesPerDay;
+        hour = (totalMinutes % minutesPerDay) / maxMinutePerHour;
+    }
 
     public readonly int GetRemainingMinutes(GameDate targetDate)
     {
@@ -137,13 +140,16 @@ public struct GameDate : IEquatable<GameDate>
         GameDate currentDate = this;
         int totalMinutes = 0;
 
+        int minutesPerHour = maxMinutePerHour;
+        int minutesPerDay = maxHourPerDay * minutesPerHour;
+
         if (currentDate.year == targetDate.year && currentDate.month == targetDate.month
             && currentDate.day == targetDate.day)
         {
-            return (targetDate.hour * 60 + targetDate.minutes) - (currentDate.hour * 60 + currentDate.minutes);
+            return (targetDate.hour * minutesPerHour + targetDate.minutes) - (currentDate.hour * minutesPerHour + currentDate.minutes);
         }
 
-        totalMinutes += (maxHourPerDay * 60) - (currentDate.hour + currentDate.minutes);
+        totalMinutes += minutesPerDay - (currentDate.hour * minutesPerHour + currentDate.minutes);
 
         currentDate.NextDay();
 
@@ -153,14 +159,14 @@ public struct GameDate : IEquatable<GameDate>
         while (currentDate.year != targetDate.year || currentDate.month != targetDate.month
             || currentDate.day != targetDate.day)
         {
-            totalMinutes += (maxHourPerDay * 60);
+            totalMinutes += minutesPerDay;
             currentDate.NextDay();
 
             currentDate.hour = 0;
             currentDate.minutes = 0;
         }
 
-        totalMinutes += targetDate.hour * 60 + targetDate.minutes;
+        totalMinutes += targetDate.hour * minutesPerHour + targetDate.minutes;
 
         return totalMinutes;
     }
