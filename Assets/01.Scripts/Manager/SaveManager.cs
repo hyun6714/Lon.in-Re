@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
 using System.IO;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class SaveManager : MonoBehaviour
@@ -11,6 +12,9 @@ public class SaveManager : MonoBehaviour
     [SerializeField] private float autoSaveInterval = 10f;
 
     private bool isSaveDeleted = false;
+
+    [Header("오프라인 보상")]
+    [SerializeField] private AutoProduction autoProduction;
 
     private void Awake()
     {
@@ -68,6 +72,7 @@ public class SaveManager : MonoBehaviour
         SaveEventData(saveData);
         SaveArtifactData(saveData);
         SavePartUpgradeData(saveData);
+        SaveOfflineData(saveData);
 
         // Json으로 변환
         string json = JsonUtility.ToJson(saveData, true);
@@ -157,6 +162,16 @@ public class SaveManager : MonoBehaviour
         {
             saveData.partUpgrades = tapUpgrade.GetSaveData();
         }
+    }
+
+    // 오프라인 보상 데이터 저장
+    private void SaveOfflineData(SaveData saveData)
+    {
+        // 현재 실제 시간을 저장
+        saveData.lastQuitTime = DateTime.UtcNow.Ticks;
+
+        // 현재 초당 생산량 저장
+        saveData.lastProductionPerSecond = autoProduction.MoneyPerSec;
     }
 
     // 저장 데이터 삭제

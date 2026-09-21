@@ -90,7 +90,7 @@ public class SaveData
     public long lastQuitTime;
 
     // 게임 종료 당시 초당 생산량
-    public int lastProductionPerSecond;
+    public float lastProductionPerSecond;
 
     #endregion
 
