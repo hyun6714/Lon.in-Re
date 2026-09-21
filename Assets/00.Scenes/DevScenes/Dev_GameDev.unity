@@ -882,6 +882,50 @@ RectTransform:
   m_AnchoredPosition: {x: 145.5, y: -179.5}
   m_SizeDelta: {x: 291, y: 359}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &106939309
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 106939311}
+  - component: {fileID: 106939310}
+  m_Layer: 0
+  m_Name: Off Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &106939310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106939309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f12c6db1ccbae448923124daeac645f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OfflineManager
+--- !u!4 &106939311
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106939309}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 826.2351, y: 409.62695, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &129399500
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8396,6 +8440,17 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &422942811 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7626063155651074073, guid: a5cf33fc2cdef95419177899498d856d, type: 3}
+  m_PrefabInstance: {fileID: 1152127568}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c1ca13735e3474aa8aac84f04b476b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoProduction
 --- !u!1 &423805421
 GameObject:
   m_ObjectHideFlags: 0
@@ -46597,7 +46652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveManager
   autoSaveInterval: 10
-  autoProduction: {fileID: 0}
+  autoProduction: {fileID: 422942811}
 --- !u!4 &1446251357
 Transform:
   m_ObjectHideFlags: 0
@@ -71433,6 +71488,7 @@ SceneRoots:
   - {fileID: 1443240577}
   - {fileID: 663056384}
   - {fileID: 477668473}
-  - {fileID: 1152127568}
   - {fileID: 2119296125}
+  - {fileID: 1152127568}
   - {fileID: 1443735911}
+  - {fileID: 106939311}
