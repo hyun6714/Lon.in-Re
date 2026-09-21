@@ -7,7 +7,7 @@ public static class GameEventBridge
 
     public static event Action<GameDate> OnTimeChanged;
 
-    /// <summary> 7시 마다 이벤트 체크 </summary>
+    /// <summary> 이벤트 체크 </summary>
     public static event Action OnEventStarted;
 
     /// <summary> 게임이 일시정지 되었을 때 발생 </summary>
@@ -43,6 +43,13 @@ public static class GameEventBridge
     /// <summary> 직원 수 텍스트 변경 용 이벤트 </summary>
     public static event Action<int, int> OnEmployeeCountChanged;
 
+    /// <summary> 팝업창 열 때 발생 </summary>
+    public static event Action<UIName> OnPopupOpened;
+
+    /// <summary> 팝업창 닫을 때 발생 </summary>
+    public static event Action<UIName> OnPopupClosed;
+
+
     // 이벤트 실행
     public static void DayChanged(GameDate date) => OnDayChanged?.Invoke(date);
     public static void TimeChanged(GameDate date) => OnTimeChanged?.Invoke(date);
@@ -59,4 +66,6 @@ public static class GameEventBridge
 
     public static void Reincarnated() => OnReincarnated?.Invoke();
     public static void EmployeeCountChanged(int current, int max) => OnEmployeeCountChanged?.Invoke(current, max);
+    public static void PopupOpened(UIName name) => OnPopupOpened?.Invoke(name);
+    public static void PopupClosed(UIName name) => OnPopupClosed?.Invoke(name);
 }

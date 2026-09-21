@@ -101,6 +101,8 @@ public class UIManager : MonoBehaviour
         GameEventBridge.OnCurrencyChanged += SetText;
         GameEventBridge.OnTimeChanged += SetText;
         GameEventBridge.OnEmployeeCountChanged += SetText;
+        GameEventBridge.OnPopupOpened += OpenPopup;
+        GameEventBridge.OnPopupClosed += ClosePopup;
     }
 
     private void UnSubscribeEvent()
@@ -109,6 +111,8 @@ public class UIManager : MonoBehaviour
         GameEventBridge.OnCurrencyChanged -= SetText;
         GameEventBridge.OnTimeChanged -= SetText;
         GameEventBridge.OnEmployeeCountChanged -= SetText;
+        GameEventBridge.OnPopupOpened -= OpenPopup;
+        GameEventBridge.OnPopupClosed -= ClosePopup;
     }
 
     // 런타임 딕셔너리에 저장된 팝업 비우기
