@@ -32,14 +32,16 @@ public class PlayerTapUpgrade : MonoBehaviour
     // 환생 이벤트 구독 / 해제
     private void OnEnable()
     {
-        ReincarnationManager.OnReincarnated += ResetUpgrade;
+        GameEventBridge.OnReincarnated += ResetUpgrade;
         GameEventBridge.OnTapMultiplierChanged += SetEventMultiplier;
+        GameEventBridge.OnArtifactUnlocked += RecalculateTapPower;
     }
 
     private void OnDisable()
     {
-        ReincarnationManager.OnReincarnated -= ResetUpgrade;
+        GameEventBridge.OnReincarnated -= ResetUpgrade;
         GameEventBridge.OnTapMultiplierChanged -= SetEventMultiplier;
+        GameEventBridge.OnArtifactUnlocked -= RecalculateTapPower;
     }
 
     private void Start()
@@ -52,7 +54,6 @@ public class PlayerTapUpgrade : MonoBehaviour
     public void RecalculateTapPower()
     {
         float totalPower = defaultBasePower;
-
         // 1. 부품 파워 합산
         for (int i = 0; i < partStates.Count; i++)
         {
@@ -63,23 +64,22 @@ public class PlayerTapUpgrade : MonoBehaviour
             }
         }
 
-        float totalMulti = 1f;
-
         // 2. 아티팩트 배율 반영
+        float artifactMulti = 1f;
         if (ArtifactManager.instance != null)
         {
-            totalMulti += ArtifactManager.instance.GetTotalGainPerClick();
+            artifactMulti += ArtifactManager.instance.GetTotalGainPerClick();
         }
 
         // 3. 이벤트 배율 반영
-        foreach(var val in eventMulti)
+        float eventMulti = 1f;
+        foreach (var val in this.eventMulti)
         {
-            totalMulti += (val.Value - 1f);
+            eventMulti *= val.Value;
         }
-        
-        totalMulti = Mathf.Max(0.1f, totalMulti);
-        totalPower *= totalMulti;
-        cachedTapPower = Mathf.Max(1, Mathf.RoundToInt(totalPower));
+
+        float finalPower = totalPower * Mathf.Max(0.1f, artifactMulti) * Mathf.Max(0.1f, eventMulti);
+        cachedTapPower = Mathf.Max(1, Mathf.RoundToInt(finalPower));
 
         // 최종 탭 파워 브로드캐스팅
         OnTapPowerChanged?.Invoke(cachedTapPower);

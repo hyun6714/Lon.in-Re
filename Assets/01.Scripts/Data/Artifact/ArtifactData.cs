@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum ArtifactsType
@@ -8,6 +9,20 @@ public enum ArtifactsType
     Legendary
 }
 
+public enum EffectType
+{
+    GainPerClick,
+    PerSecond,
+    ProbabilityIncrease,
+}
+
+[System.Serializable]
+public class ArtifactEffect
+{
+    public EffectType effectType;
+    public float effectValue;    // 증가 수치
+}
+
 [System.Serializable]
 public class ArtifactInfo
 {
@@ -16,10 +31,8 @@ public class ArtifactInfo
     public string artiName;    // 아티팩트 이름
     public Sprite icon;  // UI에 띄울 아이콘 이미지
 
-    [Header("증가 효과")]
-    public float GainperClick; //클릭당 획득량
-    public float PerSecond; //초당 획득량
-    public float Probabilityincrease; //확률 증가 
+    [Header("증가 효과 리스트")]
+    public List<ArtifactEffect> effects = new List<ArtifactEffect>();
 
     [Header("해금")]
     public int SpecialUnlockCost; //해금 비용

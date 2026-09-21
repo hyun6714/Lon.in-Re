@@ -30,9 +30,10 @@ public class ShopArtifactSlot : MonoBehaviour
     }
 
     public void SetUp(
-            ArtifactInfo info,
-            Action onPurchaseSuccessCallback = null,
-            Action<string, string, Action> onRequestConfirmCallback = null)
+        ArtifactInfo info, 
+        Action onPurchaseSuccessCallback = null,
+        Action<string, string, Action> onRequestConfirmCallback = null)
+
     {
         if (info == null)
         {
@@ -60,24 +61,25 @@ public class ShopArtifactSlot : MonoBehaviour
         if (descText != null)
         {
             string descStr = "";
-            if (info.GainperClick > 0)
+            foreach (var effect in info.effects)
             {
-                descStr += $"탭 골드 +{info.GainperClick * 100}%  ";
-            }
-            if (info.PerSecond > 0)
-            {
-                descStr += $"초당 생산 +{CurrencyFormatter.Format(info.PerSecond)}  ";
-            }
-            if (info.Probabilityincrease > 0)
-            {
-                descStr += $"개발 성공률 +{info.Probabilityincrease}%";
+                switch (effect.effectType)
+                {
+                    case EffectType.GainPerClick:
+                        descStr += $"탭 골드 +{effect.effectValue}배  ";
+                        break;
+                    case EffectType.PerSecond:
+                        descStr += $"초당 생산 +{effect.effectValue}배";
+                        break;
+                    case EffectType.ProbabilityIncrease:
+                        descStr += $"개발 성공률 +{effect.effectValue}% ";
+                        break;
+                }
             }
 
             descText.text = descStr.TrimEnd();
             descText.gameObject.SetActive(!string.IsNullOrEmpty(descStr));
         }
-
-        bool isUnlocked = ArtifactManager.instance != null && ArtifactManager.instance.IsUnlocked(targetArtifactID);
 
         // 조건 텍스트 설정
         string conditionStr = "";
@@ -89,6 +91,8 @@ public class ShopArtifactSlot : MonoBehaviour
         {
             conditionStr += $"명성 {info.requiredReputation} 이상";
         }
+
+        bool isUnlocked = ArtifactManager.instance != null && ArtifactManager.instance.IsUnlocked(targetArtifactID);
 
         if (conditionText != null)
         {
@@ -107,52 +111,32 @@ public class ShopArtifactSlot : MonoBehaviour
             unlockBtn.onClick.AddListener(OnClickUnlock);
         }
 
-        UpdateUIState(info);
+        UpdateUIState();
     }
 
-    public void UpdateUIState(ArtifactInfo info)
+    public void UpdateUIState()
     {
-        if (info == null)
-        {
-            return;
-        }
+        if (targetInfo == null) return;
 
-        bool isUnlocked = ArtifactManager.instance != null && ArtifactManager.instance.IsUnlocked(info.artifactId);
+        bool isUnlocked = ArtifactManager.instance != null && ArtifactManager.instance.IsUnlocked(targetInfo.artifactId);
 
         if (isUnlocked)
         {
-            // 이미 보유한 아티팩트
-            if (unlockBtn != null)
-            {
-                unlockBtn.interactable = false;
-            }
-            if (costText != null)
-            {
-                costText.text = "보유 중";
-                costText.color = normalColor;
-            }
-            if (conditionText != null)
-            {
-                conditionText.gameObject.SetActive(false);
-            }
+            if (unlockBtn != null) unlockBtn.interactable = false;
+            if (costText != null) costText.text = "보유 중";
         }
         else
         {
-            // 미보유 아티팩트
-            if (costText != null)
-            {
-                costText.text = CurrencyFormatter.Format(info.SpecialUnlockCost);
-                costText.color = normalColor;
-            }
+            if (costText != null) costText.text = CurrencyFormatter.Format(targetInfo.SpecialUnlockCost);
 
-            // 3가지 조건 검사 후 버튼 활성/비활성화
+            // 전달받은 값으로 조건 검사
             int currentSpecial = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Special) : 0;
             int currentReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
             int currentRebirth = GameManager.instance != null ? GameManager.instance.playerRebirthCount : 0;
 
-            bool canPurchase = (currentSpecial >= info.SpecialUnlockCost) &&
-                               (currentRebirth >= info.requiredRebirthCount) &&
-                               (currentReputation >= info.requiredReputation);
+            bool canPurchase = (currentSpecial >= targetInfo.SpecialUnlockCost) &&
+                               (currentRebirth >= targetInfo.requiredRebirthCount) &&
+                               (currentReputation >= targetInfo.requiredReputation);
 
             if (unlockBtn != null)
             {
@@ -165,7 +149,7 @@ public class ShopArtifactSlot : MonoBehaviour
     {
         if (targetInfo != null)
         {
-            UpdateUIState(targetInfo);
+            UpdateUIState();
         }
     }
 
@@ -179,35 +163,6 @@ public class ShopArtifactSlot : MonoBehaviour
         {
             return;
         }
-        if (CurrencyManager.instance == null || GameManager.instance == null)
-        {
-            return;
-        }
-
-        // 현재 값 가져오기
-        int currentSpecialCurrency = CurrencyManager.instance.GetAmount(CurrencyType.Special);
-        int currentReputation = CurrencyManager.instance.GetAmount(CurrencyType.Reputation);
-        int currentReincarnation = GameManager.instance.playerRebirthCount;
-
-        // 해금 조건 검사
-        if (currentReincarnation < targetInfo.requiredRebirthCount)
-        {
-            Debug.LogWarning($"[구매 불가] 환생 횟수가 부족합니다. (필요: {targetInfo.requiredRebirthCount}회 / 현재: {currentReincarnation}회)");
-            return;
-        }
-
-        if (currentReputation < targetInfo.requiredReputation)
-        {
-            Debug.LogWarning($"[구매 불가] 명성이 부족합니다. (필요: {targetInfo.requiredReputation} / 현재: {currentReputation})");
-            return;
-        }
-
-        if (currentSpecialCurrency < targetInfo.SpecialUnlockCost)
-        {
-            Debug.LogWarning($"[구매 불가] 특수 재화가 부족합니다. (필요: {targetInfo.SpecialUnlockCost}개 / 현재: {currentSpecialCurrency}개)");
-            return;
-        }
-
         if (onRequestConfirm != null)
         {
             onRequestConfirm.Invoke(
@@ -216,6 +171,7 @@ public class ShopArtifactSlot : MonoBehaviour
                 ExecuteUnlock
             );
         }
+        
         else
         {
             ExecuteUnlock();
@@ -225,33 +181,13 @@ public class ShopArtifactSlot : MonoBehaviour
     // 실제 구매 함수
     private void ExecuteUnlock()
     {
-        if (CurrencyManager.instance == null || GameManager.instance == null || ArtifactManager.instance == null)
-        {
-            return;
-        }
+        if (ArtifactManager.instance == null) return;
 
-        int currentSpecialCurrency = CurrencyManager.instance.GetAmount(CurrencyType.Special);
-        int currentReputation = CurrencyManager.instance.GetAmount(CurrencyType.Reputation);
-        int currentReincarnation = GameManager.instance.playerRebirthCount;
-
-        // 실제 구매 및 해금 검사
-        bool success = ArtifactManager.instance.TryUnlockArtifact(
-            targetArtifactID,
-            currentReincarnation,
-            currentReputation,
-            currentSpecialCurrency
-        );
+        bool success = ArtifactManager.instance.TryUnlockArtifact(targetArtifactID);
 
         if (success)
         {
             Debug.Log($"해금 완료: {targetInfo.artiName}");
-
-            // 아티팩트 해금 후 탭 파워 배율 변동 즉시 반영
-            var playerUpgrade = FindFirstObjectByType<PlayerTapUpgrade>();
-            if (playerUpgrade != null)
-            {
-                playerUpgrade.RecalculateTapPower();
-            }
 
             if (onPurchaseSuccess != null)
             {
@@ -259,7 +195,7 @@ public class ShopArtifactSlot : MonoBehaviour
             }
             else if (targetInfo != null)
             {
-                UpdateUIState(targetInfo);
+                UpdateUIState();
             }
         }
     }

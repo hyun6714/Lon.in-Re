@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
+using System.Collections;
+
 
 public class RankManager : MonoBehaviour
 {
@@ -14,6 +17,9 @@ public class RankManager : MonoBehaviour
     }
 
     public static RankManager instance { get; private set; }
+
+    [Header("등급별 배경 오브젝트 (Solo, Indie, Small, Midsized, Major 순서로 씬 오브젝트 드래그)")]
+    [SerializeField] private List<GameObject> backgroundObjectList;
 
     [Header("등급 데이터 에셋 (순서대로 배치)")]
     [SerializeField] private List<RankData> rankDataList;
@@ -40,16 +46,21 @@ public class RankManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-    private void Start()
-    {
-        // 게임 시작 시 현재 랭크 배경 반영
+
         UpdateOfficeVisual();
     }
 
-    private void OnEnable() => ReincarnationManager.OnReincarnated += ResetRank;
-    private void OnDisable() => ReincarnationManager.OnReincarnated -= ResetRank;
+    private void OnEnable()
+    {
+        GameEventBridge.OnReincarnated += ResetRank;
+        SceneManager.sceneLoaded += OnSceneLoaded; 
+    }
 
+    private void OnDisable()
+    {
+        GameEventBridge.OnReincarnated -= ResetRank;
+        SceneManager.sceneLoaded -= OnSceneLoaded; 
+    }
 
     public RankData GetRankData(RankState state)
     {
@@ -109,19 +120,38 @@ public class RankManager : MonoBehaviour
             GameManager.instance.currentEmployeeCount = 0;
         }
 
+        UpdateOfficeVisual();
         Debug.Log("등급 초기화 완료");
     }
 
-    private void UpdateOfficeVisual()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // 모든 랭크 데이터에 등록된 배경 오브젝트들을 순회하며 켜고 끄기
-        foreach (var data in rankDataList)
+        StartCoroutine(DelayedInitializeRank());
+    }
+
+    private IEnumerator DelayedInitializeRank()
+    {
+        yield return null; 
+
+        UpdateOfficeVisual();
+
+        if (RankUI.instance != null)
         {
-            if (data != null && data.backgroundPrefabOrObject != null)
+            RankUI.instance.UpdateRankUI();
+        }
+    }
+
+    public void UpdateOfficeVisual()
+    {
+        int currentIndex = (int)currentRank;
+
+        for (int i = 0; i < backgroundObjectList.Count; i++)
+        {
+            if (backgroundObjectList[i] != null)
             {
-                // 현재 랭크인 것만 켜고, 나머지는 끕니다.
-                bool isActive = (data == CurrentRankData);
-                data.backgroundPrefabOrObject.SetActive(isActive);
+                // 현재 등급 인덱스와 일치하는 배경만 켜고 나머지는 끕니다.
+                bool isActive = (i == currentIndex);
+                backgroundObjectList[i].SetActive(isActive);
             }
         }
     }

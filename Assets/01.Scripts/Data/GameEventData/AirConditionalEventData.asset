@@ -23,3 +23,14 @@ MonoBehaviour:
   coolText: "\uC790\uB3D9 \uBC30\uC218 2\uBC30 \uC801\uC6A9"
   unCoolText: "\uC790\uB3D9 \uBC30\uC218 0.5\uBC30 \uC801\uC6A9"
   rewardFame: 100
+  reward:
+  - rank: 0
+    rewardFame: 1000
+  - rank: 1
+    rewardFame: 2500
+  - rank: 2
+    rewardFame: 5000
+  - rank: 3
+    rewardFame: 10000
+  - rank: 4
+    rewardFame: 20000

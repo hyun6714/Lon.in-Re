@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System;
 using System.Threading;
 using UnityEngine;
-using TMPro;
 
 public enum Season
 {
@@ -75,6 +74,11 @@ public class CalendarManager : MonoBehaviour
         UnSubscribeEvent();
     }
 
+    private void Start()
+    {
+        GameEventBridge.TimeChanged(currentDate);
+    }
+
     public void SubscribeEvent()
     {
         GameEventBridge.OnPausedChanged += PausedChanged;
@@ -105,7 +109,6 @@ public class CalendarManager : MonoBehaviour
         {
             seasonString[info.season] = info.seasonName;
         }
-
     }
 
     public GameDateSaveData SaveDate()
@@ -117,13 +120,13 @@ public class CalendarManager : MonoBehaviour
     public void LoadDate(GameDateSaveData saveData)
     {
         currentDate.LoadDate(saveData);
+        GameEventBridge.TimeChanged(currentDate);
     }
 
     private async UniTaskVoid UpdateTimeTick(CancellationToken token)
     {
         try
         {
-            //float elapsedTime = 0f;
             while (!token.IsCancellationRequested)
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(realTimer), cancellationToken: token);
@@ -131,8 +134,6 @@ public class CalendarManager : MonoBehaviour
                 AddTime(minutePerSec);
 
                 GameEventBridge.TimeChanged(currentDate);
-
-                await UniTask.NextFrame(PlayerLoopTiming.EarlyUpdate, token);
             }
         }
         catch (OperationCanceledException)
@@ -194,6 +195,7 @@ public class CalendarManager : MonoBehaviour
         return data.DefaultDaysInMonth;
     }
 
+    #region Old Method
     /// <summary>
     /// 현재 날짜와 맞는지, 이벤트 발생 시간인지 비교하는 함수
     /// </summary>
@@ -205,6 +207,7 @@ public class CalendarManager : MonoBehaviour
     {
         return currentDate.year == date.year && currentDate.month == date.month && currentDate.day == date.day && currentDate.hour == defaultEventTriggerHour;
     }
+    #endregion
 
     /// <summary>
     /// addDay 만큼의 일 수가 지난 후 날짜

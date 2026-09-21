@@ -6,8 +6,6 @@ public class ReincarnationManager : MonoBehaviour
 {
     public static ReincarnationManager instance;
 
-    public static event Action OnReincarnated;
-
     public GameObject ReincarnationPop;
 
     public Transform gameListContentParent;
@@ -22,12 +20,12 @@ public class ReincarnationManager : MonoBehaviour
 
     private void OnEnable()
     {
-        OnReincarnated += ResetDataOnRebirth;
+        GameEventBridge.OnReincarnated += ResetDataOnRebirth;
     }
 
     private void OnDisable()
     {
-        OnReincarnated -= ResetDataOnRebirth;
+        GameEventBridge.OnReincarnated -= ResetDataOnRebirth;
     }
 
     public void BtnReincarnation()
@@ -39,10 +37,12 @@ public class ReincarnationManager : MonoBehaviour
 
         int currentReputation = GetCurrentReputation();
 
+        int requirement = DataManager.instance.reincarnationData.reincarnationRequirement;
+
         if (CurrencyManager.instance != null)
         {
             //특수 재화 주는 식
-            int excesReputation = currentReputation - 5000;
+            int excesReputation = currentReputation - requirement;
             if (excesReputation > 0 && CurrencyManager.instance != null)
             {
                 GameEventBridge.CurrencyAdded(CurrencyType.Special, excesReputation);
@@ -50,8 +50,7 @@ public class ReincarnationManager : MonoBehaviour
             }
         }
 
-        OnReincarnated?.Invoke();
-        GameManager.instance.UpdateRebirthUI();
+        GameEventBridge.Reincarnated();
 
         Debug.Log($"환생 완료");
     }
@@ -61,7 +60,14 @@ public class ReincarnationManager : MonoBehaviour
     {
         int currentReputation = GetCurrentReputation();
 
-        if (currentReputation < 5000 )
+        if (DataManager.instance == null || DataManager.instance.reincarnationData == null)
+        {
+            return false; 
+        }
+
+        int requirement = DataManager.instance.reincarnationData.reincarnationRequirement;
+
+        if (currentReputation < requirement)
         {
             Debug.Log($"환생 조건 미달");
             return false;
@@ -69,7 +75,7 @@ public class ReincarnationManager : MonoBehaviour
         return true;
     }
 
-    //플레이어가 가지고 있는 명성 가져오는 함수 
+    //플레이어가 가지고 있는 명성 가져오는 함수
     private int GetCurrentReputation()
     {
         if (CurrencyManager.instance != null)

@@ -33,16 +33,16 @@ public class RankUI : MonoBehaviour
     private void OnEnable()
     {
         GameEventBridge.OnRankChanged += UpdateRankUI;
-        ReincarnationManager.OnReincarnated += UpdateRankUI;
-        ReincarnationManager.OnReincarnated += RankUpOnBtn;
+        GameEventBridge.OnReincarnated += UpdateRankUI;
+        GameEventBridge.OnReincarnated += RankUpOnBtn;
         UpdateRankUI();
     }
 
     private void OnDisable()
     {
         GameEventBridge.OnRankChanged -= UpdateRankUI;
-        ReincarnationManager.OnReincarnated -= UpdateRankUI;
-        ReincarnationManager.OnReincarnated -= RankUpOnBtn;
+        GameEventBridge.OnReincarnated -= UpdateRankUI;
+        GameEventBridge.OnReincarnated -= RankUpOnBtn;
     }
 
     public void OpenRankPop()
@@ -69,10 +69,6 @@ public class RankUI : MonoBehaviour
             {
                 UIManager.Instance.SetText(HUDTextType.Level, currentData.rankDisplayName);
             }
-            //if (RankText != null)
-            //{
-            //    RankText.text = currentData.rankDisplayName;
-            //}
         }
 
         int currentIndex = (int)RankManager.instance.currentRank;

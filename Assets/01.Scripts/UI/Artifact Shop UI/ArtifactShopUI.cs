@@ -41,7 +41,7 @@ public class ArtifactShopUI : MonoBehaviour
 
             if (slot != null)
             {
-                slot.SetUp(info);
+                slot.SetUp(info, RefreshShop, null);
                 spawnedSlots.Add(slot);
             }
         }

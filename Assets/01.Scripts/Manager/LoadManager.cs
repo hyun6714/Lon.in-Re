@@ -93,6 +93,7 @@ public class LoadManager : MonoBehaviour
             EmployeeState state = EmployeeManager.instance.GetEmployeeState(employeeSaveData.employeeId);
 
             state.SetCount(employeeSaveData.count);
+            GameEventBridge.EmployeeChanged();
         }
     }
 
@@ -129,6 +130,7 @@ public class LoadManager : MonoBehaviour
     private void LoadArtifactData(SaveData saveData)
     {
         ArtifactManager.instance.LoadSaveData(saveData.artifactSaveData);
+        GameEventBridge.ArtifactUnlocked();
     }
 
     // 부품 업그레이드 불러오기

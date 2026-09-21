@@ -8,9 +8,6 @@ public class AutoProduction : MonoBehaviour
     [Header("데이터")]
     [SerializeField] private AutoProductionData data;
 
-    [Header("테스트 확인용")]
-    [SerializeField] private float nowMoney;
-
     [Header("n초당 생산량")]
     [SerializeField] private float moneyPerSec;
 
@@ -19,9 +16,6 @@ public class AutoProduction : MonoBehaviour
 
     [Header("업그레이드")]
     [SerializeField] private AutoProductionUpgrade upgrade;
-
-    [Header("직원 정보 가져오기")]
-    [SerializeField] private EmployeeManager employee;
 
     [Header("일시 정지")]
     [SerializeField] private bool isPaused = false;
@@ -55,6 +49,12 @@ public class AutoProduction : MonoBehaviour
 
     private void AutoProductionInit()
     {
+        if (data == null)
+        {
+            Utils.Log("자동 생산 데이터가 존재하지 않습니다.");
+            return;
+        }
+
         moneyPerSec = data.BaseMoneyPerSec;
         autoSec = data.BaseAutoSec;
     }
@@ -82,16 +82,28 @@ public class AutoProduction : MonoBehaviour
         GameEventBridge.OnPausedChanged -= PausedChanged;
     }
 
-    // n초당 생산량 갱신 함수. 고용 인원 + 업그레이드 증가량(임시 계산)
+    // n초당 생산량 갱신 함수. 고용 인원 + 업그레이드 증가량
     private void UpdateMoneyPerSec()
     {
-        moneyPerSec = upgrade.TotalPerSec;
-        Utils.Log($"초당 생산량 갱신 완료 : {moneyPerSec}G/초");
+        Utils.Log("업데이트 시작");
+        if (upgrade == null)
+        {
+            Utils.Log("자동 생산 업그레이드가 존재하지 않습니다.");
+            return;
+        }
 
-        UIManager.Instance.SetText(HUDTextType.CoinSec, $"{moneyPerSec}G/초");
+        moneyPerSec = upgrade.TotalPerSec;
+        Utils.Log(string.Format(data.MoneyPerSecText, moneyPerSec));
+
+        UIManager.Instance.SetText(HUDTextType.CoinSec, 
+            string.Format(data.MoneyPerSecText, moneyPerSec));
     }
 
-    // 자동 생산
+    /// <summary>
+    /// 자동 생산 비동기 함수
+    /// </summary>
+    /// <param name="token"> UniTask 토큰 </param>
+    /// <returns></returns>
     private async UniTaskVoid AutoMoneyProduct(CancellationToken token)
     {
         try
@@ -100,16 +112,12 @@ public class AutoProduction : MonoBehaviour
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(autoSec), cancellationToken: token);
 
-                // n초당 생산량이 0일 때 연산X
                 if (moneyPerSec != 0)
                 {
-                    nowMoney += moneyPerSec;
                     GameEventBridge.CurrencyAdded(CurrencyType.Normal, (int)moneyPerSec);
                     
                     UIManager.Instance.SpawnFloatingText(transform.position, (int)moneyPerSec, true);
                 }
-
-                await UniTask.NextFrame(PlayerLoopTiming.EarlyUpdate, token);
             }
         }
         catch (OperationCanceledException)
@@ -118,6 +126,7 @@ public class AutoProduction : MonoBehaviour
         }
     }
 
+    // 정지 상태 확인용
     public void PausedChanged(bool isPaused)
     {
         this.isPaused = isPaused;

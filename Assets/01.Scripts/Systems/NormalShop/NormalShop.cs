@@ -88,7 +88,7 @@ public class NormalShop : PopupBase
         InitSlots();
 
         GameEventBridge.OnCurrencyChanged += OnCurrencyChanged;
-        ReincarnationManager.OnReincarnated += OnReincarnated;
+        GameEventBridge.OnReincarnated += OnReincarnated;
     }
 
     private void OnDestroy()
@@ -96,7 +96,7 @@ public class NormalShop : PopupBase
         shopTween?.Kill();
 
         GameEventBridge.OnCurrencyChanged -= OnCurrencyChanged;
-        ReincarnationManager.OnReincarnated -= OnReincarnated;
+        GameEventBridge.OnReincarnated -= OnReincarnated;
     }
 
     private void OnReincarnated()
