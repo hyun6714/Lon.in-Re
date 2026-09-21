@@ -122,6 +122,23 @@ public class GameReleaseManager : MonoBehaviour
         return true;
     }
 
+    // 현재 정산 진행 중인 게임 개수
+    public int GetActiveGameCount(int settlementNum)
+    {
+        int activeGameCount = 0;
+
+        foreach (ReleasedGameSaveData releasedGame in releasedGames)
+        {
+            // 모든 정산이 끝나지 않은 게임만 계산
+            if (releasedGame.settlementCount < settlementNum)
+            {
+                activeGameCount++;
+            }
+        }
+
+        return activeGameCount;
+    }
+
     private void OnEnable()
     {
         GameEventBridge.OnReincarnated += ResetDataOnRebirth;

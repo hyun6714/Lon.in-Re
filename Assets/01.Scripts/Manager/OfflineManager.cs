@@ -6,15 +6,6 @@ public class OfflineManager : MonoBehaviour
 {
     public static OfflineManager instance;
 
-    // 마지막으로 게임을 종료한 실제 시간
-    private DateTime lastQuitTime;
-
-    // 게임 종료 당시 초당 생산량(합계)
-    private float lastProductionPerSecond;
-
-    // 오프라인 보상(재접속시 획득하는 보상)
-    private int offlineReward;
-
     private void Awake()
     {
         if (instance == null)

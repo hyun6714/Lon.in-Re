@@ -21,5 +21,6 @@ MonoBehaviour:
   gradeAIncreaseRate: 8
   gradeBIncreaseRate: 2
   gradeCDecreaseRate: 10
-  finalAGradeScore: 7
+  finalAGradeScore: 8
   finalBGradeScore: 5
+  maxActiveGameCount: 10

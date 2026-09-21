@@ -218,6 +218,20 @@ public class GameDevManager : MonoBehaviour
             return null;
         }
 
+        // 현재 정산 진행 중인 게임 개수
+          int activeGameCount = GameReleaseManager.instance.GetActiveGameCount(EventManager.instance.SettlementNum);
+
+        // 최대 동시 개발 게임 수 초과 시 개발 불가
+        if (activeGameCount >= gameDevData.MaxActiveGameCount)
+        {
+            Utils.Log(
+                $"동시 개발 가능한 게임 수를 초과했습니다. " +
+                $"현재 : {activeGameCount} / 최대 : {gameDevData.MaxActiveGameCount}"
+            );
+
+            return null;
+        }
+
         int totalDevelopmentCost = GetTotalDevelopmentCost();
 
         //기본 개발 비용 차감
