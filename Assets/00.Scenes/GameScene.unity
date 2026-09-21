@@ -4809,6 +4809,50 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &276928372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 276928374}
+  - component: {fileID: 276928373}
+  m_Layer: 0
+  m_Name: Offline Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &276928373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276928372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f12c6db1ccbae448923124daeac645f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OfflineManager
+--- !u!4 &276928374
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276928372}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 826.2351, y: 409.62695, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &281109661 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 291076541147657756, guid: 1da2165cb46a0f145a20ef1e277da9e2, type: 3}
@@ -35479,6 +35523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveManager
   autoSaveInterval: 10
+  autoProduction: {fileID: 1893852505}
 --- !u!4 &1257857466
 Transform:
   m_ObjectHideFlags: 0
@@ -55896,6 +55941,8 @@ MonoBehaviour:
   funIcon: {fileID: 794207709}
   graphicIcon: {fileID: 1383957107}
   optimizationIcon: {fileID: 750123449}
+  developmentCostText: {fileID: 8928029871091366164}
+  defaultGradeSprite: {fileID: 21300000, guid: f738815bdee12d442a8cc3f19ca0199c, type: 3}
   aGradeSprite: {fileID: 21300000, guid: f4007ace294b9734e9b23a573c95b7b6, type: 3}
   bGradeSprite: {fileID: 21300000, guid: dcc535d9e58aca7489348e34366ac7c8, type: 3}
   cGradeSprite: {fileID: 21300000, guid: 699a08bc9f1110f4e8b5dd0d2c77a298, type: 3}
@@ -67460,6 +67507,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5cf33fc2cdef95419177899498d856d, type: 3}
+--- !u!114 &1893852505 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7626063155651074073, guid: a5cf33fc2cdef95419177899498d856d, type: 3}
+  m_PrefabInstance: {fileID: 1893852504}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c1ca13735e3474aa8aac84f04b476b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoProduction
 --- !u!1 &1904975892
 GameObject:
   m_ObjectHideFlags: 0
@@ -70677,7 +70735,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1150273375305965054, guid: 6a08cf37cba6ded468d079bb49aa6c46, type: 3}
   m_PrefabInstance: {fileID: 471685632}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 471685633}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d950e41d0a11244f965c22b03291dc1, type: 3}
@@ -71676,6 +71734,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f46b9e4eeb25df428328962404bbf47, type: 3}
+--- !u!114 &8928029871091366164 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 810205940127814867, guid: 3f46b9e4eeb25df428328962404bbf47, type: 3}
+  m_PrefabInstance: {fileID: 8928029871091366163}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -71716,3 +71785,4 @@ SceneRoots:
   - {fileID: 500383052}
   - {fileID: 1257857466}
   - {fileID: 1270218120}
+  - {fileID: 276928374}
