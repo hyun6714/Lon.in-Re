@@ -40,7 +40,7 @@ public static class GameEventBridge
     /// <summary> 환생 시 발생 </summary>
     public static event Action OnReincarnated;
 
-    /// <summary> 직원 수 텍스트 변경 용 이벤트 </summary>
+    /// <summary> 직원 수 텍스트 변경 용 델리게이트 </summary>
     public static event Action<int, int> OnEmployeeCountChanged;
 
     /// <summary> 팝업창 열 때 발생 </summary>
@@ -48,6 +48,9 @@ public static class GameEventBridge
 
     /// <summary> 팝업창 닫을 때 발생 </summary>
     public static event Action<UIName> OnPopupClosed;
+
+    /// <summary> 다음 이벤트 남은시간 텍스트 갱신 용 델리게이트 </summary>
+    public static event Action<GameDate> OnNextEventChanged;
 
 
     // 이벤트 실행
@@ -68,4 +71,6 @@ public static class GameEventBridge
     public static void EmployeeCountChanged(int current, int max) => OnEmployeeCountChanged?.Invoke(current, max);
     public static void PopupOpened(UIName name) => OnPopupOpened?.Invoke(name);
     public static void PopupClosed(UIName name) => OnPopupClosed?.Invoke(name);
+
+    public static void NextEventChanged(GameDate nextEventDate) => OnNextEventChanged?.Invoke(nextEventDate);
 }

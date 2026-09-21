@@ -75,6 +75,8 @@ public class EventManager : MonoBehaviour
         InitializeDic();
 
         eventFactory = new EventFactory(dataContainer);
+
+        UpdateNextEvent();
     }
 
     private void InitializeDic()
@@ -297,6 +299,7 @@ public class EventManager : MonoBehaviour
             Utils.Log($"이벤트 등록 성공 : {eventType}_{kv.Key.month}월 {kv.Key.day}일 {kv.Key.hour}시");
         }
 
+        UpdateNextEvent();
     }
 
     // 게임 출시 후 해당 게임의 정산 시작
@@ -404,5 +407,48 @@ public class EventManager : MonoBehaviour
             return activeEvent.Event;
 
         return null;
+    }
+
+    public bool TryGetNextEventDate(out GameDate nextEventDate)
+    {
+        GameDate currentDate = GameDataGetter<GameDate>.GetData();
+
+        bool isFind = false;
+        nextEventDate = default;
+
+        foreach (var value in eventDateDic)
+        {
+            GameDate eventDate = value.Key;
+
+            GameDate candidate = currentDate;
+
+            candidate.month = eventDate.month;
+            candidate.day = eventDate.day;
+            candidate.hour = eventDate.hour;
+            candidate.minutes = 0;
+
+            // 이미 지난 이벤트라면 다음 해 이벤트로 넘김
+            if (candidate <= currentDate)
+            {
+                candidate.year++;
+            }
+
+            // 가장 가까운 이벤트를 다음 날짜 이벤트로 지정
+            if (!isFind || candidate < nextEventDate)
+            {
+                nextEventDate = candidate;
+                isFind = true;
+            }
+        }
+
+        return isFind;
+    }
+
+    private void UpdateNextEvent()
+    {
+        if (!TryGetNextEventDate(out GameDate nextEventDate))
+            return;
+
+        GameEventBridge.NextEventChanged(nextEventDate);
     }
 }
