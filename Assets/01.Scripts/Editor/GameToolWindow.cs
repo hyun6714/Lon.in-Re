@@ -8,6 +8,10 @@ public class GameToolWindow : EditorWindow
     private int setDay = 1;
     private int setHour = 7;
 
+    private float timeDefaultScale = 1f;
+    private float timeMultiScale = 2f;
+    private float timeMaxScale = 10f;
+
     private int normalCurrency = 10000;
     private int specialCurrency = 10000;
     private int reputationCurrency = 10000;
@@ -53,6 +57,26 @@ public class GameToolWindow : EditorWindow
 
         EditorGUILayout.Space(10);
 
+        #region 게임 가속
+        timeMultiScale = EditorGUILayout.Slider(timeMultiScale, timeDefaultScale, timeMaxScale);
+
+        EditorGUILayout.Space(5);
+
+        if (GUILayout.Button("게임 가속"))
+        {
+            Time.timeScale = timeMultiScale;
+        }
+
+        EditorGUILayout.Space(7);
+
+        if (GUILayout.Button("기본 속도로 변경"))
+        {
+            Time.timeScale = timeDefaultScale;
+        }
+        #endregion
+
+        EditorGUILayout.Space(10);
+
         #region 날짜 변경
         GUILayout.Label("날짜 강제 변경");
 
@@ -61,7 +85,7 @@ public class GameToolWindow : EditorWindow
         
         if (calendar != null)
         {
-            GameDate currentDate = calendar.CurrentDate;
+            GameDate currentDate = GameDataGetter<GameDate>.GetData();
 
             int maxMonth = currentDate.maxMonthPerYear;
             int maxHour = currentDate.maxHourPerDay;
