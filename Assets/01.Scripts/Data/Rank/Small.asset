@@ -20,3 +20,4 @@ MonoBehaviour:
   reqGamesReleased: 10
   reqEmployeeCount: 10
   reqReputation: 15000
+  reqNormal: 3000000
