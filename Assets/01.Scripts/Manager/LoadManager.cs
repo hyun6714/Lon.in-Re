@@ -61,6 +61,8 @@ public class LoadManager : MonoBehaviour
         GameEventBridge.EmployeeCountChanged(GameManager.instance.currentEmployeeCount, RankManager.instance.maxEmployee);
         GameEventBridge.ArtifactUnlocked();
 
+        int activeGameCount = GameReleaseManager.instance.GetActiveGameCount(EventManager.instance.SettlementNum);
+        GameEventBridge.GameDevSucceeded(activeGameCount, GameDevManager.instance.MaxActiveGameCount);
         Utils.Log("게임 불러오기 완료");
     }
 

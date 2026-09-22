@@ -100,6 +100,10 @@ public class GameReleaseManager : MonoBehaviour
 
         releasedGame.settlementCount++;
 
+        int activeGameCount = GetActiveGameCount(EventManager.instance.SettlementNum);
+
+        GameEventBridge.GameDevSucceeded(activeGameCount,GameDevManager.instance.MaxActiveGameCount);
+
         Utils.Log(
             $"게임 정산 횟수 증가 / ID : {gameId} / " +
             $"현재 정산 횟수 : {releasedGame.settlementCount}"
@@ -116,6 +120,10 @@ public class GameReleaseManager : MonoBehaviour
             return false;
 
         releasedGames.Remove(releasedGame);
+
+        int activeGameCount = GetActiveGameCount(EventManager.instance.SettlementNum);
+
+        GameEventBridge.GameDevSucceeded(activeGameCount,GameDevManager.instance.MaxActiveGameCount);
 
         Utils.Log($"게임 버리기 완료 / ID : {gameId}");
 
