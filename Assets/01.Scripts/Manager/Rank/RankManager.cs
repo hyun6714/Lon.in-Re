@@ -88,14 +88,21 @@ public class RankManager : MonoBehaviour
         if (nextData == null) return;
 
         int currentReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
+        int currentGold = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Normal) : 0;
 
         // 승급 조건 검사 (다음 등급 에셋에 적힌 수치와 비교)
         bool isGameSatisfied = gamesReleased >= nextData.reqGamesReleased;
         bool isEmployeeSatisfied = currenyEmployee >= nextData.reqEmployeeCount;
         bool isReputationSatisfied = currentReputation >= nextData.reqReputation;
 
-        if (isGameSatisfied && isEmployeeSatisfied && isReputationSatisfied)
+        bool isGoldSatisfied = currentGold >= nextData.reqNormal;
+
+        if (isGameSatisfied && isEmployeeSatisfied && isReputationSatisfied && isGoldSatisfied)
         {
+            if (CurrencyManager.instance != null)
+            {
+                CurrencyManager.instance.UseCurrency(CurrencyType.Normal, -nextData.reqNormal);
+            }
             currentRank = (RankState)nextIndex;
 
             UpdateOfficeVisual();

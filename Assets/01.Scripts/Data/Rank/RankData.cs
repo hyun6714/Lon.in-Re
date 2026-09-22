@@ -15,5 +15,6 @@ public class RankData : ScriptableObject
     public int reqGamesReleased; // 출시 횟수
     public int reqEmployeeCount; // 직원 인원수
     public int reqReputation; // 명성 수치 
+    public int reqNormal; // 골드 수치 
 
 }

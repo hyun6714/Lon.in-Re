@@ -14,6 +14,7 @@ public class RankUI : MonoBehaviour
     public TextMeshProUGUI CostText; //명성 요구량 텍스트
     public TextMeshProUGUI GameReqText; //출시 게임 수 요구량 텍스트
     public TextMeshProUGUI EmployeeReqText; // 직원 수 요구량 텍스트 
+    public TextMeshProUGUI GoldReqText; // 일반 재화 요구량 텍스트 
 
     [Header("등급 아이콘 UI")]
     [SerializeField] private Image rankIconImage;
@@ -163,6 +164,7 @@ public class RankUI : MonoBehaviour
             if (CostText != null) CostText.text = "-";
             if (GameReqText != null) GameReqText.text = "-";
             if (EmployeeReqText != null) EmployeeReqText.text = "-";
+            if (GoldReqText != null) GoldReqText.text = "-";
         }
         else
         {
@@ -180,13 +182,17 @@ public class RankUI : MonoBehaviour
             {
                 EmployeeReqText.text = $"{GameManager.instance.currentEmployeeCount} / {targetData.reqEmployeeCount}";
             }
+            if (GoldReqText != null)
+            {
+                int currentGold = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Normal) : 0;
+                GoldReqText.text = $"{FormatCurrency(currentGold)} / {FormatCurrency(targetData.reqNormal)}";
+            }
         }
 
         int currentRealIndex = (int)RankManager.instance.currentRank;
 
         if (rankUpButton != null)
         {
-            // 💡 솔로 등급(0번)이거나, 내 현재 등급 바로 다음 단계가 아닐 경우 버튼 숨기기
             if (viewingRankIndex == 0)
             {
                 rankUpButton.gameObject.SetActive(false); // 솔로일 때는 승급 버튼 숨김
@@ -213,4 +219,21 @@ public class RankUI : MonoBehaviour
             rankUpButton.interactable = true;
         }
     }
+
+    public string FormatCurrency(long amount)
+    {
+        if (amount >= 100000000) // 1억 이상
+        {
+            return (amount / 100000000f).ToString("0.#") + "억";
+        }
+        else if (amount >= 10000) // 1만 이상
+        {
+            return (amount / 10000f).ToString("0.#") + "만";
+        }
+        else
+        {
+            return amount.ToString("N0"); // 1만 미만은 그냥 콤마(,) 찍어서 표시
+        }
+    }
+
 }
