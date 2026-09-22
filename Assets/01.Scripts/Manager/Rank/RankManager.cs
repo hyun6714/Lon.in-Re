@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 
 
-public class RankManager : MonoBehaviour
+public class RankManager : MonoBehaviour , IGameDataGet<RankManager.RankState>
 {
     public enum RankState
     {
@@ -52,12 +52,16 @@ public class RankManager : MonoBehaviour
 
     private void OnEnable()
     {
+        GameDataGetter<RankState>.Register(this);
+
         GameEventBridge.OnReincarnated += ResetRank;
         SceneManager.sceneLoaded += OnSceneLoaded; 
     }
 
     private void OnDisable()
     {
+        GameDataGetter<RankState>.UnRegister(this);
+
         GameEventBridge.OnReincarnated -= ResetRank;
         SceneManager.sceneLoaded -= OnSceneLoaded; 
     }
@@ -101,7 +105,7 @@ public class RankManager : MonoBehaviour
         {
             if (CurrencyManager.instance != null)
             {
-                CurrencyManager.instance.UseCurrency(CurrencyType.Normal, -nextData.reqNormal);
+                CurrencyManager.instance.UseCurrency(CurrencyType.Normal, nextData.reqNormal);
             }
             currentRank = (RankState)nextIndex;
 
@@ -162,6 +166,11 @@ public class RankManager : MonoBehaviour
                 backgroundObjectList[i].SetActive(isActive);
             }
         }
+    }
+
+    public RankState GetData()
+    {
+        return currentRank;
     }
 
 }

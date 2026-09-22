@@ -328,6 +328,12 @@ public class EventManager : MonoBehaviour
             {
                 int addDay = data.NextSettlements[i - 1];
 
+                RankManager.RankState currentRank = GameDataGetter<RankManager.RankState>.GetData();
+                if (currentRank >= RankManager.RankState.Small)
+                {
+                    addDay = 14; // 필요에 따라 변경 가능
+                }
+
                 GameDate targetDate = date.GetAfterDay(addDay);
                 Utils.Log($"종료 날짜 : {targetDate.year}년 {targetDate.month}월 {targetDate.day}일 {targetDate.hour}시");
 
