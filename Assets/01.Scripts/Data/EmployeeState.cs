@@ -21,20 +21,6 @@ public class EmployeeState
         return (int)Math.Round(cost);
     }
 
-    // 현재 보유 인원에 따른 초당 생산량 계산
-    public float GetCurrentProductionPerSecond()
-    {
-        // 보유 직원이 없으면 생산량 없음
-        if (count <= 0)
-        {
-            return 0f;
-        }
-
-        double production = employeeData.ProductionPerSecond * Math.Pow(employeeData.ProductionMultiplier, count - 1);
-
-        return (float)production;
-    }
-
     // 직원 고용 시 보유 인원 증가
     public void AddEmployee()
     {
@@ -62,3 +48,4 @@ public class EmployeeState
         count = value;
     }
 }
+

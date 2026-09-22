@@ -155,9 +155,9 @@ public class EmployeeManager : MonoBehaviour
     }
 
     // 현재 보유한 모든 직원의 초당 생산량 계산
-    public float GetTotalProductionPerSecond()
+    public int GetTotalProductionPerSecond()
     {
-        float totalProduction = 0;
+        double totalProduction = 0;
 
         foreach (EmployeeState state in employeeStates)
         {
@@ -166,11 +166,22 @@ public class EmployeeManager : MonoBehaviour
                 continue;
             }
 
-            // 직원별 생산량 계산 (추후 AutoProduction 에서 사용가능)
-            totalProduction += state.GetCurrentProductionPerSecond();
+            if (state.Count > 0)
+            {
+                double employeeGroupProduction = 0;
+
+                // 고용된 인원 수만큼 반복하며 0번째부터 i번째까지 개별 생산량을 누적 계산
+                for (int i = 0; i < state.Count; i++)
+                {
+                    employeeGroupProduction += state.employeeData.ProductionPerSecond *
+                        Math.Pow(state.employeeData.ProductionMultiplier, i);
+                }
+
+                totalProduction += employeeGroupProduction;
+            }
         }
 
-        return totalProduction;
+        return (int)Math.Round(totalProduction);
     }
 
     // 환생 시 모든 직원 수 리셋
