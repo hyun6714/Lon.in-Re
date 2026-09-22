@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RankDataSO
   rank: 0
   rankDisplayName: "1\uC778 \uAC1C\uBC1C\uC790"
+  rankIcon: {fileID: 21300000, guid: 7ba3966692e84a043a7aeb6cd1932ec0, type: 3}
   hasEmployees: 0
   maxEmployee: 0
   reqGamesReleased: 0
   reqEmployeeCount: 0
   reqReputation: 0
-  backgroundPrefabOrObject: {fileID: 4759380736817278210, guid: 6360abdfc61d17f4a9ab14c8b8fe419a, type: 3}
