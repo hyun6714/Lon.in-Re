@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PartData
   partId: Part_EnergyDrink
   partName: "\uC5D0\uB108\uC9C0 \uB4DC\uB9C1\uD06C"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: c19dd7b3987ee3f46b36c6416ba2bb91, type: 3}
   unlockGrade: 0
   baseCost: 1500
   costMultiplier: 1.3
