@@ -31,11 +31,13 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         GameEventBridge.OnReincarnated += UpdateRebirthUI;
+        GameEventBridge.OnRankChanged += GameDevRe;
     }
 
     private void OnDisable()
     {
         GameEventBridge.OnReincarnated -= UpdateRebirthUI;
+        GameEventBridge.OnRankChanged -= GameDevRe;
     }
 
     public void UpdateRebirthUI()
@@ -59,5 +61,11 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         IsPaused = false;
         GameEventBridge.PausedChanged(IsPaused);
+    }
+
+    //등급업 시 게임출시 횟수 초기화
+    public void GameDevRe()
+    {
+        gameDevCount = 0;
     }
 }
