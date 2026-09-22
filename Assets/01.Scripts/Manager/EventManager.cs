@@ -74,8 +74,6 @@ public class EventManager : MonoBehaviour
         InitializeDic();
 
         eventFactory = new EventFactory(dataContainer);
-
-        UpdateNextEvent();
     }
 
     private void InitializeDic()

@@ -20,7 +20,8 @@ public enum UIName
     Popup_Event_TreasureGoblin,
     Dim,
     Popup_GameMake,
-    Popup_Sound
+    Popup_Sound,
+    Popup_Tutorial
 }
 
 public enum HUDTextType
