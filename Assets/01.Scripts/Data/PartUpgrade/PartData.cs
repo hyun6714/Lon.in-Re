@@ -11,7 +11,10 @@ public class PartData : ScriptableObject
 
     [SerializeField] private int baseCost = 10;
     [SerializeField] private float costMultiplier = 1.3f;
-    [SerializeField] private int powerPerLevel = 1;
+
+    [Header("탭 파워")]
+    [SerializeField] private int basePower = 5;
+    [SerializeField] private float powerMultiplier = 1.2f;
 
     public string PartId => partId;
     public string PartName => partName;
@@ -19,5 +22,6 @@ public class PartData : ScriptableObject
     public RankManager.RankState UnlockGrade => unlockGrade;
     public int BaseCost => baseCost;
     public float CostMultiplier => costMultiplier;
-    public int PowerPerLevel => powerPerLevel;
+    public int BasePower => basePower;
+    public float PowerMultiplier => powerMultiplier;
 }
