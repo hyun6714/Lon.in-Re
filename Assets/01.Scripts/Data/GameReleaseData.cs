@@ -1,44 +1,46 @@
-using UnityEngine;
+ï»¿using UnityEngine;
+using System;
 
 [CreateAssetMenu(fileName = "GameReleaseData", menuName = "Game/Game Release Data")]
 public class GameReleaseData : ScriptableObject
 {
-    [Header("Aµî±Þ º¸»ó")]
-    [SerializeField] private int gradeACurrencyReward;
-    [SerializeField] private int gradeAReputationReward;
+    [Header("ë“±ê¸‰ë³„ ìž¬í™” ë³´ìƒ ë¹„ìœ¨ (%)")]
+    [SerializeField] private int gradeACurrencyPercent = 700;
+    [SerializeField] private int gradeBCurrencyPercent = 300;
+    [SerializeField] private int gradeCCurrencyPercent = 110;
 
-    [Header("Bµî±Þ º¸»ó")]
-    [SerializeField] private int gradeBCurrencyReward;
-    [SerializeField] private int gradeBReputationReward;
+    [Header("Aë“±ê¸‰ ëª…ì„± ë³´ìƒ")]
+    [SerializeField] private int gradeAReputationReward = 800;
 
-    [Header("Cµî±Þ º¸»ó")]
-    [SerializeField] private int gradeCCurrencyReward;
-    [SerializeField] private int gradeCReputationReward;
+    [Header("Bë“±ê¸‰ ëª…ì„± ë³´ìƒ")]
+    [SerializeField] private int gradeBReputationReward = 400;
 
-    public int GradeACurrencyReward => gradeACurrencyReward;
-    public int GradeAReputationReward => gradeAReputationReward;
+    [Header("Cë“±ê¸‰ ëª…ì„± ë³´ìƒ")]
+    [SerializeField] private int gradeCReputationReward = 250;
 
-    public int GradeBCurrencyReward => gradeBCurrencyReward;
-    public int GradeBReputationReward => gradeBReputationReward;
-
-    public int GradeCCurrencyReward => gradeCCurrencyReward;
-    public int GradeCReputationReward => gradeCReputationReward;
-
-    public int GetCurrencyReward(DevelopmentGrade grade)
+    public int GetCurrencyReward(DevelopmentGrade grade, int baseDevelopmentCost)
     {
+        int rewardPercent = 0;
+
         switch (grade)
         {
             case DevelopmentGrade.A:
-                return gradeACurrencyReward;
+                rewardPercent = gradeACurrencyPercent;
+                break;
 
             case DevelopmentGrade.B:
-                return gradeBCurrencyReward;
+                rewardPercent = gradeBCurrencyPercent;
+                break;
 
             case DevelopmentGrade.C:
-                return gradeCCurrencyReward;
+                rewardPercent = gradeCCurrencyPercent;
+                break;
         }
 
-        return 0;
+        long reward =
+            (long)baseDevelopmentCost * rewardPercent / 100;
+
+        return (int)Math.Min(reward, int.MaxValue);
     }
 
     public int GetReputationReward(DevelopmentGrade grade)

@@ -1,6 +1,6 @@
-using System;
+ï»¿using System;
 
-// °³¹ß °á°ú µî±Ş
+// ê°œë°œ ê²°ê³¼ ë“±ê¸‰
 public enum DevelopmentGrade
 {
     C = 1,
@@ -8,17 +8,21 @@ public enum DevelopmentGrade
     A = 3
 }
 
-// °ÔÀÓ °³¹ß½Ã »ı¼º µÇ´Â µ¥ÀÌÅÍ °á°ú
+// ê²Œì„ ê°œë°œì‹œ ìƒì„± ë˜ëŠ” ë°ì´í„° ê²°ê³¼
 [Serializable]
 public class GameDevResult
 {
-    public int gameId; // °ÔÀÓ ½Äº° ID
+    public int gameId; // ê²Œì„ ì‹ë³„ ID
 
-    public DevelopmentGrade funGrade;  // Àç¹Ì
+    public DevelopmentGrade funGrade;  // ì¬ë¯¸
 
-    public DevelopmentGrade graphicGrade;  // ±×·¡ÇÈ
+    public DevelopmentGrade graphicGrade;  // ê·¸ë˜í”½
 
-    public DevelopmentGrade optimizationGrade; // ÃÖÀûÈ­
+    public DevelopmentGrade optimizationGrade; // ìµœì í™”
    
-    public DevelopmentGrade finalGrade; // ÃÖÁ¾ µî±Ş
+    public DevelopmentGrade finalGrade; // ìµœì¢… ë“±ê¸‰
+
+    public RankManager.RankState developmentRank;    // ê²Œì„ ì œì‘ ë‹¹ì‹œ ë­í¬
+
+    public int baseDevelopmentCost;    // ê²Œì„ ì œì‘ ë‹¹ì‹œ ê¸°ë³¸ ì œì‘ë¹„
 }

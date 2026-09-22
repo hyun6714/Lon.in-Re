@@ -1,15 +1,15 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-// °ÔÀÓ Ãâ½Ã
-// Ãâ½ÃµÈ °ÔÀÓ °ü¸®
+// ê²Œì„ ì¶œì‹œ
+// ì¶œì‹œëœ ê²Œì„ ê´€ë¦¬
 
 public class GameReleaseManager : MonoBehaviour
 {
     public static GameReleaseManager instance;
 
-    // Ãâ½ÃµÈ °ÔÀÓ ¸ñ·Ï
+    // ì¶œì‹œëœ ê²Œì„ ëª©ë¡
     public List<ReleasedGameSaveData> releasedGames = new List<ReleasedGameSaveData>();
 
     public event Action<ReleasedGameSaveData> OnGameReleased;
@@ -26,40 +26,40 @@ public class GameReleaseManager : MonoBehaviour
         }
     }
 
-    // °³¹ß ¿Ï·áµÈ °ÔÀÓÀ» Ãâ½Ã ¸ñ·Ï¿¡ µî·Ï
+    // ê°œë°œ ì™„ë£Œëœ ê²Œì„ì„ ì¶œì‹œ ëª©ë¡ì— ë“±ë¡
     public void ReleaseGame(GameDevResult gameResult)
     {
         GameDate currentDate = CalendarManager.instance.CurrentDate;
         ReleasedGameSaveData releasedGame = new ReleasedGameSaveData();
 
-        // °ÔÀÓ °³¹ß °á°ú
+        // ê²Œì„ ê°œë°œ ê²°ê³¼
         releasedGame.gameResult = gameResult;
 
-        // Ãâ½Ã Á÷ÈÄ¿¡´Â Á¤»ê È½¼ö 0
+        // ì¶œì‹œ ì§í›„ì—ëŠ” ì •ì‚° íšŸìˆ˜ 0
         releasedGame.settlementCount = 0;
 
-        // Ãâ½Ã ³¯Â¥
+        // ì¶œì‹œ ë‚ ì§œ
         releasedGame.releaseYear = currentDate.year;
         releasedGame.releaseMonth = currentDate.month;
         releasedGame.releaseDay = currentDate.day;
 
-        // Ãâ½Ã °ÔÀÓ ¸ñ·Ï¿¡ Ãß°¡
+        // ì¶œì‹œ ê²Œì„ ëª©ë¡ì— ì¶”ê°€
         releasedGames.Add(releasedGame);
 
-        // »õ·Î Ãâ½ÃµÈ °ÔÀÓ Àü´Ş
+        // ìƒˆë¡œ ì¶œì‹œëœ ê²Œì„ ì „ë‹¬
         OnGameReleased?.Invoke(releasedGame);
 
-        // Ãâ½Ã ³¯Â¥¸¦ ±âÁØÀ¸·Î Á¤»ê ½ÃÀÛ
+        // ì¶œì‹œ ë‚ ì§œë¥¼ ê¸°ì¤€ìœ¼ë¡œ ì •ì‚° ì‹œì‘
         EventManager.instance.StartGameSettlement(gameResult.gameId);
 
         Utils.Log(
-            $"°ÔÀÓ Ãâ½Ã ¿Ï·á  / ID : { gameResult.gameId} / " +
-            $"ÃÖÁ¾ µî±Ş : {gameResult.finalGrade} / " +
-            $"ÇöÀç Ãâ½Ã °ÔÀÓ ¼ö : {releasedGames.Count}"
+            $"ê²Œì„ ì¶œì‹œ ì™„ë£Œ  / ID : { gameResult.gameId} / " +
+            $"ìµœì¢… ë“±ê¸‰ : {gameResult.finalGrade} / " +
+            $"í˜„ì¬ ì¶œì‹œ ê²Œì„ ìˆ˜ : {releasedGames.Count}"
         );
     }
 
-    // Ãâ½ÃµÈ °ÔÀÓ, ID ·Î Ã£±â
+    // ì¶œì‹œëœ ê²Œì„, ID ë¡œ ì°¾ê¸°
     public ReleasedGameSaveData GetReleasedGameData(int gameId)
     {
         foreach (ReleasedGameSaveData releasedGame in releasedGames)
@@ -70,11 +70,11 @@ public class GameReleaseManager : MonoBehaviour
             }
         }
 
-        Utils.Log($"Ãâ½ÃµÈ °ÔÀÓÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù. ID : {gameId}");
+        Utils.Log($"ì¶œì‹œëœ ê²Œì„ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ID : {gameId}");
         return null;
     }
 
-    // ±âÁ¸ GameSettlementManager¿¡¼­ »ç¿ëÇÏ±â À§ÇÑ ÇÔ¼ö
+    // ê¸°ì¡´ GameSettlementManagerì—ì„œ ì‚¬ìš©í•˜ê¸° ìœ„í•œ í•¨ìˆ˜
     public GameDevResult GetReleasedGame(int gameId)
     {
         ReleasedGameSaveData releasedGame = GetReleasedGameData(gameId);
@@ -88,7 +88,7 @@ public class GameReleaseManager : MonoBehaviour
     }
 
 
-    // Á¤»ê ¿Ï·á È½¼ö Áõ°¡
+    // ì •ì‚° ì™„ë£Œ íšŸìˆ˜ ì¦ê°€
     public void IncreaseSettlementCount(int gameId)
     {
         ReleasedGameSaveData releasedGame = GetReleasedGameData(gameId);
@@ -101,13 +101,13 @@ public class GameReleaseManager : MonoBehaviour
         releasedGame.settlementCount++;
 
         Utils.Log(
-            $"°ÔÀÓ Á¤»ê È½¼ö Áõ°¡ / ID : {gameId} / " +
-            $"ÇöÀç Á¤»ê È½¼ö : {releasedGame.settlementCount}"
+            $"ê²Œì„ ì •ì‚° íšŸìˆ˜ ì¦ê°€ / ID : {gameId} / " +
+            $"í˜„ì¬ ì •ì‚° íšŸìˆ˜ : {releasedGame.settlementCount}"
         );
     }
 
 
-    // Ãâ½ÃµÈ °ÔÀÓ ¹ö¸®±â
+    // ì¶œì‹œëœ ê²Œì„ ë²„ë¦¬ê¸°
     public bool RemoveGame(int gameId)
     {
         ReleasedGameSaveData releasedGame = GetReleasedGameData(gameId);
@@ -117,19 +117,19 @@ public class GameReleaseManager : MonoBehaviour
 
         releasedGames.Remove(releasedGame);
 
-        Utils.Log($"°ÔÀÓ ¹ö¸®±â ¿Ï·á / ID : {gameId}");
+        Utils.Log($"ê²Œì„ ë²„ë¦¬ê¸° ì™„ë£Œ / ID : {gameId}");
 
         return true;
     }
 
-    // ÇöÀç Á¤»ê ÁøÇà ÁßÀÎ °ÔÀÓ °³¼ö
+    // í˜„ì¬ ì •ì‚° ì§„í–‰ ì¤‘ì¸ ê²Œì„ ê°œìˆ˜
     public int GetActiveGameCount(int settlementNum)
     {
         int activeGameCount = 0;
 
         foreach (ReleasedGameSaveData releasedGame in releasedGames)
         {
-            // ¸ğµç Á¤»êÀÌ ³¡³ªÁö ¾ÊÀº °ÔÀÓ¸¸ °è»ê
+            // ëª¨ë“  ì •ì‚°ì´ ëë‚˜ì§€ ì•Šì€ ê²Œì„ë§Œ ê³„ì‚°
             if (releasedGame.settlementCount < settlementNum)
             {
                 activeGameCount++;
@@ -149,7 +149,7 @@ public class GameReleaseManager : MonoBehaviour
         GameEventBridge.OnReincarnated -= ResetDataOnRebirth;
     }
 
-    //È¯»ıÇÒ ‹š °ÔÀÓ Áö¿ì´Â °Í
+    //í™˜ìƒí•  ë–„ ê²Œì„ ì§€ìš°ëŠ” ê²ƒ
     private void ResetDataOnRebirth()
     {
         releasedGames.Clear();

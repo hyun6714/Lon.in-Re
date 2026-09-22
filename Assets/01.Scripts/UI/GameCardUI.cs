@@ -1,25 +1,25 @@
-using TMPro;
+ï»¿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-// GamePopupUI¿¡¼­ ¹ŞÀº °ÔÀÓ Á¤º¸¸¦ Ä«µå¿¡ Ç¥½Ã
+// GamePopupUIì—ì„œ ë°›ì€ ê²Œì„ ì •ë³´ë¥¼ ì¹´ë“œì— í‘œì‹œ
 public class GameCardUI : MonoBehaviour
 {
-    [Header("°ÔÀÓ µî±Ş")]
+    [Header("ê²Œì„ ë“±ê¸‰")]
     [SerializeField] private Image finalGradeIcon;
 
     [SerializeField] private TMP_Text funGradeText;
     [SerializeField] private TMP_Text graphicGradeText;
     [SerializeField] private TMP_Text optimizationGradeText;
 
-    [Header("°ÔÀÓ º¸»ó")]
+    [Header("ê²Œì„ ë³´ìƒ")]
     [SerializeField] private TMP_Text fameRewardText;
     [SerializeField] private TMP_Text goldRewardText;
 
-    [Header("Á¤»ê ½Ã°£")]
+    [Header("ì •ì‚° ì‹œê°„")]
     [SerializeField] private TMP_Text remainingTimeText;
 
-    [Header("°ÔÀÓ ¹ö¸®±â")]
+    [Header("ê²Œì„ ë²„ë¦¬ê¸°")]
     [SerializeField] private Button deleteButton;
 
     private int gameId;
@@ -43,7 +43,7 @@ public class GameCardUI : MonoBehaviour
 
     private void HandleDayChanged(GameDate date)
     {
-        Utils.Log($"°ÔÀÓ Ä«µå ³¯Â¥ º¯°æ °¨Áö : {date.year}³â {date.month}¿ù {date.day}ÀÏ");
+        Utils.Log($"ê²Œì„ ì¹´ë“œ ë‚ ì§œ ë³€ê²½ ê°ì§€ : {date.year}ë…„ {date.month}ì›” {date.day}ì¼");
 
         if (releasedGameData == null || settlementData == null)
             return;
@@ -51,7 +51,7 @@ public class GameCardUI : MonoBehaviour
         UpdateRemainingTime(releasedGameData, settlementData);
     }
 
-    // °ÔÀÓ ÇÏ³ªÀÇ µ¥ÀÌÅÍ¸¦ Ä«µå¿¡ Ç¥½Ã
+    // ê²Œì„ í•˜ë‚˜ì˜ ë°ì´í„°ë¥¼ ì¹´ë“œì— í‘œì‹œ
     public void SetData(ReleasedGameSaveData releasedGame, GameReleaseData gameReleaseData, EventManagerData eventManagerData,
         Sprite aGradeSprite, Sprite bGradeSprite, Sprite cGradeSprite)
     {
@@ -62,47 +62,56 @@ public class GameCardUI : MonoBehaviour
 
         GameDevResult result = releasedGame.gameResult;
 
-        // ÃÖÁ¾ µî±Ş ÀÌ¹ÌÁö
+        // ìµœì¢… ë“±ê¸‰ ì´ë¯¸ì§€
         SetGradeIcon(finalGradeIcon, result.finalGrade, aGradeSprite, bGradeSprite, cGradeSprite);
 
-        // ¼¼ºÎ µî±Ş
+        // ì„¸ë¶€ ë“±ê¸‰
         funGradeText.text = result.funGrade.ToString();
         graphicGradeText.text = result.graphicGrade.ToString();
         optimizationGradeText.text = result.optimizationGrade.ToString();
 
-        // ÃÖÁ¾ µî±Ş¿¡ µû¸¥ º¸»ó
-        int currencyReward = gameReleaseData.GetCurrencyReward(result.finalGrade);
-        int reputationReward = gameReleaseData.GetReputationReward(result.finalGrade);
+        // ìµœì¢… ë“±ê¸‰ì— ë”°ë¥¸ ë³´ìƒ
+        int currencyReward =
+            gameReleaseData.GetCurrencyReward(
+                result.finalGrade,
+                result.baseDevelopmentCost
+            );
 
-        // º¸»ó UI Ç¥½Ã
-        goldRewardText.text = currencyReward.ToString("N0");
-        fameRewardText.text = reputationReward.ToString("N0");
+        int reputationReward =
+            gameReleaseData.GetReputationReward(
+                result.finalGrade
+            );
+
+        // ë³´ìƒ UI í‘œì‹œ
+        goldRewardText.text = CurrencyFormatter.Format(currencyReward);
+
+        fameRewardText.text = CurrencyFormatter.Format(reputationReward);
 
         UpdateRemainingTime(releasedGame, eventManagerData);
     }
 
     private void UpdateRemainingTime(ReleasedGameSaveData releasedGame, EventManagerData eventManagerData)
     {
-        // ¸ğµç Á¤»êÀÌ ³¡³­ °æ¿ì
+        // ëª¨ë“  ì •ì‚°ì´ ëë‚œ ê²½ìš°
         if (releasedGame.settlementCount >= eventManagerData.SettlementNum)
         {
-            remainingTimeText.text = "Á¤»ê ¿Ï·á";
+            remainingTimeText.text = "ì •ì‚° ì™„ë£Œ";
             return;
         }
 
-        // ´ÙÀ½ Á¤»ê±îÁö ÇÊ¿äÇÑ ÀÏ¼ö
+        // ë‹¤ìŒ ì •ì‚°ê¹Œì§€ í•„ìš”í•œ ì¼ìˆ˜
         int settlementDay = eventManagerData.NextSettlements[releasedGame.settlementCount];
 
-        // Ãâ½ÃÀÏºÎÅÍ ÇöÀç±îÁö ¸çÄ¥ÀÌ Áö³µ´ÂÁö °è»ê
+        // ì¶œì‹œì¼ë¶€í„° í˜„ì¬ê¹Œì§€ ë©°ì¹ ì´ ì§€ë‚¬ëŠ”ì§€ ê³„ì‚°
         int passedDays = GetPassedDays(releasedGame);
 
-        // ´ÙÀ½ Á¤»ê±îÁö ³²Àº ÀÏ¼ö
+        // ë‹¤ìŒ ì •ì‚°ê¹Œì§€ ë‚¨ì€ ì¼ìˆ˜
         int remainingDays = settlementDay - passedDays;
 
         if (remainingDays < 0)
             remainingDays = 0;
 
-        remainingTimeText.text = $"{remainingDays}ÀÏ";
+        remainingTimeText.text = $"{remainingDays}ì¼";
     }
 
     private int GetPassedDays(ReleasedGameSaveData releasedGame)
