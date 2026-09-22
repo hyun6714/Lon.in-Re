@@ -21,7 +21,7 @@ MonoBehaviour:
   startSeason: 3
   daysInMonthList: 1f0000001c0000001f0000001e0000001f0000001e0000001f0000001f0000001e0000001f0000001e0000001f000000
   realTime: 1
-  minutePerSec: 15
+  minutePerSec: 30
   maxMonthPerYear: 12
   maxHourPerDay: 24
   maxMinutePerHour: 60

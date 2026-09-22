@@ -45,13 +45,16 @@ public class InGameDebugPanel : MonoBehaviour
     }
 
     #region 시간 제어
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
     public void OnClickPause() => GameManager.instance?.GamePaused();
     public void OnClickResume() => GameManager.instance?.GameResume();
     public void OnClickAccelerate() => Time.timeScale = timeMultiScale;
     public void OnClickResetTimeScale() => Time.timeScale = timeDefaultScale;
+#endif
     #endregion
 
     #region 날짜 변경 기능
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
     public void SetInputYear(string value) { if (int.TryParse(value, out int result)) setYear = result; }
     public void SetInputMonth(string value) { if (int.TryParse(value, out int result)) setMonth = result; }
     public void SetInputDay(string value) { if (int.TryParse(value, out int result)) setDay = result; }
@@ -72,9 +75,11 @@ public class InGameDebugPanel : MonoBehaviour
             Debug.Log($"[DebugPanel] 날짜 변경 완료: {setYear}년 {setMonth}월 {setDay}일 {setHour}시");
         }
     }
+#endif
     #endregion
 
     #region 재화 입력 및 획득/감소 기능
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
     // UI InputField의 On Value Changed 이벤트에 연결할 함수들
     public void SetInputNormalCurrency(string value) 
     {
@@ -103,13 +108,16 @@ public class InGameDebugPanel : MonoBehaviour
 
     public void OnClickAddReputation() => GameEventBridge.CurrencyAdded(CurrencyType.Reputation, inputReputation);
     public void OnClickUseReputation() => GameEventBridge.CurrencyUsed(CurrencyType.Reputation, inputReputation);
+#endif
     #endregion
 
     #region 데이터 초기화
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
     public void OnClickResetSaveData()
     {
         SaveManager.instance?.DeleteSaveData();
         Debug.Log("[DebugPanel] 세이브 데이터 초기화 완료");
     }
+#endif
     #endregion
 }
