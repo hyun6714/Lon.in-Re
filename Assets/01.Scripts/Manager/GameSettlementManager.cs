@@ -21,14 +21,14 @@ public class GameSettlementManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.instance.OnGameSettlement += HandleGameSettlement;
+        GameEventBridge.OnGameSettlementStarted += HandleGameSettlement;
     }
 
     private void OnDisable()
     {
         if (EventManager.instance != null)
         {
-            EventManager.instance.OnGameSettlement -= HandleGameSettlement;
+            GameEventBridge.OnGameSettlementStarted -= HandleGameSettlement;
         }
     }
 

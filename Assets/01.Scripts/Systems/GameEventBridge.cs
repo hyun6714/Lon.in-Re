@@ -52,6 +52,9 @@ public static class GameEventBridge
     /// <summary> 다음 이벤트 남은시간 텍스트 갱신 용 델리게이트 </summary>
     public static event Action<GameDate> OnNextEventChanged;
 
+    /// <summary> 게임 제작 후 정산 시 발생 </summary>
+    public static event Action<int, int> OnGameSettlementStarted;
+
 
     // 이벤트 실행
     public static void DayChanged(GameDate date) => OnDayChanged?.Invoke(date);
@@ -73,4 +76,5 @@ public static class GameEventBridge
     public static void PopupClosed(UIName name) => OnPopupClosed?.Invoke(name);
 
     public static void NextEventChanged(GameDate nextEventDate) => OnNextEventChanged?.Invoke(nextEventDate);
+    public static void GameSettlementStarted(int gameID, int num) => OnGameSettlementStarted?.Invoke(gameID, num);
 }
