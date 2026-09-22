@@ -32,6 +32,8 @@ public class GameDevManager : MonoBehaviour
 
     private int nextGameId = 1;
 
+    public int MaxActiveGameCount => gameDevData.MaxActiveGameCount;
+
     // 저장된 게임 ID 불러오기
     public void LoadNextGameId(int value)
     {
@@ -290,6 +292,8 @@ public class GameDevManager : MonoBehaviour
         {
             RankUI.instance.UpdateRankUI();
         }
+
+        activeGameCount = GameReleaseManager.instance.GetActiveGameCount(EventManager.instance.SettlementNum);
 
         GameEventBridge.GameDevSucceeded(activeGameCount, gameDevData.MaxActiveGameCount);
         return result;
