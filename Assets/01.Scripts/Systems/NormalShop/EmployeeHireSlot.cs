@@ -76,7 +76,7 @@ public class EmployeeHireSlot : MonoBehaviour
         }
 
         // 재화 보유량 확인
-        int currentGold = CurrencyManager.instance.GetAmount(CurrencyType.Normal);
+        long currentGold = CurrencyManager.instance.GetAmount(CurrencyType.Normal);
         return currentGold >= targetState.GetCurrentHireCost();
     }
 
@@ -137,7 +137,7 @@ public class EmployeeHireSlot : MonoBehaviour
                 int hireCost = targetState.GetCurrentHireCost();
                 costText.text = CurrencyFormatter.Format(hireCost);
 
-                int currentGold = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Normal) : 0;
+                long currentGold = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Normal) : 0;
                 bool canAfford = currentGold >= hireCost;
 
                 // 고용 가능하면 흰색, 돈 부족하면 옅은 회색

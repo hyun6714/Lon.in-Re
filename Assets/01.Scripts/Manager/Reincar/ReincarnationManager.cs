@@ -35,7 +35,7 @@ public class ReincarnationManager : MonoBehaviour
             return;
         }
 
-        int currentReputation = GetCurrentReputation();
+        long currentReputation = GetCurrentReputation();
 
 
 
@@ -44,11 +44,11 @@ public class ReincarnationManager : MonoBehaviour
             int requirement = DataManager.instance.reincarnationData.reincarnationRequirement;
 
             //특수 재화 주는 식
-            int excessReputation = currentReputation - requirement;
+            long excessReputation = currentReputation - requirement;
 
             if (excessReputation > 0)
             {
-                int specialCurrencyGained = excessReputation / 2;
+                long specialCurrencyGained = excessReputation / 2;
 
                 if (specialCurrencyGained > 0)
                 {
@@ -65,7 +65,7 @@ public class ReincarnationManager : MonoBehaviour
     //환생 조건 
     public bool CanReincarnation()
     {
-        int currentReputation = GetCurrentReputation();
+        long currentReputation = GetCurrentReputation();
 
         if (DataManager.instance == null || DataManager.instance.reincarnationData == null)
         {
@@ -83,7 +83,7 @@ public class ReincarnationManager : MonoBehaviour
     }
 
     //플레이어가 가지고 있는 명성 가져오는 함수
-    private int GetCurrentReputation()
+    private long GetCurrentReputation()
     {
         if (CurrencyManager.instance != null)
         {

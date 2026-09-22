@@ -87,8 +87,8 @@ public class RankManager : MonoBehaviour
         RankData nextData = GetRankData((RankState)nextIndex);
         if (nextData == null) return;
 
-        int currentReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
-        int currentGold = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Normal) : 0;
+        long currentReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
+        long currentGold = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Normal) : 0;
 
         // 승급 조건 검사 (다음 등급 에셋에 적힌 수치와 비교)
         bool isGameSatisfied = gamesReleased >= nextData.reqGamesReleased;

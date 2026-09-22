@@ -338,7 +338,7 @@ public class UIManager : MonoBehaviour
         textGroup.SetText(type, value);
     }
 
-    public void SetText(HUDTextType type, int amount)
+    public void SetText(HUDTextType type, long amount)
     {
         textGroup.SetText(type, amount);
     }
@@ -348,7 +348,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     /// <param name="type"> 재화 타입 </param>
     /// <param name="amount"> 보유 수량 </param>
-    public void SetText(CurrencyType type, int amount)
+    public void SetText(CurrencyType type, long amount)
     {
         if (!currencyTextDic.TryGetValue(type, out HUDTextType textType))
         {

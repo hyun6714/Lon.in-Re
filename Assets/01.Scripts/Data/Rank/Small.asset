@@ -19,5 +19,5 @@ MonoBehaviour:
   maxEmployee: 15
   reqGamesReleased: 10
   reqEmployeeCount: 5
-  reqReputation: 15000
-  reqNormal: 3000000
+  reqReputation: 30000
+  reqNormal: 10000000

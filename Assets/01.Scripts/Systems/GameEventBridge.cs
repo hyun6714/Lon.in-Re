@@ -20,13 +20,13 @@ public static class GameEventBridge
     public static event Action<GameEventType, float> OnTapMultiplierChanged;
 
     /// <summary> 재화 획득 시 발생 (재화 타입, 재화량) </summary>
-    public static event Action<CurrencyType, int> OnCurrencyAdded;
+    public static event Action<CurrencyType, long> OnCurrencyAdded;
 
     /// <summary> 재화 사용 시 발생 (재화 타입, 재화량) </summary>
-    public static event Func<CurrencyType, int, bool> OnCurrencyUsed;
+    public static event Func<CurrencyType, long, bool> OnCurrencyUsed;
 
     /// <summary> 재화량 변화 시 발생 </summary>
-    public static event Action<CurrencyType, int> OnCurrencyChanged;
+    public static event Action<CurrencyType, long> OnCurrencyChanged;
 
     /// <summary> 직원 수 변화 시 발생 </summary>
     public static event Action OnEmployeeChaned;
@@ -63,9 +63,9 @@ public static class GameEventBridge
     public static void PausedChanged(bool isPaused) => OnPausedChanged?.Invoke(isPaused);
     public static void AutoMultiplierChanged(GameEventType type, float multi) => OnAutoMultiplierChanged?.Invoke(type, multi);
     public static void TapMultiplierChanged(GameEventType type, float multi) => OnTapMultiplierChanged?.Invoke(type, multi);
-    public static void CurrencyAdded(CurrencyType type, int value) => OnCurrencyAdded?.Invoke(type, value);
-    public static void CurrencyUsed(CurrencyType type, int value) => OnCurrencyUsed?.Invoke(type, value);
-    public static void CurrencyChanged(CurrencyType type, int value) => OnCurrencyChanged?.Invoke(type, value);
+    public static void CurrencyAdded(CurrencyType type, long value) => OnCurrencyAdded?.Invoke(type, value);
+    public static void CurrencyUsed(CurrencyType type, long value) => OnCurrencyUsed?.Invoke(type, value);
+    public static void CurrencyChanged(CurrencyType type, long value) => OnCurrencyChanged?.Invoke(type, value);
     public static void EmployeeChanged() => OnEmployeeChaned?.Invoke();
     public static void RankChanged() => OnRankChanged?.Invoke();
     public static void ArtifactUnlocked() => OnArtifactUnlocked?.Invoke();
