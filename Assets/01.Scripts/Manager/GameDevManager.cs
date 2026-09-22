@@ -291,6 +291,7 @@ public class GameDevManager : MonoBehaviour
             RankUI.instance.UpdateRankUI();
         }
 
+        GameEventBridge.GameDevSucceeded(activeGameCount, gameDevData.MaxActiveGameCount);
         return result;
     }
 
