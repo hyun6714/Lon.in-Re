@@ -15,7 +15,7 @@ MonoBehaviour:
   employeeId: EMP_004
   employeeName: "\uB9AC\uB4DC \uAC1C\uBC1C\uC790"
   unlockGrade: 3
-  baseHireCost: 750000
+  baseHireCost: 5000000
   hireCostMultiplier: 1.3
-  productionPerSecond: 8000
+  productionPerSecond: 1000000
   productionMultiplier: 1.2

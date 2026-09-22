@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: GameReleaseData
   m_EditorClassIdentifier: Assembly-CSharp::GameReleaseData
   gradeACurrencyReward: 350000
-  gradeAReputationReward: 800
+  gradeAReputationReward: 2000
   gradeBCurrencyReward: 150000
-  gradeBReputationReward: 400
+  gradeBReputationReward: 1000
   gradeCCurrencyReward: 55000
-  gradeCReputationReward: 250
+  gradeCReputationReward: 500
