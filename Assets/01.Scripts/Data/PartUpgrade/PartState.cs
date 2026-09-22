@@ -12,6 +12,11 @@ public class PartState
     // 현재 부품이 제공하는 총 탭 파워
     public int GetTotalPower()
     {
+        if (level <= 0)
+        {
+            return 0;
+        }
+
         double power = partData.BasePower * Math.Pow(partData.PowerMultiplier, level);
         return (int)Math.Round(power);
     }
