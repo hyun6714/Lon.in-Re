@@ -12,6 +12,15 @@ public class EventManagerData : ScriptableObject
         60
     };
 
+    [SerializeField]
+    private List<int> nextHighSettlements = new List<int>()
+    {
+        14,
+        28
+    };
+
     public List<int> NextSettlements => nextSettlements;
+    public List<int> NextHighSettlements => nextHighSettlements;
     public int SettlementNum => nextSettlements.Count;
+    public int HighSettlementNum => nextHighSettlements.Count;
 }
