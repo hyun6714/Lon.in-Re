@@ -180,6 +180,13 @@ public class GameToolWindow : EditorWindow
 
         EditorGUILayout.Space(15);
 
+        if (SaveManager.instance == null)
+        {
+            EditorGUILayout.HelpBox("SaveManager가 존재하지 않습니다.", MessageType.Warning);
+            EditorGUILayout.EndScrollView();
+            return;
+        }
+
         if (GUILayout.Button("진행도 초기화 및 종료"))
         {
             SaveManager.instance.DeleteSaveData();

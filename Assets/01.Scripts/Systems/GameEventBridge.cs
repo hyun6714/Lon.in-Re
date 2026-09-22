@@ -41,7 +41,7 @@ public static class GameEventBridge
     public static event Action OnReincarnated;
 
     /// <summary> 직원 수 텍스트 변경 용 델리게이트 </summary>
-    public static event Action<int, int> OnEmployeeCountChanged;
+    public static event Action<int, int, HUDTextType> OnEmployeeCountChanged;
 
     /// <summary> 팝업창 열 때 발생 </summary>
     public static event Action<UIName> OnPopupOpened;
@@ -54,6 +54,9 @@ public static class GameEventBridge
 
     /// <summary> 게임 제작 후 정산 시 발생 </summary>
     public static event Action<int, int> OnGameSettlementStarted;
+
+    /// <summary> 게임 제작 성공 후 발생 </summary>
+    public static event Action<int, int, HUDTextType> OnGameDevSucceeded;
 
 
     // 이벤트 실행
@@ -71,10 +74,11 @@ public static class GameEventBridge
     public static void ArtifactUnlocked() => OnArtifactUnlocked?.Invoke();
 
     public static void Reincarnated() => OnReincarnated?.Invoke();
-    public static void EmployeeCountChanged(int current, int max) => OnEmployeeCountChanged?.Invoke(current, max);
+    public static void EmployeeCountChanged(int current, int max, HUDTextType type = HUDTextType.Employee) => OnEmployeeCountChanged?.Invoke(current, max, type);
     public static void PopupOpened(UIName name) => OnPopupOpened?.Invoke(name);
     public static void PopupClosed(UIName name) => OnPopupClosed?.Invoke(name);
 
     public static void NextEventChanged(GameDate nextEventDate) => OnNextEventChanged?.Invoke(nextEventDate);
     public static void GameSettlementStarted(int gameID, int num) => OnGameSettlementStarted?.Invoke(gameID, num);
+    public static void GameDevSucceeded(int current, int max, HUDTextType type = HUDTextType.Game) => OnGameDevSucceeded?.Invoke(current, max, type);
 }

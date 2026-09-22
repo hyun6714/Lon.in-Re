@@ -114,6 +114,7 @@ public class UIManager : MonoBehaviour
         GameEventBridge.OnPopupOpened += OpenPopup;
         GameEventBridge.OnPopupClosed += ClosePopup;
         GameEventBridge.OnNextEventChanged += SetNextEvent;
+        GameEventBridge.OnGameDevSucceeded += SetText;
     }
 
     private void UnSubscribeEvent()
@@ -126,6 +127,7 @@ public class UIManager : MonoBehaviour
         GameEventBridge.OnPopupOpened -= OpenPopup;
         GameEventBridge.OnPopupClosed -= ClosePopup;
         GameEventBridge.OnNextEventChanged -= SetNextEvent;
+        GameEventBridge.OnGameDevSucceeded -= SetText;
     }
 
     // 런타임 딕셔너리에 저장된 팝업 비우기
@@ -369,14 +371,15 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 고용 직원 수량 텍스트
+    /// 고용 직원, 게임 개발 수량 텍스트
     /// </summary>
-    /// <param name="currentCount"> 고용한 총 직원수 </param>
-    /// <param name="maxCount"> 현재 등급에 가능한 총 직원수 </param>
-    public void SetText(int currentCount, int maxCount)
+    /// <param name="currentCount"> 현재 수량 </param>
+    /// <param name="maxCount"> 최대 수량 </param>
+    /// <param name="type"> 텍스트 타입 </param>
+    public void SetText(int currentCount, int maxCount, HUDTextType type)
     {
         string text = $"{currentCount}/{maxCount}";
-        textGroup.SetText(HUDTextType.Employee, text);
+        textGroup.SetText(type, text);
     }
     #endregion
 
