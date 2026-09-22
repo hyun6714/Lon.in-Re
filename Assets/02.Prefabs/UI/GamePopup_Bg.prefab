@@ -1295,6 +1295,7 @@ MonoBehaviour:
   useDim: 1
   exitBtn: {fileID: 5521389111248037978}
   gameMakeBtn: {fileID: 2558435054770290326}
+  gameMakeCostText: {fileID: 6400484801086295537}
 --- !u!1 &7592434162967683497
 GameObject:
   m_ObjectHideFlags: 0

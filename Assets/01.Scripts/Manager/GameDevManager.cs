@@ -1,38 +1,38 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-// È®·ü °­È­
-// ¼¼ºÎ µî±Ş ·£´ı »ı¼º 
-// ÃÖÁ¾ µî±Ş °è»ê
-// °ÔÀÓ °³¹ß 
+// í™•ë¥  ê°•í™”
+// ì„¸ë¶€ ë“±ê¸‰ ëœë¤ ìƒì„± 
+// ìµœì¢… ë“±ê¸‰ ê³„ì‚°
+// ê²Œì„ ê°œë°œ 
 
 public class GameDevManager : MonoBehaviour
 {
     public static GameDevManager instance;
 
-    [Header("°ÔÀÓ °³¹ß µ¥ÀÌÅÍ")]
+    [Header("ê²Œì„ ê°œë°œ ë°ì´í„°")]
     [SerializeField] private GameDevData gameDevData;
 
-    [Header("°ÔÀÓ °³¹ß UI")]
+    [Header("ê²Œì„ ê°œë°œ UI")]
     [SerializeField] private TMP_Text probabilityCountText;
     [SerializeField] private Image funIcon;
     [SerializeField] private Image graphicIcon;
     [SerializeField] private Image optimizationIcon;
     [SerializeField] private TMP_Text developmentCostText;
 
-    [Header("µî±Ş ÀÌ¹ÌÁö")]
+    [Header("ë“±ê¸‰ ì´ë¯¸ì§€")]
     [SerializeField] private Sprite defaultGradeSprite;
     [SerializeField] private Sprite aGradeSprite;
     [SerializeField] private Sprite bGradeSprite;
     [SerializeField] private Sprite cGradeSprite;
 
-    // ÇöÀç È®·ü Ãß°¡ È½¼ö
+    // í˜„ì¬ í™•ë¥  ì¶”ê°€ íšŸìˆ˜
     private int probabilityUpgradeCount = 0;
 
     private int nextGameId = 1;
 
-    // ÀúÀåµÈ °ÔÀÓ ID ºÒ·¯¿À±â
+    // ì €ì¥ëœ ê²Œì„ ID ë¶ˆëŸ¬ì˜¤ê¸°
     public void LoadNextGameId(int value)
     {
         nextGameId = value;
@@ -51,37 +51,56 @@ public class GameDevManager : MonoBehaviour
         }
     }
 
-    // ÇöÀç Aµî±Ş È®·ü °è»ê
+    // í˜„ì¬ Aë“±ê¸‰ í™•ë¥  ê³„ì‚°
     public float GetCurrentARate()
     {
         return gameDevData.GradeARate + (gameDevData.GradeAIncreaseRate * probabilityUpgradeCount);
     }
 
-    // ÇöÀç Bµî±Ş È®·ü °è»ê
+    // í˜„ì¬ Bë“±ê¸‰ í™•ë¥  ê³„ì‚°
     public float GetCurrentBRate()
     {
         return gameDevData.GradeBRate + (gameDevData.GradeBIncreaseRate * probabilityUpgradeCount);
     }
 
-    // ÇöÀç Cµî±Ş È®·ü °è»ê
+    // í˜„ì¬ Cë“±ê¸‰ í™•ë¥  ê³„ì‚°
     public float GetCurrentCRate()
     {
         return gameDevData.GradeCRate - (gameDevData.GradeCDecreaseRate * probabilityUpgradeCount);
     }
 
-    // ÇöÀç ÃÖÁ¾ °³¹ß ºñ¿ë
-    private int GetTotalDevelopmentCost()
+    // í˜„ì¬ ë­í¬ì˜ ê¸°ë³¸ ê²Œì„ ì œì‘ë¹„
+    private int GetBaseDevelopmentCost()
     {
-        return gameDevData.DevelopmentCost + (gameDevData.ProbabilityUpgradeCost * probabilityUpgradeCount);
+        return gameDevData.GetDevelopmentCost(
+            RankManager.instance.currentRank
+        );
+    }
+    public int CurrentBaseDevelopmentCost => GetBaseDevelopmentCost();
+
+    // í™•ë¥  ê°•í™” 1íšŒ ë¹„ìš©
+    private int GetProbabilityUpgradeCost()
+    {
+        return Mathf.RoundToInt(
+            GetBaseDevelopmentCost() *
+            gameDevData.ProbabilityUpgradeCostRate
+        );
     }
 
-    // Ãß°¡ ºñ¿ëÀ» ÁöºÒÇÏ°í °³¹ß È®·ü Áõ°¡
+    // í™•ë¥  ê°•í™” ë¹„ìš©ê¹Œì§€ í¬í•¨í•œ ìµœì¢… ì œì‘ë¹„
+    private int GetTotalDevelopmentCost()
+    {
+        return GetBaseDevelopmentCost() +
+            (GetProbabilityUpgradeCost() * probabilityUpgradeCount);
+    }
+
+    // ì¶”ê°€ ë¹„ìš©ì„ ì§€ë¶ˆí•˜ê³  ê°œë°œ í™•ë¥  ì¦ê°€
     public void UpgradeProbability()
     {
-        // ÃÖ´ë Ãß°¡ È½¼ö È®ÀÎ
+        // ìµœëŒ€ ì¶”ê°€ íšŸìˆ˜ í™•ì¸
         if (probabilityUpgradeCount >= gameDevData.MaxProbabilityUpgradeCount)
         {
-            Utils.Log("´õ ÀÌ»ó È®·üÀ» ¿Ã¸± ¼ö ¾ø½À´Ï´Ù.");
+            Utils.Log("ë” ì´ìƒ í™•ë¥ ì„ ì˜¬ë¦´ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
             return;
         }
 
@@ -91,13 +110,13 @@ public class GameDevManager : MonoBehaviour
         UpdateDevelopmentCostText();
 
         Utils.Log(
-            $"È®·ü Áõ°¡ ¿Ï·á / A : {GetCurrentARate()}% / " +
+            $"í™•ë¥  ì¦ê°€ ì™„ë£Œ / A : {GetCurrentARate()}% / " +
             $"B : {GetCurrentBRate()}% / " +
             $"C : {GetCurrentCRate()}%"
         );
     }
 
-    // È®·ü °­È­ È½¼ö °¨¼Ò
+    // í™•ë¥  ê°•í™” íšŸìˆ˜ ê°ì†Œ
     public void DecreaseProbability()
     {
         if (probabilityUpgradeCount <= 0)
@@ -111,25 +130,26 @@ public class GameDevManager : MonoBehaviour
         UpdateDevelopmentCostText();
 
         Utils.Log(
-            $"È®·ü °­È­ Ãë¼Ò / ÇöÀç °­È­ È½¼ö : {probabilityUpgradeCount}"
+            $"í™•ë¥  ê°•í™” ì·¨ì†Œ / í˜„ì¬ ê°•í™” íšŸìˆ˜ : {probabilityUpgradeCount}"
         );
     }
 
 
-    // È®·ü °­È­ È½¼ö UI °»½Å
+    // í™•ë¥  ê°•í™” íšŸìˆ˜ UI ê°±ì‹ 
     private void UpdateProbabilityCountText()
     {
         probabilityCountText.text = probabilityUpgradeCount.ToString();
     }
 
-    // °ÔÀÓ ¸¸µé±â ¹öÆ° ºñ¿ë UI °»½Å
+    // ê²Œì„ ë§Œë“¤ê¸° ë²„íŠ¼ ë¹„ìš© UI ê°±ì‹ 
     private void UpdateDevelopmentCostText()
     {
-        developmentCostText.text = GetTotalDevelopmentCost().ToString("N0");
+        developmentCostText.text =
+            CurrencyFormatter.Format(GetTotalDevelopmentCost());
     }
 
 
-    // È®·ü¿¡ µû¶ó A, B,C Áß ÇÏ³ª¸¦ ·£´ıÀ¸·Î °áÁ¤
+    // í™•ë¥ ì— ë”°ë¼ A, B,C ì¤‘ í•˜ë‚˜ë¥¼ ëœë¤ìœ¼ë¡œ ê²°ì •
     public DevelopmentGrade GetRandomGrade()
     {
         float aRate = GetCurrentARate();
@@ -137,47 +157,47 @@ public class GameDevManager : MonoBehaviour
         float cRate = GetCurrentCRate();
 
 
-        // A + B + C µî±Ş È®·üÀÇ ÃÑÇÕ °è»ê
-        // ÀüÃ¼ ÇÕÀÌ 100%°¡ µÇµµ·Ï ¼³Á¤
+        // A + B + C ë“±ê¸‰ í™•ë¥ ì˜ ì´í•© ê³„ì‚°
+        // ì „ì²´ í•©ì´ 100%ê°€ ë˜ë„ë¡ ì„¤ì •
         float totalRate = aRate + bRate + cRate;
 
-        // ÃÑ È®·üÀÌ 100%°¡ ¾Æ´Ï¸é ½ÇÇà ¾È´ï
+        // ì´ í™•ë¥ ì´ 100%ê°€ ì•„ë‹ˆë©´ ì‹¤í–‰ ì•ˆëŒ
         if (totalRate != 100f)
         {
-            Utils.Log("È®·ü ÃÑÇÕÀº 100%°¡ µÇ¾î¾ß ÇÕ´Ï´Ù");
+            Utils.Log("í™•ë¥  ì´í•©ì€ 100%ê°€ ë˜ì–´ì•¼ í•©ë‹ˆë‹¤");
             return DevelopmentGrade.C;
         }
 
         float randomValue = Random.Range(0f, 100f);
 
-        // A µî±Ş
-        // ±âº» È®·ü ±âÁØ : 0 ÀÌ»ó 33 ¹Ì¸¸
+        // A ë“±ê¸‰
+        // ê¸°ë³¸ í™•ë¥  ê¸°ì¤€ : 0 ì´ìƒ 33 ë¯¸ë§Œ
         if (randomValue < aRate)
         {
             return DevelopmentGrade.A;
         }
 
-        // B µî±Ş
-        // ±âº» È®·ü ±âÁØ : 33 ÀÌ»ó 66 ¹Ì¸¸
+        // B ë“±ê¸‰
+        // ê¸°ë³¸ í™•ë¥  ê¸°ì¤€ : 33 ì´ìƒ 66 ë¯¸ë§Œ
         if (randomValue < aRate + bRate)
         {
             return DevelopmentGrade.B;
         }
 
-        // ³ª¸ÓÁö C µî±Ş 66ÀÌ»ó 100ÀÌÇÏ
+        // ë‚˜ë¨¸ì§€ C ë“±ê¸‰ 66ì´ìƒ 100ì´í•˜
         return DevelopmentGrade.C;
     }
 
-    // °ÔÀÓ °³¹ß °á°ú °è»ê
+    // ê²Œì„ ê°œë°œ ê²°ê³¼ ê³„ì‚°
     public GameDevResult GameResult()
     {
         GameDevResult result = new GameDevResult();
 
-        // °³¹ßµÈ °ÔÀÓ °íÀ¯ ID ºÎ¿©
+        // ê°œë°œëœ ê²Œì„ ê³ ìœ  ID ë¶€ì—¬
         result.gameId = nextGameId;
         nextGameId++;
 
-        // °¢ Ç×¸ñº° µî±Ş ·£´ı °áÁ¤
+        // ê° í•­ëª©ë³„ ë“±ê¸‰ ëœë¤ ê²°ì •
         result.funGrade = GetRandomGrade();
         result.graphicGrade = GetRandomGrade();
         result.optimizationGrade = GetRandomGrade();
@@ -187,46 +207,46 @@ public class GameDevManager : MonoBehaviour
         return result;
     }
 
-    // Àç¹Ì, ±×·¡ÇÈ, ÃÖÀûÈ­ Á¡¼ö¸¦ ÇÕ»êÇÏ¿© ÃÖÁ¾ µî±Ş °áÁ¤
-    // ÃÑÁ¡Àº ÀÓ½Ã·Î ¼³Á¤ÇØµÒ
+    // ì¬ë¯¸, ê·¸ë˜í”½, ìµœì í™” ì ìˆ˜ë¥¼ í•©ì‚°í•˜ì—¬ ìµœì¢… ë“±ê¸‰ ê²°ì •
+    // ì´ì ì€ ì„ì‹œë¡œ ì„¤ì •í•´ë‘ 
     public DevelopmentGrade CalculateFinalGrade(GameDevResult result)
     {
         int totalScore =(int)result.funGrade + (int)result.graphicGrade + (int)result.optimizationGrade;
 
-        // ÃÑÁ¡ 7 ~ 9Á¡ = A
+        // ì´ì  7 ~ 9ì  = A
         if (totalScore >= gameDevData.FinalAGradeScore)
         {
             return DevelopmentGrade.A;
         }
 
-        // ÃÑÁ¡ 5 ~ 6Á¡ = B
+        // ì´ì  5 ~ 6ì  = B
         if (totalScore >= gameDevData.FinalBGradeScore)
         {
             return DevelopmentGrade.B;
         }
 
-        // ÃÑÁ¡ 3 ~ 4Á¡ = C
+        // ì´ì  3 ~ 4ì  = C
         return DevelopmentGrade.C;
     }
 
-    // °ÔÀÓ °³¹ß
+    // ê²Œì„ ê°œë°œ
     public GameDevResult DevelopGame()
     {
         if (CurrencyManager.instance == null)
         {
-            Utils.Log("CurrencyManager¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Utils.Log("CurrencyManagerë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
             return null;
         }
 
-        // ÇöÀç Á¤»ê ÁøÇà ÁßÀÎ °ÔÀÓ °³¼ö
+        // í˜„ì¬ ì •ì‚° ì§„í–‰ ì¤‘ì¸ ê²Œì„ ê°œìˆ˜
           int activeGameCount = GameReleaseManager.instance.GetActiveGameCount(EventManager.instance.SettlementNum);
 
-        // ÃÖ´ë µ¿½Ã °³¹ß °ÔÀÓ ¼ö ÃÊ°ú ½Ã °³¹ß ºÒ°¡
+        // ìµœëŒ€ ë™ì‹œ ê°œë°œ ê²Œì„ ìˆ˜ ì´ˆê³¼ ì‹œ ê°œë°œ ë¶ˆê°€
         if (activeGameCount >= gameDevData.MaxActiveGameCount)
         {
             Utils.Log(
-                $"µ¿½Ã °³¹ß °¡´ÉÇÑ °ÔÀÓ ¼ö¸¦ ÃÊ°úÇß½À´Ï´Ù. " +
-                $"ÇöÀç : {activeGameCount} / ÃÖ´ë : {gameDevData.MaxActiveGameCount}"
+                $"ë™ì‹œ ê°œë°œ ê°€ëŠ¥í•œ ê²Œì„ ìˆ˜ë¥¼ ì´ˆê³¼í–ˆìŠµë‹ˆë‹¤. " +
+                $"í˜„ì¬ : {activeGameCount} / ìµœëŒ€ : {gameDevData.MaxActiveGameCount}"
             );
 
             return null;
@@ -234,34 +254,36 @@ public class GameDevManager : MonoBehaviour
 
         int totalDevelopmentCost = GetTotalDevelopmentCost();
 
-        //±âº» °³¹ß ºñ¿ë Â÷°¨
+        //ê¸°ë³¸ ê°œë°œ ë¹„ìš© ì°¨ê°
         bool success = CurrencyManager.instance.UseCurrency(CurrencyType.Normal, totalDevelopmentCost);
 
-        // °³¹ß ºñ¿ëÀÌ ºÎÁ·ÇÏ¸é Ãë¼Ò
+        // ê°œë°œ ë¹„ìš©ì´ ë¶€ì¡±í•˜ë©´ ì·¨ì†Œ
         if (!success)
         {
-            Utils.Log("°ÔÀÓ °³¹ß ºñ¿ëÀÌ ºÎÁ·ÇÕ´Ï´Ù.");
+            Utils.Log("ê²Œì„ ê°œë°œ ë¹„ìš©ì´ ë¶€ì¡±í•©ë‹ˆë‹¤.");
             return null;
         }
 
-        // °ÔÀÓ °³¹ß °á°ú »ı¼º
+        // ê²Œì„ ê°œë°œ ê²°ê³¼ ìƒì„±
         GameDevResult result = GameResult();
+        result.developmentRank = RankManager.instance.currentRank;
+        result.baseDevelopmentCost = GetBaseDevelopmentCost();
         GameManager.instance.gameDevCount++;
 
-        // °³¹ß ¿Ï·á Áï½Ã °ÔÀÓ Ãâ½Ã
+        // ê°œë°œ ì™„ë£Œ ì¦‰ì‹œ ê²Œì„ ì¶œì‹œ
         GameReleaseManager.instance.ReleaseGame(result);
 
-        // ÀÌ¹ø °³¹ß¿¡ »ç¿ëÇÑ È®·ü °­È­ È½¼ö ÃÊ±âÈ­
+        // ì´ë²ˆ ê°œë°œì— ì‚¬ìš©í•œ í™•ë¥  ê°•í™” íšŸìˆ˜ ì´ˆê¸°í™”
         probabilityUpgradeCount = 0;
         UpdateProbabilityCountText();
         UpdateDevelopmentCostText();
 
         Utils.Log(
-            $"°ÔÀÓ °³¹ß ¿Ï·á / ID : { result.gameId} / " +
-            $"Àç¹Ì : {result.funGrade} / " +
-            $"±×·¡ÇÈ : {result.graphicGrade} / " +
-            $"ÃÖÀûÈ­ : {result.optimizationGrade} / " +
-            $"ÃÖÁ¾ µî±Ş : {result.finalGrade}"
+            $"ê²Œì„ ê°œë°œ ì™„ë£Œ / ID : { result.gameId} / " +
+            $"ì¬ë¯¸ : {result.funGrade} / " +
+            $"ê·¸ë˜í”½ : {result.graphicGrade} / " +
+            $"ìµœì í™” : {result.optimizationGrade} / " +
+            $"ìµœì¢… ë“±ê¸‰ : {result.finalGrade}"
         );
 
         if (RankUI.instance != null)
@@ -290,7 +312,7 @@ public class GameDevManager : MonoBehaviour
         }
     }
 
-    // °ÔÀÓ¸ŞÀÌÅ© UI ÃÊ±âÈ­
+    // ê²Œì„ë©”ì´í¬ UI ì´ˆê¸°í™”
     public void ResetGameMakeUI()
     {
         probabilityUpgradeCount = 0;
@@ -303,7 +325,7 @@ public class GameDevManager : MonoBehaviour
         optimizationIcon.sprite = defaultGradeSprite;
     }
 
-    // °ÔÀÓ ¸¸µé±â ¹öÆ°
+    // ê²Œì„ ë§Œë“¤ê¸° ë²„íŠ¼
     public GameDevResult OnClickDevelopGame()
     {
         GameDevResult result = DevelopGame();

@@ -1,39 +1,64 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "GameDevelopmentData", menuName = "Game/Game Development Data")]
 
 public class GameDevData : ScriptableObject
 {
-    [Header("°³¹ß ºñ¿ë")]
-    [SerializeField] private int developmentCost = 10000;
+    [Header("ëž­í¬ë³„ ê°œë°œ ë¹„ìš©")]
+    [SerializeField] private int soloDevelopmentCost = 50000;
+    [SerializeField] private int indieDevelopmentCost = 300000;
+    [SerializeField] private int smallDevelopmentCost = 2000000;
+    [SerializeField] private int midsizedDevelopmentCost = 30000000;
+    [SerializeField] private int majorPublisherDevelopmentCost = 100000000;
 
-    [Header("È®·ü Ãß°¡ ºñ¿ë")]
-    [SerializeField] private int probabilityUpgradeCost = 1000;
+    [Header("í™•ë¥  ì¶”ê°€ ë¹„ìš© ë¹„ìœ¨")]
+    [SerializeField] private float probabilityUpgradeCostRate = 0.05f;
 
-    [Header("ÃÖ´ë È®·ü Ãß°¡ È½¼ö")]
+    [Header("ìµœëŒ€ í™•ë¥  ì¶”ê°€ íšŸìˆ˜")]
     [SerializeField] private int maxProbabilityUpgradeCount = 3;
 
-    [Header("±âº» µî±Þ È®·ü")] //³ªÁß¿¡ ¼öÄ¡ Á¶Á¤ °¡´É
-    [SerializeField] private float gradeARate = 33f;
-    [SerializeField] private float gradeBRate = 33f;
-    [SerializeField] private float gradeCRate = 34f;
+    [Header("ê¸°ë³¸ ë“±ê¸‰ í™•ë¥ ")] //ë‚˜ì¤‘ì— ìˆ˜ì¹˜ ì¡°ì • ê°€ëŠ¥
+    [SerializeField] private float gradeARate = 15f;
+    [SerializeField] private float gradeBRate = 30f;
+    [SerializeField] private float gradeCRate = 55f;
 
-    [Header("È®·ü Ãß°¡ 1È¸´ç µî±Þ º¯È­")]
-    [SerializeField] private float gradeAIncreaseRate = 3f;
+    [Header("í™•ë¥  ì¶”ê°€ 1íšŒë‹¹ ë“±ê¸‰ ë³€í™”")]
+    [SerializeField] private float gradeAIncreaseRate = 8f;
     [SerializeField] private float gradeBIncreaseRate = 2f;
-    [SerializeField] private float gradeCDecreaseRate = 5f;
+    [SerializeField] private float gradeCDecreaseRate = 10f;
 
-    [Header("ÃÖÁ¾ µî±Þ Á¡¼ö ±âÁØ")] // ³ªÁß¿¡ ¼öÁ¤ °¡´É
-    [SerializeField] private int finalAGradeScore = 7;
+    [Header("ìµœì¢… ë“±ê¸‰ ì ìˆ˜ ê¸°ì¤€")] // ë‚˜ì¤‘ì— ìˆ˜ì • ê°€ëŠ¥
+    [SerializeField] private int finalAGradeScore = 8;
     [SerializeField] private int finalBGradeScore = 5;
 
-    [Header("ÃÖ´ë µ¿½Ã °³¹ß °ÔÀÓ ¼ö")]
+    [Header("ìµœëŒ€ ë™ì‹œ ê°œë°œ ê²Œìž„ ìˆ˜")]
     [SerializeField] private int maxActiveGameCount = 10;
 
-    public int DevelopmentCost => developmentCost;
+    public float ProbabilityUpgradeCostRate => probabilityUpgradeCostRate;
 
-    public int ProbabilityUpgradeCost => probabilityUpgradeCost;
+    public int GetDevelopmentCost(RankManager.RankState rank)
+    {
+        switch (rank)
+        {
+            case RankManager.RankState.Solo:
+                return soloDevelopmentCost;
+
+            case RankManager.RankState.Indie:
+                return indieDevelopmentCost;
+
+            case RankManager.RankState.Small:
+                return smallDevelopmentCost;
+
+            case RankManager.RankState.Midsized:
+                return midsizedDevelopmentCost;
+
+            case RankManager.RankState.MajorPublisher:
+                return majorPublisherDevelopmentCost;
+        }
+
+        return soloDevelopmentCost;
+    }
 
     public int MaxProbabilityUpgradeCount => maxProbabilityUpgradeCount;
 

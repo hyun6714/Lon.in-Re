@@ -1,10 +1,10 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class GameSettlementManager : MonoBehaviour
 {
     public static GameSettlementManager instance;
 
-    [Header("°ÔÀÓ Ãâ½Ã º¸»ó µ¥ÀÌÅÍ")]
+    [Header("ê²Œì„ ì¶œì‹œ ë³´ìƒ ë°ì´í„°")]
     [SerializeField] private GameReleaseData gameReleaseData;
 
     private void Awake()
@@ -32,36 +32,46 @@ public class GameSettlementManager : MonoBehaviour
         }
     }
 
-    // °ÔÀÓ Á¤»ê ÀÌº¥Æ® ¹ß»ı ½Ã È£Ãâ
+    // ê²Œì„ ì •ì‚° ì´ë²¤íŠ¸ ë°œìƒ ì‹œ í˜¸ì¶œ
     private void HandleGameSettlement(int gameId, int settlementCount)
     {
         GameDevResult gameResult = GameReleaseManager.instance.GetReleasedGame(gameId);
 
         if (gameResult == null)
         {
-            Utils.Log($"Á¤»êÇÒ °ÔÀÓÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù. ID : {gameId}");
+            Utils.Log($"ì •ì‚°í•  ê²Œì„ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ID : {gameId}");
             return;
         }
 
-        int currencyReward = 0;
-        int reputationReward = 0;
+        // ê²Œì„ ì „ì²´ ì •ì‚° ë³´ìƒ
+        int totalCurrencyReward =
+            gameReleaseData.GetCurrencyReward(
+                gameResult.finalGrade,
+                gameResult.baseDevelopmentCost
+            );
 
-        switch (gameResult.finalGrade)
+        int totalReputationReward =
+            gameReleaseData.GetReputationReward(
+                gameResult.finalGrade
+            );
+
+        int settlementNum = EventManager.instance.SettlementNum;
+
+        if (settlementNum <= 0)
         {
-            case DevelopmentGrade.A:
-                currencyReward = gameReleaseData.GradeACurrencyReward;
-                reputationReward = gameReleaseData.GradeAReputationReward;
-                break;
+            Utils.Log("ê²Œì„ ì •ì‚° íšŸìˆ˜ê°€ ì„¤ì •ë˜ì–´ ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
+            return;
+        }
 
-            case DevelopmentGrade.B:
-                currencyReward = gameReleaseData.GradeBCurrencyReward;
-                reputationReward = gameReleaseData.GradeBReputationReward;
-                break;
+        // ê¸°ë³¸ ë¶„í•  ë³´ìƒ
+        int currencyReward = totalCurrencyReward / settlementNum;
+        int reputationReward = totalReputationReward / settlementNum;
 
-            case DevelopmentGrade.C:
-                currencyReward = gameReleaseData.GradeCCurrencyReward;
-                reputationReward = gameReleaseData.GradeCReputationReward;
-                break;
+        // ë‚˜ëˆ„ê³  ë‚¨ì€ ê°’ì€ ë§ˆì§€ë§‰ ì •ì‚° ë•Œ ì§€ê¸‰
+        if (settlementCount == settlementNum)
+        {
+            currencyReward += totalCurrencyReward % settlementNum;
+            reputationReward += totalReputationReward % settlementNum;
         }
 
         GameEventBridge.CurrencyAdded(CurrencyType.Normal, currencyReward);
@@ -70,11 +80,11 @@ public class GameSettlementManager : MonoBehaviour
         GameReleaseManager.instance.IncreaseSettlementCount(gameId);
 
         Utils.Log(
-            $"°ÔÀÓ Á¤»ê / ID : {gameId} / " +
-            $"Á¤»ê È¸Â÷ : {settlementCount} / " +
-            $"ÃÖÁ¾ µî±Ş : {gameResult.finalGrade} / " +
-            $"ÀçÈ­ º¸»ó : {currencyReward} / " +
-            $"¸í¼º º¸»ó : {reputationReward}"
+            $"ê²Œì„ ì •ì‚° / ID : {gameId} / " +
+            $"ì •ì‚° íšŒì°¨ : {settlementCount} / " +
+            $"ìµœì¢… ë“±ê¸‰ : {gameResult.finalGrade} / " +
+            $"ì¬í™” ë³´ìƒ : {currencyReward} / " +
+            $"ëª…ì„± ë³´ìƒ : {reputationReward}"
         );
     }
 }

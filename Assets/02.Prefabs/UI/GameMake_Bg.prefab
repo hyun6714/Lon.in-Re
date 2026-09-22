@@ -1098,7 +1098,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "* \uD655\uB960 UP 1 = 1000G \uC18C\uBAA8 "
+  m_text: "\u203B \uD655\uB960 UP 1\uD68C\uB2F9 \uC81C\uC791\uBE44 +5%"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 928f7fbd92faa284eb5967a0497735e9, type: 2}
   m_sharedMaterial: {fileID: -8858597400809627153, guid: 928f7fbd92faa284eb5967a0497735e9, type: 2}
