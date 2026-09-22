@@ -148,8 +148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dde6f4bc6817634bb85494ad39144cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  rebirthText: {fileID: 0}
   playerRebirthCount: 0
   gameDevCount: 0
+  currentEmployeeCount: 0
 --- !u!4 &67100346
 Transform:
   m_ObjectHideFlags: 0
@@ -165,6 +167,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &344350840 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7367700528763730496, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
+  m_PrefabInstance: {fileID: 8192642522489388216}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &386446700
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da67491e41f9d134caf8eed14a7ecc06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CurrencyManager
-  currencyText: {fileID: 1792455465}
   currencyDatabase: {fileID: 11400000, guid: 1fe5d80301c629c4db1852d69d84c589, type: 2}
 --- !u!4 &427461040
 Transform:
@@ -276,17 +288,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &512440162 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3806875278229414313, guid: acd5eb9d8830a4146a2aa240f32bd87c, type: 3}
-  m_PrefabInstance: {fileID: 2804244666932816473}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &600026108
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,11 +387,6 @@ MonoBehaviour:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1174621835648247990, guid: b1a93970f21793344a4388b13a21d2c6, type: 3}
   m_PrefabInstance: {fileID: 2621202113561021041}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1006814977 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8322495765488717858, guid: 61c373e2d0000d3438587ebbd54b20e1, type: 3}
-  m_PrefabInstance: {fileID: 3712276451233986893}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1038629478 stripped
 MonoBehaviour:
@@ -540,6 +536,17 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &1229294469 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 205003361194743494, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
+  m_PrefabInstance: {fileID: 8192642522489388216}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &1337146820
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,6 +577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47fe0d75f617af94b8f60bbac28adf87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RankManager
+  backgroundObjectList: []
   rankDataList:
   - {fileID: 11400000, guid: 484695b4244307544bc13fb9a34966f6, type: 2}
   - {fileID: 11400000, guid: 8574d52ce7effdb438d7ba7e49c8c37e, type: 2}
@@ -577,7 +585,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 71559f5044eb7ab4d9e4b12d3b6705d8, type: 2}
   - {fileID: 11400000, guid: 72780581f9543394fbdc13dce867772a, type: 2}
   currentRank: 0
-  currentEmployeeCount: 0
 --- !u!4 &1337146822
 Transform:
   m_ObjectHideFlags: 0
@@ -606,12 +613,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RankUI
   RankPopup: {fileID: 664541937}
-  RankText: {fileID: 512440162}
   RankUpText: {fileID: 1483632173}
   CostText: {fileID: 771888714}
   GameReqText: {fileID: 1947252752}
   EmployeeReqText: {fileID: 1572317736}
+  rankIconImage: {fileID: 0}
   rankUpButton: {fileID: 1038629478}
+  prevButton: {fileID: 344350840}
+  nextButton: {fileID: 1229294469}
 --- !u!114 &1483632173 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8290928897082431255, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
@@ -632,17 +641,6 @@ GameObject:
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1435730273817567110, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
   m_PrefabInstance: {fileID: 8192642522489388216}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
---- !u!114 &1792455465 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9137560385669823566, guid: acd5eb9d8830a4146a2aa240f32bd87c, type: 3}
-  m_PrefabInstance: {fileID: 2804244666932816473}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -692,6 +690,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ReincarnationManager
   ReincarnationPop: {fileID: 415260228}
+  gameListContentParent: {fileID: 0}
 --- !u!4 &1973847607
 Transform:
   m_ObjectHideFlags: 0
@@ -719,8 +718,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 423f0b78599636240b7a83580c802518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ReincarnationUI
-  ReincarnationBtn: {fileID: 1006814977}
-  ReincarnationPop: {fileID: 415260228}
 --- !u!1001 &2621202113561021041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1084,6 +1081,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 205003361194743494, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 205003361194743494, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 205003361194743494, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1337146823}
+    - target: {fileID: 205003361194743494, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 205003361194743494, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickNextRank
+      objectReference: {fileID: 0}
+    - target: {fileID: 205003361194743494, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RankUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 205003361194743494, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 887704349925282292, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1134,7 +1159,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5814845755042395175, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5895622510286692375, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1235,6 +1260,42 @@ PrefabInstance:
     - target: {fileID: 6892974620298132500, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7367700528763730496, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7367700528763730496, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7367700528763730496, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7367700528763730496, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1337146823}
+    - target: {fileID: 7367700528763730496, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7367700528763730496, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7367700528763730496, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickPrevRank
+      objectReference: {fileID: 0}
+    - target: {fileID: 7367700528763730496, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RankUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7367700528763730496, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8454491117725475997, guid: e96b4d258833fb748a0009bed2c7c0e5, type: 3}
       propertyPath: m_AnchorMax.y

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RankDataSO
   rank: 3
   rankDisplayName: "\uC911\uACAC \uAE30\uC5C5"
+  rankIcon: {fileID: 21300000, guid: 2d087471f35fe8c4b8a14bd01401f1b6, type: 3}
   hasEmployees: 1
   maxEmployee: 20
   reqGamesReleased: 50

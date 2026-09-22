@@ -15,9 +15,15 @@ public class RankUI : MonoBehaviour
     public TextMeshProUGUI GameReqText; //출시 게임 수 요구량 텍스트
     public TextMeshProUGUI EmployeeReqText; // 직원 수 요구량 텍스트 
 
-    [Header("승급 버튼")]
-    public Button rankUpButton;
+    [Header("등급 아이콘 UI")]
+    [SerializeField] private Image rankIconImage;
 
+    [Header("승급 버튼")]
+    [SerializeField] public Button rankUpButton;
+    [SerializeField] private Button prevButton; // 좌측 화살표 버튼
+    [SerializeField] private Button nextButton; // 우측 화살표 버튼
+
+    private int viewingRankIndex = 0;
     private void Awake()
     {
         if (instance == null)
@@ -35,7 +41,20 @@ public class RankUI : MonoBehaviour
         GameEventBridge.OnRankChanged += UpdateRankUI;
         GameEventBridge.OnReincarnated += UpdateRankUI;
         GameEventBridge.OnReincarnated += RankUpOnBtn;
-        UpdateRankUI();
+
+        if (prevButton != null) prevButton.onClick.AddListener(OnClickPrevRank);
+        if (nextButton != null) nextButton.onClick.AddListener(OnClickNextRank);
+
+        if (RankManager.instance != null)
+        {
+            int currentRealIndex = (int)RankManager.instance.currentRank;
+            int maxIndex = 4;
+
+            viewingRankIndex = currentRealIndex + 1;
+            if (viewingRankIndex > maxIndex) viewingRankIndex = maxIndex;
+
+            UpdateRankUI();
+        }
     }
 
     private void OnDisable()
@@ -49,6 +68,23 @@ public class RankUI : MonoBehaviour
     {
         if (RankPopup == null) return;
         RankPopup.SetActive(true);
+
+        if (RankManager.instance != null)
+        {
+            int currentRealIndex = (int)RankManager.instance.currentRank;
+            int maxIndex = 4;
+
+            if (currentRealIndex < maxIndex)
+            {
+                viewingRankIndex = currentRealIndex + 1; 
+            }
+            else
+            {
+                viewingRankIndex = currentRealIndex; 
+            }
+        }
+
+        UpdateRankUI();
     }
 
     public void CloseRankPop()
@@ -58,8 +94,35 @@ public class RankUI : MonoBehaviour
         RankPopup.SetActive(false);
     }
 
+    public void OnClickPrevRank()
+    {
+        viewingRankIndex--;
+        if (viewingRankIndex < 1)
+        {
+            viewingRankIndex = 1; // 인디부터
+        }
+        UpdateRankUI();
+    }
+
+    public void OnClickNextRank()
+    {
+        if (RankManager.instance == null) return;
+
+        // RankManager에 등록된 데이터 개수 기준 최대 인덱스
+        int maxIndex = 4;
+
+
+        viewingRankIndex++;
+        if (viewingRankIndex > maxIndex)
+        {
+            viewingRankIndex = maxIndex; // 최고 등급에서 멈춤
+        }
+        UpdateRankUI();
+    }
+
     public void UpdateRankUI()
     {
+
         if (RankManager.instance == null) return;
 
         RankData currentData = RankManager.instance.CurrentRankData;
@@ -71,39 +134,38 @@ public class RankUI : MonoBehaviour
             }
         }
 
-        int currentIndex = (int)RankManager.instance.currentRank;
-        int nextIndex = currentIndex + 1;
+        int currentReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
+        RankData targetData = RankManager.instance.GetRankData((RankManager.RankState)viewingRankIndex);
+        if (targetData == null) return;
 
-        RankData targetData = RankManager.instance.GetRankData((RankManager.RankState)nextIndex);
-        if (targetData == null)
+        // 팝업 중앙에 표시할 등급 이름 (예: 인디 개발자, 중소기업 등)
+        if (RankUpText != null)
         {
-            targetData = currentData;
-
-            if (RankUpText != null)
-            {
-                RankUpText.text = "최고 등급";
-            }
-
-            if (CostText != null)
-            {
-                CostText.text = "-";
-            }
-
-            if (rankUpButton != null)
-            {
-                rankUpButton.interactable = false;
-            }
-
-            return;
+            RankUpText.text = targetData.rankDisplayName;
         }
 
-        if (targetData != null)
+        if (rankIconImage != null)
         {
-            if (RankUpText != null)
+            if (targetData.rankIcon != null)
             {
-                RankUpText.text = targetData.rankDisplayName;
+                rankIconImage.gameObject.SetActive(true);
+                rankIconImage.sprite = targetData.rankIcon;
             }
+            else
+            {
+                rankIconImage.gameObject.SetActive(false);
+            }
+        }
 
+        // 요구 조건 표시 (첫번째 등급인 Solo는 보통 요구치가 없거나 0일 수 있음)
+        if (viewingRankIndex == 0)
+        {
+            if (CostText != null) CostText.text = "-";
+            if (GameReqText != null) GameReqText.text = "-";
+            if (EmployeeReqText != null) EmployeeReqText.text = "-";
+        }
+        else
+        {
             if (CostText != null)
             {
                 CostText.text = targetData.reqReputation.ToString("N0");
@@ -117,6 +179,27 @@ public class RankUI : MonoBehaviour
             if (EmployeeReqText != null)
             {
                 EmployeeReqText.text = $"{GameManager.instance.currentEmployeeCount} / {targetData.reqEmployeeCount}";
+            }
+        }
+
+        int currentRealIndex = (int)RankManager.instance.currentRank;
+
+        if (rankUpButton != null)
+        {
+            // 💡 솔로 등급(0번)이거나, 내 현재 등급 바로 다음 단계가 아닐 경우 버튼 숨기기
+            if (viewingRankIndex == 0)
+            {
+                rankUpButton.gameObject.SetActive(false); // 솔로일 때는 승급 버튼 숨김
+            }
+            else if (viewingRankIndex == currentRealIndex + 1)
+            {
+                rankUpButton.gameObject.SetActive(true);
+                rankUpButton.interactable = true;
+            }
+            else
+            {
+                rankUpButton.interactable = false;
+                rankUpButton.gameObject.SetActive(false);
             }
         }
 
