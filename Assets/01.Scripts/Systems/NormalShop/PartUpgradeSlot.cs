@@ -70,11 +70,8 @@ public class PartUpgradeSlot : MonoBehaviour
             return;
         }
 
-        // 이름 Lv.N (+수치)
-        if (infoText != null)
-        {
-            infoText.text = $"{data.PartName} Lv.{targetState.Level} (+{CurrencyFormatter.Format(data.PowerPerLevel)})";
-        }
+        // 이름 Lv.N (+기본 수치)
+        infoText.text = $"{data.PartName} Lv.{targetState.Level} (+{CurrencyFormatter.Format(targetState.GetCurrentPower())})";
 
         // 비용
         if (costText != null)
