@@ -10,7 +10,7 @@ public class GameToolWindow : EditorWindow
 
     private float timeDefaultScale = 1f;
     private float timeMultiScale = 2f;
-    private float timeMaxScale = 10f;
+    private float timeMaxScale = 30f;
 
     private int normalCurrency = 10000;
     private int specialCurrency = 10000;
