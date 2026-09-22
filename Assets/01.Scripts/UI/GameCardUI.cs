@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -92,15 +93,19 @@ public class GameCardUI : MonoBehaviour
 
     private void UpdateRemainingTime(ReleasedGameSaveData releasedGame, EventManagerData eventManagerData)
     {
-        // 모든 정산이 끝난 경우
-        if (releasedGame.settlementCount >= eventManagerData.SettlementNum)
+        RankManager.RankState currentRank = GameDataGetter<RankManager.RankState>.GetData();
+
+        List<int> currentSettlementList = eventManagerData.GetCurrentSettlementList(currentRank);
+        int maxSettlementNum = currentSettlementList.Count;
+
+        if (releasedGame.settlementCount >= maxSettlementNum)
         {
             remainingTimeText.text = "정산 완료";
             return;
         }
 
         // 다음 정산까지 필요한 일수
-        int settlementDay = eventManagerData.NextSettlements[releasedGame.settlementCount];
+        int settlementDay = currentSettlementList[releasedGame.settlementCount];
 
         // 출시일부터 현재까지 며칠이 지났는지 계산
         int passedDays = GetPassedDays(releasedGame);
