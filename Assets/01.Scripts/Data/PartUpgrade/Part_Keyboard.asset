@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PartData
   partId: Part_Keyboard
   partName: "\uAE30\uACC4\uC2DD \uD0A4\uBCF4\uB4DC"
-  icon: {fileID: 0}
+  icon: {fileID: 1105232840734988218, guid: 0de5107be2e540b44a8e666f246fd439, type: 3}
   unlockGrade: 0
   baseCost: 10
   costMultiplier: 1.3
