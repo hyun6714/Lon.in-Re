@@ -270,7 +270,7 @@ public class NormalShop : PopupBase
     }
 
     // 재화 변동 시 상점이 켜져 있을 때만 갱신
-    private void OnCurrencyChanged(CurrencyType type, int amount)
+    private void OnCurrencyChanged(CurrencyType type, long amount)
     {
         // 닫혀 있으면 갱신 X
         if (shopPanel == null || !shopPanel.activeSelf)

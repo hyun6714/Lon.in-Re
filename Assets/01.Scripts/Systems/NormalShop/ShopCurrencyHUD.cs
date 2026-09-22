@@ -34,7 +34,7 @@ public class ShopCurrencyHUD : MonoBehaviour
         RefreshAllCurrencies();
     }
 
-    private void HandleCurrencyChanged(CurrencyType type, int amount)
+    private void HandleCurrencyChanged(CurrencyType type, long amount)
     {
         UpdateCurrencyText(type, amount);
     }
@@ -49,7 +49,7 @@ public class ShopCurrencyHUD : MonoBehaviour
         UpdateCurrencyText(CurrencyType.Reputation, CurrencyManager.instance.GetAmount(CurrencyType.Reputation));
     }
 
-    private void UpdateCurrencyText(CurrencyType type, int amount)
+    private void UpdateCurrencyText(CurrencyType type, long amount)
     {
         switch (type)
         {

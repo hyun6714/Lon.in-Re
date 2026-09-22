@@ -9,13 +9,13 @@ public class SaveData
     #region 재화
 
     // 일반 재화
-    public int normalCurrency;
+    public long normalCurrency;
 
     // 특수 재화
-    public int specialCurrency;
+    public long specialCurrency;
 
     // 명성
-    public int reputation;
+    public long reputation;
 
     #endregion
 

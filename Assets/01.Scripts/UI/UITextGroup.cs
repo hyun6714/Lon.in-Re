@@ -64,7 +64,7 @@ public class UITextGroup : MonoBehaviour
         text.text = value;
     }
 
-    public void SetText(HUDTextType type, int value)
+    public void SetText(HUDTextType type, long value)
     {
         SetText(type, $"{value:N0}");
     }

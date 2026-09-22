@@ -137,7 +137,7 @@ public class RankUI : MonoBehaviour
             }
         }
 
-        int currentReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
+        long currentReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
         RankData targetData = RankManager.instance.GetRankData((RankManager.RankState)viewingRankIndex);
         if (targetData == null) return;
 
@@ -186,7 +186,7 @@ public class RankUI : MonoBehaviour
             }
             if (GoldReqText != null)
             {
-                int currentGold = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Normal) : 0;
+                long currentGold = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Normal) : 0;
                 GoldReqText.text = $"{FormatCurrency(currentGold)} / {FormatCurrency(targetData.reqNormal)}";
             }
         }
@@ -246,7 +246,7 @@ public class RankUI : MonoBehaviour
         }
     }
 
-    private void HandleCurrencyChanged(CurrencyType type, int newAmount)
+    private void HandleCurrencyChanged(CurrencyType type, long newAmount)
     {
         if (type == CurrencyType.Normal || type == CurrencyType.Reputation)
         {

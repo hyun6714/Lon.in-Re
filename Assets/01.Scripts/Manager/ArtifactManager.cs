@@ -52,8 +52,8 @@ public class ArtifactManager : MonoBehaviour
         }
 
         int playerRebirth = GameManager.instance != null ? GameManager.instance.playerRebirthCount : 0;
-        int playerReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
-        int playerSpecial = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Special) : 0;
+        long playerReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
+        long playerSpecial = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Special) : 0;
 
         if (playerRebirth < info.requiredRebirthCount ||
             playerReputation < info.requiredReputation ||

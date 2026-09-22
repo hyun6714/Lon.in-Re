@@ -8,7 +8,7 @@ public class CurrencyManager : MonoBehaviour
 
     public static CurrencyManager instance { get; private set; }
 
-    private Dictionary<CurrencyType, int> currentCurrencies = new Dictionary<CurrencyType, int>();
+    private Dictionary<CurrencyType, long> currentCurrencies = new Dictionary<CurrencyType, long>();
 
     [SerializeField] private CurrencyDatabase currencyDatabase;
 
@@ -65,9 +65,9 @@ public class CurrencyManager : MonoBehaviour
     }
 
     //현재 유저가 가진 재화 수량 반환
-    public int GetAmount(CurrencyType type)
+    public long GetAmount(CurrencyType type)
     {
-        if (currentCurrencies.TryGetValue(type, out int amount))
+        if (currentCurrencies.TryGetValue(type, out long amount))
         {
             return amount;
         }
@@ -75,7 +75,7 @@ public class CurrencyManager : MonoBehaviour
     }
 
     //재화 획득
-    public void AddCurrency(CurrencyType type, int amount)
+    public void AddCurrency(CurrencyType type, long amount)
     {
         if (amount <= 0)
             return;
@@ -86,11 +86,11 @@ public class CurrencyManager : MonoBehaviour
     }
 
     //재화 차감 
-    public bool UseCurrency(CurrencyType type, int amount)
+    public bool UseCurrency(CurrencyType type, long amount)
     {
         if (amount <= 0) return false;
 
-        int current = GetAmount(type);
+        long current = GetAmount(type);
         if (current < amount)
         {
             Debug.Log($"{type} 재화가 부족합니다");
@@ -105,7 +105,7 @@ public class CurrencyManager : MonoBehaviour
     }
 
     // 재화 값 설정
-    public void SetCurrency(CurrencyType type, int amount)
+    public void SetCurrency(CurrencyType type, long amount)
     {
         currentCurrencies[type] = amount;
 

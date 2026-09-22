@@ -130,9 +130,9 @@ public class ShopArtifactSlot : MonoBehaviour
             if (costText != null) costText.text = CurrencyFormatter.Format(targetInfo.SpecialUnlockCost);
 
             // 전달받은 값으로 조건 검사
-            int currentSpecial = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Special) : 0;
-            int currentReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
-            int currentRebirth = GameManager.instance != null ? GameManager.instance.playerRebirthCount : 0;
+            long currentSpecial = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Special) : 0;
+            long currentReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
+            long currentRebirth = GameManager.instance != null ? GameManager.instance.playerRebirthCount : 0;
 
             bool canPurchase = (currentSpecial >= targetInfo.SpecialUnlockCost) &&
                                (currentRebirth >= targetInfo.requiredRebirthCount) &&
