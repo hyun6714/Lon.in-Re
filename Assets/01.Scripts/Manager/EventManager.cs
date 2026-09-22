@@ -302,6 +302,7 @@ public class EventManager : MonoBehaviour
                 IsStarted = false
             };
 
+            Utils.Log($"[EventManager] 이벤트 등록 : {eventType}");
             Utils.Log($"이벤트 등록 성공 : {eventType}_{kv.Key.month}월 {kv.Key.day}일 {kv.Key.hour}시");
         }
 
@@ -372,8 +373,11 @@ public class EventManager : MonoBehaviour
 
             activeEvent.IsStarted = true;
 
+            Utils.Log($"[EventManager] 이벤트 시작 완료 : {activeEvent.Info.PopupName}");
+
             GameEventBridge.PopupOpened(activeEvent.Info.PopupName);
 
+            Utils.Log($"[EventManager] 팝업 열기 완료 : {activeEvent.Info.PopupName}");
             Utils.Log($"이벤트 시작 : {activeEvent.Type}");
         }        
     }

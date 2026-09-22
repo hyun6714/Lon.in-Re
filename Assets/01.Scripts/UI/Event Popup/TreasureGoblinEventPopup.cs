@@ -37,10 +37,25 @@ public class TreasureGoblinEventPopup : EventPopupBase
     {
         transform.localScale = Vector3.one * data.CloseSize;
 
+        goblinEvent = null;
+
+        Utils.Log("[Goblin Popup] OnEnable 시작");
+
+        if (EventManager.instance == null)
+        {
+            SetText("EventManger NULL");
+            return;
+        }
+
         goblinEvent = EventManager.instance.GetActiveEvent(GameEventType.TreasureGoblin) as TreasureGoblinEvent;
 
         if (goblinEvent == null)
+        {
+            SetText("Goblin Event NULL");
             return;
+        }
+
+        Utils.Log("[Goblin Popup] Goblin Event 가져오기 성공");
 
         if (goblin != null)
         {
@@ -54,7 +69,7 @@ public class TreasureGoblinEventPopup : EventPopupBase
     {
         try
         {
-            await UniTask.WaitUntil(() => goblinEvent.IsFinished, cancellationToken: ctk);
+            await UniTask.WaitUntil(() => goblinEvent != null && goblinEvent.IsFinished, cancellationToken: ctk);
 
             Result(goblinEvent.IsSuccess);
         }
@@ -80,6 +95,9 @@ public class TreasureGoblinEventPopup : EventPopupBase
 
     private void Result(bool result)
     {
+        if (goblinEvent == null)
+            return;
+
         if (result)
         {
             SetText(goblinEvent.SuccessText);

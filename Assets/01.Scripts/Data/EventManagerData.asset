@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5073e042d2066cd42b82a42c9610369a, type: 3}
   m_Name: EventManagerData
   m_EditorClassIdentifier: Assembly-CSharp::EventManagerData
-  nextSettlements: 1e0000003c000000
+  nextSettlements: 070000000e000000
