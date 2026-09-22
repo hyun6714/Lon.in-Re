@@ -42,7 +42,7 @@ public class RankUI : MonoBehaviour
         GameEventBridge.OnRankChanged += UpdateRankUI;
         GameEventBridge.OnReincarnated += UpdateRankUI;
         GameEventBridge.OnReincarnated += RankUpOnBtn;
-        GameEventBridge.OnCurrencyAdded += HandleCurrencyChanged;
+        GameEventBridge.OnCurrencyChanged += HandleCurrencyChanged;
 
         if (prevButton != null) prevButton.onClick.AddListener(OnClickPrevRank);
         if (nextButton != null) nextButton.onClick.AddListener(OnClickNextRank);
@@ -64,7 +64,7 @@ public class RankUI : MonoBehaviour
         GameEventBridge.OnRankChanged -= UpdateRankUI;
         GameEventBridge.OnReincarnated -= UpdateRankUI;
         GameEventBridge.OnReincarnated -= RankUpOnBtn;
-        GameEventBridge.OnCurrencyAdded -= HandleCurrencyChanged;
+        GameEventBridge.OnCurrencyChanged -= HandleCurrencyChanged;
     }
 
     public void OpenRankPop()
@@ -246,12 +246,11 @@ public class RankUI : MonoBehaviour
         }
     }
 
-    private void HandleCurrencyChanged(CurrencyType type, int amount)
+    private void HandleCurrencyChanged(CurrencyType type, int newAmount)
     {
         if (type == CurrencyType.Normal || type == CurrencyType.Reputation)
         {
             UpdateRankUI();
         }
     }
-
 }
