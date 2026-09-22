@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: EventManagerData
   m_EditorClassIdentifier: Assembly-CSharp::EventManagerData
   nextSettlements: 070000000e000000
+  nextHighSettlements: 0a00000014000000

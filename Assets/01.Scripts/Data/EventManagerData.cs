@@ -23,4 +23,13 @@ public class EventManagerData : ScriptableObject
     public List<int> NextHighSettlements => nextHighSettlements;
     public int SettlementNum => nextSettlements.Count;
     public int HighSettlementNum => nextHighSettlements.Count;
+
+    public List<int> GetCurrentSettlementList(RankManager.RankState rank)
+    {
+        if (rank >= RankManager.RankState.Small)
+        {
+            return nextHighSettlements; 
+        }
+        return nextSettlements;
+    }
 }
