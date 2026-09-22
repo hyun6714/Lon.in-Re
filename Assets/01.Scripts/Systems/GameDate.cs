@@ -182,7 +182,7 @@ public struct GameDate : IEquatable<GameDate>
         return totalMinutes;
     }
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
     public void SetDate(GameDate date)
     {
         year = date.year;

@@ -236,7 +236,7 @@ public class CalendarManager : MonoBehaviour, IGameDataGet<GameDate>
         return currentDate;
     }
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
     public void SetDateOnlyEditor(GameDate date)
     {
         currentDate.SetDate(date);

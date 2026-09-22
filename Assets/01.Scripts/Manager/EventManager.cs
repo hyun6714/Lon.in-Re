@@ -61,9 +61,6 @@ public class EventManager : MonoBehaviour
 
     private CancellationTokenSource token;
 
-    // 정산 이벤트
-    public event Action<int, int> OnGameSettlement;
-
     [Header("일시 정지")]
     [SerializeField] private bool isPaused;
 
@@ -340,7 +337,7 @@ public class EventManager : MonoBehaviour
                 GameDataGetter<GameDate>.GetData() >= targetDate,
                 cancellationToken: token);
 
-                OnGameSettlement?.Invoke(gameId, i);
+                GameEventBridge.GameSettlementStarted(gameId, i);
                 Utils.Log($"[{gameId}]ID 프로젝트의 [{i}]번째 정산 완료.");
             }
         }
