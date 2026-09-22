@@ -222,17 +222,25 @@ public class RankUI : MonoBehaviour
 
     public string FormatCurrency(long amount)
     {
-        if (amount >= 100000000) // 1억 이상
+        if (amount >= 10000000000000000L) // 1경 이상 (10^16)
         {
-            return (amount / 100000000f).ToString("0.#") + "억";
+            return (amount / 10000000000000000d).ToString("0.#") + "경";
         }
-        else if (amount >= 10000) // 1만 이상
+        else if (amount >= 1000000000000L) // 1조 이상 (10^12)
         {
-            return (amount / 10000f).ToString("0.#") + "만";
+            return (amount / 1000000000000d).ToString("0.#") + "조";
+        }
+        else if (amount >= 100000000L) // 1억 이상 (10^8)
+        {
+            return (amount / 100000000d).ToString("0.#") + "억";
+        }
+        else if (amount >= 10000L) // 1만 이상 (10^4)
+        {
+            return (amount / 10000d).ToString("0.#") + "만";
         }
         else
         {
-            return amount.ToString("N0"); // 1만 미만은 그냥 콤마(,) 찍어서 표시
+            return amount.ToString("N0"); // 1만 미만은 콤마(,) 찍어서 표시
         }
     }
 
