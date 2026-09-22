@@ -32,6 +32,7 @@ public class EmployeeData : ScriptableObject
     //초당 골드 생산량
     [SerializeField] private int productionPerSecond;
 
+    [SerializeField] private float productionMultiplier = 1.15f;
 
     public string EmployeeId => employeeId;
 
@@ -44,4 +45,6 @@ public class EmployeeData : ScriptableObject
     public float HireCostMultiplier => hireCostMultiplier;
 
     public int ProductionPerSecond => productionPerSecond;
+
+    public float ProductionMultiplier => productionMultiplier;
 }
