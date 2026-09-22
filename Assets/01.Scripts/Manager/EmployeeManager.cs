@@ -155,9 +155,9 @@ public class EmployeeManager : MonoBehaviour
     }
 
     // 현재 보유한 모든 직원의 초당 생산량 계산
-    public int GetTotalProductionPerSecond()
+    public float GetTotalProductionPerSecond()
     {
-        int totalProduction = 0;
+        float totalProduction = 0;
 
         foreach (EmployeeState state in employeeStates)
         {
@@ -167,7 +167,7 @@ public class EmployeeManager : MonoBehaviour
             }
 
             // 직원별 생산량 계산 (추후 AutoProduction 에서 사용가능)
-            totalProduction += state.employeeData.ProductionPerSecond * state.Count;
+            totalProduction += state.GetCurrentProductionPerSecond();
         }
 
         return totalProduction;
