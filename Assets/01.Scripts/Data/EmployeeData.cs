@@ -24,7 +24,7 @@ public class EmployeeData : ScriptableObject
     [SerializeField] private int baseHireCost;
 
     // 두번째 고용시 n배만큼 가격 증가
-    [SerializeField] private float hireCostMultiplier = 1.3f;
+    [SerializeField] private float hireCostMultiplier = 1.2f;
 
 
     [Header("생산 정보")]
@@ -32,6 +32,8 @@ public class EmployeeData : ScriptableObject
     //초당 골드 생산량
     [SerializeField] private int productionPerSecond;
 
+    // 직원 추가 고용 시 생산량 증가 배율
+    [SerializeField] private float productionMultiplier = 1.2f;
 
     public string EmployeeId => employeeId;
 
@@ -44,4 +46,6 @@ public class EmployeeData : ScriptableObject
     public float HireCostMultiplier => hireCostMultiplier;
 
     public int ProductionPerSecond => productionPerSecond;
+
+    public float ProductionMultiplier => productionMultiplier;
 }
