@@ -12,7 +12,8 @@ public class PartState
     // 현재 부품이 제공하는 총 탭 파워
     public int GetTotalPower()
     {
-        return level * partData.PowerPerLevel;
+        double power = partData.BasePower * Math.Pow(partData.PowerMultiplier, level);
+        return (int)Math.Round(power);
     }
 
     // 다음 레벨 강화 비용 계산 : BaseCost * (Multiplier ^ Level)
@@ -20,6 +21,18 @@ public class PartState
     {
         double cost = partData.BaseCost * Math.Pow(partData.CostMultiplier, level);
         return (int)Math.Round(cost);
+    }
+
+    public int GetCurrentPower()
+    {
+        double power = partData.BasePower * Math.Pow(partData.PowerMultiplier, level);
+        return (int)Math.Round(power);
+    }
+
+    public int GetNextPower()
+    {
+        double power = partData.BasePower * Math.Pow(partData.PowerMultiplier, level + 1);
+        return (int)Math.Round(power);
     }
 
     public void LevelUp()
