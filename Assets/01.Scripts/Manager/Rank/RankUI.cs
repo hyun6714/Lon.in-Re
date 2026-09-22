@@ -42,6 +42,7 @@ public class RankUI : MonoBehaviour
         GameEventBridge.OnRankChanged += UpdateRankUI;
         GameEventBridge.OnReincarnated += UpdateRankUI;
         GameEventBridge.OnReincarnated += RankUpOnBtn;
+        GameEventBridge.OnCurrencyAdded += HandleCurrencyChanged;
 
         if (prevButton != null) prevButton.onClick.AddListener(OnClickPrevRank);
         if (nextButton != null) nextButton.onClick.AddListener(OnClickNextRank);
@@ -63,6 +64,7 @@ public class RankUI : MonoBehaviour
         GameEventBridge.OnRankChanged -= UpdateRankUI;
         GameEventBridge.OnReincarnated -= UpdateRankUI;
         GameEventBridge.OnReincarnated -= RankUpOnBtn;
+        GameEventBridge.OnCurrencyAdded -= HandleCurrencyChanged;
     }
 
     public void OpenRankPop()
@@ -241,6 +243,14 @@ public class RankUI : MonoBehaviour
         else
         {
             return amount.ToString("N0"); // 1만 미만은 콤마(,) 찍어서 표시
+        }
+    }
+
+    private void HandleCurrencyChanged(CurrencyType type, int amount)
+    {
+        if (type == CurrencyType.Normal || type == CurrencyType.Reputation)
+        {
+            UpdateRankUI();
         }
     }
 
