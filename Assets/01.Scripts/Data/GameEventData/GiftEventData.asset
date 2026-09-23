@@ -13,24 +13,19 @@ MonoBehaviour:
   m_Name: GiftEventData
   m_EditorClassIdentifier: Assembly-CSharp::GiftEventData
   eventType: 3003
-  solo: 500
-  indie: 2000
-  small: 10000
-  midsized: 50000
-  major: 200000
   reward:
   - rank: 0
-    rewardGold: 500
-    rewardFame: 200
-  - rank: 1
-    rewardGold: 2000
+    rewardGold: 25000
     rewardFame: 500
+  - rank: 1
+    rewardGold: 250000
+    rewardFame: 3500
   - rank: 2
-    rewardGold: 10000
-    rewardFame: 1000
+    rewardGold: 2500000
+    rewardFame: 8000
   - rank: 3
-    rewardGold: 50000
-    rewardFame: 5000
+    rewardGold: 175000000
+    rewardFame: 20000
   - rank: 4
-    rewardGold: 200000
-    rewardFame: 10000
+    rewardGold: 250000000
+    rewardFame: 50000

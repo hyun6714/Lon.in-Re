@@ -27,10 +27,10 @@ MonoBehaviour:
   - rank: 0
     rewardFame: 500
   - rank: 1
-    rewardFame: 2500
-  - rank: 2
     rewardFame: 5000
-  - rank: 3
+  - rank: 2
     rewardFame: 10000
+  - rank: 3
+    rewardFame: 30000
   - rank: 4
-    rewardFame: 20000
+    rewardFame: 70000

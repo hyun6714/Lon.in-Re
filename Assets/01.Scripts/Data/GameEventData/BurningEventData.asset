@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BurningEventData
   eventType: 3001
   burningTime: 10
-  clickMultiplier: 5
-  autoMultiplier: 2
+  clickMultiplier: 1.5
+  autoMultiplier: 1.5
   baseClickMultiplier: 1
   baseAutoMultiplier: 1
   endTime: 2
