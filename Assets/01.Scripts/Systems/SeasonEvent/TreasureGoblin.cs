@@ -14,8 +14,7 @@ public class TreasureGoblin : MonoBehaviour
 
     public void Init(TreasureGoblinEventPopup popup)
     {
-        this.popup = popup;
-        camera = Camera.main;                
+        this.popup = popup;             
 
         if (dir == Vector2.zero)
             dir = Vector2.right;
@@ -25,8 +24,15 @@ public class TreasureGoblin : MonoBehaviour
 
     private void OnEnable()
     {
+        camera = Camera.main;
+
+        transform.position = Vector3.zero;
+
         // ·£´ý ¹æÇâ
         dir = Random.insideUnitCircle.normalized;
+
+        if(dir == Vector2.zero)
+            dir = Vector2.right;
 
         ScaleCheck();
     }
