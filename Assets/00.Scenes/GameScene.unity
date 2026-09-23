@@ -6612,8 +6612,8 @@ RectTransform:
   - {fileID: 149694438}
   - {fileID: 608942201}
   - {fileID: 1814877864}
-  - {fileID: 2015311838}
   - {fileID: 1962029063}
+  - {fileID: 2015311838}
   - {fileID: 1538602167}
   - {fileID: 231229379}
   m_Father: {fileID: 1151037099}
@@ -36782,7 +36782,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC9C1\uC6D0 \uAD00\uB9AC"
+  m_text: "\uC9C1\uC6D0"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 928f7fbd92faa284eb5967a0497735e9, type: 2}
   m_sharedMaterial: {fileID: -8858597400809627153, guid: 928f7fbd92faa284eb5967a0497735e9, type: 2}
@@ -79367,7 +79367,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 419, y: -28}
+  m_AnchoredPosition: {x: 289, y: -28}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1962029064
@@ -79884,7 +79884,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 289, y: -28}
+  m_AnchoredPosition: {x: 419, y: -28}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2015311839
@@ -82944,6 +82944,26 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1766930933}
+    - target: {fileID: 810205940127814867, guid: 3f46b9e4eeb25df428328962404bbf47, type: 3}
+      propertyPath: m_text
+      value: 10,000
+      objectReference: {fileID: 0}
+    - target: {fileID: 810205940127814867, guid: 3f46b9e4eeb25df428328962404bbf47, type: 3}
+      propertyPath: m_fontSize
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 810205940127814867, guid: 3f46b9e4eeb25df428328962404bbf47, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 810205940127814867, guid: 3f46b9e4eeb25df428328962404bbf47, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 810205940127814867, guid: 3f46b9e4eeb25df428328962404bbf47, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1539061972140620689, guid: 3f46b9e4eeb25df428328962404bbf47, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -83080,6 +83100,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1766930933}
+    - target: {fileID: 8451362627110009882, guid: 3f46b9e4eeb25df428328962404bbf47, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 8451362627110009882, guid: 3f46b9e4eeb25df428328962404bbf47, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 8451362627110009882, guid: 3f46b9e4eeb25df428328962404bbf47, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 65.8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
