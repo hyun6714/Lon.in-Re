@@ -24,6 +24,8 @@ public class TreasureGoblinEventPopup : EventPopupBase
         {
             goblin.Init(this);
         }
+
+        gameObject.SetActive(false);
     }
 
     public override void OpenPopup()

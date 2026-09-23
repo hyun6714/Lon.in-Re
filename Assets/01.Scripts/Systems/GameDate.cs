@@ -46,14 +46,38 @@ public struct GameDate : IEquatable<GameDate>
 
     public void LoadDate(GameDateSaveData saveData)
     {
+        if (saveData == null)
+        {
+            Utils.Log("[GameDate] 저장된 날짜 데이터가 없습니다.");
+            return;
+        }
+
         year = saveData.year;
-        month = saveData.month;
-        day = saveData.day;
-        hour = saveData.hour;
-        minutes = saveData.minutes;
+
+        int maxMonth = Mathf.Min(maxMonthPerYear, daysInMonthList.Count);
+
+        if (maxMonth <= 0)
+        {
+            Utils.Log("[GameDate] 날짜별 일수 데이터가 없습니다.");
+            return;
+        }
+
+        if (saveData.month < 1 || saveData.month > maxMonth)
+        {
+            Utils.Log($"[GameDate] 잘못 저장된 월 : {saveData.month} -> 1~{maxMonth} 범위 보정");
+        }
+
+        month = Mathf.Clamp(saveData.month, 1, maxMonth);
+
+        lastDay = daysInMonthList[month - 1];
+
+        day = Mathf.Clamp(saveData.day, 1, lastDay);
+
+        hour = Mathf.Clamp(saveData.hour, 0, maxHourPerDay - 1);
+
+        minutes = Mathf.Clamp(saveData.minutes, 0, maxMinutePerHour);
 
         UpdateSeason();
-        lastDay = daysInMonthList[month - 1];
     }
 
     public void NextDay()
