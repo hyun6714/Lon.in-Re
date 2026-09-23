@@ -93,9 +93,9 @@ public class GameCardUI : MonoBehaviour
 
     private void UpdateRemainingTime(ReleasedGameSaveData releasedGame, EventManagerData eventManagerData)
     {
-        RankManager.RankState currentRank = GameDataGetter<RankManager.RankState>.GetData();
+        RankManager.RankState devRank = releasedGame.gameResult.developmentRank;
 
-        List<int> currentSettlementList = eventManagerData.GetCurrentSettlementList(currentRank);
+        List<int> currentSettlementList = eventManagerData.GetCurrentSettlementList(devRank);
         int maxSettlementNum = currentSettlementList.Count;
 
         if (releasedGame.settlementCount >= maxSettlementNum)
