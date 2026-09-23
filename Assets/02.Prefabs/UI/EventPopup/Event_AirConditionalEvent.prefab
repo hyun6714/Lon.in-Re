@@ -246,6 +246,7 @@ GameObject:
   - component: {fileID: 7130230044330518112}
   - component: {fileID: 8989054675523566993}
   - component: {fileID: 1043421131042623028}
+  - component: {fileID: 1291187940035083830}
   m_Layer: 5
   m_Name: EventSelect_Button
   m_TagString: Untagged
@@ -367,6 +368,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1291187940035083830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940708632186381729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea1868a7add606e44b820e1aa7b4630f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonSound
+  soundType: 1
 --- !u!1 &3665583685536423993
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,6 +669,7 @@ GameObject:
   - component: {fileID: 5616787244455444899}
   - component: {fileID: 5094066136883094927}
   - component: {fileID: 3232201778379809029}
+  - component: {fileID: 7755451768580616970}
   m_Layer: 5
   m_Name: EventSelect_Button (1)
   m_TagString: Untagged
@@ -776,6 +791,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &7755451768580616970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6162814332245863379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea1868a7add606e44b820e1aa7b4630f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonSound
+  soundType: 1
 --- !u!1 &7281795973630532815
 GameObject:
   m_ObjectHideFlags: 0
