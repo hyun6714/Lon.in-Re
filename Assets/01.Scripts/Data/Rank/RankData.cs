@@ -6,6 +6,7 @@ public class RankData : ScriptableObject
     public RankManager.RankState rank;
     public string rankDisplayName; // ∑©≈©¿Ã∏ß
     public Sprite rankIcon; //icon
+    public Sprite rankHUDIcon;
 
     [Header("Ω∫≈» ¡§∫∏")]
     public bool hasEmployees;

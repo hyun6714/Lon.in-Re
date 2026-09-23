@@ -15,9 +15,10 @@ MonoBehaviour:
   rank: 3
   rankDisplayName: "\uC911\uACAC \uAE30\uC5C5"
   rankIcon: {fileID: 21300000, guid: 2d087471f35fe8c4b8a14bd01401f1b6, type: 3}
+  rankHUDIcon: {fileID: 21300000, guid: d33fe0bd813e53b4685027bc50ce2bcb, type: 3}
   hasEmployees: 1
   maxEmployee: 30
   reqGamesReleased: 50
   reqEmployeeCount: 15
   reqReputation: 375000
-  reqNormal: 10000000
+  reqNormal: 100000000

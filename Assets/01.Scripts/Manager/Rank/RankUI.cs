@@ -18,6 +18,7 @@ public class RankUI : MonoBehaviour
 
     [Header("등급 아이콘 UI")]
     [SerializeField] private Image rankIconImage;
+    [SerializeField] private Image rankHUDImage;
 
     [Header("승급 버튼")]
     [SerializeField] public Button rankUpButton;
@@ -79,11 +80,11 @@ public class RankUI : MonoBehaviour
 
             if (currentRealIndex < maxIndex)
             {
-                viewingRankIndex = currentRealIndex + 1; 
+                viewingRankIndex = currentRealIndex + 1;
             }
             else
             {
-                viewingRankIndex = currentRealIndex; 
+                viewingRankIndex = currentRealIndex;
             }
         }
 
@@ -134,6 +135,19 @@ public class RankUI : MonoBehaviour
             if (UIManager.Instance != null)
             {
                 UIManager.Instance.SetText(HUDTextType.Level, currentData.rankDisplayName);
+            }
+        }
+
+        if (rankHUDImage != null)
+        {
+            if (currentData.rankHUDIcon != null)
+            {
+                rankHUDImage.gameObject.SetActive(true);
+                rankHUDImage.sprite = currentData.rankHUDIcon;
+            }
+            else
+            {
+                rankHUDImage.gameObject.SetActive(false);
             }
         }
 
