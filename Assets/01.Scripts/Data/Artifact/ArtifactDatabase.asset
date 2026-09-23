@@ -20,7 +20,7 @@ MonoBehaviour:
     effects:
     - effectType: 0
       effectValue: 1.1
-    SpecialUnlockCost: 1000
+    SpecialUnlockCost: 5000
     requiredRebirthCount: 0
     requiredReputation: 0
   - artifactId: 101
@@ -30,7 +30,7 @@ MonoBehaviour:
     effects:
     - effectType: 0
       effectValue: 1.1
-    SpecialUnlockCost: 1500
+    SpecialUnlockCost: 10000
     requiredRebirthCount: 0
     requiredReputation: 0
   - artifactId: 102
@@ -40,7 +40,7 @@ MonoBehaviour:
     effects:
     - effectType: 0
       effectValue: 1.3
-    SpecialUnlockCost: 2500
+    SpecialUnlockCost: 20000
     requiredRebirthCount: 1
     requiredReputation: 1500
   - artifactId: 103
@@ -50,7 +50,7 @@ MonoBehaviour:
     effects:
     - effectType: 0
       effectValue: 1.3
-    SpecialUnlockCost: 3000
+    SpecialUnlockCost: 30000
     requiredRebirthCount: 1
     requiredReputation: 2500
   - artifactId: 104
@@ -60,7 +60,7 @@ MonoBehaviour:
     effects:
     - effectType: 0
       effectValue: 1.5
-    SpecialUnlockCost: 5000
+    SpecialUnlockCost: 50000
     requiredRebirthCount: 1
     requiredReputation: 4000
   - artifactId: 105
@@ -70,7 +70,7 @@ MonoBehaviour:
     effects:
     - effectType: 0
       effectValue: 1.5
-    SpecialUnlockCost: 10000
+    SpecialUnlockCost: 100000
     requiredRebirthCount: 2
     requiredReputation: 4000
   - artifactId: 106
@@ -80,7 +80,7 @@ MonoBehaviour:
     effects:
     - effectType: 0
       effectValue: 2
-    SpecialUnlockCost: 30000
+    SpecialUnlockCost: 150000
     requiredRebirthCount: 3
     requiredReputation: 5000
   - artifactId: 200
@@ -100,7 +100,7 @@ MonoBehaviour:
     effects:
     - effectType: 1
       effectValue: 1.2
-    SpecialUnlockCost: 2000
+    SpecialUnlockCost: 10000
     requiredRebirthCount: 0
     requiredReputation: 0
   - artifactId: 202
@@ -110,7 +110,7 @@ MonoBehaviour:
     effects:
     - effectType: 1
       effectValue: 1.5
-    SpecialUnlockCost: 3000
+    SpecialUnlockCost: 10000
     requiredRebirthCount: 0
     requiredReputation: 1000
   - artifactId: 203
@@ -120,7 +120,7 @@ MonoBehaviour:
     effects:
     - effectType: 1
       effectValue: 1.5
-    SpecialUnlockCost: 4500
+    SpecialUnlockCost: 45000
     requiredRebirthCount: 1
     requiredReputation: 1000
   - artifactId: 204
@@ -130,9 +130,9 @@ MonoBehaviour:
     effects:
     - effectType: 1
       effectValue: 1.8
-    SpecialUnlockCost: 6000
+    SpecialUnlockCost: 80000
     requiredRebirthCount: 1
-    requiredReputation: 2000
+    requiredReputation: 30000
   - artifactId: 205
     type: 2
     artiName: "\uC120\uD48D\uAE30"
@@ -140,7 +140,7 @@ MonoBehaviour:
     effects:
     - effectType: 1
       effectValue: 1.8
-    SpecialUnlockCost: 8000
+    SpecialUnlockCost: 125000
     requiredRebirthCount: 2
     requiredReputation: 200
   - artifactId: 206
@@ -150,6 +150,6 @@ MonoBehaviour:
     effects:
     - effectType: 1
       effectValue: 2.5
-    SpecialUnlockCost: 24000
+    SpecialUnlockCost: 240000
     requiredRebirthCount: 3
     requiredReputation: 3000

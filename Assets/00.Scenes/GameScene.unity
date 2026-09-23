@@ -12265,6 +12265,7 @@ MonoBehaviour:
   EmployeeReqText: {fileID: 87627637}
   GoldReqText: {fileID: 770749846}
   rankIconImage: {fileID: 1979703579}
+  rankHUDImage: {fileID: 2048466090}
   rankUpButton: {fileID: 281109661}
   prevButton: {fileID: 1841904561354181455}
   nextButton: {fileID: 1841904561354181454}
@@ -12689,7 +12690,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3398261926625312594, guid: 6a08cf37cba6ded468d079bb49aa6c46, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4507467442329840655, guid: 6a08cf37cba6ded468d079bb49aa6c46, type: 3}
       propertyPath: m_Pivot.x
