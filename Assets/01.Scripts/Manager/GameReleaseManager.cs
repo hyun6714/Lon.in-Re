@@ -50,7 +50,7 @@ public class GameReleaseManager : MonoBehaviour
         OnGameReleased?.Invoke(releasedGame);
 
         // 출시 날짜를 기준으로 정산 시작
-        EventManager.instance.StartGameSettlement(gameResult.gameId);
+        EventManager.instance.StartGameSettlement(gameResult.gameId, gameResult.developmentRank);
 
         Utils.Log(
             $"게임 출시 완료  / ID : { gameResult.gameId} / " +

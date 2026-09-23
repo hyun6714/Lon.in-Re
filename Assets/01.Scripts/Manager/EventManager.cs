@@ -306,10 +306,10 @@ public class EventManager : MonoBehaviour
 
     // 게임 출시 후 해당 게임의 정산 시작
     // 저장된 개발 이벤트 날짜와 gameId를 사용하여 게임별 정산
-    public void StartGameSettlement(int gameId)
+    public void StartGameSettlement(int gameId, RankManager.RankState settlementRank)
     {
         GameDate nowDate = GameDataGetter<GameDate>.GetData();
-        StartGameSettlementAsync(nowDate, gameId, 0, token.Token).Forget();
+        StartGameSettlementAsync(nowDate, gameId, 0, settlementRank, token.Token).Forget();
     }
 
     /// <summary>
@@ -320,17 +320,15 @@ public class EventManager : MonoBehaviour
     /// <param name="gameId"> 출시 게임 고유 ID </param>
     /// <param name="token"> UniTask 토큰 </param>
     /// <returns></returns>
-    public async UniTaskVoid StartGameSettlementAsync(GameDate date, int gameId, int settlementCount, CancellationToken token)
+    public async UniTaskVoid StartGameSettlementAsync(GameDate date, int gameId, int settlementCount, RankManager.RankState settlementRank, CancellationToken token)
     {
         try
         {
-            RankManager.RankState currentRank = GameDataGetter<RankManager.RankState>.GetData();
-
-            int num = currentRank >= RankManager.RankState.Small ? data.HighSettlementNum : data.SettlementNum;
+            int num = settlementRank >= RankManager.RankState.Small ? data.HighSettlementNum : data.SettlementNum;
 
             for (int i = settlementCount + 1; i <= num; i++)
             {
-                int addDay = currentRank >= RankManager.RankState.Small? data.NextHighSettlements[i - 1] : data.NextSettlements[i - 1];
+                int addDay = settlementRank >= RankManager.RankState.Small? data.NextHighSettlements[i - 1] : data.NextSettlements[i - 1];
                 
                 GameDate targetDate = date.GetAfterDay(addDay);
                 Utils.Log($"종료 날짜 : {targetDate.year}년 {targetDate.month}월 {targetDate.day}일 {targetDate.hour}시");
@@ -406,7 +404,7 @@ public class EventManager : MonoBehaviour
         releaseDate.month = releasedGame.releaseMonth;
         releaseDate.day = releasedGame.releaseDay;
 
-        StartGameSettlementAsync(releaseDate, releasedGame.gameResult.gameId, releasedGame.settlementCount, token.Token ).Forget();
+        StartGameSettlementAsync(releaseDate, releasedGame.gameResult.gameId, releasedGame.settlementCount, releasedGame.gameResult.developmentRank, token.Token ).Forget();
     }
 
     // 금일 실행 중(또는 예정된) 이벤트 가져오기

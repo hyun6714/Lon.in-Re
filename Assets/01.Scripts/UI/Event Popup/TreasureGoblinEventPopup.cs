@@ -10,6 +10,7 @@ public class TreasureGoblinEventPopup : EventPopupBase
 
     [Header("고블린")]
     [SerializeField] private TreasureGoblin goblin;
+    [SerializeField] private Transform goblinStartPos;
 
     [Header("텍스트")]
     [SerializeField] private TextMeshProUGUI mainText;

@@ -18,7 +18,7 @@ public class TreasureGoblinEvent : IEvent
     private bool isSuccess;
 
     public int TouchCount => touchCount;
-    public int RequireTouchCOunt => data.RequireTouchCount;
+    public int RequireTouchCount => data.RequireTouchCount;
     public float Timer => timer;
 
     public bool IsStarted => isStarted;
@@ -105,7 +105,7 @@ public class TreasureGoblinEvent : IEvent
 
         touchCount++;
 
-        if (touchCount >= RequireTouchCOunt)
+        if (touchCount >= RequireTouchCount)
         {
             SuccessEvent();
             return true;
