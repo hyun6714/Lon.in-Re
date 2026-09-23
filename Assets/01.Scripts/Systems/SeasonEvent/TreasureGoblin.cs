@@ -25,6 +25,9 @@ public class TreasureGoblin : MonoBehaviour
     private void OnEnable()
     {
         camera = Camera.main;
+
+        transform.position = Vector3.zero;
+
         // ·£´ý ¹æÇâ
         dir = Random.insideUnitCircle.normalized;
 
