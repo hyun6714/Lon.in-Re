@@ -58,6 +58,8 @@ public static class GameEventBridge
     /// <summary> 게임 제작 성공 후 발생 </summary>
     public static event Action<int, int, HUDTextType> OnGameDevSucceeded;
 
+    /// <summary> 재화 교환 요청 시 발생 (ExchangeDataSO) </summary>
+    public static event Action<ExchangeDataSO> OnCurrencyExchangeRequested;
 
     // 이벤트 실행
     public static void DayChanged(GameDate date) => OnDayChanged?.Invoke(date);
@@ -81,4 +83,5 @@ public static class GameEventBridge
     public static void NextEventChanged(GameDate nextEventDate) => OnNextEventChanged?.Invoke(nextEventDate);
     public static void GameSettlementStarted(int gameID, int num) => OnGameSettlementStarted?.Invoke(gameID, num);
     public static void GameDevSucceeded(int current, int max, HUDTextType type = HUDTextType.Game) => OnGameDevSucceeded?.Invoke(current, max, type);
+    public static void CurrencyExchangeRequested(ExchangeDataSO exchangeData) => OnCurrencyExchangeRequested?.Invoke(exchangeData);
 }
