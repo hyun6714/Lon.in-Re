@@ -20,7 +20,7 @@ public class TreasureGoblin : MonoBehaviour
         if (dir == Vector2.zero)
             dir = Vector2.right;
 
-        ScaleCheck();
+        gameObject.SetActive(false);
     }
 
     private void OnEnable()
