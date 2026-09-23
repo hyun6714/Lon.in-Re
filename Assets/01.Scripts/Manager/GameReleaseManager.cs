@@ -161,5 +161,7 @@ public class GameReleaseManager : MonoBehaviour
     private void ResetDataOnRebirth()
     {
         releasedGames.Clear();
+
+        GameEventBridge.GameDevSucceeded(0, GameDevManager.instance.MaxActiveGameCount);
     }
 }
