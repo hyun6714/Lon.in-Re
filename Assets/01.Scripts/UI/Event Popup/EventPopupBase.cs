@@ -67,10 +67,11 @@ public class EventPopupBase : PopupBase
                     gameObject.SetActive(false);
                     UIManager.Instance.DimCheck();
 
-                    if (!UIManager.Instance.HasActivePopup())
-                    {
-                        GameManager.instance.GameResume();
-                    }
+                    //if (!UIManager.Instance.HasActivePopup())
+                    //{
+                    //    GameManager.instance.GameResume();
+                    //}
+                    GameManager.instance.GameResume();
                 })
                 .ToUniTask(TweenCancelBehaviour.CompleteAndCancelAwait, ctk);
         }
