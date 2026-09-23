@@ -38,6 +38,8 @@ public class SoundManager : MonoBehaviour
     {
         SetBGMVolume(PlayerPrefs.GetFloat("BGMVolume", 1f));
         SetSFXVolume(PlayerPrefs.GetFloat("SFXVolume", 1f));
+
+        PlayBGM(BGMType.Main);
     }
 
     private void InitSoundDictionary()

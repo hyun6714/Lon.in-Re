@@ -32,6 +32,8 @@ public class TapController : MonoBehaviour, IPointerDownHandler
         if (TryClickTreasureGoblin(eventData.position))
             return;
 
+        SoundManager.instance?.PlaySFX(SFXType.Tap, true);  // 탭 효과음 재생
+
         // 플레이어 강화 수치 가져오기
         int currentPower = playerUpgrade != null ? playerUpgrade.CurrentTapPower : 1;
 

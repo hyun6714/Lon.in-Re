@@ -61,6 +61,8 @@ public class GameSettlementManager : MonoBehaviour
 
         GameReleaseManager.instance.IncreaseSettlementCount(gameId);
 
+        SoundManager.instance?.PlaySFX(SFXType.Settlement); // 게임 정산 효과음 재생
+
         Utils.Log(
             $"게임 정산 / ID : {gameId} / " +
             $"정산 회차 : {settlementCount} / " +
