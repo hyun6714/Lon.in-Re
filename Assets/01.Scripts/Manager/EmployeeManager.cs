@@ -88,7 +88,7 @@ public class EmployeeManager : MonoBehaviour
         }
 
         // 4. 현재 고용 비용 계산
-        int hireCost = state.GetCurrentHireCost();
+        long hireCost = state.GetCurrentHireCost();
 
         // 5. CurrencyManager 존재 확인
         if (CurrencyManager.instance == null)
