@@ -16,7 +16,7 @@ MonoBehaviour:
   - artifactId: 100
     type: 0
     artiName: "\uD654\uBD84"
-    icon: {fileID: -2966200626249415253, guid: eb5decfa772a1d2418d9af38ec1f47d3, type: 3}
+    icon: {fileID: 21300000, guid: 2fef5381704076846b974f23f2da9c97, type: 3}
     effects:
     - effectType: 0
       effectValue: 1.1
@@ -26,7 +26,7 @@ MonoBehaviour:
   - artifactId: 101
     type: 0
     artiName: "\uCC45"
-    icon: {fileID: -7371509505491802261, guid: 63d266f6f922b3b47aa9338d49778536, type: 3}
+    icon: {fileID: 21300000, guid: b33b415c4c039224eaadf02ee0ef4700, type: 3}
     effects:
     - effectType: 0
       effectValue: 1.1
@@ -36,7 +36,7 @@ MonoBehaviour:
   - artifactId: 102
     type: 1
     artiName: "\uBB3C"
-    icon: {fileID: -4093987921198194536, guid: ae997dcf1a6274843b3b9d9d32fd40cd, type: 3}
+    icon: {fileID: 21300000, guid: 0bd28a89075b9194a95313f256e3f22c, type: 3}
     effects:
     - effectType: 0
       effectValue: 1.3
@@ -46,7 +46,7 @@ MonoBehaviour:
   - artifactId: 103
     type: 1
     artiName: "\uC18C\uD654\uAE30"
-    icon: {fileID: -2947526863502713391, guid: e3a664a5ff6e51e47b71337e7a01c7cc, type: 3}
+    icon: {fileID: 21300000, guid: 4156daedc6769c74988a0e3e610167e2, type: 3}
     effects:
     - effectType: 0
       effectValue: 1.3
@@ -56,7 +56,7 @@ MonoBehaviour:
   - artifactId: 104
     type: 2
     artiName: "\uC81C\uC2B5\uAE30"
-    icon: {fileID: -41970534257140035, guid: a7d0df3e95073894ca75ecf3a8023b18, type: 3}
+    icon: {fileID: 21300000, guid: bd1cbe47a3f981f479e60236d61c95e8, type: 3}
     effects:
     - effectType: 0
       effectValue: 1.5
@@ -66,7 +66,7 @@ MonoBehaviour:
   - artifactId: 105
     type: 2
     artiName: "\uB178\uD2B8\uBD81"
-    icon: {fileID: -8868653072870737037, guid: d8057628c51c577438d2ce140c9a807c, type: 3}
+    icon: {fileID: 21300000, guid: 4fb20d3ff42770c4facec88490b8174e, type: 3}
     effects:
     - effectType: 0
       effectValue: 1.5
@@ -76,7 +76,7 @@ MonoBehaviour:
   - artifactId: 106
     type: 3
     artiName: "\uC790\uD310\uAE30 "
-    icon: {fileID: -5789677524543127715, guid: 8f7808d265cd1274397ea0fff7ae58e9, type: 3}
+    icon: {fileID: 21300000, guid: 03c914717d49bb0499ac6d316b260e3e, type: 3}
     effects:
     - effectType: 0
       effectValue: 2
@@ -86,7 +86,7 @@ MonoBehaviour:
   - artifactId: 200
     type: 0
     artiName: "\uC758\uC790"
-    icon: {fileID: 6132618406234632, guid: 5e51191ad6a240946a6454742f57c182, type: 3}
+    icon: {fileID: 21300000, guid: 4df2a882afa90e248983a6f7eed9125d, type: 3}
     effects:
     - effectType: 1
       effectValue: 1.2
@@ -96,7 +96,7 @@ MonoBehaviour:
   - artifactId: 201
     type: 0
     artiName: "\uC2AC\uB9AC\uD37C"
-    icon: {fileID: 5616075518325981702, guid: 2c6018efb8d3c7643826a84ff1171106, type: 3}
+    icon: {fileID: 7604456299918065798, guid: 802682fbfb6a6ab4aac98b212f44fcf2, type: 3}
     effects:
     - effectType: 1
       effectValue: 1.2
@@ -106,7 +106,7 @@ MonoBehaviour:
   - artifactId: 202
     type: 1
     artiName: "\uD504\uB85C\uADF8\uB7A8"
-    icon: {fileID: -6172548384692717979, guid: 9708eb3e625481e44932dabb0fa0cb8f, type: 3}
+    icon: {fileID: 21300000, guid: d792873e77cb4b94fa48c5ea0e1ad04f, type: 3}
     effects:
     - effectType: 1
       effectValue: 1.5
@@ -116,7 +116,7 @@ MonoBehaviour:
   - artifactId: 203
     type: 1
     artiName: "\uD140\uBE14\uB7EC"
-    icon: {fileID: 6286643261106798013, guid: 0b5daba0dadf7ae4a8b3640e3ebf02dd, type: 3}
+    icon: {fileID: 21300000, guid: 094e59464befe9c43a51233912e944de, type: 3}
     effects:
     - effectType: 1
       effectValue: 1.5
@@ -126,7 +126,7 @@ MonoBehaviour:
   - artifactId: 204
     type: 2
     artiName: "\uC2A4\uD0E0\uB4DC"
-    icon: {fileID: 288847819329685680, guid: 2b73ece5f7eacec48aa9c85a9a37dd43, type: 3}
+    icon: {fileID: 21300000, guid: 750cbf1e145f5c742abe0e3f6c777857, type: 3}
     effects:
     - effectType: 1
       effectValue: 1.8
@@ -136,7 +136,7 @@ MonoBehaviour:
   - artifactId: 205
     type: 2
     artiName: "\uC120\uD48D\uAE30"
-    icon: {fileID: -2849204910212236749, guid: 2e4bfce44eba97c4b880fa5ad79491ba, type: 3}
+    icon: {fileID: 21300000, guid: 296362c520ad779449056ab35852f231, type: 3}
     effects:
     - effectType: 1
       effectValue: 1.8
@@ -146,7 +146,7 @@ MonoBehaviour:
   - artifactId: 206
     type: 3
     artiName: "\uD578\uB4DC\uD3F0"
-    icon: {fileID: 7965088197702528346, guid: 5e685d6d40d25984a8dca39826d2b0b9, type: 3}
+    icon: {fileID: 21300000, guid: 393cf311187c99f4b928c0bcc8fe59d9, type: 3}
     effects:
     - effectType: 1
       effectValue: 2.5
