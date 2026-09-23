@@ -115,7 +115,7 @@ public class EmployeeHireSlot : MonoBehaviour
         }
 
         // 직군명 x인원수 (+초당생산량)
-        int totalProduction = data.ProductionPerSecond * targetState.Count;
+        long totalProduction = (long)data.ProductionPerSecond * targetState.Count;
         if (infoText != null)
         {
             infoText.text = $"{data.EmployeeName} x{targetState.Count} (+{CurrencyFormatter.Format(totalProduction)}/초)";
@@ -134,7 +134,7 @@ public class EmployeeHireSlot : MonoBehaviour
             }
             else
             {
-                int hireCost = targetState.GetCurrentHireCost();
+                long hireCost = targetState.GetCurrentHireCost();
                 costText.text = CurrencyFormatter.Format(hireCost);
 
                 long currentGold = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Normal) : 0;

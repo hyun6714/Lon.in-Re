@@ -107,7 +107,7 @@ public class PlayerTapUpgrade : MonoBehaviour
             return false;
         }
 
-        int cost = state.GetNextCost();
+        long cost = state.GetNextCost();
         if (CurrencyManager.instance.UseCurrency(CurrencyType.Normal, cost))
         {
             state.LevelUp();

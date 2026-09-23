@@ -76,7 +76,7 @@ public class PartUpgradeSlot : MonoBehaviour
         // 비용
         if (costText != null)
         {
-            int nextCost = targetState.GetNextCost();
+            long nextCost = targetState.GetNextCost();
             costText.text = CurrencyFormatter.Format(nextCost);
 
             CheckCost();
@@ -102,7 +102,7 @@ public class PartUpgradeSlot : MonoBehaviour
             return;
         }
 
-        int nextCost = targetState.GetNextCost();
+        long nextCost = targetState.GetNextCost();
         bool canBuy = CurrencyManager.instance != null && CurrencyManager.instance.GetAmount(CurrencyType.Normal) >= nextCost;
 
         costText.color = canBuy ? originCostColor : new Color(0.65f, 0.65f, 0.65f, 1f);
