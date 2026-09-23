@@ -80,6 +80,7 @@ public class GameCardUI : MonoBehaviour
 
         int reputationReward =
             gameReleaseData.GetReputationReward(
+                result.developmentRank,
                 result.finalGrade
             );
 

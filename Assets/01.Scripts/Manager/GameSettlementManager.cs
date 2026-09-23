@@ -43,36 +43,18 @@ public class GameSettlementManager : MonoBehaviour
             return;
         }
 
-        // 게임 전체 정산 보상
-        int totalCurrencyReward =
+        // 게임 정산 보상
+        int currencyReward =
             gameReleaseData.GetCurrencyReward(
                 gameResult.finalGrade,
                 gameResult.baseDevelopmentCost
             );
 
-        int totalReputationReward =
+        int reputationReward =
             gameReleaseData.GetReputationReward(
+                gameResult.developmentRank,
                 gameResult.finalGrade
             );
-
-        int settlementNum = EventManager.instance.SettlementNum;
-
-        if (settlementNum <= 0)
-        {
-            Utils.Log("게임 정산 횟수가 설정되어 있지 않습니다.");
-            return;
-        }
-
-        // 기본 분할 보상
-        int currencyReward = totalCurrencyReward / settlementNum;
-        int reputationReward = totalReputationReward / settlementNum;
-
-        // 나누고 남은 값은 마지막 정산 때 지급
-        if (settlementCount == settlementNum)
-        {
-            currencyReward += totalCurrencyReward % settlementNum;
-            reputationReward += totalReputationReward % settlementNum;
-        }
 
         GameEventBridge.CurrencyAdded(CurrencyType.Normal, currencyReward);
         GameEventBridge.CurrencyAdded(CurrencyType.Reputation, reputationReward);
@@ -82,6 +64,7 @@ public class GameSettlementManager : MonoBehaviour
         Utils.Log(
             $"게임 정산 / ID : {gameId} / " +
             $"정산 회차 : {settlementCount} / " +
+            $"제작 랭크 : {gameResult.developmentRank} / " +
             $"최종 등급 : {gameResult.finalGrade} / " +
             $"재화 보상 : {currencyReward} / " +
             $"명성 보상 : {reputationReward}"

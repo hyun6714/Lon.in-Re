@@ -171,7 +171,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 94, y: -11}
+  m_AnchoredPosition: {x: 99, y: -11}
   m_SizeDelta: {x: 32, y: 32}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &5241178423805964023
@@ -380,7 +380,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 17, y: -14}
+  m_AnchoredPosition: {x: 22, y: -14}
   m_SizeDelta: {x: 120, y: 23.93}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4671932795023179619
@@ -1078,7 +1078,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 2, y: -11}
+  m_AnchoredPosition: {x: -4, y: -11}
   m_SizeDelta: {x: 24, y: 32}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &6855600177235297427
@@ -1426,9 +1426,9 @@ RectTransform:
   m_Children:
   - {fileID: 5370429794115589142}
   - {fileID: 4975758553316518599}
+  - {fileID: 5192801255523189361}
   - {fileID: 4324712643459373542}
   - {fileID: 854506663497641249}
-  - {fileID: 5192801255523189361}
   - {fileID: 8246951972784863378}
   - {fileID: 4833834593881612708}
   - {fileID: 8703211493925421491}
@@ -1678,7 +1678,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -75, y: -14}
+  m_AnchoredPosition: {x: -78, y: -14}
   m_SizeDelta: {x: 120, y: 23.93}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &380328216338362828
@@ -2102,7 +2102,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -48, y: -14}
+  m_AnchoredPosition: {x: -58, y: -18}
   m_SizeDelta: {x: 120, y: 23.93}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &9113900415233046681
@@ -2133,7 +2133,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uCD1D"
+  m_text: "\uD68C\uB2F9"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 928f7fbd92faa284eb5967a0497735e9, type: 2}
   m_sharedMaterial: {fileID: -8858597400809627153, guid: 928f7fbd92faa284eb5967a0497735e9, type: 2}
@@ -2160,8 +2160,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
