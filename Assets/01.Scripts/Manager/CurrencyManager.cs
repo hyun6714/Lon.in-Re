@@ -33,6 +33,7 @@ public class CurrencyManager : MonoBehaviour
         GameEventBridge.OnCurrencyUsed += UseCurrency;
 
         GameEventBridge.OnReincarnated += ResetCurrenciesExceptSpecial;
+        GameEventBridge.OnCurrencyExchangeRequested += HandleExchange;
     }
 
     private void OnDisable()
@@ -41,6 +42,7 @@ public class CurrencyManager : MonoBehaviour
         GameEventBridge.OnCurrencyUsed -= UseCurrency;
 
         GameEventBridge.OnReincarnated -= ResetCurrenciesExceptSpecial;
+        GameEventBridge.OnCurrencyExchangeRequested -= HandleExchange;
     }
 
     private void InitializeCurrencies()
@@ -130,5 +132,25 @@ public class CurrencyManager : MonoBehaviour
         }
 
         Debug.Log("특수 재화를 제외한 모든 재화가 초기화되었습니다.");
+    }
+
+    private void HandleExchange(ExchangeDataSO exchangeData)
+    {
+        if (exchangeData == null) return;
+
+       
+        bool isSuccess = UseCurrency(exchangeData.SourceCurrencyType, exchangeData.CostAmount);
+
+        if (isSuccess)
+        {
+
+            AddCurrency(exchangeData.TargetCurrencyType, exchangeData.RewardAmount);
+            Debug.Log($"교환 성공: {exchangeData.SourceCurrencyType} -{exchangeData.CostAmount:N0} / {exchangeData.TargetCurrencyType} +{exchangeData.RewardAmount:N0}");
+        }
+        else
+        {
+            Debug.Log("재화가 부족합니다.");
+            // TODO: 재화 부족 팝업 연출 추가
+        }
     }
 }

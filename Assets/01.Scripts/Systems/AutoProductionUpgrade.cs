@@ -10,8 +10,8 @@ public class AutoProductionUpgrade : MonoBehaviour
     [SerializeField] private AutoProductionUpgradeData data;
 
     [Header("총 생산량 합산")]
-    [SerializeField] private float totalPerSec;
-    public float TotalPerSec => totalPerSec;
+    [SerializeField] private long totalPerSec;
+    public long TotalPerSec => totalPerSec;
 
     private float defaultAutoUpgradeTotalPerSec;
     private float defaultAutoMultiplier;

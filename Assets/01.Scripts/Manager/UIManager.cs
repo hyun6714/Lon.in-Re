@@ -21,7 +21,8 @@ public enum UIName
     Dim,
     Popup_GameMake,
     Popup_Sound,
-    Popup_Tutorial
+    Popup_Tutorial,
+    Popup_GoldChage
 }
 
 public enum HUDTextType

@@ -27,12 +27,17 @@ public class PartState
     }
 
     // 다음 레벨 강화 비용 계산 : BaseCost * (Multiplier ^ Level)
-    public int GetNextCost()
+    public long GetNextCost()
     {
         double cost = partData.BaseCost *
                       Math.Pow(partData.CostMultiplier, level);
 
-        return (int)Math.Round(cost);
+        if (cost >= long.MaxValue)
+        {
+            return long.MaxValue;
+        }
+
+        return (long)Math.Round(cost);
     }
 
     public int GetCurrentPower()

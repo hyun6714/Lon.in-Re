@@ -9,9 +9,9 @@ public class AutoProduction : MonoBehaviour
     [SerializeField] private AutoProductionData data;
 
     [Header("n초당 생산량")]
-    [SerializeField] private float moneyPerSec;
+    [SerializeField] private long moneyPerSec;
 
-    public float MoneyPerSec => moneyPerSec;
+    public long MoneyPerSec => moneyPerSec;
 
     [Header("n초")]
     [SerializeField] private float autoSec;
