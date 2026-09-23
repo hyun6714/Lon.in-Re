@@ -5,18 +5,34 @@ using System;
 public class GameReleaseData : ScriptableObject
 {
     [Header("등급별 재화 보상 비율 (%)")]
-    [SerializeField] private int gradeACurrencyPercent = 700;
-    [SerializeField] private int gradeBCurrencyPercent = 300;
-    [SerializeField] private int gradeCCurrencyPercent = 110;
+    [SerializeField] private int gradeACurrencyPercent = 125;
+    [SerializeField] private int gradeBCurrencyPercent = 110;
+    [SerializeField] private int gradeCCurrencyPercent = 80;
 
-    [Header("A등급 명성 보상")]
-    [SerializeField] private int gradeAReputationReward = 800;
+    [Header("Solo 명성 보상")]
+    [SerializeField] private int soloAReputationReward = 2000;
+    [SerializeField] private int soloBReputationReward = 1000;
+    [SerializeField] private int soloCReputationReward = 500;
 
-    [Header("B등급 명성 보상")]
-    [SerializeField] private int gradeBReputationReward = 400;
+    [Header("Indie 명성 보상")]
+    [SerializeField] private int indieAReputationReward = 5000;
+    [SerializeField] private int indieBReputationReward = 3000;
+    [SerializeField] private int indieCReputationReward = 2000;
 
-    [Header("C등급 명성 보상")]
-    [SerializeField] private int gradeCReputationReward = 250;
+    [Header("Small 명성 보상")]
+    [SerializeField] private int smallAReputationReward = 10000;
+    [SerializeField] private int smallBReputationReward = 7000;
+    [SerializeField] private int smallCReputationReward = 5000;
+
+    [Header("Midsized 명성 보상")]
+    [SerializeField] private int midsizedAReputationReward = 30000;
+    [SerializeField] private int midsizedBReputationReward = 15000;
+    [SerializeField] private int midsizedCReputationReward = 10000;
+
+    [Header("MajorPublisher 명성 보상")]
+    [SerializeField] private int majorAReputationReward = 70000;
+    [SerializeField] private int majorBReputationReward = 50000;
+    [SerializeField] private int majorCReputationReward = 30000;
 
     public int GetCurrencyReward(DevelopmentGrade grade, int baseDevelopmentCost)
     {
@@ -43,18 +59,72 @@ public class GameReleaseData : ScriptableObject
         return (int)Math.Min(reward, int.MaxValue);
     }
 
-    public int GetReputationReward(DevelopmentGrade grade)
+    public int GetReputationReward(
+        RankManager.RankState rank,
+        DevelopmentGrade grade
+    )
     {
-        switch (grade)
+        switch (rank)
         {
-            case DevelopmentGrade.A:
-                return gradeAReputationReward;
+            case RankManager.RankState.Solo:
+                switch (grade)
+                {
+                    case DevelopmentGrade.A:
+                        return soloAReputationReward;
+                    case DevelopmentGrade.B:
+                        return soloBReputationReward;
+                    case DevelopmentGrade.C:
+                        return soloCReputationReward;
+                }
+                break;
 
-            case DevelopmentGrade.B:
-                return gradeBReputationReward;
+            case RankManager.RankState.Indie:
+                switch (grade)
+                {
+                    case DevelopmentGrade.A:
+                        return indieAReputationReward;
+                    case DevelopmentGrade.B:
+                        return indieBReputationReward;
+                    case DevelopmentGrade.C:
+                        return indieCReputationReward;
+                }
+                break;
 
-            case DevelopmentGrade.C:
-                return gradeCReputationReward;
+            case RankManager.RankState.Small:
+                switch (grade)
+                {
+                    case DevelopmentGrade.A:
+                        return smallAReputationReward;
+                    case DevelopmentGrade.B:
+                        return smallBReputationReward;
+                    case DevelopmentGrade.C:
+                        return smallCReputationReward;
+                }
+                break;
+
+            case RankManager.RankState.Midsized:
+                switch (grade)
+                {
+                    case DevelopmentGrade.A:
+                        return midsizedAReputationReward;
+                    case DevelopmentGrade.B:
+                        return midsizedBReputationReward;
+                    case DevelopmentGrade.C:
+                        return midsizedCReputationReward;
+                }
+                break;
+
+            case RankManager.RankState.MajorPublisher:
+                switch (grade)
+                {
+                    case DevelopmentGrade.A:
+                        return majorAReputationReward;
+                    case DevelopmentGrade.B:
+                        return majorBReputationReward;
+                    case DevelopmentGrade.C:
+                        return majorCReputationReward;
+                }
+                break;
         }
 
         return 0;
