@@ -95,10 +95,10 @@ public class AutoProduction : MonoBehaviour
         }
 
         moneyPerSec = upgrade.TotalPerSec;
-        Utils.Log(string.Format(data.MoneyPerSecText, moneyPerSec));
+        Utils.Log(string.Format(data.MoneyPerSecText, CurrencyFormatter.Format(moneyPerSec)));
 
         UIManager.Instance.SetText(HUDTextType.CoinSec, 
-            string.Format(data.MoneyPerSecText, moneyPerSec));
+            string.Format(data.MoneyPerSecText, CurrencyFormatter.Format(moneyPerSec)));
     }
 
     /// <summary>
