@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
@@ -9,27 +9,27 @@ public class RankManager : MonoBehaviour , IGameDataGet<RankManager.RankState>
 {
     public enum RankState
     {
-        Solo, //1ÀÎ
-        Indie, //ÀÎµğ
-        Small, //Áß¼Ò
-        Midsized, //Áß°ß
-        MajorPublisher //´ë±â¾÷
+        Solo, //1ì¸
+        Indie, //ì¸ë””
+        Small, //ì¤‘ì†Œ
+        Midsized, //ì¤‘ê²¬
+        MajorPublisher //ëŒ€ê¸°ì—…
     }
 
     public static RankManager instance { get; private set; }
 
-    [Header("µî±Şº° ¹è°æ ¿ÀºêÁ§Æ® (Solo, Indie, Small, Midsized, Major ¼ø¼­·Î ¾À ¿ÀºêÁ§Æ® µå·¡±×)")]
+    [Header("ë“±ê¸‰ë³„ ë°°ê²½ ì˜¤ë¸Œì íŠ¸ (Solo, Indie, Small, Midsized, Major ìˆœì„œë¡œ ì”¬ ì˜¤ë¸Œì íŠ¸ ë“œë˜ê·¸)")]
     [SerializeField] private List<GameObject> backgroundObjectList;
 
-    [Header("µî±Ş µ¥ÀÌÅÍ ¿¡¼Â (¼ø¼­´ë·Î ¹èÄ¡)")]
+    [Header("ë“±ê¸‰ ë°ì´í„° ì—ì…‹ (ìˆœì„œëŒ€ë¡œ ë°°ì¹˜)")]
     [SerializeField] private List<RankData> rankDataList;
 
     public RankState currentRank = RankState.Solo;
 
-    // ÇöÀç µî±ŞÀÇ ScriptableObject µ¥ÀÌÅÍ ÀĞ±â
+    // í˜„ì¬ ë“±ê¸‰ì˜ ScriptableObject ë°ì´í„° ì½ê¸°
     public RankData CurrentRankData => GetRankData(currentRank);
 
-    // ±âÁ¸ º¯¼ö È£È¯¿ë ÇÁ·ÎÆÛÆ¼ (½Ç½Ã°£ ¹İ¿µ)
+    // ê¸°ì¡´ ë³€ìˆ˜ í˜¸í™˜ìš© í”„ë¡œí¼í‹° (ì‹¤ì‹œê°„ ë°˜ì˜)
     public bool hasEmployees => CurrentRankData != null && CurrentRankData.hasEmployees;
     public int maxEmployee => CurrentRankData != null ? CurrentRankData.maxEmployee : 0;
     public int gamesReleased => GameManager.instance != null ? GameManager.instance.gameDevCount : 0;
@@ -82,7 +82,7 @@ public class RankManager : MonoBehaviour , IGameDataGet<RankManager.RankState>
         int currentIndex = (int)currentRank;
         int nextIndex = currentIndex + 1;
 
-        // ÃÖ°í µî±Ş µµ´Ş È®ÀÎ
+        // ìµœê³  ë“±ê¸‰ ë„ë‹¬ í™•ì¸
         if (currentIndex >= rankDataList.Count - 1 || nextIndex >= rankDataList.Count)
         {
             return;
@@ -94,7 +94,7 @@ public class RankManager : MonoBehaviour , IGameDataGet<RankManager.RankState>
         long currentReputation = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Reputation) : 0;
         long currentGold = CurrencyManager.instance != null ? CurrencyManager.instance.GetAmount(CurrencyType.Normal) : 0;
 
-        // ½Â±Ş Á¶°Ç °Ë»ç (´ÙÀ½ µî±Ş ¿¡¼Â¿¡ ÀûÈù ¼öÄ¡¿Í ºñ±³)
+        // ìŠ¹ê¸‰ ì¡°ê±´ ê²€ì‚¬ (ë‹¤ìŒ ë“±ê¸‰ ì—ì…‹ì— ì íŒ ìˆ˜ì¹˜ì™€ ë¹„êµ)
         bool isGameSatisfied = gamesReleased >= nextData.reqGamesReleased;
         bool isEmployeeSatisfied = currenyEmployee >= nextData.reqEmployeeCount;
         bool isReputationSatisfied = currentReputation >= nextData.reqReputation;
@@ -111,17 +111,19 @@ public class RankManager : MonoBehaviour , IGameDataGet<RankManager.RankState>
 
             UpdateOfficeVisual();
 
+            SoundManager.instance?.PlaySFX(SFXType.RankUp);    // ë­í¬ ì—… íš¨ê³¼ìŒ ì¬ìƒ
+
             GameEventBridge.RankChanged();
             GameEventBridge.EmployeeCountChanged(currenyEmployee, maxEmployee);
         }
         else
         {
-            Debug.Log("Á¶°ÇÀÌ ºÎÁ·ÇÕ´Ï´Ù");
+            Debug.Log("ì¡°ê±´ì´ ë¶€ì¡±í•©ë‹ˆë‹¤");
         }
 
     }
 
-    //È¯»ıÇÒ ¶§ »ç¿ëÇÏ´Â µ¥ÀÌÅÍ ÃÊ±âÈ­
+    //í™˜ìƒí•  ë•Œ ì‚¬ìš©í•˜ëŠ” ë°ì´í„° ì´ˆê¸°í™”
     public void ResetRank()
     {
         currentRank = RankState.Solo;
@@ -133,7 +135,7 @@ public class RankManager : MonoBehaviour , IGameDataGet<RankManager.RankState>
         }
 
         UpdateOfficeVisual();
-        Debug.Log("µî±Ş ÃÊ±âÈ­ ¿Ï·á");
+        Debug.Log("ë“±ê¸‰ ì´ˆê¸°í™” ì™„ë£Œ");
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -161,7 +163,7 @@ public class RankManager : MonoBehaviour , IGameDataGet<RankManager.RankState>
         {
             if (backgroundObjectList[i] != null)
             {
-                // ÇöÀç µî±Ş ÀÎµ¦½º¿Í ÀÏÄ¡ÇÏ´Â ¹è°æ¸¸ ÄÑ°í ³ª¸ÓÁö´Â ²ü´Ï´Ù.
+                // í˜„ì¬ ë“±ê¸‰ ì¸ë±ìŠ¤ì™€ ì¼ì¹˜í•˜ëŠ” ë°°ê²½ë§Œ ì¼œê³  ë‚˜ë¨¸ì§€ëŠ” ë•ë‹ˆë‹¤.
                 bool isActive = (i == currentIndex);
                 backgroundObjectList[i].SetActive(isActive);
             }

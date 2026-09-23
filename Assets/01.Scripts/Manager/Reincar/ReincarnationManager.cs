@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,7 +43,7 @@ public class ReincarnationManager : MonoBehaviour
         {
             int requirement = DataManager.instance.reincarnationData.reincarnationRequirement;
 
-            //Æ¯¼ö ÀçÈ­ ÁÖ´Â ½Ä
+            //íŠ¹ìˆ˜ ì¬í™” ì£¼ëŠ” ì‹
             long excessReputation = currentReputation - requirement;
 
             if (excessReputation > 0)
@@ -56,13 +56,14 @@ public class ReincarnationManager : MonoBehaviour
                 }
             }
         }
+        SoundManager.instance?.PlaySFX(SFXType.Reincarnation);  // í™˜ìƒ íš¨ê³¼ìŒ ì¬ìƒ
 
         GameEventBridge.Reincarnated();
 
-        Debug.Log($"È¯»ı ¿Ï·á");
+        Debug.Log($"í™˜ìƒ ì™„ë£Œ");
     }
 
-    //È¯»ı Á¶°Ç 
+    //í™˜ìƒ ì¡°ê±´ 
     public bool CanReincarnation()
     {
         long currentReputation = GetCurrentReputation();
@@ -76,13 +77,13 @@ public class ReincarnationManager : MonoBehaviour
 
         if (currentReputation < requirement)
         {
-            Debug.Log($"È¯»ı Á¶°Ç ¹Ì´Ş");
+            Debug.Log($"í™˜ìƒ ì¡°ê±´ ë¯¸ë‹¬");
             return false;
         }
         return true;
     }
 
-    //ÇÃ·¹ÀÌ¾î°¡ °¡Áö°í ÀÖ´Â ¸í¼º °¡Á®¿À´Â ÇÔ¼ö
+    //í”Œë ˆì´ì–´ê°€ ê°€ì§€ê³  ìˆëŠ” ëª…ì„± ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜
     private long GetCurrentReputation()
     {
         if (CurrencyManager.instance != null)

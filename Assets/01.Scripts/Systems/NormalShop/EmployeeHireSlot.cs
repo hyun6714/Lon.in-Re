@@ -185,6 +185,8 @@ public class EmployeeHireSlot : MonoBehaviour
 
         manager.HireEmployee(targetState.employeeData.EmployeeId);
 
+        SoundManager.instance?.PlaySFX(SFXType.Hire);
+
         // 고용 성공 연출
         transform.DOComplete();
         transform.DOPunchScale(Vector3.one * 0.06f, 0.15f, vibrato: 5, elasticity: 0.5f)

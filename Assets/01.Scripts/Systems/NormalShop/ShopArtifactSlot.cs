@@ -187,6 +187,8 @@ public class ShopArtifactSlot : MonoBehaviour
 
         if (success)
         {
+            SoundManager.instance?.PlaySFX(SFXType.ArtifactUnlock); // 아티팩트 해금 효과음 재생
+
             Debug.Log($"해금 완료: {targetInfo.artiName}");
 
             if (onPurchaseSuccess != null)

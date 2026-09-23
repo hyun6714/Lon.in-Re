@@ -27,26 +27,32 @@ MonoBehaviour:
     clip: {fileID: 0}
   sfxList:
   - sfxType: 0
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: d4f2b72925433a14b930170d6b71165d, type: 3}
     volume: 0.5
   - sfxType: 1
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: e6b278f194b4b62458c3ca527c63535e, type: 3}
     volume: 0.5
   - sfxType: 2
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 15f34bd45d026bb4b84a748913de65ef, type: 3}
     volume: 0.5
   - sfxType: 3
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: b0ea0c7643fe33941bd748f217cb689e, type: 3}
     volume: 0.5
   - sfxType: 4
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: a759fb4813caa6b448842f85a2a4e8a0, type: 3}
     volume: 0.5
   - sfxType: 5
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: ab82ff70831cb8345992a6e8f1eabdda, type: 3}
     volume: 0.5
   - sfxType: 6
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: bddd877f13e4ef94596f932cf4be2cfb, type: 3}
     volume: 0.5
   - sfxType: 7
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 42d1072396bac5f419093fad7195756a, type: 3}
     volume: 0.5
+  - sfxType: 8
+    clip: {fileID: 8300000, guid: 3de594c2462b6104286ae19232710d2a, type: 3}
+    volume: 0.5
+  - sfxType: 9
+    clip: {fileID: 8300000, guid: c2f688d2bcf02834aa3f85267a7350fb, type: 3}
+    volume: 0.3

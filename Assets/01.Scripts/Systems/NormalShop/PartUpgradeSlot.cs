@@ -118,6 +118,8 @@ public class PartUpgradeSlot : MonoBehaviour
         // 업그레이드 시도
         if (playerUpgrade.TryUpgrade(targetState))
         {
+            SoundManager.instance?.PlaySFX(SFXType.UpgradeSuccess); // 업그레이드 성공 효과음 재생
+
             // 업그레이드 성공 연출
             transform.DOComplete();
             transform.DOPunchScale(Vector3.one * 0.06f, 0.15f, vibrato: 5, elasticity: 0.5f)
@@ -129,6 +131,8 @@ public class PartUpgradeSlot : MonoBehaviour
         }
         else
         {
+            SoundManager.instance?.PlaySFX(SFXType.UpgradeFail);    // 업그레이드 실패 효과음 재생
+
             // 업그레이드 실패
             PlayFailAnimation();
         }
