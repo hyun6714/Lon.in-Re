@@ -18,7 +18,7 @@ MonoBehaviour:
   rankHUDIcon: {fileID: 21300000, guid: 9f60ea8fc37382444adbf14d80ed76bd, type: 3}
   hasEmployees: 1
   maxEmployee: 50
-  reqGamesReleased: 100
+  reqGamesReleased: 50
   reqEmployeeCount: 30
   reqReputation: 1500000
   reqNormal: 10000000000

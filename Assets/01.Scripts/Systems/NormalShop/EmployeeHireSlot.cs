@@ -115,7 +115,17 @@ public class EmployeeHireSlot : MonoBehaviour
         }
 
         // 직군명 x인원수 (+초당생산량)
-        long totalProduction = (long)data.ProductionPerSecond * targetState.Count;
+        double totalProductionDouble = 0;
+
+        for (int i = 0; i < targetState.Count; i++)
+        {
+            double employeeProduction = data.ProductionPerSecond * Math.Pow(data.ProductionMultiplier, i);
+            totalProductionDouble += employeeProduction;
+        }
+
+        // long 타입으로 변환 (최대값 초과 방지 처리 포함)
+        long totalProduction = totalProductionDouble >= long.MaxValue ? long.MaxValue : (long)Math.Round(totalProductionDouble);
+
         if (infoText != null)
         {
             infoText.text = $"{data.EmployeeName} x{targetState.Count} (+{CurrencyFormatter.Format(totalProduction)}/초)";
