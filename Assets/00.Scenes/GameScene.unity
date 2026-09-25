@@ -34974,7 +34974,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -255, y: -131}
+  m_AnchoredPosition: {x: -260, y: -131}
   m_SizeDelta: {x: 24, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &928447377
@@ -49473,6 +49473,81 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1348955482
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1348955483}
+  - component: {fileID: 1348955485}
+  - component: {fileID: 1348955484}
+  m_Layer: 5
+  m_Name: Gold_Turn_Fame_Img
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1348955483
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348955482}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4823600936930352041}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -132.6, y: -225.5}
+  m_SizeDelta: {x: 32, y: 32}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1348955484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348955482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 69f2e79ad628e0045aeb348145ccf742, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1348955485
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348955482}
+  m_CullTransparentMesh: 1
 --- !u!1 &1378139521
 GameObject:
   m_ObjectHideFlags: 0
@@ -82263,12 +82338,12 @@ PrefabInstance:
         \uBA85\uC131\uC744 \uBAA8\uC544\uC11C \uC2B9\uAE09\uD558\uBA74 \uAD6C\uB9E4\uD560
         \uC218 \uC788\uB294 \uAC83\uC774 \uB298\uC5B4\uB0A9\uB2C8\uB2E4.\n5. \uC778\uB514
         \uAC1C\uBC1C\uC790 \uB4F1\uAE09\uBD80\uD130 \uC9C1\uC6D0\uC744 \uACE0\uC6A9\uD560
-        \uC218 \uC788\uC2B5\uB2C8\uB2E4.\n7.  \uD658\uC0DD\uC740        \uBA85\uC131
+        \uC218 \uC788\uC2B5\uB2C8\uB2E4.\n7.  \uD658\uC0DD\uC740       \uBA85\uC131
         3\uB9CC \uBD80\uD130 \uAC00\uB2A5\uD569\uB2C8\uB2E4.\n8. \uD658\uC0DD \uC2DC      
         \uBA85\uC131 3\uB9CC\uC744 \uC81C\uC678\uD55C \uCD08\uACFC\uD55C \uBA85\uC131\uC758
         1/2 \uB9CC\uD07C        \uB97C \uC5BB\uC2B5\uB2C8\uB2E4.\n9.  \uBA85\uC131\uC774
-        \uBD80\uC871\uD558\uB2E4\uBA74 \uC624\uB978\uCABD\uC704\uC5D0 \uBC84\uD2BC\uC744
-        \uB20C\uB7EC \uACE8\uB4DC\uB85C \uAD50\uD658\uD558\uC138\uC694.\n"
+        \uBD80\uC871\uD558\uB2E4\uBA74        \uBC84\uD2BC\uC744 \uB20C\uB7EC \uACE8\uB4DC\uB85C
+        \uAD50\uD658\uD558\uC138\uC694.\n"
       objectReference: {fileID: 0}
     - target: {fileID: 6821656814682583036, guid: 07a83fb20cba1a9479632af7d4ee94a3, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -82295,6 +82370,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4994379280545308232, guid: 07a83fb20cba1a9479632af7d4ee94a3, type: 3}
       insertIndex: 9
       addedObject: {fileID: 689136920}
+    - targetCorrespondingSourceObject: {fileID: 4994379280545308232, guid: 07a83fb20cba1a9479632af7d4ee94a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1348955483}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4924119116602641114, guid: 07a83fb20cba1a9479632af7d4ee94a3, type: 3}
       insertIndex: -1
