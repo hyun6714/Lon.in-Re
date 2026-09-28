@@ -18,12 +18,7 @@ public enum SFXType
 
 public enum BGMType
 {
-    Main,           // 기본
-    Spring,         // 봄
-    Summer,         // 여름
-    Fall,           // 가을
-    Winter,         // 겨울
-    Burning         // 버닝
+    Main           // 기본
 }
 
 [Serializable]
