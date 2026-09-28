@@ -15,16 +15,6 @@ MonoBehaviour:
   bgmList:
   - bgmType: 0
     clip: {fileID: 8300000, guid: 01c9d14b77cef86419d4d7feab2141ec, type: 3}
-  - bgmType: 1
-    clip: {fileID: 0}
-  - bgmType: 2
-    clip: {fileID: 0}
-  - bgmType: 3
-    clip: {fileID: 0}
-  - bgmType: 4
-    clip: {fileID: 0}
-  - bgmType: 5
-    clip: {fileID: 0}
   sfxList:
   - sfxType: 0
     clip: {fileID: 8300000, guid: d4f2b72925433a14b930170d6b71165d, type: 3}

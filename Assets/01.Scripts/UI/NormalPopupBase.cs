@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System;
 using System.Threading;
@@ -64,7 +64,10 @@ public class NormalPopupBase : PopupBase
                 .OnComplete(() =>
                 {
                     gameObject.SetActive(false);
-                    UIManager.Instance.DimCheck();
+                    if (UIManager.Instance != null)
+                    {
+                        UIManager.Instance.DimCheck();
+                    }
                 })
                 .ToUniTask(TweenCancelBehaviour.CompleteAndCancelAwait, ctk);
         }
